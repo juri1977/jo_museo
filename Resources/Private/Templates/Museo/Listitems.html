@@ -1,0 +1,153 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<div class="clearfix">
+	<f:render partial="Facettecontrols" arguments="{_all}"/>
+</div>
+<div class="results clearfix container">
+	<h3>{jo:translate(key:'{langPath}:founditems')}</h3>
+	<f:if condition="{joSolrObjects.response.docs}">
+		<f:then>
+			<table class="table table-responsive table-bordered table-hover table-condensed joSolrTable">
+				<tr>
+					<th class="col6 joImageCol">
+						{jo:translate(key:'{langPath}:jo_bkr_base.abbildung')}
+					</th>
+					<th class="link col1<f:if condition='{sorting.active.title}'> active</f:if>">
+						<f:link.action noCache="1" class="sorttitle {sorting.all.title.0}" arguments="{sortvar:'title', direction:'{sorting.all.title.1}',jopaginatepage:'{paginationdata.aktiv}',detail:'{joDetailId}'}"  title="Sortieren nach Titel">
+							<div class="sortmask">
+								<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+									<f:then>
+										<div class="joSprite"></div>
+									</f:then>
+									<f:else>
+										<f:image src="{f:uri.resource(path:'Images/sprite.svg')}" alt="Sortieren nach Titel" title="Sortieren nach Titel" />
+									</f:else>
+								</f:if>
+							</div>
+							Titel und Kurztext
+						</f:link.action>
+					</th>
+					<th class="col3">
+						{jo:translate(key:'{langPath}:jo_bkr_base.sachgruppe')}
+					</th>
+					<th class="col5">&nbsp;</th>
+				</tr>
+				<f:for each="{joSolrObjects.response.docs}" as="items" key="number" iteration="counter">
+					<tr class="bt">
+						<td class="joImageCol">
+							<f:if condition="{items.images}">
+								<f:then>
+									<f:for each="{items.images}" as="subitems" key="subnumber" iteration="subcounter">
+										<f:if condition="{subcounter.isFirst}">
+											<f:alias map="{imagedata: '{subitems->jo:explode(delimiter:\'$\')}'}">
+												<img src="{imagedata.0}" class="joResponseImage" alt="{imagedata.2}" title="{imagedata.2}">
+											</f:alias>
+										</f:if>
+									</f:for>
+								</f:then>
+								<f:else>
+									<f:if condition="{settings.imgplaceholder}">
+										<f:then>
+											<f:image class="img-placeholder" src="{settings.imgplaceholder}" treatIdAsReference="1" width="300" />
+										</f:then>
+										<f:else>
+											<f:image class="img-placeholder" src="/typo3conf/ext/jo_museo/Resources/Public/Images/platzhalter.jpg" width="300" />
+										</f:else>
+									</f:if>
+								</f:else>
+							</f:if>
+						</td>
+						<td>
+							<h2><f:format.html>{items.title}</f:format.html></h2>
+							<f:format.html><f:format.crop maxCharacters="140" respectWordBoundaries="TRUE" respectHtml="TRUE">{items.bemerkung}</f:format.crop></f:format.html>
+						</td>
+						<td>
+							<f:for each="{items.classification}" as="subitems" key="subnumber" iteration="subcounter">
+								<f:format.html>{subitems}</f:format.html><br>
+							</f:for>
+						</td>
+						<td>
+							<div class="detail control_button">
+								<f:link.action noCache="1" action="detailobject" arguments="{joDetailView:'{items.id}',h:'1'}" title="{jo:translate(key:'{langPath}:jo_bkr_base.details')}">
+									<span>{jo:translate(key:'{langPath}:jo_bkr_base.details')}</span>
+									<div class="addGradient">
+										<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+											<f:then>
+												<div class="joSprite"></div>
+											</f:then>
+											<f:else>
+												<f:image src="{f:uri.resource(path:'Images/sprite.svg')}" alt="{jo:translate(key:'{langPath}:jo_bkr_base.details')}" title="{jo:translate(key:'{langPath}:jo_bkr_base.details')}" />
+											</f:else>
+										</f:if>
+									</div>
+								</f:link.action>
+							</div>
+							<f:if condition="{items.images}">
+								<f:for each="{items.images}" as="subitems" key="subnumber" iteration="subcounter">
+									<f:if condition="{subcounter.isFirst}">
+										<f:alias map="{imagedata: '{subitems->jo:explode(delimiter:\'$\')}'}">
+											<f:if condition="{imagedata.1}">
+												<div class="viewer control_button">
+													<f:link.external uri="{imagedata.1}" title="{jo:translate(key:'{langPath}:jo_bkr_base.digitizer')}">
+														<span>{jo:translate(key:'{langPath}:jo_bkr_base.digitizer')}</span>
+														<div class="addGradient">
+															<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+																<f:then>
+																	<div class="joSprite"></div>
+																</f:then>
+																<f:else>
+																	<f:image src="{f:uri.resource(path:'Images/sprite.svg')}" alt="{jo:translate(key:'{langPath}:jo_bkr_base.digitizer.inview')}" title="{jo:translate(key:'{langPath}:jo_bkr_base.digitizer.inview')}" />
+																</f:else>
+															</f:if>
+														</div>
+													</f:link.external>
+												</div>
+											</f:if>
+										</f:alias>
+									</f:if>
+								</f:for>
+							</f:if>
+							<div class="colbox control_button">
+								<f:if condition="{jo:joinarray(arraycontains:'{collbox_content}', keytofind:'{items.id}')}">
+									<f:then>
+										<f:link.action noCache="1" class="listBookmarkRemove" arguments="{remove_from_box:'{items.id}'}" title="{jo:translate(key:'{langPath}:jo_bkr_base.digitizer.inview')}">
+											<span>{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks.remove')}</span>
+											<div class="addGradient">
+												<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+													<f:then>
+														<div class="joSprite"></div>
+													</f:then>
+													<f:else>
+														<f:image src="{f:uri.resource(path:'Images/sprite.svg')}" alt="{jo:translate(key:'{langPath}:jo_bkr_base.digitizer.inview')}" title="{jo:translate(key:'{langPath}:jo_bkr_base.digitizer.inview')}" />
+													</f:else>
+												</f:if>
+											</div>
+										</f:link.action>
+									</f:then>
+									<f:else>
+										<f:link.action noCache="1" class="listBookmark" arguments="{add_to_box:'{items.id}'}" title="{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks')}">
+											<span>{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks')}</span>
+											<div class="addGradient">
+												<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+													<f:then>
+														<div class="joSprite"></div>
+													</f:then>
+													<f:else>
+														<f:image src="{f:uri.resource(path:'Images/sprite.svg')}" alt="{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks')}" title="{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks')}" />
+													</f:else>
+												</f:if>
+											</div>
+										</f:link.action>
+									</f:else>
+								</f:if>
+							</div>
+						</td>
+					</tr>
+				</f:for>
+			</table>
+			<f:render partial="Paginator" arguments="{_all}"/>
+		</f:then>
+		<f:else>
+			<h1 class="joNothingFound">{jo:translate(key:'{langPath}:jo_bkr_base.noobjects')}</h1>
+		</f:else>
+	</f:if>
+</div>

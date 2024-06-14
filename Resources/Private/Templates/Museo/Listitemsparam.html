@@ -1,0 +1,46 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<div class="clearfix">
+	<f:render partial="FacettecontrolsParam" arguments="{_all}"/>
+</div>
+<div class="results clearfix container">
+	<f:if condition="{joSolrObjects.response.docs}">
+		<f:then>
+			<div class="joListNotableContainer">
+				<f:for each="{joSolrObjects.response.docs}" as="items" key="number" iteration="counter">
+					<div class="clearfix row list_notable<f:if condition='{jo:joinarray(arraycontains:\'{hidden_items}\', keytofind:\'{items.id}\')}'> inactive</f:if>" data-id="{items.id}">
+						<div class="col-md-12 joListText">
+							<f:if condition="{items.titleFirstletter} != {titleFirstletter}">
+								<h3><span class="marking">{items.titleFirstletter}</span></h3>
+							</f:if>
+							<div class="clearfix title_or_symbols">
+								<h2><f:format.html>{items.title}</f:format.html></h2>
+							</div>
+							<f:if condition="{items.titleAlt} && !{settings.excludefields.list.titleAlt}">
+								<div class="clearfix row">
+									<div class="col-md-5"><b>Alternative Titel:</b></div>
+									<div class="col-md-7 titleAlt">
+										<f:for each="{items.titleAlt}" as="joSubIndex">
+											<div><f:format.html>{joSubIndex}</f:format.html></div>
+										</f:for>
+									</div>
+								</div>
+							</f:if>
+							<f:if condition="!{settings.excludefields.list.noteBundled} && {items.noteBundled}">
+								<f:for each="{items.noteBundled}" as="sub">
+									<f:for each="{sub.baseinformation}" as="ssub">
+										<div><f:format.html><f:format.nl2br>{ssub.Beschreibung}</f:format.nl2br></f:format.html></div>
+									</f:for>
+								</f:for>
+							</f:if>
+						</div>
+					</div>
+					<f:variable name="titleFirstletter" value="{items.titleFirstletter}"/>
+				</f:for>
+			</div>
+			<f:render partial="Paginator" arguments="{_all}"/>
+		</f:then>
+		<f:else>
+			<h1 class="joNothingFound">{jo:translate(key:'{langPath}:jo_bkr_base.noobjects')}</h1>
+		</f:else>
+	</f:if>
+</div>

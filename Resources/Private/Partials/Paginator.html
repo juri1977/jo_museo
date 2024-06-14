@@ -1,0 +1,65 @@
+<f:if condition="{paginationdata.range} && {paginationdata.range->f:count()}>1">
+	<div class="joPaginateWrap">
+		<ul class="pagination justify-content-center flex-wrap">
+			<li class="paginator-back">
+				<f:if condition="{paginationdata.links} != {paginationdata.aktiv}">
+					<f:then>
+						<f:link.action noCache="1" pageType="{ajaxpagetype}" class="page-link{ajaxpagetypecssclass}" action="{paginationdata.action}" arguments="{jopaginatepage:'{paginationdata.links}',joDetailView:'{baseid}'}" additionalParams="{ceid:'{extbase_config.ce_uid}'}">
+							&lt;&lt;
+						</f:link.action>
+					</f:then>
+					<f:else>
+						<span>&lt;&lt;</span>
+					</f:else>
+				</f:if>
+			</li>
+			<f:if condition="{paginationdata.first}">
+				<li>
+					<f:link.action noCache="1" pageType="{ajaxpagetype}" class="page-link{ajaxpagetypecssclass}" action="{paginationdata.action}" arguments="{jopaginatepage:'{paginationdata.first}',joDetailView:'{baseid}'}" additionalParams="{ceid:'{extbase_config.ce_uid}'}">
+						{paginationdata.first}... 
+					</f:link.action>
+				</li>
+			</f:if>
+			<f:for each="{paginationdata.range}" as="joPaginate">
+				<li <f:if condition="{joPaginate} == {paginationdata.aktiv}">class="active"</f:if>>
+					<f:link.action noCache="1" pageType="{ajaxpagetype}" class="page-link{ajaxpagetypecssclass}" action="{paginationdata.action}" arguments="{jopaginatepage:'{joPaginate}',joDetailView:'{baseid}'}" additionalParams="{ceid:'{extbase_config.ce_uid}'}">
+						{joPaginate}
+					</f:link.action>
+				</li>
+			</f:for>
+			<f:if condition="{settings.paginatorjumper}">
+				<li class="paginator-jumper">
+					<div class="jumper-menu">
+					    <f:form action="{paginationdata.action}" arguments="{joDetailView:'{baseid}'}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" class="jumper-form">
+					    	<div class="input-group">
+					    		<f:form.textfield class="form-control" name="jopaginatepage" type="number" placeholder="zu Seite" value="" />
+					    		<span class="input-group-btn">
+					    			<button class="btn btn-default" type="submit">Go</button>
+					    		</span>
+					    	</div>
+					    </f:form>
+				  	</div>
+				</li>
+			</f:if>
+			<f:if condition="{paginationdata.last}">
+				<li>
+					<f:link.action noCache="1" pageType="{ajaxpagetype}" class="page-link{ajaxpagetypecssclass}" action="{paginationdata.action}" arguments="{jopaginatepage:'{paginationdata.last}',joDetailView:'{baseid}'}" additionalParams="{ceid:'{extbase_config.ce_uid}'}">
+						...{paginationdata.last}
+					</f:link.action>
+				</li>
+			</f:if>
+			<li class="paginator-next">
+				<f:if condition="{paginationdata.rechts} != {paginationdata.aktiv}">
+					<f:then>
+						<f:link.action noCache="1" pageType="{ajaxpagetype}" class="page-link{ajaxpagetypecssclass}" action="{paginationdata.action}" arguments="{jopaginatepage:'{paginationdata.rechts}',joDetailView:'{baseid}'}" additionalParams="{ceid:'{extbase_config.ce_uid}'}">
+							&gt;&gt;
+						</f:link.action>
+					</f:then>
+					<f:else>
+						<span>&gt;&gt;</span>
+					</f:else>
+				</f:if>
+			</li>
+		</ul>
+	</div>
+</f:if>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3DataStructure>
+	<meta>		
+		<langDisable>1</langDisable>
+	</meta>	
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>Digitale Ausstellungen - Sektion/Kapitel</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<padding>
+					    <TCEforms>
+							<label>Abstand der Sektionsübersichten nach links und rechts (Desktop)</label>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">Kein Abstand (Standard)</numIndex>
+										<numIndex index="1">0</numIndex>
+									</numIndex>									
+									<numIndex index="1" type="array">
+										<numIndex index="0">Extraklein</numIndex>
+										<numIndex index="1">1</numIndex>
+									</numIndex>									
+									<numIndex index="2" type="array">
+										<numIndex index="0">Klein</numIndex>
+										<numIndex index="1">2</numIndex>
+									</numIndex>									
+									<numIndex index="3" type="array">
+										<numIndex index="0">Mittel</numIndex>
+										<numIndex index="1">3</numIndex>
+									</numIndex>									
+									<numIndex index="4" type="array">
+										<numIndex index="0">Groß</numIndex>
+										<numIndex index="1">4</numIndex>
+									</numIndex>									
+									<numIndex index="5" type="array">
+										<numIndex index="0">Extragroß</numIndex>
+										<numIndex index="1">5</numIndex>
+									</numIndex>									
+								</items>
+							</config>
+					    </TCEforms>
+					</padding>
+					<textpos>
+					    <TCEforms>
+							<label>Position der Textinformationen der Sektionen</label>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">Overlay - Headline und Teaser vor dem Bildensemble (Default)</numIndex>
+										<numIndex index="1">0</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">Datum, Headline, Subheadline und Teaser Über dem Bildensemble</numIndex>
+										<numIndex index="1">1</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">Datum, Headline, Subheadline im ersten Bildcontainer, Teaser unter dem Bildensemble</numIndex>
+										<numIndex index="1">2</numIndex>
+									</numIndex>
+								</items>
+							</config>
+					    </TCEforms>
+					</textpos>
+					<bgcolor>
+					    <TCEforms>
+							<label>Hintergrundfarbe für die Detailansicht dieser Sektion</label>
+							<config>
+								<type>input</type>
+								<renderType>colorpicker</renderType>
+							</config>
+					    </TCEforms>
+					</bgcolor>
+					<fontcolor>
+					    <TCEforms>
+							<label>Schriftfarbe für die Detailansicht dieser Sektion</label>
+							<config>
+								<type>input</type>
+								<renderType>colorpicker</renderType>
+							</config>
+					    </TCEforms>
+					</fontcolor>
+					<ctatext>
+					    <TCEforms>
+							<label>Formulierung eines Textes, der auf dem Call-to-action-Button erscheint</label>
+							<description>Hier können Sie den Button "Mehr erfahren" bearbeiten. Wählen Sie eine Formulierung, die den Nutzer animiert, sich die Inhalte der Sektion anzuschauen.</description>
+							<config>
+								<placeholder>Interessiert, wie es weitergeht? Klicken Sie hier!</placeholder>
+								<type>input</type>
+							</config>
+					    </TCEforms>
+					</ctatext>
+				</el>
+			</ROOT>
+		</sDEF>
+	</sheets>
+</T3DataStructure>

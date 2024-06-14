@@ -1,0 +1,1010 @@
+<f:comment>Überschriften für Liste, Grid und Detailansicht @all -> aktuell wird NUR Gridview beachtet!!!</f:comment>
+<f:section name="headline">
+  <f:if condition="{config.fieldlist.gridview.headline.type} == 'multivalue'">
+    <f:then>
+      <f:for each="{items.{config.fieldlist.gridview.headline.name}}" as="subitems" key="sk" iteration="si">
+        <span>
+          <f:format.html>{subitems}</f:format.html>
+        </span>
+      </f:for>
+    </f:then>
+    <f:else>
+      <f:format.html>{items.{config.fieldlist.gridview.headline.name}}</f:format.html>
+    </f:else>
+  </f:if>
+</f:section>
+
+<f:comment>Fallback wenn keine Daten unterhalb eines Aggregates zu finden sind</f:comment>
+<f:section name="nodata">
+  <div class="row no-gutters item_info_wrap">
+    <div class="col-12">
+       keine Daten vorhanden
+    </div>
+  </div>
+</f:section>
+
+ <f:section name="buildfieldsandsegments">
+  <f:comment>
+    <!--
+      @all -> dies funktioniert nicht, siehe Detail ansicht, dort gibt es dann keine ausgabe, da {item.Allgemein} und so ja nicht exestiert
+    <f : if condition="{items} && {items.{fields.name}}">
+    -->
+  </f:comment>
+  <f:if condition="{items}">
+     
+    <f:comment>
+      <!--
+        Der Kartenblock wird nicht ausgespielt, wenn keine geodaten vorhanden sind
+        @all -> könnte man auch im Controller erledigen und den Konfigurationsstrang bei der Field-config entfernen
+      -->
+    </f:comment>
+    <f:if condition="{fields.specialaggregationtype} != 'mapblock' || ({fields.specialaggregationtype} == 'mapblock' && {showmap})">
+      <div class="sw sectionwrap_{fi.index} {fields.additionalclases}">
+        <div class="section_inner_wrap">
+          <f:variable name="collapsible" value="{collapseclass:'collapse',pointerclass:'pointer'}"/>
+          <f:if condition="{fields.dontcollapse}">
+             <f:variable name="collapsible" value="{collapseclass:'',pointerclass:''}"/>
+          </f:if>
+          <f:if condition="{fields.type} == 'aggregate'">
+            <f:then>
+              <f:if condition="{fields.hideaggregationheader} != 'true' && {fields.name}">
+                <f:variable name="ariaexpanded" value="true"/>
+                <f:comment>
+                  <!--
+                    Klasse für Aggregat auf oder zugeklappt
+                  -->
+                </f:comment>
+                <f:variable name="collapsedornot" value=""/>
+                <f:if condition="!{fields.show}">
+                  <f:variable name="collapsedornot" value=" collapsed"/>
+                  <f:variable name="ariaexpanded" value="false"/>      
+                </f:if>
+                <f:variable name="classes" value=""/>
+                <f:if condition="{fields.hideaggregationheader} != 'true'">
+                    <f:if condition="{fields.show}">
+                      <f:then>
+                        <f:variable name="classes" value="show collapse"/>
+                      </f:then>
+                      <f:else>
+                        <f:variable name="classes" value="collapse"/>
+                      </f:else>
+                    </f:if>
+                </f:if>
+                <h3 id="heading-{fi.index}-{mk}" data-toggle="{collapsible.collapseclass}" data-target="#collapse-{fi.index}-{mk}" aria-expanded="{ariaexpanded}" aria-controls="collapse-{fi.index}" class="{collapsible.pointerclass}{collapsedornot}">
+                  <f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.{fields.name}')}">
+                      <f:then>
+                        {jo:translate(key:'{langPath}:jo_bkr_base.{fields.name}')}
+                      </f:then>
+                      <f:else>
+                        {fields.name}
+                      </f:else>
+                    </f:if>
+                </h3>
+              </f:if>
+              <div id="collapse-{fi.index}-{mk}" class="{classes}" aria-labelledby="heading-{fi.index}-{mk}" data-parent="#sidebar">
+                <div class="inner_collapse_wrap">
+                  <f:variable name="hascontent" value="0" />
+                  <f:for each="{fields.sub}" as="subfields" key="sk" iteration="si">
+                    <f:if condition="{items.{subfields.name}} || {subfields.name} == 'passthrough'">
+                      <f:variable name="hascontent" value="1" />
+                    </f:if>
+                    <f:render partial="Sections" section="itemstructure" arguments="{items:'{items}', fields:'{subfields}', langPath:'{langPath}', parent:'{subfields}', extbase_config:'{extbase_config}', ajaxpagetype:'{ajaxpagetype}', ajaxpagetypecssclass:'{ajaxpagetypecssclass}',config:'{config}',prevnext:'{prevnext}',alldata:'{_all}'}"/>
+                  </f:for>
+                  <f:if condition="{hascontent} != '1'">
+                    <f:render section="nodata" arguments="{_all}"/>
+                  </f:if>
+                </div>
+              </div>
+            </f:then>
+            <f:else>
+              <f:render partial="Sections" section="itemstructure" arguments="{items:'{items}', fields:'{fields}', langPath:'{langPath}', parent:'{fields}', extbase_config:'{extbase_config}', ajaxpagetype:'{ajaxpagetype}', ajaxpagetypecssclass:'{ajaxpagetypecssclass}',config:'{config}',prevnext:'{prevnext}',alldata:'{_all}'}"/>
+            </f:else>
+          </f:if>
+        </div>
+      </div>
+    </f:if>
+  </f:if>
+</f:section>
+
+<f:section name="searchinstructure">
+    <f:link.action noCache="1" class="searchinstructure" additionalParams="{add:'1'}" arguments="{bcpId:'{baseid}', setsubsearch:'1'}" title="{jo:translate(key:'{langPath}:jo_bkr_base.structure')}">Suche innerhalb der Struktur</f:link.action>
+</f:section>
+
+<f:section name="itemstructure">
+  <f:variable name="labelcss" value="col-md-5"/>
+  <f:if condition="{fields.labelcss}">
+     <f:variable name="labelcss" value="{fields.labelcss}"/>
+  </f:if>
+  <f:variable name="valuecss" value=""/>
+  <f:if condition="{fields.valuecss}">
+     <f:variable name="valuecss" value=" {fields.valuecss}"/>
+  </f:if>
+  <f:variable name="valuealignment" value=" va"/>
+  <f:if condition="{fields.valuealignment} == 'horizontal'">
+    <f:variable name="valuealignment" value=" ha"/>
+  </f:if>
+  <f:if condition="{items.{fields.name}} || {fields.name} == 'passthrough'">
+    <f:if condition="{fields.hidelabel}">
+      <f:then>
+        <f:switch expression="{fields.type}">
+          <f:case value="multivalue">
+            <f:variable name="number_items" value="{items.{fields.name} -> f:count()}"/>
+            <f:if condition="{fields.showonlyfirstitem}">
+              <f:variable name="number_items" value="{fields.showonlyfirstitem}"/>
+            </f:if>
+            <f:for each="{items.{fields.name}}" as="subitems" key="sk" iteration="si">
+              <f:if condition="({sk} >= {config.fieldlist.detailview.images.count} && {fields.subtype} == 'moreimages') || {fields.subtype} != 'moreimages'"> 
+                <f:if condition="{si.index} < {number_items}">
+                  <div class="item_no_label_wrap subtype_{fields.subtype}{valuecss}{valuealignment}">
+                    <f:render section="itemtype" arguments="{singleitem:'{subitems}', fields:'{fields}', langPath:'{langPath}', parent:'{parent}', key:'{sk}', extbase_config:'{extbase_config}', ajaxpagetype:'{ajaxpagetype}', ajaxpagetypecssclass:'{ajaxpagetypecssclass}',config:'{config}'}"/><f:if condition="!{si.isLast} && {fields.valuealignment}=='horizontal'">, </f:if> 
+                  </div>
+                </f:if>
+              </f:if>
+            </f:for>
+          </f:case>
+          <f:case value="donotprocessvalue">
+            <div class="item_no_label_wrap subtype_{fields.subtype}{valuecss}{valuealignment}">
+              <f:switch expression="{fields.subtype}">
+                  <f:case value="imageviewer">
+                    <f:render partial="Image" section="image_viewer" arguments="{_all}"/>
+                  </f:case>
+                  <f:case value="map">
+                    <f:render section="map" arguments="{_all}"/>
+                  </f:case>
+                  <f:case value="feedback">
+                    <f:if condition="{config.init.searchconfig.objectcomment.active} == '1'">
+                      <f:render arguments="{_all}" section="feedback" />
+                    </f:if>
+                  </f:case>
+                  <f:case value="childelements">
+                    <f:if condition="{alldata.child_elements.response.docs}">
+                      <f:render partial="Views" section="childobjects" arguments="{_all}"/>
+                    </f:if>
+                  </f:case>
+              </f:switch>
+              <f:comment>
+                <!--
+                  <f:render section="itemtype" arguments="{singleitem:'{items.{fields.name}}', fields:'{fields}', langPath:'{langPath}', parent:'{parent}', key:'{sk}', extbase_config:'{extbase_config}', ajaxpagetype:'{ajaxpagetype}', ajaxpagetypecssclass:'{ajaxpagetypecssclass}'}"/>
+                -->
+              </f:comment>
+            </div>
+          </f:case>
+          <f:defaultCase>
+            <f:if condition="({sk} >= {config.fieldlist.detailview.images.count} && {fields.subtype} == 'moreimages') || {fields.subtype} != 'moreimages'"> 
+               <div class="item_no_label_wrap subtype_{fields.subtype}{valuecss}{valuealignment}">
+                  <f:render section="itemtype" arguments="{singleitem:'{items.{fields.name}}', fields:'{fields}', langPath:'{langPath}', parent:'{parent}', key:'{sk}', extbase_config:'{extbase_config}', ajaxpagetype:'{ajaxpagetype}', ajaxpagetypecssclass:'{ajaxpagetypecssclass}',config:'{config}'}"/>
+                </div>
+              </f:if>
+          </f:defaultCase>
+        </f:switch> 
+      </f:then>
+      <f:else>
+        <div class="row no-gutters item_info_wrap{f:if(condition: '{fields.fieldalignment}', then: ' flex-column')}{f:if(condition: '{fields.name} == download', then: ' download-column')}">
+          <f:if condition="!{fields.nolabel}">
+            <div class="label{f:if(condition: '{fields.fieldalignment}', then: '', else: ' {labelcss}')}">
+              <f:variable name="label_name" value="{fields.name}"/>
+              <f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.{fields.name}')}">
+                <f:variable name="label_name" value="{jo:translate(key:'{langPath}:jo_bkr_base.{fields.name}')}"/>
+              </f:if>
+              <f:if condition="{fields.additional_label_field} && {items.{fields.additional_label_field}} && {jo:translate(key:'{langPath}:jo_bkr_base.{items.{fields.additional_label_field}}_{fields.name}')}">
+                 <f:variable name="label_name" value="{jo:translate(key:'{langPath}:jo_bkr_base.{items.{fields.additional_label_field}}_{fields.name}')}"/>
+              </f:if>
+              {label_name}
+            </div>
+          </f:if>
+          <div class="value item_wrap{f:if(condition: '{fields.fieldalignment}', then: '', else: ' col-md')}{valuealignment}">
+            <f:if condition="{fields.name} == 'download'">
+              <f:then>
+                <f:render section="download" arguments="{_all}" />
+              </f:then>
+              <f:else>
+                <f:if condition="{fields.type} == 'multivalue'">
+                  <f:then>
+                    <f:for each="{items.{fields.name}}" as="subitems" key="sk" iteration="si">
+                      <div class="item_wrap">
+                        <f:render section="itemtype" arguments="{singleitem:'{subitems}', fields:'{fields}', langPath:'{langPath}', parent:'{parent}', key:'{sk}', extbase_config:'{extbase_config}', ajaxpagetype:'{ajaxpagetype}', ajaxpagetypecssclass:'{ajaxpagetypecssclass}',config:'{config}'}"/><f:if condition="!{si.isLast} && {fields.valuealignment}=='horizontal'">, </f:if> 
+                      </div>
+                    </f:for>
+                  </f:then>
+                  <f:else>
+                    <f:render section="itemtype" arguments="{singleitem:'{items.{fields.name}}', fields:'{fields}', langPath:'{langPath}', parent:'{parent}', key:'{sk}', extbase_config:'{extbase_config}', ajaxpagetype:'{ajaxpagetype}', ajaxpagetypecssclass:'{ajaxpagetypecssclass}',config:'{config}'}"/>
+                  </f:else>
+                </f:if>
+              </f:else>
+            </f:if>
+
+
+          </div>
+        </div>
+      </f:else>
+   </f:if>
+  </f:if>
+</f:section>
+
+<f:section name="download">
+  <div class="download-wrapper"><button type="button" class="download-btn" data-toggle="modal" data-target="#downloadModal" title="{jo:translate(key:'{langPath}:sections.export.downloads')}">{jo:translate(key:'{langPath}:sections.export.downloads')}</button></div>
+  <div class="modal fade" id="downloadModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div>
+			<h2>Lizenzhinweis</h2>
+			<p>Wir engagieren uns für eine offene und freie Wissenschaftskultur. Daher stellen wir Ihnen die Inhalte von GOTHA.digital so frei wie möglich zur Verfügung. Den Rechtehinweis finden Sie direkt beim Download jedes digitalen Objekts.</p>
+			<br/>			 
+			<p><a href="https://creativecommons.org/publicdomain/mark/1.0/deed.de" target="blank">Public Domain Mark 1.0</a>
+			<br/>
+			Das digitale Objekt ist frei von Urheberrechten. Sie können es frei verwenden und verbreiten.</p>
+			<br/>			 
+			<p><a href="https://creativecommons.org/licenses/by/4.0/deed.de" target="blank">CC BY 4.0</a>
+			<br/>
+			Sie dürfen das digitale Objekt frei verwenden, sofern Sie die Urheber*in sowie die bereitstellende Institution nennen.</p>
+			<br/>			 
+			<p><a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de" target="blank">CC BY-SA 4.0</a>
+			<br/>
+			Sie dürfen diese Inhalte frei verwenden, sofern Sie die Urheber*in sowie die bereitstellende Institution nennen. Bearbeitungen oder auf unseren Daten aufbauende neue Inhalte müssen Sie unter derselben Lizenz anbieten.</p>
+			<br/>			 
+			<p><b>Metadaten</b> stehen unter Public Domain Mark 1.0 bzw. CC0. Die enthaltenen Texte stellen wir Ihnen mit der Lizenz CC BY 4.0 zur Verfügung.</p>
+			<br/>			
+			<h2>Veröffentlichungen</h2>
+			<p>Bei Veröffentlichung von Abbildungen bitten wir um Zusendung eines Belegexemplars oder um eine Mitteilung der bibliographischen Angaben Ihrer Publikation. Bei elektronischen Veröffentlichungen bitten wir um einen Hinweis mit den Zugangsmöglichkeiten (z.B. DOI, URN).</p>
+			<br/>
+            <h2>Digitalisate:</h2>
+            <div class="link-wrap">
+              <f:for each="{items.{fields.name}}" as="subitems" key="sk" iteration="si">
+                <f:if condition="{subitems.images}">
+                  <div class="download-img-wrap row">
+                    <f:for each="{subitems.images}" as="img" key="ik" iteration="ii">
+                      <div class="download-img-block col-12 col-md-6">
+                        <f:comment>
+                          <!--
+                          <div class="download-img-it"><label>Name:&nbsp;</label><span>{img.name}</span></div>
+                          -->
+                        </f:comment>
+                        <f:if condition="{img.files}">
+                          <div class="download-file-wrap row">
+                            <f:comment>
+                            <!--
+                            <label>Bilder:</label>
+                            -->
+                            </f:comment>
+                            <div class="col-md-4 download-img-poster">
+                              <img src="{img.thumb}" />
+                            </div>
+                            <div class="col-md-8">
+                              <f:for each="{img.files}" as="files" key="fk" iteration="fi">
+                                <p><f:link.action class="download_link link_external d-inline-block position-relative img" action="downloadimage" arguments="{url:'{files.url}'}">{files.name}</f:link.action></p>
+                              </f:for>
+                            </div>
+                          </div>
+                        </f:if>
+                        <f:comment>
+                          <!--
+                          <f:if condition="{img.iiif}">
+                            <div class="download-img-it"><label>IIIF:&nbsp;</label><a class="download_link link_external d-inline-block position-relative iiif" href="{img.iiif}" target="_blank" download>info.json</a></div>
+                          </f:if>
+                          -->
+                        </f:comment>
+                        <f:if condition="{img.license} || {img.licenseHolder} || {img.credit}">
+                          <button class="btn download-license-btn" type="button" data-toggle="collapse-next" aria-expanded="false">Lizenzen</button>
+                          <div class="download-rights-wrapper collapse">
+                            <f:if condition="{img.license}">
+                              <div class="download-img-it">
+                                <label>Lizenz:&nbsp;</label>
+                                <f:if condition="{img.licenseLink}">
+                                  <f:then>
+                                    <f:link.external uri="{img.licenseLink}" target="_blank"><span>{img.license}</span></f:link.external>
+                                  </f:then>
+                                  <f:else>
+                                    <span>{img.license}</span>
+                                  </f:else>
+                                </f:if>
+                              </div>
+                            </f:if>
+                            <f:if condition="{img.licenseHolder}">
+                              <div class="download-img-it">
+                                <label>Lizenzinhaber:&nbsp;</label>
+                                <f:if condition="{img.licenseHolderLink}">
+                                  <f:then>
+                                    <f:link.external uri="{img.licenseHolderLink}" target="_blank"><span>{img.licenseHolder}</span></f:link.external>
+                                  </f:then>
+                                  <f:else>
+                                    <span>{img.licenseHolder}</span>
+                                  </f:else>
+                                </f:if>
+                              </div>
+                            </f:if>
+                            <f:if condition="{img.credit}">
+                              <div class="download-img-it"><label>Credit:&nbsp;</label><span>{img.credit}</span></div>
+                            </f:if>
+                          </div>
+                        </f:if>
+                      </div>
+                    </f:for>
+                  </div>
+                </f:if>
+                <f:comment>
+                <!--
+                <f:alias map="{array_data: '{subitems->jo:explode(delimiter:\'$\')}'}">
+                  <a class="download_link link_external d-inline-block position-relative {array_data.1}" href="{array_data.2}" target="_blank" download>{array_data.0}</a>
+                </f:alias>
+                -->
+                </f:comment>
+              </f:for>
+            </div>
+            <hr/>
+            <h2>Metadaten</h2>
+            <div class="d-flex dwn-meta-wrap">
+              <f:if condition="{items.canonical}">
+                <f:link.external class="dwn-meta-link" uri="{items.canonical}" target="_blank">Zitierlink</f:link.external>
+              </f:if>
+
+              <f:for each="{items.{fields.name}}" as="subitems" key="sk" iteration="si">
+                <f:if condition="{subitems.lido}">
+                  <a class="dwn-meta-link lido-link" href="{subitems.lido}" target="_blank" download>Lido</a>
+                </f:if>
+                <f:if condition="{subitems.manifest}">
+                  <a class="dwn-meta-link manifest-link" href="{subitems.manifest}" target="_blank" download>Manifest</a>
+                </f:if>
+                <f:if condition="{subitems.zip}">
+                  <a class="dwn-meta-link zip-link" href="{subitems.zip.file}" target="_blank" download><f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.{subitems.zip.name}')}"><f:then>{jo:translate(key:'{langPath}:jo_bkr_base.{subitems.zip.name}')}</f:then><f:else>{subitems.zip.name}</f:else></f:if></a>
+                </f:if>
+              </f:for>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</f:section>
+
+<f:section name="itemtype"><f:spaceless>
+  <f:variable name="labelcss" value="col-md-5"/>
+  <f:if condition="{fields.labelcss}">
+     <f:variable name="labelcss" value="{fields.labelcss}"/>
+  </f:if>
+  <f:variable name="label_style" value=" default"/>
+  <f:if condition="{fields.icon}">
+    <f:variable name="label_style" value=" icon_{fields.icon}"/>
+  </f:if>
+  <f:switch expression="{fields.subtype}">
+    <f:case value="urn_resolver">
+      <f:link.external class="joRisContainer link_external d-inline-block position-relative{label_style}" uri="https://nbn-resolving.org/{singleitem}" target="_blank">{singleitem}</f:link.external>
+      <button class="joRisKopy" title="Link kopieren">Link kopieren</button>
+    </f:case>
+    <f:case value="link_external">
+      <f:link.external class="link_external d-inline-block position-relative{label_style}" uri="{singleitem}" target="_blank">
+        <f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.{fields.sublabel}')}">
+            <f:then>
+              {jo:translate(key:'{langPath}:jo_bkr_base.{fields.sublabel}')}
+            </f:then>
+            <f:else>
+              {singleitem}
+            </f:else>
+          </f:if>
+      </f:link.external>
+    </f:case>
+    <f:case value="literature">
+        <f:for each="{singleitem.3}" as="aut" iteration="autit">
+          <f:if condition="{aut.1}">
+            <f:then>
+                <f:link.external class="link_external_small d-inline-block position-relative" target="_blank" uri="{aut.1}">{aut.0}</f:link.external>
+            </f:then>
+            <f:else>
+              {aut.0}
+            </f:else>
+          </f:if>
+          <f:if condition="{autit.isLast} != 1">, </f:if>  
+        </f:for>
+        <f:if condition="{singleitem.0}">{singleitem.0},</f:if>
+        <f:if condition="{singleitem.1}">{singleitem.1},</f:if>
+        <f:if condition="{singleitem.2}">{singleitem.2},</f:if>
+        <f:if condition="{singleitem.4}">{singleitem.4},</f:if>
+        <f:if condition="{singleitem.6}">{singleitem.6}</f:if>
+        <f:if condition="{singleitem.5}">
+          <f:link.external class="gbv" uri="{singleitem.5}" target="_blank">
+            {jo:translate(key:'{langPath}:jo_bkr_base.gvk')}
+          </f:link.external>
+        </f:if>
+    </f:case>
+    <f:case value="literatureall">
+        <f:for each="{singleitem}" as="litblock" key="litkey">
+          <div class="row no-gutters item_info_wrap">
+            <div class="label{f:if(condition: '{parent.fieldalignment}', then: ' col-12', else: ' col-md-5')}">
+              <f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.{litkey}')}">
+                <f:then>
+                  {jo:translate(key:'{langPath}:jo_bkr_base.{litkey}')}
+                </f:then>
+                <f:else>
+                  {litkey}:
+                </f:else>
+              </f:if>
+            </div>
+            <div class="{f:if(condition: '{parent.fieldalignment}', then: ' col-12', else: ' col-md')} value">
+              <f:for each="{litblock}" as="lititem">
+                <div class="item_wrap">
+                  <f:for each="{lititem.autor}" as="aut" iteration="autit">
+                    <f:if condition="{aut.1}">
+                      <f:then>
+                          <f:link.external class="link_external_small d-inline-block position-relative" target="_blank" uri="{aut.1}">{aut.0}</f:link.external>
+                      </f:then>
+                      <f:else>
+                        {aut.0}
+                      </f:else>
+                    </f:if>
+                    <f:if condition="{autit.isLast} != 1">, </f:if>:  
+                  </f:for>
+
+                  <f:if condition="{lititem.titel}">{lititem.titel},</f:if>
+                  <f:if condition="{lititem.subtitle}">{lititem.subtitle},</f:if>
+                  <f:if condition="{lititem.related}">{lititem.related},</f:if>
+                  <f:if condition="{lititem.jahr}">{lititem.jahr},</f:if>
+                  <f:if condition="{lititem.page}">{lititem.page}</f:if>
+                  <f:if condition="{lititem.link}">
+                    <f:if condition="{lititem.type} != 'linkexternal'">
+                      <f:then>
+                        <f:link.external class="gbv" uri="{lititem.link}" target="_blank">{jo:translate(key:'{langPath}:jo_bkr_base.gvk')}</f:link.external>
+                      </f:then>
+                      <f:else>
+                         <f:link.external class="link_external" uri="{lititem.link}" target="_blank">{lititem.titel}</f:link.external>
+                      </f:else> 
+                    </f:if>
+                  </f:if>
+                </div>
+              </f:for>
+            </div>
+          </div>
+      </f:for>
+    </f:case>
+    <f:case value="location">
+        <f:if condition="{singleitem.0}">{singleitem.0}</f:if>
+        <f:for each="{singleitem.2}" as="s">
+          <div class="link_wrap">
+            <f:link.external class="link_external d-inline-block position-relative" uri="{s}" target="_blank">{s}</f:link.external>
+          </div>
+        </f:for>
+    </f:case>
+    <f:case value="detaillink">
+      <f:alias map="{detail_link: '{singleitem->jo:explode(delimiter:\'$\')}'}">
+        <f:link.action action="detailobject" noCache="1" pageType="{ajaxpagetype}" class="detaillink{ajaxpagetypecssclass}{label_style}" arguments="{h:'1',joDetailView:'{detail_link.0}',joDel:'1'}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" title="{detail_link.1}">{detail_link.1}</f:link.action>
+      </f:alias>
+    </f:case>
+    <f:case value="moreimages">
+      <f:alias map="{imagedata: '{singleitem->jo:explode(delimiter:\'$\')}'}">
+          <div class="bg-img" <f:if condition='{imagedata.0}'>style="background-image:url('{imagedata.0}')"</f:if>></div>
+          <f:if condition="{imagedata.2} || {imagedata.3} || {imagedata.4} || {imagedata.5}">
+            <div class="img_caption">
+              <span data-toggle="collapse-next">caption einblenden</span>
+              <div class="img-main-text collapse">
+                <f:render arguments="{catdata:imagedata, langPath:langPath}" section="image-detail-full"/>
+              </div>
+            </div>
+          </f:if>
+      </f:alias>
+    </f:case>
+    <f:case value="locationQualified">
+      <div class="row no-gutters item_info_wrap">
+        <f:variable name="location_label_css" value="col-md-5"/>
+        <f:if condition="{labelcss}">
+          <f:variable name="location_label_css" value="{labelcss}"/>
+        </f:if>
+         <f:if condition="{parent.fieldalignment}">
+          <f:variable name="location_label_css" value="col-12"/>
+        </f:if>
+        <div class="label {location_label_css}">
+            <f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.{key}')}">
+              <f:then>
+                {jo:translate(key:'{langPath}:jo_bkr_base.{key}')}
+              </f:then>
+              <f:else>
+                {key}:
+              </f:else>
+            </f:if>
+        </div>
+        <div class="{f:if(condition: '{parent.fieldalignment}', then: ' col-12', else: ' col-md')} value">
+          <f:variable name="amount" value="{singleitem -> f:count()}" />
+          <f:if condition="{parent.numbershown}">
+            <f:if condition="{parent.numbershown} == '1' && {amount} > 1">
+              <f:then>
+                  <div class="locationcollapsed d-inline-block">zeige {amount} Orte</div> 
+                  <div class="joRis plus">
+                    <div class="kreis">
+                      <div class="horizontal"></div>
+                      <div class="vertical"></div>
+                    </div>
+                  </div>
+              </f:then>
+              <f:else>
+              <f:comment>
+                <f:if condition="{parent.numbershown} && {iis.cycle} == {parent.numbershown}">
+                  <f:if condition="{amount} > {parent.numbershown}">
+                    <div class="item_wrap">+ {amount - parent.numbershown} weitere Orte</div>
+                  </f:if>
+                </f:if>
+              </f:comment>
+              </f:else>
+            </f:if>
+
+          </f:if>
+          <div {f:if(condition:'{parent.numbershown} && {amount} > 1',then:'class="joRisContainer" style="display:none;"',else:'')}>
+            <f:for each="{singleitem}" as="si" iteration="iis">
+              <div class="item_wrap">
+                <f:if condition="{si.name}">{si.name}</f:if>
+                <f:if condition="{si.normdata}">
+                  <f:for each="{si.normdata}" as="s" >
+                    <div class="link_wrap">
+                      <f:link.external class="link_external d-inline-block position-relative" uri="{s}" target="_blank">{s}</f:link.external>
+                    </div>
+                  </f:for>
+                </f:if>
+              </div>
+            </f:for>
+          </div>
+        </div>
+      </div>  
+    </f:case>
+    <f:case value="download">
+      <f:alias map="{array_data: '{singleitem->jo:explode(delimiter:\'$\')}'}">
+           <f:link.external class="download_link link_external d-inline-block position-relative {array_data.1}" uri="{array_data.2}" target="_blank">
+                {array_data.0}
+          </f:link.external>
+      </f:alias>
+    </f:case>
+    <f:case value="gnd">    
+      <f:alias map="{array_data: '{singleitem->jo:explode(delimiter:\'$\')}'}">
+          <f:if condition="(({config.allowed_facettes.{fields.name}} || {config.allowed_facettes.{fields.name}Firstletter} || {config.allowed_facettes.{fields.maponfieldname}}) && {fields.allowthisfilter}">
+            <f:then>
+              <f:variable name="fieldname" value="{fields.name}"/>
+              <f:if condition="{config.allowed_facettes.{fields.maponfieldname}}">
+                <f:variable name="fieldname" value="{fields.maponfieldname}"/>
+              </f:if>
+              <f:link.action noCache="1" pageType="{ajaxpagetype}" class="detailEntityLink{ajaxpagetypecssclass}{label_style}" additionalParams="{ceid:'{extbase_config.ce_uid}',rs:'1',del:'1',add:'1'}" arguments="{jo:jomakearray(arraykey:'{fieldname}', arrayvalue:'{singleitem}')}">{array_data.0}</f:link.action>
+            </f:then>
+            <f:else>{array_data.0}</f:else>
+          </f:if>
+
+          <f:if condition="{array_data.1} && {fields.hidenormdata} != 1">
+            <f:link.action pageType="200" noCache="1" class="joEntityfacts plus" additionalParams="{gnd:'{array_data.1}', ceid:'{extbase_config.ce_uid}'}" action="entityfacts" title="Normdaten von culturegraph" target="blank">
+              <div class="kreis">
+                <div class="horizontal"></div>
+                <div class="vertical"></div>
+              </div>
+            </f:link.action>
+            <div class="joEntityFactsContainer" style="display:none;"></div>
+          </f:if>
+      </f:alias>
+    </f:case>
+    <f:case value="launchfilter">
+      <f:link.action noCache="1" pageType="{ajaxpagetype}" class="detailEntityLink{ajaxpagetypecssclass}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" arguments="{entitynorole:'{singleitem}', joDel:'1'}" title="{jo:translate(key:'{langPath}:jo_bkr_base.remove.entity')}">   
+        Zeige alle mit dieser Person verknüpften Datensätze
+      </f:link.action>
+    </f:case>
+    <f:case value="entity">
+
+      <f:variable name="number_items" value="{singleitem -> f:count()}"/>
+      <f:if condition="{fields.showonlyfirstitem}">
+        <f:variable name="number_items" value="{fields.showonlyfirstitem}"/>
+      </f:if>
+      <div class="row no-gutters item_info_wrap entity_wrap"> 
+        <f:if condition="!{fields.hidepersonroles}">
+          <div class="{labelcss} label">
+            <f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.{key}')}">
+              <f:then>{jo:translate(key:'{langPath}:jo_bkr_base.{key}')}</f:then>
+              <f:else>{key}:</f:else>
+            </f:if>
+          </div>
+        </f:if>
+        <div class="col-md value">
+          <f:for each="{singleitem}" as="si" iteration="iit">
+            <f:if condition="{iit.index} < {number_items}">
+              <div class="item_wrap">
+                <f:if condition="{config.allowed_facettes.entityFirstletter} && {fields.allowthisfilter}">
+                  <f:then>
+                    <f:if condition="{fields.linktoobject} && {si.normdata.intern}">
+                      <f:then>
+                        <f:link.action class="detailEntityLink{ajaxpagetypecssclass}" pageType="{ajaxpagetype}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" noCache="1" action="detailobject" arguments="{joDetailView:'{si.normdata.intern}',jopaginatepage:'{extbase_config.paginate}',h:'1', startfrom:'1'}" title="{jo:translate(key:'{langPath}:jo_bkr_base.details')}">
+                          {si.name}
+                        </f:link.action>
+                      </f:then>
+                      <f:else>
+                        <f:link.action noCache="1" pageType="{ajaxpagetype}" class="detailEntityLink{ajaxpagetypecssclass}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" arguments="{entitynorole:'{si.name}{f:if(condition:\'{si.normdata.gnd}\',then:\'${si.normdata.gnd}\',else:\'\')}', joDel:'1'}" title="{jo:translate(key:'{langPath}:jo_bkr_base.remove.entity')}">
+                         {si.name}
+                        </f:link.action>
+                      </f:else>
+                    </f:if>
+                  </f:then>
+                  <f:else>
+                    {si.name}
+                  </f:else>
+                </f:if>
+                <f:if condition="{si.normdata.gnd} && {fields.hidenormdata} != 1">
+                  <f:link.action pageType="200" noCache="1" class="joEntityfacts plus" additionalParams="{gnd:'{si.normdata.gnd}', ceid:'{extbase_config.ce_uid}'}" action="entityfacts" title="Normdaten von culturegraph" target="blank">
+                      <div class="kreis">
+                        <div class="horizontal"></div>
+                        <div class="vertical"></div>
+                      </div>
+                  </f:link.action>
+                  <f:if condition="{si.normdata.gnd} && {fields.showgndexplorer} == 1">
+                    <f:link.external class="link_external d-inline-block position-relative gnd_explorer" uri="https://explore.gnd.network/gnd/{si.normdata.gnd}/relations" title="GND Explorer" target="_blank">GND Explorer</f:link.external>
+                  </f:if>
+                  <div class="joEntityFactsContainer" style="display:none;"></div>
+                </f:if>
+              </div>
+            </f:if>
+          </f:for>
+        </div>
+      </div>
+    </f:case>
+    <f:case value="childElements">   
+       <f:link.action pageType="{ajaxpagetype}" noCache="1" class="detailEntityLink{ajaxpagetypecssclass}" additionalParams="{add:'1',ceid:'{extbase_config.ce_uid}'}" arguments="{childrenReference:'{singleitem.id}', setsubsearch:'1',objectType:'{singleitem.name}'}" title="{jo:translate(key:'{langPath}:jo_bkr_base.remove.entity')}">
+          {singleitem.name} ({singleitem.number})
+      </f:link.action>
+    </f:case>
+    <f:case value="inheritedUnspecified">
+      <f:for each="{singleitem}" as="s" key="k">
+        <div class="row no-gutters item_info_wrap">
+          <div class="label{f:if(condition: '{parent.fieldalignment}', then: ' col-12', else: ' col-md-4')}">
+              <f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.{k}')}">
+                <f:then>
+                  {jo:translate(key:'{langPath}:jo_bkr_base.{k}')}
+                </f:then>
+                <f:else>
+                  {k}:
+                </f:else>
+              </f:if>
+          </div>
+          <div class="col-md value">
+            <f:for each="{s}" as="si" key="ki">
+               <div class="item_wrap">{si}</div>
+            </f:for>
+          </div>
+        </div>
+      </f:for>
+    </f:case>    
+    <f:case value="typology">
+      <f:for each="{singleitem}" as="s" key="k">
+        <div class="item_info_wrap bold text-underline">{k}</div>
+        <f:for each="{s}" as="si" key="ki">
+          <div class="item_info_wrap bold">
+             <f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.{ki}')}">
+              <f:then>
+                {jo:translate(key:'{langPath}:jo_bkr_base.{ki}')}
+              </f:then>
+              <f:else>
+                {ki}:
+              </f:else>
+            </f:if>
+          </div>
+          <div class="item_info_liststyle">
+            <ul>
+            <f:for each="{si}" as="sii" key="kii">
+              <li>
+                <div class="row no-gutters item_info_wrap">
+                  <div class="label{f:if(condition: '{parent.fieldalignment}', then: ' col-12', else: ' col-md-4')}">
+                    <f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.{kii}')}">
+                      <f:then>
+                        {jo:translate(key:'{langPath}:jo_bkr_base.{kii}')}
+                      </f:then>
+                      <f:else>
+                        {kii}:
+                      </f:else>
+                    </f:if>
+                  </div>
+                  <div class="col-md value">
+                     <f:if condition="{fields.nestedspecialfields.{kii}}">
+                      <f:then> 
+                          <f:render section="itemtype" arguments="{singleitem:'{sii}', fields:'{fields.nestedspecialfields.{kii}}', langPath:'{langPath}', parent:'{parent}', key:'{sk}', extbase_config:'{extbase_config}', ajaxpagetype:'{ajaxpagetype}', ajaxpagetypecssclass:'{ajaxpagetypecssclass}',config:'{config}'}"/>
+                      </f:then>
+                      <f:else>
+                         {sii}
+                      </f:else>
+                    </f:if>
+                  </div>
+                </div>
+              </li>
+            </f:for>
+            </ul>
+          </div>
+        </f:for>
+      </f:for>
+    </f:case>
+    <f:case value="geojson">
+        <div class="joRisKopy">Geodaten kopieren</div>
+        <div class="joRis plus">
+          <div class="kreis">
+            <div class="horizontal"></div>
+            <div class="vertical"></div>
+          </div>
+        </div>
+        <div class="joRisContainer" style="display:none;">
+          <f:for each="{singleitem}" as="poly" iteration="l">
+            <f:format.html>{poly}<f:if condition="{l.isLast}!=1">, </f:if></f:format.html>
+          </f:for>
+        </div>
+    </f:case>
+    <f:case value="copy_clipboard">
+      <f:if condition="{fields.splitchar}">
+        <f:then>
+          <f:for each="{singleitem->jo:explode(delimiter:fields.splitchar)}" as="splititems">
+            <div>
+              <div class="joRisContainer{label_style}">{splititems}</div>
+              <button class="joRisKopy" title="Link kopieren">Link kopieren</button>
+            </div>
+          </f:for>
+        </f:then>
+        <f:else>
+          <div class="joRisContainer{label_style}">{singleitem}</div>
+          <button class="joRisKopy" title="Link kopieren">Link kopieren</button>
+        </f:else>
+      </f:if>
+    </f:case>
+    <f:case value="copy_clipboard_with_link_external">
+      <f:if condition="{fields.splitchar}">
+        <f:then>
+          <f:for each="{singleitem->jo:explode(delimiter:fields.splitchar)}" as="splititems">
+            <div>
+              <div class="joRisContainer with-external{label_style}">
+                <f:link.external class="link_external position-relative" uri="{singleitem}" target="_blank"><f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.{fields.sublabel}')}"><f:then>{jo:translate(key:'{langPath}:jo_bkr_base.{fields.sublabel}')}</f:then><f:else>{singleitem}</f:else></f:if>
+                </f:link.external>
+              </div>
+              <button class="joRisKopy" title="Link kopieren">Link kopieren</button>
+            </div>
+          </f:for>
+        </f:then>
+        <f:else>
+          <div class="joRisContainer with-external{label_style}">
+            <f:link.external class="link_external position-relative" uri="{singleitem}" target="_blank"><f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.{fields.sublabel}')}"><f:then>{jo:translate(key:'{langPath}:jo_bkr_base.{fields.sublabel}')}</f:then><f:else>{singleitem}</f:else>
+              </f:if></f:link.external>
+          </div>
+          <button class="joRisKopy" title="Link kopieren">Link kopieren</button>
+        </f:else>
+      </f:if>
+    </f:case>
+    <f:case value="arrayrecursive">
+        <f:for each="{singleitem}" as="dynamicblock" key="dynamickey">
+          <div class="row no-gutters item_info_wrap">
+            <div class="label{f:if(condition: '{parent.fieldalignment}', then: ' col-12', else: ' col-md-5')}">
+              <f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.{dynamickey}')}">
+                <f:then>
+                  {jo:translate(key:'{langPath}:jo_bkr_base.{dynamickey}')}
+                </f:then>
+                <f:else>
+                  {dynamickey}:
+                </f:else>
+              </f:if>
+            </div>
+            <div class="{f:if(condition: '{parent.fieldalignment}', then: ' col-12', else: ' col-md')} value">
+              <f:for each="{dynamicblock}" as="dynamicblockitem">
+                <div class="item_wrap">{dynamicblockitem}</div>
+              </f:for>
+            </div>
+          </div>
+      </f:for>
+    </f:case>
+    <f:defaultCase>
+      <f:comment>
+        <!--
+          Nur in diesem Strang greift die neue Struktur aus noteBundledJSON
+          hier kommen die Daten als Array an:
+          $item = array(
+              'literal' => $literal,
+              'foreign_id_link_to' => $foreign_id_link_to,
+              'foreign_id_search_for' => $foreign_id_search_for,
+          );
+          Die Weiche hierfür könnn/müssen wir ggf. auch auf die anderen Felder ausweiten
+        -->
+      </f:comment>
+      <f:if condition="{singleitem.literal}">
+        <f:variable name="singleitem_orig">{singleitem}</f:variable>
+        <f:variable name="singleitem">{singleitem.literal}</f:variable>
+      </f:if>
+      <f:if condition="{singleitem_orig.foreign_id_link_to}">
+        <f:variable name="singleitem"><f:format.htmlentitiesDecode><f:link.action action="detailobject" noCache="1" pageType="{ajaxpagetype}" class="detaillink{ajaxpagetypecssclass}{label_style}" arguments="{h:'1',joDetailView:'{singleitem_orig.foreign_id_link_to}',joDel:'1'}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" title="{singleitem}">{singleitem}</f:link.action></f:format.htmlentitiesDecode></f:variable>
+      </f:if>
+       <f:if condition="{singleitem_orig.link_external}">
+        <f:variable name="singleitem">{singleitem}<br><f:format.htmlentitiesDecode><f:link.external class="link_external d-inline-block position-relative{label_style}" uri="{singleitem_orig.link_external}" target="_blank">mehr erfahren</f:link.external></f:format.htmlentitiesDecode></f:variable>
+      </f:if>
+      <f:if condition="{fields.headline}">
+        <f:variable name="singleitem"><{fields.headline}>{singleitem}</{fields.headline}></f:variable>
+      </f:if>
+      <f:if condition="(({config.allowed_facettes.{fields.name}} || {config.allowed_facettes.{fields.name}Firstletter} || {config.allowed_facettes.{fields.maponfieldname}}) && {fields.allowthisfilter}">
+        <f:then>
+          <f:variable name="fieldname" value="{fields.name}"/>
+          <f:if condition="{config.allowed_facettes.{fields.maponfieldname}}">
+            <f:variable name="fieldname" value="{fields.maponfieldname}"/>
+          </f:if>
+          <f:link.action noCache="1" pageType="{ajaxpagetype}" class="detailEntityLink{ajaxpagetypecssclass}{label_style}" additionalParams="{ceid:'{extbase_config.ce_uid}',rs:'1',del:'1',add:'1'}" arguments="{jo:jomakearray(arraykey:'{fieldname}', arrayvalue:'{singleitem}')}" title="Alle Objekte identifizieren, die ebenfalls mit dem Begriff '{singleitem}' klassifiziert sind. Achtung - alle zuvor von Ihnen gewählten Suchfilter werden zurückgesetzt!">
+            <f:render section="cropfields" arguments="{_all}"/>
+        </f:link.action>
+        </f:then>
+        <f:else>
+          <f:render section="cropfields" arguments="{_all}"/>
+        </f:else>
+      </f:if>
+    </f:defaultCase>
+  </f:switch>
+</f:spaceless></f:section>
+
+<f:section name="cropfields">
+  <f:if condition="{fields.crop}">
+      <f:then>
+        <f:format.crop maxCharacters="{fields.crop}" respectWordBoundaries="true" append="..." respectHtml="true">{singleitem}</f:format.crop>
+      </f:then>
+      <f:else>
+        <div class="item_content_wrap{label_style}"><f:format.nl2br><f:format.html>{singleitem}</f:format.html></f:format.nl2br></div>
+      </f:else>
+    </f:if>
+</f:section>
+
+<f:section name="image-detail-full"> 
+  <f:if condition="{catdata.2}">{catdata.2}<br></f:if>
+  <f:if condition="{catdata.3}">Abbildung: {catdata.3},</f:if>
+  <f:if condition="{catdata.5}">Rechteinhaber: {catdata.5}</f:if>
+  <br>
+  <f:if condition="{catdata.4}"><div class="img-detail-licenc"><span class="licenc-icon" title="{catdata.4}"></span>{catdata.4}</div></f:if>
+</f:section>
+
+<f:section name="image-background">
+  <f:for each="{items.images}" as="item" key="subnumber" iteration="subcounter">
+    <f:alias map="{imagedata: '{item->jo:explode(delimiter:\'$\')}'}">
+      <f:if condition="{subcounter.cycle} <= {img_number}"> 
+          <div class="bg-img" <f:if condition='{imagedata.0}'>style="background-image:url('{imagedata.0}')"</f:if>></div>
+      </f:if>
+    </f:alias>
+  </f:for>
+</f:section>
+<f:section name="placeholder-background">
+   <f:if condition="{placeholerimage}">
+      <f:then>
+        <f:variable name="placeholdersrc" value="{placeholerimage.uid}" />
+      </f:then>
+      <f:else>
+        <f:variable name="placeholdersrc" value="/typo3conf/ext/jo_museo/Resources/Public/Images/platzhalter.jpg" />
+      </f:else>
+    </f:if>  
+    <div class="grid-img col pl" style='background-image:url(<f:uri.image src="{placeholdersrc}" treatIdAsReference="1" width="400" />)'></div>
+</f:section>
+
+<f:section name="image-img">
+  <f:for each="{items.images}" as="item" key="subnumber" iteration="subcounter">
+    <f:alias map="{imagedata: '{item->jo:explode(delimiter:\'$\')}'}">
+      <f:if condition="{subcounter.cycle} <= {img_number}"> 
+        <img src="{imagedata.0}" class="image-img" alt="{imagedata.0}" title="{imagedata.2}"/>
+      </f:if>
+    </f:alias>
+  </f:for>
+</f:section>
+<f:section name="placeholder-img">
+   <f:if condition="{placeholerimage}">
+      <f:then>
+        <f:variable name="placeholdersrc" value="{placeholerimage.uid}" />
+      </f:then>
+      <f:else>
+        <f:variable name="placeholdersrc" value="/typo3conf/ext/jo_museo/Resources/Public/Images/platzhalter.jpg" />
+      </f:else>
+    </f:if>  
+    <f:image src="{placeholdersrc}" treatIdAsReference="1" width="450" />
+</f:section>
+
+
+<f:section name="controls">
+  <div class="detail d-inline-block control_button">
+    <f:link.action class="d-flex{ajaxpagetypecssclass}" pageType="{ajaxpagetype}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" noCache="1" action="detailobject" arguments="{joDetailView:'{items.id}',jopaginatepage:'{extbase_config.paginate}',h:'1', startfrom:'{number}'}" title="{jo:translate(key:'{langPath}:jo_bkr_base.details')}">
+      <span class="d-flex">{jo:translate(key:'{langPath}:jo_bkr_base.details')}</span>
+      <div class="addGradient">
+        <div class="joSprite"></div>
+      </div>
+    </f:link.action>
+  </div>
+  <f:render section="merkliste" arguments="{_all}"/>
+  <f:if condition="{items.lonlat} && {extbase_config.action} == 'map'">
+    <div class="localize control_button">
+      <a class="locatePoint" href="#" title="Gebiet lokalisieren">
+        <span>Gebiet lokalisieren</span>
+        <div class="addGradient">
+            <div class="joSprite"></div>
+        </div>
+      </a>
+    </div>
+  </f:if>
+</f:section>
+
+<f:section name="merkliste">
+  <f:if condition="{config.init.searchconfig.collectorbox} == 1">
+    <div class="colbox d-inline-block control_button">
+      <f:if condition="{jo:joinarray(arraycontains:'{collbox_content}', keytofind:'{items.id}')}">
+        <f:then>
+          <f:link.action noCache="1" pageType="{ajaxpagetype}" class="listBookmarkRemove{ajaxpagetypecssclass}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" arguments="{remove_from_box:'{items.id}',jopaginatepage:'{extbase_config.paginate}',oa:'{extbase_config.action}'}" action="{extbase_config.action}" title="{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks.remove')}">
+            <span class="d-flex">{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks.remove')}</span>
+            <div class="addGradient">
+              <div class="joSprite"></div>  
+            </div>
+          </f:link.action>
+        </f:then>
+        <f:else>
+          <f:link.action noCache="1" action="{extbase_config.action}" pageType="{ajaxpagetype}" class="listBookmark{ajaxpagetypecssclass}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" arguments="{add_to_box:'{items.id}',jopaginatepage:'{extbase_config.paginate}',oa:'{extbase_config.action}'}" title="{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks')}">
+            <span class="d-flex">{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks')}</span>
+            <div class="addGradient">
+              <div class="joSprite"></div>
+            </div>
+          </f:link.action>
+        </f:else>
+      </f:if>
+    </div>
+  </f:if>
+</f:section>
+
+<f:section name="feedback">
+  <div class="feedback_wrap row no-gutters">
+    <div class="upperFeedback col-12">
+      <div>
+          {jo:translate(key:'{langPath}:feedback.text.anrede')} <br />
+          {jo:translate(key:'{langPath}:feedback.text.text')} <f:link.page pageUid="<f:cObject typoscriptObjectPath='lib.datenschutz'/>">{jo:translate(key:'{langPath}:feedback.text.datenschutz')}</f:link.page>
+      </div>
+    </div>
+    <f:form action="detailobject" pageType="{ajaxpagetype}" objectName="emaildata" class="col-md-12 form-horizontal{ajaxpagetypecssclass}" noCache="1" arguments="{joDetailView:'{items.id}', startfrom:'{prevnext.current_index}',jopaginatepage:'{extbase_config.paginate}'}" additionalParams="{ceid:'{extbase_config.ce_uid}'}">
+      <f:form.hidden property="objId" value="{items.id}" />
+      <f:form.hidden property="objTitle" value="{items.title}" />
+        <div class="form-group row">
+          <label for="inputEmail" class="{labelcss} col-form-label">{jo:translate(key:'{langPath}:feedback.email')}</label>
+          <div class="col-md">
+            <f:form.textfield type="email" id="inputEmail" class="form-control" required="TRUE" property="email" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="inputName" class="{labelcss} col-form-label">{jo:translate(key:'{langPath}:feedback.name')}</label>
+          <div class="col-md">
+            <f:form.textfield id="inputName" class="form-control" required="TRUE" property="name" />
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="inputText" class="{labelcss} col-form-label">{jo:translate(key:'{langPath}:feedback.nachricht')}</label>
+          <div class="col-md">
+            <f:form.textarea class="form-control" id="inputText" rows="6" property="nachricht" additionalAttributes="{required: 'required'}"></f:form.textarea>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-md-12 text-right">
+            <f:form.submit class="btn btn-primary feedback-submit" value="{jo:translate(key:'{langPath}:feedback.send')}" />
+          </div>
+        </div>
+    </f:form>
+  </div>
+</f:section>
+
+<f:section name="map">
+  <div id="map-container" class="h-100">
+      <div id="mapdiv" class="olMap h-100"></div>
+      <div id="popup" class="ol-popup">
+        <div id="popup-loader" style="display: none"></div>
+        <div id="popup-content"></div>
+      </div>
+    </div>
+</f:section>
+
+<f:comment>
+  <!--
+    Keine Daten gefunden
+  -->
+</f:comment>
+<f:section name="nothing_found">
+  <div class="noResults_wrap">
+      <h1 class="joNothingFound">{jo:translate(key:'{langPath}:jo_bkr_base.noobjects')}</h1>
+      <f:link.action noCache="1" additionalParams="{ceid:'{extbase_config.ce_uid}'}" pageType="{ajaxpagetype}" class="c_button d-inline-block pt-3{ajaxpagetypecssclass}" pageType="{ajaxpagetype}" arguments="{joDel:'1'}">
+        <div class="joDeleteIcon_noResults d-flex align-items-center" id="joDeleteIcon">
+          <div class="joSprite joFoundIcon no-results"
+            alt="{jo:translate(key:'{langPath}:solrindex_title_clearallfilter')}"
+            title="{jo:translate(key:'{langPath}:solrindex_title_clearallfilter')}">
+          </div>
+          <span class="pl-3">
+            <jo:translate key='{langPath}:solrindex_title_clearallfilter' />
+          </span>
+        </div>
+      </f:link.action>
+    </div>
+</f:section>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="messages" date="2015-01-21T16:48:33Z" product-name="jo_museo">
+        <header/>
+        <body>
+            <trans-unit id="tx_jomuseo_domain_model_instituteclass.title">
+                <source>titel</source>
+                <target>Titel</target>
+            </trans-unit>
+            <trans-unit id="tx_jomuseo_domain_model_institute.title">
+                <source>titel</source>
+                <target>Titel</target>
+            </trans-unit>
+            <trans-unit id="tx_jomuseo_domain_model_institute.shorttitle">
+                <source>shorttitle</source>
+                <target>Kurztitel</target>
+            </trans-unit>
+            <trans-unit id="tx_jomuseo_domain_model_institute.subtitle">
+                <source>subtitle</source>
+                <target>Untertitel</target>
+            </trans-unit>
+            <trans-unit id="tx_jomuseo_domain_model_institute.description">
+                <source>description</source>
+                <target>Beschreibung</target>
+            </trans-unit>
+            <trans-unit id="tx_jomuseo_domain_model_institute.contact">
+                <source>contact</source>
+                <target>Kontakt</target>
+            </trans-unit>
+            <trans-unit id="tx_jomuseo_domain_model_institute.geodata">
+                <source>geodata</source>
+                <target>GEO Daten</target>
+            </trans-unit>
+            <trans-unit id="tx_jomuseo_domain_model_institute.geotext">
+                <source>geotext</source>
+                <target>Ortsname</target>
+            </trans-unit>
+            <trans-unit id="tx_jomuseo_domain_model_institute.tenantreference">
+                <source>tenantreference</source>
+                <target>Tenant Reference</target>
+            </trans-unit>
+            <trans-unit id="tx_jomuseo_domain_model_institute.gnddata">
+                <source>gnddata</source>
+                <target>GND Daten</target>
+            </trans-unit>
+            <trans-unit id="tx_jomuseo_domain_model_institute.isilnummer">
+                <source>isil number</source>
+                <target>ISIL-Nummer</target>
+            </trans-unit>
+            <trans-unit id="tx_jomuseo_domain_model_institute.datastorage">
+                <source>folder for the publication</source>
+                <target>Ordner für die Publikationen</target>
+            </trans-unit>
+            <trans-unit id="tx_jomuseo_domain_model_institute.externalstock">
+                <source>external link to the collection objects</source>
+                <target>Externer Link zu den Sammlungsobjekten</target>
+            </trans-unit>
+            <trans-unit id="tx_jomuseo_domain_model_institute.barrierfree">
+                <source>barrierfree</source>
+                <target>Barrierefrei</target>
+            </trans-unit>
+			 <trans-unit id="tx_jomuseo_domain_model_institute.idref">
+                <source>idref</source>
+                <target>ID oder Filtervariable für den Datensatz</target>
+            </trans-unit>
+            <trans-unit id="tx_jomuseo_domain_model_institute.website">
+                <source>website</source>
+                <target>Webseite</target>
+            </trans-unit>
+            <trans-unit id="tx_jomuseo_domain_model_institute.classfication">
+                <source>classfication</source>
+                <target>Einstufung</target>
+            </trans-unit>
+            <trans-unit id="tx_jomuseo_domain_model_institute.image">
+                <source>image</source>
+                <target>Vorschaubild</target>
+            </trans-unit>
+            <trans-unit id="tx_jomuseo_domain_model_institute.image.add">
+                <source>imageadd</source>
+                <target>Bild hinzufügen</target>
+            </trans-unit>
+            <trans-unit id="tx_jomuseo_domain_model_institute.obj_of_the_month">
+                <source>Objekt des Monats</source>
+                <target>Objekt des Monats</target>
+            </trans-unit>
+            <trans-unit id="tx_jomuseo_domain_model_institute.notlocalstatus">
+                <source>Partner Institution?</source>
+                <target>Partner Institution?</target>
+            </trans-unit>
+            <trans-unit id="tx_jomuseo_domain_model_institute.bannerimg">
+                <source>Erstes Bild Banner</source>
+                <target>Erstes Bild Banner</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

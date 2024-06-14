@@ -1,0 +1,2125 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="de" target-language="en" datatype="plaintext" original="messages" date="2015-01-21T16:48:33Z" product-name="jo_bkr_base">
+		<header/>
+		<body>
+             <trans-unit id="jo_bkr_base.listenuebersicht">
+                <source>Listenübersicht</source>
+                 <target>list view</target>
+            </trans-unit>     
+            <trans-unit id="jo_bkr_base.kartenansicht">
+                <source>Kartenansicht</source>
+                 <target>view on map</target>
+            </trans-unit> 
+            <trans-unit id="jo_bkr_base.bestaendeanzeigen">
+                <source>Bestände anzeigen</source>
+                <target>stock</target>
+            </trans-unit>  
+            <trans-unit id="jo_bkr_base.zurwebseite">
+                <source>zur Webseite</source>
+                <target>website</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.externlink">
+                <source>zum virtuellen Rundgang</source>
+                <target>to the virtual tour</target>
+            </trans-unit> 
+            <trans-unit id="jo_bkr_base.publikationen">
+                <source>Publikationen</source>
+                <target>publications</target>
+            </trans-unit>       
+            <trans-unit id="jo_bkr_base.fulltextTei.tei_body">
+                <source>Transkription:</source>
+                <target>Transkription:</target>
+            </trans-unit> 
+			<trans-unit id="jo_bkr_base.pages">
+                <source>[Translate to Englisch]:Seitenbereich</source>
+				<target>Seitenbereich:</target>        
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.asn">
+                <source>[Translate to Englisch]:Erwähnte Person:</source>
+				<target>Erwähnte Person:</target>        
+			</trans-unit>
+			 <trans-unit id="jo_bkr_base.jparticle">
+                <source>[Translate to Englisch]:Zeitschriftenartikel</source>
+				<target>Zeitschriftenartikel</target>        
+			</trans-unit>
+			 <trans-unit id="jo_bkr_base.poi">
+				<source>[Translate to Englisch]:Point of interest</source>
+				<target>Point of interest</target>
+			</trans-unit>
+            <trans-unit id="jo_bkr_base.sammlungliste">
+                <source>[Translate to Englisch]:Die Sammlungen der FSU als Liste</source>
+                <target>Die Sammlungen der FSU als Liste</target>           
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.news">
+                <source>[Translate to Englisch]:Aktuelles</source>
+                <target>Aktuelles</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.news.full">
+                <source>[Translate to Englisch]:Neuigkeiten</source>
+                <target>Neuigkeiten</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.watchNow">
+                <source>[Translate to Englisch]:Veranstaltungen</source>
+                <target>Veranstaltungen</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.collection">
+                <source>[Translate to Englisch]:Sammlungen</source>
+                <target>Sammlungen</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.formel">
+                <source>formula:</source>
+                <target>Formel:</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.foto">
+                <source>photo:</source>
+                <target>Foto:</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.abbildungsrechte">
+                <source>image rights:</source>
+				<target>Abbildungsrechte:</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.muenzherr">
+                <source>lord of the mint:</source>
+                <target>Münzherr:</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.fund">
+				<source>finding place:</source>
+				<target>Fundort:</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.tocollection">
+				<source>Zur Sammlungsübersicht</source>
+				<target>Zur Sammlungsübersicht</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.view.map">
+                <source>[Translate to Englisch]:Zur Kartenansicht der Sammlungen</source>
+                <target>Zur Kartenansicht der Sammlungen</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.view.list">
+                <source>[Translate to Englisch]:Zur Listenübersicht der Sammlungen</source>
+                <target>Zur Listenübersicht der Sammlungen</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.collection.onMap">
+                <source>[Translate to Englisch]:Die Sammlungen der FSU auf der Karte</source>
+                <target>Die Sammlungen der FSU auf der Karte</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.overview">
+                <source>[Translate to Englisch]:Zur Übersicht</source>
+                <target>Zur Übersicht</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.link.fsu">
+                <source>[Translate to Englisch]:Link zur Seite der FSU</source>
+                <target>Link zur Seite der FSU</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.logo.collection">
+                <source>[Translate to Englisch]:Sammlungs</source>
+                <target>Sammlungs</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.logo.portal">
+                <source>[Translate to Englisch]:portal</source>
+                <target>portal</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.logo.uni">
+                <source>[Translate to Englisch]:der Friedrich-Schiller-Universität Jena</source>
+                <target>der Friedrich-Schiller-Universität Jena</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.logo.slogan">
+                <source>[Translate to Englisch]:forschen, lernen, inspirieren</source>
+                <target>forschen, lernen, inspirieren</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.note.text">
+                <source>[Translate to Englisch]:Bitte klicken Sie einmal, um die Karte zu aktivieren.</source>
+                <target>Bitte klicken Sie einmal, um die Karte zu aktivieren.</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.publication">
+                <source>[Translate to Englisch]:Veröffentlichungen</source>
+                <target>Veröffentlichungen</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.stock">
+                <source>[Translate to Englisch]:Bestand</source>
+                <target>Bestand</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.publications">
+                <source>[Translate to Englisch]:Publikationen</source>
+                <target>Publikationen</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.contact">
+                <source>[Translate to Englisch]:Kontakt</source>
+                <target>Kontakt</target>
+			</trans-unit>
+
+			<trans-unit id="jo_bkr_base.listoverview">
+                <source>[Translate to Englisch]:Listenübersicht</source>
+                <target>Listenübersicht</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.mapoverview">
+                <source>[Translate to Englisch]:Kartenansicht</source>
+                <target>Kartenansicht</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.brochureoverview">
+                <source>[Translate to Englisch]:Broschürenansicht</source>
+                <target>Broschürenansicht</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.yoursearch">
+                <source>[Translate to Englisch]:Sie suchen im Volltext nach:</source>
+                <target>Sie suchen im Volltext nach:</target>
+			</trans-unit>			
+			<trans-unit id="jo_bkr_base.claim">
+                <source>[Translate to Englisch]:research, learn, inspire</source>
+				<target>forschen, lernen, inspirieren</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.noillustration">
+                <source>[Translate to Englisch]:keine Abbildung vorhanden</source>
+                <target>keine Abbildung vorhanden</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.belongingcollection">
+                <source>[Translate to Englisch]:Zugehörige Sammlung:</source>
+                <target>Zugehörige Sammlung:</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.inventorynr">
+                <source>[Translate to Englisch]:Inventarnummer:</source>
+                <target>Inventarnummer:</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.classification">
+                <source>classification:</source>
+                <target>Klassifikation:</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.descfront">
+                <source>front(legend):</source>
+				<target>Vorderseite(Legende):</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.descback">
+                <source>back(legend):</source>
+				<target>Rückseite(Legende):</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.masse">
+                <source>dimension:</source>
+				<target>Maße:</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.hersteller">
+                <source>producer:</source>
+				<target>Hersteller:</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.technik">
+                <source>technique:</source>
+				<target>Technik:</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.literatur">
+                <source>publications:</source>
+				<target>Literatur:</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.herstellungsort">
+                <source>manufacture:</source>
+				<target>Herstellungsort:</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.material">
+                <source>material:</source>
+				<target>Material:</target>
+			</trans-unit>
+            <trans-unit id="jo_bkr_base.locationherstellung">
+                <source>manufacture:</source>
+                <target>Herstellungsort:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.locationgebrauch">
+                <source>Gebrauchsort:</source>
+                <target>Gebrauchsort:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.locationfund">
+                <source>Fundort:</source>
+                <target>Fundort:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.location">
+                <source>Ort:</source>
+                <target>Ort:</target>
+            </trans-unit>
+			<trans-unit id="jo_bkr_base.kuenstler">
+                <source>artist:</source>
+				<target>Künstler:</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.herstellung">
+                <source>place of manufacture:</source>
+				<target>Herstellungsort:</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.gebrauch">
+                <source>place of use:</source>
+				<target>Verwendungsort:</target>
+			</trans-unit>	
+			<trans-unit id="jo_bkr_base.anm">
+                <source>[Translate to Englisch]:Bemerkung:</source>
+                <target>Bemerkung:</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.backtooverview">
+                <source>[Translate to Englisch]:Zurück zur Übersicht</source>
+                <target>Zurück zur Übersicht</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.maininfo">
+                <source>[Translate to Englisch]:Allgemeine Informationen</source>
+                <target>Allgemeine Informationen</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.nopublications">
+                <source>[Translate to Englisch]:Keine Publikationen vorhanden.</source>
+                <target>Keine Publikationen vorhanden.</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.fulltextsearch">
+                <source>[Translate to Englisch]:Sie suchen im Volltext nach:</source>
+                <target>Sie suchen im Volltext nach:</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.clearallsearchfilters">
+                <source>[Translate to Englisch]:Alle Suchfilter löschen</source>
+                <target>Alle Suchfilter löschen</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.foundobjects">
+                <source>[Translate to Englisch]:Gefundene Objekte:</source>
+                <target>Gefundene Objekte:</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.abbildung">
+                <source>[Translate to Englisch]:Abbildung</source>
+                <target>Abbildung</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.bezeichnung">
+                <source>[Translate to Englisch]:Bezeichnung</source>
+                <target>Bezeichnung</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.sachgruppe">
+                <source>Klassifikation</source>
+                <target>Klassifikation</target>
+			</trans-unit>
+            <trans-unit id="jo_bkr_base.category">
+                <source>Kategorie</source>
+                <target>Kategorie</target>
+            </trans-unit>
+			<trans-unit id="jo_bkr_base.noobjects">
+                <source>[Translate to Englisch]:Es wurden keine Objekte gefunden</source>
+                <target>Es wurden keine Objekte gefunden</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.sammlungendurchsuchen">
+                <source>[Translate to Englisch]:Sammlungen durchsuchen</source>
+                <target>Sammlungen durchsuchen</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.metaobj">
+                <source>[Translate to Englisch]:Metadaten des Objektes anzeigen</source>
+                <target>Metadaten des Objektes anzeigen</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.showinviewer">
+                <source>[Translate to Englisch]:Objekt im Bildbetrachter anzeigen</source>
+                <target>Objekt im Bildbetrachter anzeigen</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.addcollectorsbox">
+                <source>[Translate to Englisch]:Zur Collectorsbox hinzufügen</source>
+                <target>Zur Collectorsbox hinzufügen</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.togglenavigation">
+                <source>[Translate to Englisch]:Zeige Menü</source>
+                <target>Zeige Menü</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.logo_sign_pt1">
+                <source>[Translate to Englisch]:collection</source>
+                <target>Sammlungs</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.logo_sign_pt2">
+                <source>[Translate to Englisch]:portal</source>
+                <target>portal</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.logo_sign_pt3">
+                <source>[Translate to Englisch]:der Friedrich-Schiller-Universität Jena</source>
+                <target>der Friedrich-Schiller-Universität Jena</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.showdetail">
+                <source>[Translate to Englisch]:zur detailansicht</source>
+                <target>zur detailansicht</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.nothingtolist">
+                <source>[Translate to Englisch]:Nichts zu holen - Bitte wählen Sie die Kachel "Einzelbefund" - dort sind aktuell alle Pois abgelegt ;-)</source>
+                <target>Nichts zu holen - Bitte wählen Sie die Kachel "Einzelbefund" - dort sind aktuell alle Pois abgelegt ;-)</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.createpdf">
+                <source>Dieses Objekt als PDF herunterladen</source>
+                <target>Dieses Objekt als PDF herunterladen</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.completeoverview">
+                <source>Zur vollständigen Übersicht</source>
+                <target>Zur vollständigen Übersicht</target>
+			</trans-unit>
+			<trans-unit id="jo_bkr_base.homepage">
+                <source>homepage</source>
+                <target>Zur Homepage</target>
+            </trans-unit>
+			<trans-unit id="jo_bkr_base.showdate">
+                <source>date:</source>
+                <target>Datierung:</target>
+            </trans-unit>
+			<trans-unit id="jo_bkr_base.region_dynasty">
+                <source>Landesteil / Linie:</source>
+                <target>Landesteil / Linie:</target>
+            </trans-unit>
+			<trans-unit id="jo_bkr_base.minting_place">
+                <source>Münzstätte:</source>
+                <target>Münzstätte:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.getmore">
+                <source>mehr erfahren</source>
+                <target>mehr erfahren</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.ol.map.label">
+                <source>Karte:</source>
+                <target>Karte:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.ol.map.show">
+                <source>Objekt auf der Karte anzeigen</source>
+                <target>Objekt auf der Karte anzeigen</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.relatedfinding">
+                <source>Zugehörige Objekte</source>
+                <target>Zugehörige Objekte</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.description">
+                <source>Beschreibung</source>
+                <target>Beschreibung</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.more.img">
+                <source>weitere Abbildungen:</source>
+                <target>weitere Abbildungen:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.related.links">
+                <source>weiterführende Links:</source>
+                <target>weiterführende Links:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.gvk">
+                <source>GVK</source>
+                <target>GVK</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.literature.long">
+                <source>Literatur(lang):</source>
+                <target>Literatur(lang):</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.literature.short">
+                <source>Literatur(kurz):</source>
+                <target>Literatur(kurz):</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.obj.id">
+                <source>Objekt-ID:</source>
+                <target>Objekt-ID:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.showtime">
+                <source>Datierung (individuell):</source>
+                <target>Datierung (individuell):</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.times">
+                <source>Datierung (allgemein):</source>
+                <target>Datierung (allgemein):</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.classification.archiolog">
+                <source>Klassifikation (Archäologie):</source>
+                <target>Klassifikation (Archäologie):</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.coords">
+                <source>Koordinaten:</source>
+                <target>Koordinaten:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.district">
+                <source>Territorialherrschaft/ Landkreis/ kreisfreie Stadt:</source>
+                <target>Territorialherrschaft/ Landkreis/ kreisfreie Stadt:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.place">
+                <source>Ort:</source>
+                <target>Ort:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.overview">
+                <source>Übersicht</source>
+                <target>Übersicht</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.classificationtime">
+                <source>Datierung/Zeiten</source>
+                <target>Datierung/Zeiten</target>
+            </trans-unit>
+			<trans-unit id="jo_bkr_base.breadcrumbs.classificationtags">
+                <source>Schlagworte:</source>
+                <target>Schlagworte:</target>
+            </trans-unit>
+			<trans-unit id="jo_bkr_base.breadcrumbs.objectsPlants">
+                <source>Pflanzenindex:</source>
+                <target>Pflanzenindex:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.territory">
+                <source>Landkreis:</source>
+                <target>Landkreis:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.territory3">
+                <source>Orte</source>
+                <target>Orte</target>
+            </trans-unit>
+
+            <trans-unit id="jo_bkr_base.breadcrumbs.born">
+                <source>Born</source>
+                <target>Geboren</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.died">
+                <source>Died</source>
+                <target>Gestorben</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.confession">
+                <source>Confession</source>
+                <target>Bekenntnis</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.keywords">
+                <source>Keywords</source>
+                <target>Keywords</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.institut">
+                <source>Institutional Affiliation</source>
+                <target>Organisation</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.relations">
+                <source>Family Relations</source>
+                <target>Art der Familienbeziehung</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.viaf">
+                <source>VIAF</source>
+                <target>VIAF</target>
+            </trans-unit>
+
+            <trans-unit id="jo_bkr_base.breadcrumbs.category">
+                <source>Themen</source>
+                <target>Themen</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.fulltext">
+                <source>Suche über alle Felder</source>
+                <target>Suche über alle Felder</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.timeline">
+                <source>Zeiten:</source>
+                <target>Zeiten:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.label_timeline">
+                <source>Zeiten</source>
+                <target>Zeiten</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.objectType">
+                <source>Objekttypen:</source>
+                <target>Objekttypen:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.label_objectType">
+                <source>Objekttypen</source>
+                <target>Objekttypen</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.objectTypeHierarchy">
+                <source>Objekttypen:</source>
+                <target>Objekttypen:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.label_objectTypeHierarchy">
+                <source>Objekttypen</source>
+                <target>Objekttypen</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.classProject">
+                <source>Projekte/Sammlungen:</source>
+                <target>Projekte/Sammlungen:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.label_classProject">
+                <source>Projekte/Sammlungen</source>
+                <target>Projekte/Sammlungen</target>
+            </trans-unit>
+			<trans-unit id="jo_bkr_base.fulltextClean">
+                <source>Treffer im Volltext:</source>
+                <target>Treffer im Volltext:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.tenant">
+                <source>Bereitstellende Institution / Datengeber:</source>
+                <target>Bereitstellende Institution / Datengeber:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.label_tenant">
+                <source>Bereitstellende Institution / Datengeber</source>
+                <target>Bereitstellende Institution / Datengeber</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.classification">
+                <source>Klassifikation:</source>
+                <target>Klassifikation:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.label_classification">
+                <source>Klassifikation</source>
+                <target>Klassifikation</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.material">
+                <source>Material:</source>
+                <target>Material:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.label_material">
+                <source>Material</source>
+                <target>Material</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.entityFirstletter">
+                <source>Personen/Institutionen:</source>
+                <target>Personen/Institutionen:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.label_entityFirstletter">
+                <source>Personen/Institutionen</source>
+                <target>Personen/Institutionen</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.entitynorole">
+                <source>Personen/Institutionen:</source>
+                <target>Personen/Institutionen:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.entityTokenized">
+                <source>Personen/Institutionen (inkrementell):</source>
+                <target>Personen/Institutionen (inkrementell):</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.label_entityTokenized">
+                <source>Personen/Institutionen (inkrementell)</source>
+                <target>Personen/Institutionen (inkrementell)</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.locationFirstletter">
+                <source>Orte:</source>
+                <target>Orte:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.label_locationFirstletter">
+                <source>Orte</source>
+                <target>Orte</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.location">
+                <source>Orte:</source>
+                <target>Orte:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.locationmanufacture">
+                <source>Herstellungsort:</source>
+                <target>Herstellungsort:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.locationauthority">
+                <source>Lagerungsort:</source>
+                <target>Lagerungsort:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.mfr">
+                <source>Hersteller:</source>
+                <target>Hersteller:</target>
+            </trans-unit>
+             <trans-unit id="jo_bkr_base.col">
+                <source>Bestandsbildner:</source>
+                <target>Bestandsbildner:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.author">
+                <source>Autor:</source>
+                <target>Autor:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.visitor">
+                <source>Visitator(en):</source>
+                <target>Visitator(en):</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.client">
+                <source>Auftraggeber:</source>
+                <target>Auftraggeber:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledsource_href">
+                <source>Verweis auf andere Quellen (Link):</source>
+                <target>Verweis auf andere Quellen (Link):</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.chronorder">
+                <source>Zeitliche Einordnung:</source>
+                <target>Zeitliche Einordnung:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.chronorder.pure">
+                <source>Zeitliche Einordnung</source>
+                <target>Zeitliche Einordnung</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.period">
+                <source>Zeit/Zeitraum:</source>
+                <target>Zeit/Zeitraum:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.label_period">
+                <source>Zeitraum</source>
+                <target>Zeitraum</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.archclassification">
+                <source>Archäologische Klassifikation:</source>
+                <target>Archäologische Klassifikation:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.details">
+                <source>Details anzeigen</source>
+                <target>Details anzeigen</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.digitizer">
+                <source>Digitalisat anzeigen</source>
+                <target>Digitalisat anzeigen</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.digitizer.inview">
+                <source>Digitalisat im Viewer anzeigen</source>
+                <target>Digitalisat im Viewer anzeigen</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.filter.remove">
+                <source>Filter löschen</source>
+                <target>Filter löschen</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.bookmarks">
+                <source>Auf die Merkliste</source>
+                <target>Auf die Merkliste</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.bookmarks.remove">
+                <source>Von der Merkliste</source>
+                <target>Von der Merkliste</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.territory2">
+                <source>Territorium</source>
+                <target>Territorium</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.title.shorttext">
+                <source>Titel und Kurztext</source>
+                <target>Titel und Kurztext</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.sort.title">
+                <source>Sortieren nach Titel</source>
+                <target>Sortieren nach Titel</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.add_to_previous">
+                <source>Diese Auswahl hinzufügen.</source>
+                <target>Diese Auswahl hinzufügen.</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.sortvar">
+                <source>Sortierung:</source>
+                <target>Sortierung:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.title">
+                <source>title</source>
+                <target>Titel</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.desc">
+                <source>descending</source>
+                <target>absteigend</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.asc">
+                <source>ascending</source>
+                <target>aufsteigend</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.people">
+                <source>Personen:</source>
+                <target>Personen:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.remove.title">
+                <source>Verknüpfte Objekte finden. Achtung, sämtliche von Ihnen zuvor gewählte Filter werden zurückgesetzt!</source>
+                <target>Verknüpfte Objekte finden. Achtung, sämtliche von Ihnen zuvor gewählte Filter werden zurückgesetzt!</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.objectType">
+                <source>Befundtyp (Archäologie):</source>
+                <target>Befundtyp (Archäologie):</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.img.proof">
+                <source>Abb.:</source>
+                <target>Abb.:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.img.license">
+                <source>Lizenz:</source>
+                <target>Lizenz:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.img.copyright">
+                <source>Rechteinhaber:</source>
+                <target>Rechteinhaber:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.titleAndText">
+                <source>Titel und Kurztext</source>
+                <target>Titel und Kurztext</target>
+            </trans-unit>
+            <trans-unit id="flash.add.merkliste">
+                <source>Objekt zur Merkliste hinzugefügt.</source>
+                <target>Objekt zur Merkliste hinzugefügt.</target>
+            </trans-unit>
+            <trans-unit id="flash.remove.merkliste">
+                <source>Objekt von der Merkliste gelöscht.</source>
+                <target>Objekt von der Merkliste gelöscht.</target>
+            </trans-unit>
+            <trans-unit id="flash.remove.suchfilter">
+                <source>Ihre zuvor definierten Suchfilter wurden zurückgesetzt.</source>
+                <target>Ihre zuvor definierten Suchfilter wurden zurückgesetzt.</target>
+            </trans-unit>
+            <trans-unit id="flash.set">
+                <source>Sie haben einen Filter gesetzt: </source>
+                <target>Sie haben einen Filter gesetzt: </target>
+            </trans-unit>
+            <trans-unit id="flash.remove">
+                <source>Sie haben einen Filter entfernt: </source>
+                <target>Sie haben einen Filter entfernt: </target>
+            </trans-unit>
+            <trans-unit id="flash.fulltext">
+                <source>Suche über alle Felder</source>
+                <target>Suche über alle Felder</target>
+            </trans-unit>
+            <trans-unit id="flash.category">
+                <source>Themen</source>
+                <target>Themen</target>
+            </trans-unit>
+            <trans-unit id="flash.title">
+                <source>Titel/Name</source>
+                <target>Titel/Name</target>
+            </trans-unit>
+            <trans-unit id="flash.classificationtime">
+                <source>Datierung/Zeiten</source>
+                <target>Datierung/Zeiten</target>
+            </trans-unit>
+            <trans-unit id="flash.territory">
+                <source>Territorium</source>
+                <target>Territorium</target>
+            </trans-unit>
+            <trans-unit id="flash.personen">
+                <source>Personen</source>
+                <target>Personen</target>
+            </trans-unit>
+            <trans-unit id="flash.orte">
+                <source>Orte</source>
+                <target>Orte</target>
+            </trans-unit>
+            <trans-unit id="flash.zeiten">
+                <source>Zeiten</source>
+                <target>Zeiten</target>
+            </trans-unit>
+            <trans-unit id="flash.classification">
+                <source>Klassifikation</source>
+                <target>Klassifikation</target>
+            </trans-unit>
+            <trans-unit id="flash.objectType">
+                <source>Objekttypen</source>
+                <target>Objekttypen</target>
+            </trans-unit>
+            <trans-unit id="flash.objectTypeHierarchy">
+                <source>Objekttypen</source>
+                <target>Objekttypen</target>
+            </trans-unit>
+            <trans-unit id="flash.classProject">
+                <source>Projekte</source>
+                <target>Projekte</target>
+            </trans-unit>
+            <trans-unit id="flash.tenant">
+                <source>Bereitstellende Institution/Datengeber</source>
+                <target>Bereitstellende Institution/Datengeber</target>
+            </trans-unit>
+            <trans-unit id="flash.tenantHierarchy">
+                <source>Bereitstellende Institution/Datengeber</source>
+                <target>Bereitstellende Institution/Datengeber</target>
+            </trans-unit>
+            <trans-unit id="flash.material">
+                <source>Material</source>
+                <target>Material</target>
+            </trans-unit>
+            <trans-unit id="flash.parent">
+                <source>Parent</source>
+                <target>Parent</target>
+            </trans-unit>
+            <trans-unit id="flash.pid">
+                <source>TODO</source>
+                <target>TODO</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.timeline.point">
+                <source>Zeitpunkt:</source>
+                <target>Zeitpunkt:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.timeline.nothing">
+                <source>Es wurden keine auswertbaren Zeiteinheiten gefunden.</source>
+                <target>Es wurden keine auswertbaren Zeiteinheiten gefunden.</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.show.all.items">
+                <source>Alle Daten anzeigen</source>
+                <target>Alle Daten anzeigen</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.show.item">
+                <source>Diesen Ort einblenden</source>
+                <target>Diesen Ort einblenden</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.hide.item">
+                <source>Diesen Ort ausblenden</source>
+                <target>Diesen Ort ausblenden</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.ort.territory">
+                <source>Ort, Territorium:</source>
+                <target>Ort, Territorium:</target>
+            </trans-unit>
+            <trans-unit id="fact_stream.dataSource">
+                <source>Datenquelle:</source>
+                <target>Datenquelle:</target>
+            </trans-unit>
+            <trans-unit id="fact_stream.dataSource.text">
+                <source>Deutsche Nationalbibliothek/GND</source>
+                <target>Deutsche Nationalbibliothek/GND</target>
+            </trans-unit>
+            <trans-unit id="fact_stream.preferredName">
+                <source>bevorzugter Name:</source>
+                <target>bevorzugter Name:</target>
+            </trans-unit>
+            <trans-unit id="fact_stream.type">
+                <source>Typ:</source>
+                <target>Typ:</target>
+            </trans-unit>
+            <trans-unit id="fact_stream.dateOfBirth">
+                <source>Geburtsdatum:</source>
+                <target>Geburtsdatum:</target>
+            </trans-unit>
+            <trans-unit id="fact_stream.dateOfDeath">
+                <source>Sterbedatum:</source>
+                <target>Sterbedatum:</target>
+            </trans-unit>
+            <trans-unit id="fact_stream.professionOrOccupation">
+                <source>Tätigkeit:</source>
+                <target>Tätigkeit:</target>
+            </trans-unit>
+            <trans-unit id="fact_stream.variantName">
+                <source>alternative Namensformen:</source>
+                <target>alternative Namensformen:</target>
+            </trans-unit>
+            <trans-unit id="fact_stream.affiliation">
+                <source>Zugehörigkeit:</source>
+                <target>Zugehörigkeit:</target>
+            </trans-unit>
+            <trans-unit id="fact_stream.sameAs">
+                <source>Externe Links:</source>
+                <target>Externe Links:</target>
+            </trans-unit>
+            <trans-unit id="fact_stream.dateOfEstablishment">
+                <source>Gründungsdatum:</source>
+                <target>Gründungsdatum:</target>
+            </trans-unit>
+            <trans-unit id="fact_stream.placeOfBusiness">
+                <source>Geschäftsplatz:</source>
+                <target>Geschäftsplatz:</target>
+            </trans-unit>
+            <trans-unit id="fact_stream.associatedPlace">
+                <source>Land:</source>
+                <target>Land:</target>
+            </trans-unit>
+            <trans-unit id="fact_stream.isA">
+                <source>Funktion:</source>
+                <target>Funktion:</target>
+            </trans-unit>
+            <trans-unit id="fact_stream.biographicalOrHistoricalInformation">
+                <source>biografische/historische Informationen:</source>
+                <target>biografische/historische Informationen:</target>
+            </trans-unit>
+            <trans-unit id="fact_stream.predecessor">
+                <source>Vorgänger Organisation:</source>
+                <target>Vorgänger Organisation:</target>
+            </trans-unit>
+            <trans-unit id="fact_stream.relatedOrganisation">
+                <source>Verwandte Organisation:</source>
+                <target>Verwandte Organisation:</target>
+            </trans-unit>
+            <trans-unit id="fact_stream.homepage">
+                <source>Homepage:</source>
+                <target>Homepage:</target>
+            </trans-unit>
+            <trans-unit id="email.feedback.send">
+                <source>Ihr Feedback wurde erfolgreich versendet.</source>
+                <target>Ihr Feedback wurde erfolgreich versendet.</target>
+            </trans-unit>
+            <trans-unit id="email.error">
+                <source>Beim versenden ihres Feedbacks wurde ein Fehler festgestellt. Bitte versuchen Sie es nochmal.</source>
+                <target></target>
+            </trans-unit>
+            <trans-unit id="feedback.email">
+                <source>E-Mail</source>
+                <target>E-Mail</target>
+            </trans-unit>
+            <trans-unit id="feedback.name">
+                <source>Name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="feedback.nachricht">
+                <source>Nachricht</source>
+                <target>Nachricht</target>
+            </trans-unit>
+            <trans-unit id="feedback.text.anrede">
+                <source>Sehr geehrte Nutzerinnen und Nutzer,</source>
+                <target>Sehr geehrte Nutzerinnen und Nutzer,</target>
+            </trans-unit>
+            <trans-unit id="feedback.text.text">
+                <source>um die Qualität unseres Portals ständig zu verbessern, sind wir auf Ihre Mithilfe angewiesen. Sollten Sie Fehler in den Datensätzen entdecken (z.B. Rechtschreibung, Zahlendreher etc.) oder sonstige Probleme mit der Anzeige der Dokumente haben, zögern Sie bitte nicht, uns dies mitzuteilen. Dazu können Sie das nebenstehende Kontakt-Formular verwenden. Ihre Daten werden sicher durch ein SSL-Zertifikat übertragen. Sollten Sie weitere Fragen zum Datenschutz haben, klicken sie bitte hier:</source>
+                <target>um die Qualität unseres Portals ständig zu verbessern, sind wir auf Ihre Mithilfe angewiesen. Sollten Sie Fehler in den Datensätzen entdecken (z.B. Rechtschreibung, Zahlendreher etc.) oder sonstige Probleme mit der Anzeige der Dokumente haben, zögern Sie bitte nicht, uns dies mitzuteilen. Dazu können Sie das nebenstehende Kontakt-Formular verwenden. Ihre Daten werden sicher durch ein SSL-Zertifikat übertragen. Sollten Sie weitere Fragen zum Datenschutz haben, klicken sie bitte hier:</target>
+            </trans-unit>
+            <trans-unit id="feedback.text.datenschutz">
+                <source>Informationen zum Datenschutz</source>
+                <target>Informationen zum Datenschutz</target>
+            </trans-unit>
+            <trans-unit id="feedback.send">
+                <source>Absenden</source>
+                <target>Absenden</target>
+            </trans-unit>
+            <trans-unit id="solrindex_title_clearallfilter">
+                <source>Alle Suchfilter löschen und neue Recherche starten</source>
+                <target>Alle Suchfilter löschen und neue Recherche starten</target>
+            </trans-unit>
+            <trans-unit id="solrindex_searchfor">
+                <source>Ihre Recherche - Sie suchen:</source>
+                <target>Ihre Recherche - Sie suchen:</target>
+            </trans-unit>
+            <trans-unit id="search_classification">
+                <source>nach den folgenden Klassifikationen:</source>
+                <target>nach den folgenden Klassifikationen:</target>
+            </trans-unit>
+            <trans-unit id="search_fulltext">
+                <source>im Volltext nach:</source>
+                <target>im Volltext nach:</target>
+            </trans-unit>
+            <trans-unit id="search_objectType">
+                <source>nach den folgenden Objekttypen:</source>
+                <target>nach den folgenden Objekttypen:</target>
+            </trans-unit>
+            <trans-unit id="search_material">
+                <source>nach den folgenden Materialien:</source>
+                <target>nach den folgenden Materialien:</target>
+            </trans-unit>
+            <trans-unit id="founditems">
+                <source>Gefundene Objekte:</source>
+                <target>Gefundene Objekte:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.owner">
+                <source>Besitzer:</source>
+                <target>Besitzer:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.own">
+                <source>Besitzer:</source>
+                <target>Besitzer:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.mainauthor">
+                <source>Hauptautor:</source>
+                <target>Hauptautor:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.subauthor">
+                <source>Mitautor:</source>
+                <target>Mitautor:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.aut">
+                <source>Autor:</source>
+                <target>Autor:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.mainpublisher">
+                <source>Herausgeber:</source>
+                <target>Herausgeber:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.subpublisher">
+                <source>Mitherausgeber:</source>
+                <target>Mitherausgeber:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.translator">
+                <source>Übersetzer:</source>
+                <target>Übersetzer:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.trl">
+                <source>Übersetzer:</source>
+                <target>Übersetzer:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.fotographer">
+                <source>Fotograf:</source>
+                <target>Fotograf:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.pht">
+                <source>Fotograf:</source>
+                <target>Fotograf:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.illustrator">
+                <source>Illustrator, Kupferstecher:</source>
+                <target>Illustrator, Kupferstecher:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.ill">
+                <source>Illustrator, Kupferstecher:</source>
+                <target>Illustrator, Kupferstecher:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.commentator">
+                <source>Kommentator, Bearbeiter:</source>
+                <target>Kommentator, Bearbeiter:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.cmm">
+                <source>Kommentator, Bearbeiter:</source>
+                <target>Kommentator, Bearbeiter:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.composer">
+                <source>Komponist:</source>
+                <target>Komponist:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.cmp">
+                <source>Komponist:</source>
+                <target>Komponist:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.painter">
+                <source>Maler:</source>
+                <target>Maler:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.art">
+                <source>Maler:</source>
+                <target>Maler:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.moderator">
+                <source>Moderator:</source>
+                <target>Moderator:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.mod">
+                <source>Moderator:</source>
+                <target>Moderator:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.editor">
+                <source>Redakteur:</source>
+                <target>Redakteur:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.edt">
+                <source>Redakteur:</source>
+                <target>Redakteur:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.sponsor">
+                <source>Sponsor:</source>
+                <target>Sponsor:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.spn">
+                <source>Sponsor:</source>
+                <target>Sponsor:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.organiser">
+                <source>Veranstalter:</source>
+                <target>Veranstalter:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.hst">
+                <source>Veranstalter:</source>
+                <target>Veranstalter:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.reviewer">
+                <source>Rezensent:</source>
+                <target>Rezensent:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.rev">
+                <source>Rezensent:</source>
+                <target>Rezensent:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.authororeviewer">
+                <source>Autor des rezensierten Werkes:</source>
+                <target>Autor des rezensierten Werkes:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.contibutorofreviewer">
+                <source>Herausgeber des rezensierten Werkes:</source>
+                <target>Herausgeber des rezensierten Werkes:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.mentionedinst">
+                <source>Erwähnte Institution:</source>
+                <target>Erwähnte Institution:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.mentionedperson">
+                <source>Erwähnte Person:</source>
+                <target>Erwähnte Person:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.mentioned">
+                <source>Erwähnte Person:</source>
+                <target>Erwähnte Person:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.publisheroforiginal">
+                <source>Verlag des rezensierten Werkes:</source>
+                <target>Verlag des rezensierten Werkes:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.misc">
+                <source>Sonst. Mitarbeiter:</source>
+                <target>Sonst. Mitarbeiter:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.ctb">
+                <source>Sonst. Mitarbeiter:</source>
+                <target>Sonst. Mitarbeiter:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.interviewer">
+                <source>Interviewer:</source>
+                <target>Interviewer:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.ivr">
+                <source>Interviewer:</source>
+                <target>Interviewer:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.interviewee">
+                <source>befragte Person / Interviewter:</source>
+                <target>befragte Person / Interviewter:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.ive">
+                <source>befragte Person / Interviewter:</source>
+                <target>befragte Person / Interviewter:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.publisher">
+                <source>Verlag:</source>
+                <target>Verlag:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.pbl">
+                <source>Verlag:</source>
+                <target>Verlag:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.contributor">
+                <source>Beitragender:</source>
+                <target>Beitragender:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.director">
+                <source>Regisseur:</source>
+                <target>Regisseur:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.drt">
+                <source>Regisseur:</source>
+                <target>Regisseur:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.assumedauthor">
+                <source>vermuteter Autor:</source>
+                <target>vermuteter Autor:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.att">
+                <source>vermuteter Autor:</source>
+                <target>vermuteter Autor:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.assumedmentionedperson">
+                <source>Vermutete erwähnte Person:</source>
+                <target>Vermutete erwähnte Person:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.editorofreviewedwork">
+                <source>Bearbeiter des rezensierten Werkes:</source>
+                <target>Bearbeiter des rezensierten Werkes:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.translatorofreviewedwork">
+                <source>Übersetzer des rezensierten Werkes:</source>
+                <target>Übersetzer des rezensierten Werkes:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.widmungsempf">
+                <source>Widmungsempfänger:</source>
+                <target>Widmungsempfänger:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.dte">
+                <source>Widmungsempfänger:</source>
+                <target>Widmungsempfänger:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.angeblicher_autor">
+                <source>Angeblicher Autor:</source>
+                <target>Angeblicher Autor:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.dub">
+                <source>Angeblicher Autor:</source>
+                <target>Angeblicher Autor:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.drucker">
+                <source>Drucker:</source>
+                <target>Drucker:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.prt">
+                <source>Drucker:</source>
+                <target>Drucker:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.crp">
+                <source>Korrespondenzpartner:</source>
+                <target>Korrespondenzpartner:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.pictured_person">
+                <source>Abgebildete Person:</source>
+                <target>Abgebildete Person:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.begruender">
+                <source>Begründer:</source>
+                <target>Begründer:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.bearbeiter">
+                <source>Bearbeiter:</source>
+                <target>Bearbeiter:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.kartograph">
+                <source>Kartograph:</source>
+                <target>Kartograph:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.ctg">
+                <source>Kartograph:</source>
+                <target>Kartograph:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.operator">
+                <source>Betreiber:</source>
+                <target>Betreiber:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.oth">
+                <source>Andere:</source>
+                <target>Andere:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.partner">
+                <source>Partner:</source>
+                <target>Partner:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.publisherprinter">
+                <source>Verleger / Drucker:</source>
+                <target>Verleger / Drucker:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.primarydata">
+                <source>Primärdaten:</source>
+                <target>Primärdaten:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.displayInOriginal">
+                <source>Objekt im Originalkontext anzeigen</source>
+                <target>Objekt im Originalkontext anzeigen</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.parentobject">
+                <source>Übergeordnetes Objekt:</source>
+                <target>Übergeordnetes Objekt:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.childrenReference">
+                <source>Verweis auf andere Objekte:</source>
+                <target>Verweis auf andere Objekte:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.placepublisher">
+                <source>Verlag / Druckerei:</source>
+                <target>Verlag / Druckerei:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.printing_de">
+                <source>Druckort (deutsch):</source>
+                <target>Druckort (deutsch):</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.printing_original_item">
+                <source>Druckort (Vorlage):</source>
+                <target>Druckort (Vorlage):</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.format">
+                <source>Format / Umfang:</source>
+                <target>Format / Umfang:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.altFormat">
+                <source>Format / Umfang:</source>
+                <target>Format / Umfang:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.located">
+                <source>Standort:</source>
+                <target>Standort:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.datentyp">
+                <source>Illustrationsangabe:</source>
+                <target>Illustrationsangabe:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.shelfmark">
+                <source>Signatur(en):</source>
+                <target>Signatur(en):</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.keywords">
+                <source>Schlüsselwörter:</source>
+                <target>Schlüsselwörter:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.footnote">
+                <source>Fußnote:</source>
+                <target>Fußnote:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.fingerprint">
+                <source>Fingerprint:</source>
+                <target>Fingerprint:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.fingerprintOrigin">
+                <source>Herkunft des Fingerprints:</source>
+                <target>Herkunft des Fingerprints:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.bibReference">
+                <source>Bibliographischer Nachweis:</source>
+                <target>Bibliographischer Nachweis:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.genre">
+                <source>Gattung:</source>
+                <target>Gattung:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.authorInformation">
+                <source>Verantwortlichkeitsangabe:</source>
+                <target>Verantwortlichkeitsangabe:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.language">
+                <source>Sprache:</source>
+                <target>Sprache:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.pat">
+                <source>Förderer:</source>
+                <target>Förderer:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.patron">
+                <source>Förderer:</source>
+                <target>Förderer:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.deceased">
+                <source>Verstorbener:</source>
+                <target>Verstorbener:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.scr">
+                <source>SchreiberIn:</source>
+                <target>SchreiberIn:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.corporation">
+                <source>Bereitstellende Institution:</source>
+                <target>Bereitstellende Institution:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.component">
+                <source>Bestand:</source>
+                <target>Bestand:</target>
+            </trans-unit>
+            <trans-unit id="OR">
+                <source>oder</source>
+                <target>oder</target>
+            </trans-unit>
+            <trans-unit id="AND">
+                <source>und</source>
+                <target>und</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.noteBundled">
+                <source>Bemerkung</source>
+                <target>Bemerkung</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.bemerkung">
+                <source>Bemerkung:</source>
+                <target>Bemerkung:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.locationpointoforigin">
+                <source>Entstehungsort:</source>
+                <target>Entstehungsort:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledcover">
+                <source>Beschreibung des Einbandes:</source>
+                <target>Beschreibung des Einbandes:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledapplication">
+                <source>Schließen/Applikation:</source>
+                <target>Schließen/Applikation:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.project_partner">
+                <source>Projektpartner:</source>
+                <target>Projektpartner:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.locationsignificant">
+                <source>Wichtige Orte:</source>
+                <target>Wichtige Orte:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.locationinstallationsite">
+                <source>Ausstellungsort:</source>
+                <target>Ausstellungsort:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.significant">
+                <source>Wichtige Personen:</source>
+                <target>Wichtige Personen:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledhistorische_einordnung">
+                <source>Historische Einordnung:</source>
+                <target>Historische Einordnung:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledoldeditions">
+                <source>Nachweis früherer Editionen:</source>
+                <target>Nachweis früherer Editionen:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledliteratur">
+                <source>Literatur:</source>
+                <target>Literatur:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledueberlieferungsart">
+                <source>Überlieferungsform:</source>
+                <target>Überlieferungsform:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledcountry">
+                <source>Bundesland:</source>
+                <target>Bundesland:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledenthaelt">
+                <source>Enthält:</source>
+                <target>Enthält:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledlaufzeit">
+                <source>Laufzeit:</source>
+                <target>Laufzeit:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledprovenienz">
+                <source>Provenienz:</source>
+                <target>Provenienz:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledbibliographie">
+                <source>Bibliographie:</source>
+                <target>Bibliographie:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledaktanzahl_laut_quelle">
+                <source>Aktanzahl (standardisiert):</source>
+                <target>Aktanzahl (standardisiert):</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledunitid">
+                <source>Signatur:</source>
+                <target>Signatur:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledton">
+                <source>Ton:</source>
+                <target>Ton:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledtype">
+                <source>Typ:</source>
+                <target>Typ:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledfarbe">
+                <source>Farbe:</source>
+                <target>Farbe:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledformat">
+                <source>Format:</source>
+                <target>Format:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledhistory">
+                <source>Geschichte:</source>
+                <target>Geschichte:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledschriftraum">
+                <source>Schriftraum:</source>
+                <target>Schriftraum:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledschrift">
+                <source>Schrift:</source>
+                <target>Schrift:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledspaltenanzahl">
+                <source>Spaltenanzahl:</source>
+                <target>Spaltenanzahl:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledzeilenanzahl">
+                <source>Zeilenanzahl:</source>
+                <target>Zeilenanzahl:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledkodikologie">
+                <source>Kodikologie:</source>
+                <target>Kodikologie:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledabstract">
+                <source>Abstract:</source>
+                <target>Abstract:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledfolio_seite">
+                <source>Folio/Seite:</source>
+                <target>Folio/Seite:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledtranskription_vollregest">
+                <source>Transkription/Vollregest:</source>
+                <target>Transkription/Vollregest:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledregest">
+                <source>Regest:</source>
+                <target>Regest:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundleddatumszitat">
+                <source>Datumszitat:</source>
+                <target>Datumszitat:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledsiegel">
+                <source>Siegel:</source>
+                <target>Siegel:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundleddorsualvermerk">
+                <source>Dorsualvermerk:</source>
+                <target>Dorsualvermerk:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundlededition_literatur">
+                <source>Edition/Literatur:</source>
+                <target>Edition/Literatur:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledweitere_exemplare">
+                <source>weitere Exemplare:</source>
+                <target>weitere Exemplare:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledlaufzeit_in_minuten">
+                <source>Laufzeit in Minuten:</source>
+                <target>Laufzeit in Minuten:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledinhalt">
+                <source>Inhalt:</source>
+                <target>Inhalt:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledplaybillhead">
+                <source>Theaterzettelkopf:</source>
+                <target>Theaterzettelkopf:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledtranslation">
+                <source>Übersetzung:</source>
+                <target>Übersetzung:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledrelatedmaterial">
+                <source>verwandtes Material:</source>
+                <target>verwandtes Material:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledprintshop">
+                <source>Druckerei:</source>
+                <target>Druckerei:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledpurpose">
+                <source>Entstehungszweck:</source>
+                <target>Entstehungszweck:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledfulfilment">
+                <source>Ausführung:</source>
+                <target>Ausführung:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledreview">
+                <source>Rezension:</source>
+                <target>Rezension:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledmusicalscore">
+                <source>Details zur Schauspielmusik:</source>
+                <target>Details zur Schauspielmusik:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledplaymusic">
+                <source>mit Schauspielmusik/Einlage:</source>
+                <target>mit Schauspielmusik/Einlage:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledsource">
+                <source>Verweis auf andere Quellen:</source>
+                <target>Verweis auf andere Quellen:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledlanguage">
+                <source>Sprache:</source>
+                <target>Sprache:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledliterature">
+                <source>Literatur:</source>
+                <target>Literatur:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledfootnote">
+                <source>Fußnote:</source>
+                <target>Fußnote:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledgenre">
+                <source>Gattung:</source>
+                <target>Gattung:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledillustrationdecl">
+                <source>Illustrationsangabe:</source>
+                <target>Illustrationsangabe:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledvolumestatement">
+                <source>Teil:</source>
+                <target>Teil:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledvolumecount_standard">
+                <source>Zählung in normierter Form:</source>
+                <target>Zählung in normierter Form:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledvolumecount_original_item">
+                <source>Zählung in Vorlageform:</source>
+                <target>Zählung in Vorlageform:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei">
+                <source>Quelle (TEI):</source>
+                <target>Quelle (TEI):</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.show_detail">
+                <source>Datei anzeigen</source>
+                <target>Datei anzeigen</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.show.xml">
+                <source>als XML anzeigen</source>
+                <target>als XML anzeigen</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledfilm">
+                <source>Filmnummer:</source>
+                <target>Filmnummer:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.artist">
+                <source>Künstler:</source>
+                <target>Künstler:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.pictured">
+                <source>abgebildete Person:</source>
+                <target>abgebildete Person:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledbestandbildner">
+                <source>Bestandbildner:</source>
+                <target>Bestandbildner:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledteilbestandbildner">
+                <source>Teilbestandbildner:</source>
+                <target>Teilbestandbildner:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledordnungsgruppe">
+                <source>Ordnungsgruppe:</source>
+                <target>Ordnungsgruppe:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledzwueber">
+                <source>Art:</source>
+                <target>Art:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledkindofvisitation">
+                <source>Art bzw. Stufe des Schriftstücks:</source>
+                <target>Art bzw. Stufe des Schriftstücks:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.rcp">
+                <source>Empfänger:</source>
+                <target>Empfänger:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.bdd">
+                <source>Buchbinder:</source>
+                <target>Buchbinder:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.vdg">
+                <source>Kameramann/frau:</source>
+                <target>Kameramann/frau:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.cwt">
+                <source>KommentatorIn:</source>
+                <target>KommentatorIn:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.cns">
+                <source>ZensorIn:</source>
+                <target>ZensorIn:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.chr">
+                <source>ChoreografIn:</source>
+                <target>ChoreografIn:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.cli">
+                <source>AuftraggeberIn:</source>
+                <target>AuftraggeberIn:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.cnd">
+                <source>Dirigent:</source>
+                <target>Dirigent:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.wat">
+                <source>BeiträgerIn (lit.):</source>
+                <target>BeiträgerIn (lit.):</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.wam">
+                <source>BeiträgerIn (mus.):</source>
+                <target>BeiträgerIn (mus.):</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.egr">
+                <source>StecherIn:</source>
+                <target>StecherIn:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.org">
+                <source>Originator:</source>
+                <target>Originator:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.pra">
+                <source>Praeses:</source>
+                <target>Praeses:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.fmo">
+                <source>Vorbesitzer:</source>
+                <target>Vorbesitzer:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.pro">
+                <source>ProduzentIn:</source>
+                <target>ProduzentIn:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.pdr">
+                <source>Verantwortlicher:</source>
+                <target>Verantwortlicher:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.rsp">
+                <source>RespondentIn:</source>
+                <target>RespondentIn:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.cph">
+                <source>Rechteinhaber:</source>
+                <target>Rechteinhaber:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.res">
+                <source>ForscherIn:</source>
+                <target>ForscherIn:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.wit">
+                <source>Zeuge/Zeugin:</source>
+                <target>Zeuge/Zeugin:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.ancestor">
+                <source>Vorfahre(n):</source>
+                <target>Vorfahre(n):</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.celebrated">
+                <source>Gefeierte Person:</source>
+                <target>Gefeierte Person:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.contributor_art">
+                <source>Beiträger künstlerisch:</source>
+                <target>Beiträger künstlerisch:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.corporation_etal">
+                <source>sonstige Körperschaft:</source>
+                <target>sonstige Körperschaft:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.discussed">
+                <source>besprochene Person:</source>
+                <target>besprochene Person:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.fourier">
+                <source>Fourier:</source>
+                <target>Fourier:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.previous_organisation">
+                <source>Vorgängerorganisation:</source>
+                <target>Vorgängerorganisation:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.proband">
+                <source>Proband:</source>
+                <target>Proband:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.publishingCompany">
+                <source>Verlag/Druckerei:</source>
+                <target>Verlag/Druckerei:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.sender">
+                <source>Absender:</source>
+                <target>Absender:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.visitor">
+                <source>Visitator(en):</source>
+                <target>Visitator(en):</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.cre">
+                <source>Hersteller:</source>
+                <target>Hersteller:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.locationpublished">
+                <source>Erstellungsort:</source>
+                <target>Erstellungsort:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.other">
+                <source>Andere Personen:</source>
+                <target>Andere Personen:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.title">
+                <source>Titel:</source>
+                <target>Titel:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.plangofdata">
+                <source>Sprache:</source>
+                <target>Sprache:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.pprojectclass">
+                <source>Projektklasse:</source>
+                <target>Projektklasse:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.pgender">
+                <source>Geschlecht:</source>
+                <target>Geschlecht:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.pnametype">
+                <source>Typ:</source>
+                <target>Typ:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.pauthorithyurn">
+                <source>URN:</source>
+                <target>URN:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.pauthority_lit">
+                <source>Lit.:</source>
+                <target>Lit.:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.pauthority_pages">
+                <source>Seiten:</source>
+                <target>Seiten:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.perindex">
+                <source>Personenindex:</source>
+                <target>Personenindex:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.pnamefirst">
+                <source>Vorname:</source>
+                <target>Vorname:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.pnamefamily">
+                <source>Name:</source>
+                <target>Name:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.ptitledesign">
+                <source>titledesign:</source>
+                <target>titledesign:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.pusedfrom">
+                <source>Von:</source>
+                <target>Von:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.pusedto">
+                <source>Bis:</source>
+                <target>Bis:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.plcrelendverifi">
+                <source>Nachprüfung:</source>
+                <target>Nachprüfung:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.pcomments">
+                <source>Person Kommentar:</source>
+                <target>Person Kommentar:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.comment">
+                <source>Kommentar:</source>
+                <target>Kommentar:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.status">
+                <source>Status:</source>
+                <target>Status:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.work_stage">
+                <source>Arbeitsphase:</source>
+                <target>Arbeitsphase:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.timecreate">
+                <source>Erstellt:</source>
+                <target>Erstellt:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.timelastchg">
+                <source>Letzte Änderung:</source>
+                <target>Letzte Änderung:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.keyword_in_index">
+                <source>Schlagwort:</source>
+                <target>Schlagwort:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.keyword_lang">
+                <source>Schlagwort Sprache:</source>
+                <target>Schlagwort Sprache:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.keyword_translation">
+                <source>Schlagwort Übersetzung:</source>
+                <target>Schlagwort Übersetzung:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.remarks">
+                <source>Bemerkungen:</source>
+                <target>Bemerkungen:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.locationfinding">
+                <source>Fundort:</source>
+                <target>Fundort:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.locationproductionminting_authority_country_place">
+                <source>Münzstand / Land / Ort:</source>
+                <target>Münzstand / Land / Ort:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.locationproductionminting_place">
+                <source>Münzstätte:</source>
+                <target>Münzstätte:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.locationproductionminting_authority">
+                <source>Münzstand:</source>
+                <target>Münzstand:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.typology">
+                <source>Typologische Beschreibung:</source>
+                <target>Typologische Beschreibung:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.typologygeneralinformation">
+                <source>Allgemeine Informationen:</source>
+                <target>Allgemeine Informationen:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.typologypreflabel">
+                <source>Typ-Nummer:</source>
+                <target>Typ-Nummer:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.typologyorigreference">
+                <source>Typportal-Referenz:</source>
+                <target>Typportal-Referenz:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.typologyrepresentsobjecttype">
+                <source>Objekttyp:</source>
+                <target>Objekttyp:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.typologyhasmanufacture">
+                <source>Herstellung:</source>
+                <target>Herstellung:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.typologyhasdenomination">
+                <source>Nominal:</source>
+                <target>Nominal:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.typologyhasmaterial">
+                <source>Material:</source>
+                <target>Material:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.typologydate">
+                <source>Datum:</source>
+                <target>Datum:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.typologyhasauthority">
+                <source>Autorität:</source>
+                <target>Autorität:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.typologygeographic">
+                <source>Geografische Zuordnung:</source>
+                <target>Geografische Zuordnung:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.typologyhasmint">
+                <source>Münzstätte:</source>
+                <target>Münzstätte:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.typologyhasregion">
+                <source>Region:</source>
+                <target>Region:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.typologyhasobverse">
+                <source>Vorderseite:</source>
+                <target>Vorderseite:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.typologyhaslegend">
+                <source>Legende:</source>
+                <target>Legende:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.typologytype">
+                <source>Beschreibung:</source>
+                <target>Beschreibung:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.typologyhasportrait">
+                <source>Dargestellte(r):</source>
+                <target>Dargestellte(r):</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.typologyhasreverse">
+                <source>Rückseite:</source>
+                <target>Rückseite:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.typologyhaslegendhasreverse">
+                <source>Legende:</source>
+                <target>Legende:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.typologytypehasreverse">
+                <source>Beschreibung:</source>
+                <target>Beschreibung:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.typologydatasource">
+                <source>Primärdaten:</source>
+                <target>Primärdaten:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.locationproductionregion_dynasty">
+                <source>Landesteil / Linie:</source>
+                <target>Landesteil / Linie:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledfront">
+                <source>Vorderseite (Legende):</source>
+                <target>Vorderseite (Legende):</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledback">
+                <source>Rückseite (Legende):</source>
+                <target>Rückseite (Legende):</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.locationpointoforigingnd">
+                <source>Entstehungsort GND:</source>
+                <target>Entstehungsort GND:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.facet.uebersicht">
+                <source>Übersicht</source>
+                <target>Übersicht</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.person">
+                <source>Personen</source>
+                <target>Personen</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.orte">
+                <source>Erwähnte Orte</source>
+                <target>Erwähnte Orte</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.plant">
+                <source>Pflanzen</source>
+                <target>Pflanzen</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.keywords">
+                <source>Sachen</source>
+                <target>Sachen</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.editor">
+                <source>Bearbeiter</source>
+                <target>Bearbeiter</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.tei.meta">
+                <source>Metadaten:</source>
+                <target>Metadaten:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.locationmentioned">
+                <source>Erwähnte Orte:</source>
+                <target>Erwähnte Orte:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.objectsPlantsFirstletter">
+                <source>Pflanzenindex:</source>
+                <target>Pflanzenindex:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.classificationtagsFirstletter">
+                <source>Schlagworte:</source>
+                <target>Schlagworte:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledsummary">
+                <source>Zusammenfassung:</source>
+                <target>Zusammenfassung:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledincipit">
+                <source>Incipit (nach Vorlage):</source>
+                <target>Incipit (nach Vorlage):</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.transcription">
+                <source>Transkription</source>
+                <target>Transkription</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.translation.de">
+                <source>Übersetzung (DE)</source>
+                <target>Übersetzung (DE)</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.translation.en">
+                <source>Übersetzung (EN)</source>
+                <target>Übersetzung (EN)</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.notebundledorigin">
+                <source>Herkunft:</source>
+                <target>Herkunft:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.locationvisited#">
+                <source>Besuchte Orte:</source>
+                <target>Besuchte Orte:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.dateeventsevent#">
+                <source>Ereignisse:</source>
+                <target>Ereignisse:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.label_objectsPlantsFirstletter">
+                <source>Pflanzen</source>
+                <target>Pflanzen</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.label_classificationtagsFirstletter">
+                <source>Schlagwort</source>
+                <target>Schlagwort</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.oldinventarnummer">
+                <source>Altinventarnummer:</source>
+                <target>Altinventarnummer:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.locationHierarchy">
+                <source>Ort (hierarchisch):</source>
+                <target>Ort (hierarchisch):</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.locationHierarchy">
+                <source>Ort (hierarchisch):</source>
+                <target>Ort (hierarchisch):</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.label_locationHierarchy">
+                <source>Ort (hierarchisch)</source>
+                <target>Ort (hierarchisch)</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.sorting">
+                <source>sorting:</source>
+                <target>sorting:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.locationHistory">
+                <source>locationHistory:</source>
+                <target>locationHistory:</target>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.title">
+                <source>NK-Erfassungs-Nummer:</source>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.location">
+                <source>Fundort:</source>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.locationPolygones">
+                <source>Polygon GeoJSON:</source>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.sort.score">
+                <source>Score</source>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.sort.titleSort">
+                <source>Titel</source>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.sort.startdate">
+                <source>Datum</source>
+            </trans-unit>
+            <trans-unit id="detail.collapse.plus">
+                <source>Alles aufklappen</source>
+            </trans-unit>
+            <trans-unit id="detail.collapse.minus">
+                <source>Alles zuklappen</source>
+            </trans-unit>
+            <trans-unit id="flash.sortierung-score">
+                <source>Sortierung Score</source>
+            </trans-unit>
+            <trans-unit id="flash.sortierung-titleSort">
+                <source>Sortierung Titel</source>
+            </trans-unit>
+            <trans-unit id="flash.sortierung-startdate">
+                <source>Sortierung Datum</source>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.score">
+                <source>Score</source>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.titleSort">
+                <source>Titel</source>
+            </trans-unit>
+            <trans-unit id="jo_bkr_base.breadcrumbs.startdate">
+                <source>Datum</source>
+            </trans-unit>
+		</body>
+	</file>
+</xliff>

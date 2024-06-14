@@ -1,0 +1,635 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<f:flashMessages />
+<div class="search_wrap alt_view">
+	<div class="row no-gutters search_masks">
+		<f:if condition="{config.init.searchconfig.expertsearch}">
+			<div class="search_type_wrap flex-column d-flex-bak">
+				<div class="fuzzy_search">Einfache Suche</div>
+				<div class="expert_search active">Erweitere Suche</div>
+			</div>
+		</f:if>
+		<div class="searchform expert col">
+			
+				<f:variable name="placeholder"><f:if condition='{settings.placeholder}'><f:then>{settings.placeholder}</f:then><f:else>{jo:translate(key:'{langPath}:jo_bkr_base.bestanddurchsuchen')}</f:else></f:if></f:variable>
+				<f:form class="expertmask" name="suche" noCache="1" method="POST">
+					<div class="row no-gutters">
+						<div class="col-md-12">
+							<f:form.textfield class="search_box d-inline-block" name="fulltext" value="" placeholder="Suche im Volltext"/>
+							<f:form.textfield class="search_box d-inline-block" name="locationTokenizedExpert" value="" placeholder="Ort/Münzstand/Münzstätte"/>
+							<f:form.textfield class="search_box d-inline-block" name="entityTokenizedExpert" value="" placeholder="Personen"/>
+							<f:comment>
+							<div class="w-100">
+								
+								<label class="fuzzySwitch joAnd">
+							  		<input class="joAndOrCheck" name="tx_jomuseo_pi1009[locationTokenizedExpert]" type="checkbox" value="1">
+							  		<span class="slider square"></span>
+							  		<span class="joAndText">unscharf</span>
+							  		<span class="joOrText">scharf</span>
+								</label>
+							</div>
+							<div class="w-100">
+								
+								<label class="fuzzySwitch joAnd">
+							  		<input class="joAndOrCheck" name="tx_jomuseo_pi1009[entityTokenizedExpert]" type="checkbox" value="1">
+							  		<span class="slider square"></span>
+							  		<span class="joAndText">unscharf</span>
+							  		<span class="joOrText">scharf</span>
+								</label>
+							</div>
+								<f:form.textfield class="search_box d-inline-block" name="nominalExpert" value="" placeholder="Nominal"/>
+								<f:form.textfield class="search_box d-inline-block" name="locationTokenizedExpert" value="" placeholder="Ort (tokenized)"/>
+								<f:form.textfield class="search_box d-inline-block" name="entityTokenizedExperta" value="" placeholder="Person (tokenized)"/>
+							</f:comment>
+							
+							
+							<f:form.select name="material" options="{material}" style="width:100%;padding: 10px;margin-bottom: 20px;"/>
+							<f:form.textfield class="search_box d-inline-block" name="classificationtags" value="" placeholder="Sachbegriff"/>
+							
+						</div>
+						<div class="col-md-6 left-side">
+							<f:form.textfield class="search_box d-inline-block" name="starttime" value="" placeholder="Zeitraum von (z.B. -100)"/>
+						</div>
+						<div class="col-md-6 right-side">
+							<f:form.textfield class="search_box d-inline-block" name="endtime" value="" placeholder="Zeitraum bis  (z.B. 1000)"/>
+						</div>
+						<div class="col-12 submit-container">
+							<f:spaceless>
+								<div class="submit-content">
+									<label for="expertSubmit" class="submit-label">Suchen</label>
+									<f:form.submit id="expertSubmit" class="d-inline-block search_button" name="search_submit" value="" />
+								</div>
+							</f:spaceless>
+						</div>
+					</div>	
+				</f:form>
+			<f:comment>
+				<f:variable name="placeholder"><f:if condition='{settings.placeholder}'><f:then>{settings.placeholder}</f:then><f:else>{jo:translate(key:'{langPath}:jo_bkr_base.bestanddurchsuchen')}</f:else></f:if></f:variable>
+				<f:form name="suche" noCache="1" method="POST" style="border:none;">
+					
+				</f:form>
+			</f:comment>
+		</div>
+	</div>
+</div>
+<div class="joTimeLineAndFilter alt_view">
+	<div class="controls_wrap">
+		<f:if condition="{settings.allowlistandtable}">
+			<f:then>
+				<div class="row mx-auto joControls-container">
+					<ul class="joControls nav nav-tabs col-md-9">
+						<f:render section="joLoadFacettesList" arguments="{_all}"/>
+					</ul>
+					<ul class="nav joListandtable col-md-3">
+						<li {f:if(condition:'{extbase_config.listview}=="List"',then:'class="active"',else:'')}>
+							<f:link.action noCache="1" class="joList-icon" title="{jo:translate(key:'{langPath}:view.list')}" additionalParams="{v:'List'}">{jo:translate(key:'{langPath}:view.list')}</f:link.action>							
+						</li>
+						<f:if condition="{settings.showGridView}">
+							<li {f:if(condition:'{extbase_config.listview}=="Listgrid"',then:'class="active"',else:'')}>
+								<f:link.action noCache="1" class="joTable-icon" title="{jo:translate(key:'{langPath}:view.grid')}" additionalParams="{v:'Listgrid'}">{jo:translate(key:'{langPath}:view.grid')}</f:link.action>
+							</li>
+						</f:if>
+						<f:if condition="{settings.showHalleryView}">
+							<li {f:if(condition:'{extbase_config.listview}=="Listgallery"',then:'class="active"',else:'')}>
+								<f:link.action noCache="1" class="joTable-icon" title="{jo:translate(key:'{langPath}:view.gallery')}" additionalParams="{v:'Listgallery'}">{jo:translate(key:'{langPath}:view.gallery')}</f:link.action>
+							</li>
+						</f:if>
+					</ul>
+				</div>
+			</f:then>
+			<f:else>
+				<div class="clearfix container row mx-auto joControls-container">
+					<f:if condition="{facettes_prepared.existing_index -> f:count()} > 0">
+						<f:then>
+							<ul class="joControls nav nav-tabs col-md-12">
+								<f:render section="joLoadFacettesList" arguments="{_all}"/>
+							</ul>
+						</f:then>
+						<f:else>
+							<f:if condition="{settings.detail-btn-ansicht-top}">
+								<f:if condition='{joSearcharraycomplete}'>
+									<div class="tab-pane active" id="searchparams">
+										<div class="akt_filter clearfix">
+											<div class="joSearchControl">
+												<f:for each="{joSearcharraycomplete.content}" as="items" key="k" iteration="i">	
+													<div class="joFacettedSearch">
+														<div class="img_wrap">
+															<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+																<f:then>
+																	<div id="{k}" class="joSprite" title="{jo:translate(key:'{langPath}:search_{k}')}"></div>
+																</f:then>
+																<f:else>
+																	<f:image id="{k}" src="{f:uri.resource(path:'Images/sprite.svg')}" alt="{jo:translate(key:'{langPath}:search_{k}')}" title="{jo:translate(key:'{langPath}:search_{k}')}" />
+																</f:else>
+															</f:if>
+														</div>
+														<span class="joTest">
+															<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{k}')}">
+																<f:then>
+																	{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{k}')}
+																</f:then>
+																<f:else>
+																	{k}
+																</f:else>
+															</f:if>
+														</span>
+														<f:switch expression="{k}">
+															<f:case value="timeline"><f:render section="timeline" arguments="{_all}"/></f:case>
+															<f:case value="Boundingbox"><f:render section="Boundingbox" arguments="{_all}"/></f:case>
+															<f:defaultCase><f:render section="standardfields" arguments="{_all}"/></f:defaultCase>
+														</f:switch>
+														<f:if condition='{jo:jodynamicarray(arrayname:\'{joSearcharraycomplete.content}\', arraykey:\'{k}\')->f:count()} > 1'>
+															<!-- verknüpft durch: -->
+															<div class="and_or_toggle" style="display:none;">
+																<f:link.action noCache="1" class="and_link {f:if(condition:'{jo:jodynamicarray(arrayname:\'{joSearcharraycomplete.logical_concat}\', arraykey:\'{k}\')}==\'AND\'',then:' active',else:'')}" arguments="{jo:jomakearray(arraykey:'lgandor{k}', arrayvalue:'1')}">
+																	<!-- und -->
+																	<label class="joAndOrSwitch joAnd">
+																  		<input class="joAndOrCheck" type="checkbox">
+																  		<span class="slider square"></span>
+																  		<span class="joAndText">{jo:translate(key:'{langPath}:AND')}</span>
+																  		<span class="joOrText">{jo:translate(key:'{langPath}:OR')}</span>
+																	</label>
+																</f:link.action>
+																<f:link.action noCache="1" class="or_link {f:if(condition:'{jo:jodynamicarray(arrayname:\'{joSearcharraycomplete.logical_concat}\', arraykey:\'{k}\')}==\'OR\'',then:' active',else:'')}" arguments="{jo:jomakearray(arraykey:'lgandor{k}', arrayvalue:'2')}">
+																	<!-- oder -->
+																	<label class="joAndOrSwitch joAnd">
+																  		<input class="joAndOrCheck" type="checkbox" <f:if condition="{jo:jodynamicarray(arrayname:'{joSearcharraycomplete.logical_concat}', arraykey:'{k}')}=='AND'">checked="checked"</f:if>>
+																  		<span class="slider square"></span>
+																  		<span class="joAndText">{jo:translate(key:'{langPath}:AND')}</span>
+																  		<span class="joOrText">{jo:translate(key:'{langPath}:OR')}</span>
+																	</label>
+																</f:link.action>
+															</div>
+														</f:if>
+													</div>
+												</f:for>
+											</div>
+										</div>
+									</div>
+								</f:if>
+								<div class="joFound joFix container joAlternative">
+									<div class="joFound-text">
+										<f:format.number decimals="0" thousandsSeparator=".">{joSolrObjects.response.numFound}</f:format.number> Treffer
+									</div>
+								</div>
+							</f:if>
+						</f:else>
+					</f:if>
+				</div>
+			</f:else>
+		</f:if> 
+	</div>
+	<f:if condition="{facettes_prepared.alpha_index} || {facettes_prepared.full_index} || {facettes_prepared.hierarchical_index} || {settings.helpTitle} || {settings.helpText}">
+		<div class="facettes">
+			<div class="tab-content">
+				<f:if condition="{facettes_prepared.alpha_index}">
+					<f:for each="{facettes_prepared.alpha_index}" as="joIndex" key="key" iteration="joindexiteration">
+						<div class="tab-pane" id="{key}">
+							<h3>
+								<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{key}')}">
+									<f:then>
+										{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{key}')}
+									</f:then>
+									<f:else>
+										{key}
+									</f:else>
+								</f:if>
+							</h3>
+							<f:if condition="{key} == 'entityFirstletter' && {settings.showAutocomplete}">
+								<div class="joAutocomplete-container">
+									<span class="joAutoPer-icon"></span>
+									<span class="lbl">Personenindex:</span><input type="hidden" id="entitySearchUrl" value="{f:uri.action(noCache: '1', arguments: '{type: \'entitywildcard\', entityTokenizedwc: \'TEXT\'}')}" /> <input type="text" class="joAutocomplete" placeholder="Name der gesuchten Person" data-id="{extbase_config.currentPageId}"/>
+								</div>
+							</f:if>
+							<div class="clearfix">
+								<span class="joAlphIndex-icon"></span>
+								<span class="lbl">{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.alphabeticindex')}</span>
+								<ul class="joAlphabetIndex clearfix joIndex_{key}">
+									<f:for each="{joIndex.content}" as="joSubIndex" key="Subkey" iteration="joSubindexiteration">
+										<li>
+											<f:if condition="{jo:joinarray(arraycontains:'{joIndex.active}', keytofind:'{Subkey}')}">
+												<div class="joKreis"></div>
+											</f:if>
+											<f:if condition="{joSubIndex}">
+												<f:then>
+													<f:link.action pageType="2328" noCache="1" additionalParams="{ret:'fac'}" action="ajax" arguments="{jo:jomakearray(arraykey:'{key}', arrayvalue:'{Subkey}')}">{Subkey}</f:link.action>
+												</f:then>
+												<f:else>
+													<span>{Subkey}</span>
+												</f:else>
+											</f:if>
+										</li>
+									</f:for>
+								</ul>
+								<div class="joFacettesContainer"></div>
+							</div>
+						</div>
+					</f:for> 
+				</f:if>
+				<f:if condition="{facettes_prepared.full_index}">
+					<f:for each="{facettes_prepared.full_index}" as="joIndex" key="key" iteration="joindexiteration">
+						<div class="tab-pane" id="{key}">
+							<h3>
+								<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{key}')}">
+									<f:then>
+										{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{key}')}
+									</f:then>
+									<f:else>
+										{key}
+									</f:else>
+								</f:if>
+							</h3>
+							<f:if condition="{joIndex.headerdata}">
+								<f:if condition="{joSolrObjects.response.docs->f:count()}>0">
+									<f:then>
+										<f:render partial="Timeline" arguments="{_all}"/>
+									</f:then>
+									<f:else>
+										<div class="joTimelineBody">
+											{jo:translate(key:'{langPath}:jo_bkr_base.timeline.nothing')}
+										</div>
+									</f:else>
+								</f:if>	
+							</f:if>
+							<f:if condition="{joIndex.content}">
+								<div class="index_wrapper">
+									<div class="clearfix row">
+										<f:for each="{joIndex.content}" as="joSubSubIndex" iteration="josubiteration">
+											<f:alias map="{searcharray: '{jo:jodynamicarray(arrayname:\'{joSearcharraycomplete.content}\', arraykey:\'{key}\')}'}">			
+												<div class="index_col col-md-4 col_count_{joIndex.config.col}">
+													<f:for each="{joSubSubIndex}" as="joSubSubSubIndex">
+														<div class="button_wrap">
+															<f:if condition="{jo:joinarray(arraycontains:'{searcharray}', keytofind:'{joSubSubSubIndex.orig}')}">
+																<f:then>
+																	<div class="joCheck-container">
+																		<f:link.action noCache="1" class="joCheck joCheckColor_active" arguments="{jo:jomakearray(arraykey:'remove{key}', arrayvalue:'{joSubSubSubIndex.orig}')}">
+																			&nbsp;
+																		</f:link.action>
+																	</div>
+																	<f:link.action noCache="1" class="add joCheckColor_active" arguments="{jo:jomakearray(arraykey:'remove{key}', arrayvalue:'{joSubSubSubIndex.orig}')}">
+																		<f:if condition="{key} == 'classificationtime'">
+																			<f:then>
+																				<f:alias map="{name_array: '{joSubSubSubIndex.0->jo:explode(delimiter:\'#\')}'}">
+																					{name_array.1} ({joSubSubSubIndex.number})
+																				</f:alias>
+																			</f:then>
+																			<f:else>
+																				{joSubSubSubIndex.0} ({joSubSubSubIndex.number})
+																			</f:else>
+																		</f:if>
+																	</f:link.action>
+																</f:then>
+																<f:else>
+																	<div class="joCheck-container">
+																		<f:link.action noCache="1" class="joCheck joCheckColor_inactive" additionalParams="{add:'1'}" arguments="{jo:jomakearray(arraykey:'{key}', arrayvalue:'{joSubSubSubIndex.orig}')}">
+																			&nbsp;
+																		</f:link.action>
+																	</div>
+																	<f:link.action noCache="1" class="add joCheckColor_inactive" additionalParams="{add:'1'}" arguments="{jo:jomakearray(arraykey:'{key}', arrayvalue:'{joSubSubSubIndex.orig}')}">
+																		<f:if condition="{key} == 'classificationtime'">
+																			<f:then>
+																				<f:alias map="{name_array: '{joSubSubSubIndex.0->jo:explode(delimiter:\'#\')}'}">
+																					{name_array.1} ({joSubSubSubIndex.number})
+																				</f:alias>
+																			</f:then>
+																			<f:else>
+																				{joSubSubSubIndex.0} ({joSubSubSubIndex.number})
+																			</f:else>
+																		</f:if>
+																	</f:link.action>
+																</f:else>
+															</f:if>
+														</div>
+													</f:for>
+												</div>
+											</f:alias>
+										</f:for>
+									</div>
+								</div>
+							</f:if>
+						</div>
+					</f:for>
+				</f:if>
+				<f:if condition="{facettes_prepared.hierarchical_index}">
+					<f:for each="{facettes_prepared.hierarchical_index}" as="joIndex" key="key" iteration="joindexiteration">
+						<div class="tab-pane hierachical" id="{key}">
+							<h3>
+								<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{key}')}">
+									<f:then>
+										{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{key}')}
+									</f:then>
+									<f:else>
+										{key}
+									</f:else>
+								</f:if>
+							</h3>
+							<div class="joSliderShow-prev"></div>
+							<div class="joSliderShow-container">
+								<div class="joSliderShowPane clearfix">
+									<f:for each="{joIndex.content}" as="content_cols" key="k" iteration="i">
+										<div class="clearfix joSliderShowItems items<f:if condition='{i.isFirst}'><f:then></f:then><f:else> joSubHierarchy</f:else></f:if><f:if condition='{i.isLast}'> isLast</f:if>" data-level="{i.cycle}" <f:if condition="{k} == '0'"><f:then></f:then><f:else>id="{k}"</f:else></f:if>>
+											<div class="joSliderShow-Title">
+												<f:if condition="{i.isFirst}">
+													<f:then>
+														{jo:translate(key:'{langPath}:jo_bkr_base.facet.uebersicht')}
+													</f:then>
+													<f:else>
+														<f:format.crop maxCharacters="60">
+															<jo:jodynamicarray arrayname="{joIndex.rootline}" arraykey="{i.index}" />
+														</f:format.crop>
+													</f:else>
+												</f:if>
+											</div>
+											<ul>
+												<f:for each="{content_cols}" as="joSubIndex" key="Subkey" iteration="joSubindexiteration">
+													<f:alias map="{name_array: '{joSubIndex.v->jo:explode(delimiter:\'$\')}'}">
+														<li class="<f:if condition='{joSubIndex.a}'>active</f:if><f:if condition='{joSubIndex.o}'> joCheckOpen</f:if>">
+															<div class="button_wrap">
+																<div class="joCheck-container">
+																	<f:if condition="{joSubIndex.a} == '1'">
+																		<f:then>
+																			<f:link.action noCache="1" class="joCheck joCheckColor_{joSubIndex.a}" arguments="{jo:jomakearray(arraykey:'remove{key}', arrayvalue:'{Subkey}')}">
+																				&nbsp;
+																			</f:link.action>
+																		</f:then>
+																		<f:else>
+																			<f:link.action noCache="1" class="joCheck joCheckColor_{joSubIndex.a}" additionalParams="{add:'1'}" arguments="{jo:jomakearray(arraykey:'{key}', arrayvalue:'{Subkey}')}">
+																				&nbsp;
+																			</f:link.action>
+																		</f:else>
+																	</f:if>
+																</div>
+																<f:if condition="{joSubIndex.a} == '1'">
+																	<f:then>
+																		<f:link.action noCache="1" class="add joCheckColor_{joSubIndex.a}" arguments="{jo:jomakearray(arraykey:'remove{key}', arrayvalue:'{Subkey}')}">
+																			{name_array.0} ({joSubIndex.c})
+																		</f:link.action>
+																	</f:then>
+																	<f:else>
+																		<f:link.action noCache="1" class="add joCheckColor_{joSubIndex.a}" additionalParams="{add:'1'}" arguments="{jo:jomakearray(arraykey:'{key}', arrayvalue:'{Subkey}')}">
+																			{name_array.0} ({joSubIndex.c})
+																		</f:link.action>
+																	</f:else>
+																</f:if>
+																<div class="joOpener-container">
+																	<f:if condition="{joSubIndex.ch}">
+																		<div class="joOpener joCheckColor_{joSubIndex.a}<f:if condition='{joSubIndex.o}'> active</f:if>" data-href="<f:uri.action action="ajax" controller="Museo" additionalParams="{ret:'h'}" noCache="1" pageType="2328" arguments="{jo:jomakearray(arraykey:'{key}', arrayvalue:'{Subkey}')}"/>" data-id="{joSubIndex.id}"></div>
+																	</f:if>
+																</div>
+															</div>
+														</li>
+													</f:alias>
+												</f:for>
+											</ul>
+										</div>
+									</f:for>
+								</div>
+							</div>
+							<div class="joSliderShow-next"></div>
+						</div>
+					</f:for> 
+				</f:if>
+				<f:if condition='{joSearcharraycomplete}'>
+					<div class="tab-pane active" id="searchparams">
+						<div class="akt_filter clearfix">		
+							<h3>{jo:translate(key:'{langPath}:solrindex_searchfor')}</h3>
+							<div class="joSearchControl">
+								<f:for each="{joSearcharraycomplete.content}" as="items" key="k" iteration="i">	
+									<div class="joFacettedSearch">
+										<div class="img_wrap">
+											<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+												<f:then>
+													<div id="{k}" class="joSprite" title="{jo:translate(key:'{langPath}:search_{k}')}"></div>
+												</f:then>
+												<f:else>
+													<f:image id="{k}" src="{f:uri.resource(path:'Images/sprite.svg')}" alt="{jo:translate(key:'{langPath}:search_{k}')}" title="{jo:translate(key:'{langPath}:search_{k}')}" />
+												</f:else>
+											</f:if>
+										</div>
+										<span>
+											<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{k}')}">
+												<f:then>
+													{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{k}')}
+												</f:then>
+												<f:else>
+													{k}
+												</f:else>
+											</f:if>
+										</span>
+										<f:switch expression="{k}">
+											<f:case value="timeline"><f:render section="timeline" arguments="{_all}"/></f:case>
+											<f:case value="Boundingbox"><f:render section="Boundingbox" arguments="{_all}"/></f:case>
+											<f:defaultCase><f:render section="standardfields" arguments="{_all}"/></f:defaultCase>
+										</f:switch>
+										<f:if condition='{jo:jodynamicarray(arrayname:\'{joSearcharraycomplete.content}\', arraykey:\'{k}\')->f:count()} > 1'>
+											<f:if condition="{k} != 'timeline'}">
+												<div class="and_or_toggle" style="display:none;">
+													<f:link.action noCache="1" class="and_link {f:if(condition:'{jo:jodynamicarray(arrayname:\'{joSearcharraycomplete.logical_concat}\', arraykey:\'{k}\')}==\'AND\'',then:' active',else:'')}" arguments="{jo:jomakearray(arraykey:'lgandor{k}', arrayvalue:'1')}">
+														<label class="joAndOrSwitch joAnd">
+															<input class="joAndOrCheck" type="checkbox">
+															<span class="slider square"></span>
+															<span class="joAndText ff">{jo:translate(key:'{langPath}:AND')}</span>
+															<span class="joOrText hh">{jo:translate(key:'{langPath}:OR')}</span>
+														</label>
+													</f:link.action>
+													<f:link.action noCache="1" class="or_link {f:if(condition:'{jo:jodynamicarray(arrayname:\'{joSearcharraycomplete.logical_concat}\', arraykey:\'{k}\')}==\'OR\'',then:' active',else:'')}" arguments="{jo:jomakearray(arraykey:'lgandor{k}', arrayvalue:'2')}">
+														
+														<label class="joAndOrSwitch joAnd">
+															<input class="joAndOrCheck" type="checkbox" <f:if condition="{jo:jodynamicarray(arrayname:'{joSearcharraycomplete.logical_concat}', arraykey:'{k}')}=='AND'">checked="checked"</f:if>>
+															<span class="slider square"></span>
+															<span class="joAndText zz">{jo:translate(key:'{langPath}:AND')}</span>
+															<span class="joOrText ii">{jo:translate(key:'{langPath}:OR')}</span>
+														</label>
+													</f:link.action>
+												</div>
+											</f:if>
+										</f:if>
+									</div>
+								</f:for>
+							</div>
+						</div>
+					</div>
+				</f:if>
+				<f:if condition="{settings.helpTitle} || {settings.helpText}">
+					<div class="tab-pane fade" id="facette_info">
+						<h3>{settings.helpTitle}</h3>
+						<f:format.raw>{settings.helpText}</f:format.raw>
+					</div>
+				</f:if>
+			</div>
+		</div>
+	</f:if>
+	<div class="joFound joFix container">
+		<div class="joFound-text">
+			{jo:translate(key:'{langPath}:founditems')} <f:format.number decimals="0" thousandsSeparator=".">{joSolrObjects.response.numFound}</f:format.number>
+		</div>
+	</div>
+</div>
+
+<f:section name="Boundingbox">
+	 <div class="joFacetteItem">
+		<f:link.action noCache="1" arguments="{removeBoundingbox:'1'}">
+			<f:alias map="{data_array: '{joIndex->jo:explode(delimiter:\'$\')}'}">			
+				NW: {items.x1} - {items.y2}<br>
+				SO: {items.x2} - {items.y1}<br>
+			</f:alias>
+			<div class="img-container">
+				<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+					<f:then>
+						<div class="joSprite" title="Filter löschen"></div>
+					</f:then>
+					<f:else>
+						<f:image src="{f:uri.resource(path:'Images/sprite.svg')}" alt="Filter löschen" title="Filter löschen" />
+					</f:else>
+				</f:if>
+			</div>
+		</f:link.action>
+	</div> 
+</f:section>
+
+<f:section name="standardfields">
+	<f:for each="{items}" as="joIndex" key="key" iteration="si">
+		<div class="joFacetteItem">
+			<f:link.action noCache="1" arguments="{jo:jomakearray(arraykey:'remove{k}', arrayvalue:'{joIndex}')}">
+				<f:if condition='{k} != "sortvar"'>
+					<f:then>
+						<f:alias map="{data_array: '{joIndex->jo:explode(delimiter:\'$\')}'}">			
+							<f:if condition="{k} == 'classificationtime'">
+								<f:then>
+									<f:alias map="{name_array: '{data_array.0->jo:explode(delimiter:\'#\')}'}">
+										{name_array.1}
+									</f:alias>
+								</f:then>
+								<f:else>
+									<f:alias map="{name_array2: '{data_array.0->jo:explode(delimiter:\'/\', last: \'1\')}'}">
+										{name_array2}
+									</f:alias>
+								</f:else>
+							</f:if>
+						</f:alias>
+					</f:then>
+					<f:else>
+						<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{joIndex.0}')}">
+							<f:then>
+								{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{joIndex.0}')}
+							</f:then>
+							<f:else>
+								{joIndex.0}
+							</f:else>
+						</f:if>
+						<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{joIndex.1}')}">
+							<f:then>
+								{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{joIndex.1}')}
+							</f:then>
+							<f:else>
+								{joIndex.1}
+							</f:else>
+						</f:if>
+					</f:else>
+				</f:if>
+				<div class="img-container">
+					<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+						<f:then>
+							<div class="joSprite" title="{jo:translate(key:'{langPath}:jo_bkr_base.filter.remove')}"></div>
+						</f:then>
+						<f:else>
+							<f:image src="{f:uri.resource(path:'Images/sprite.svg')}" alt="{jo:translate(key:'{langPath}:jo_bkr_base.filter.remove')}" title="{jo:translate(key:'{langPath}:jo_bkr_base.filter.remove')}" />
+						</f:else>
+					</f:if>
+				</div>
+			</f:link.action>
+		</div> 
+		<f:if condition='{items->f:count()} > 1'>
+			<f:if condition='{si.isLast} != 1'>
+				<jo:translate key="{langPath}:{jo:jodynamicarray(arrayname:'{joSearcharraycomplete.logical_concat}', arraykey:'{k}')}" />
+			</f:if>
+		</f:if>
+	</f:for>
+</f:section>
+
+<f:section name="joLoadFacettesList">
+	<f:for each="{facettes_prepared.existing_index}" as="facettes" key="key" iteration="i">
+		<li>
+			<a class="c_button{f:if(condition:'{facettes.number}',then:' withNumber',else:'')}" data-toggle="tab" href="#{facettes.name}">
+				<f:if condition="{jo:jodynamicarray(arrayname:'{facettes_prepared.selected_facettes}', arraykey:'{facettes.name}')}">
+					<div class="joKreis"></div>
+				</f:if>
+				<f:if condition="{facettes.number}">
+					<span class="number">{facettes.number}</span>
+				</f:if>
+				<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+					<f:then>
+						<div class="joSprite" title="{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.label_{facettes.name}')}"></div>
+					</f:then>
+					<f:else>
+						<f:image src="{f:uri.resource(path:'Images/sprite.svg')}" alt="label_{facettes.name}" title="{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.label_{facettes.name}')}" />
+					</f:else>
+				</f:if>
+			</a>
+		</li>		
+	</f:for>
+	<f:if condition="{joSearcharraycomplete}">
+		<li>
+			<a class="c_button active show{f:if(condition:'{facettes.number}',then:' withNumber',else:'')}" data-toggle="tab" href="#searchparams">
+				<f:if condition="{facettes.number}">
+					<span class="number">{facettes.number}</span>
+				</f:if>
+				<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+					<f:then>
+						<div class="joSprite" title="Ihre Suchparameter"></div>
+					</f:then>
+					<f:else>
+						<f:image src="{f:uri.resource(path:'Images/sprite.svg')}" alt="label_{facettes.name}" title="{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.label_{facettes.name}')}" />
+					</f:else>
+				</f:if>
+			</a>
+		</li>	
+		<li>
+			<f:link.action noCache="1" class="c_button" arguments="{joDel:'1'}">
+				<div id="joDeleteIcon">
+					<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+						<f:then>
+							<div class="joSprite joFoundIcon" alt="{jo:translate(key:'{langPath}:solrindex_title_clearallfilter')}" title="{jo:translate(key:'{langPath}:solrindex_title_clearallfilter')}" ></div>
+						</f:then>
+						<f:else>
+							<f:image src="{f:uri.resource(path:'Images/sprite.svg')}" class="joFoundIcon" alt="{jo:translate(key:'{langPath}:solrindex_title_clearallfilter')}" title="{jo:translate(key:'{langPath}:solrindex_title_clearallfilter')}" />
+						</f:else>
+					</f:if>
+				</div>
+			</f:link.action>
+		</li>
+	</f:if>
+	<f:if condition="{settings.helpTitle} || {settings.helpText}">
+		<li>
+			<a class="c_button" data-toggle="tab" href="#facette_info" title="Informationen zur Suche">
+				<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+					<f:then>
+						<div class="joSprite" title="Informationen zu den Suchfacetten" ></div>
+					</f:then>
+					<f:else>
+						<f:image src="{f:uri.resource(path:'Images/sprite.svg')}" alt="Informationen zu den Suchfacetten" title="Informationen zu den Suchfacetten" />
+					</f:else>
+				</f:if>
+			</a>
+		</li>
+	</f:if>
+</f:section>
+
+<f:section name="timeline">
+	 <div class="joFacetteItem">
+		<f:link.action noCache="1" arguments="{jodeletetimefilter:'1'}">
+			<f:alias map="{data_array: '{joIndex->jo:explode(delimiter:\'$\')}'}">			
+				{items.start} - {items.end}
+			</f:alias>
+			<div class="img-container">
+				<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+					<f:then>
+						<div class="joSprite" title="Filter löschen" ></div>
+					</f:then>
+					<f:else>
+						<f:image src="{f:uri.resource(path:'Images/sprite.svg')}" alt="Filter löschen" title="Filter löschen" />
+					</f:else>
+				</f:if>
+			</div>
+		</f:link.action>
+	</div> 
+</f:section>

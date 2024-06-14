@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3DataStructure>
+	<meta>		
+		<langDisable>1</langDisable>
+	</meta>	
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>Digitale Ausstellungen - Objekt</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<padding>
+					    <TCEforms>
+							<label>Abstand der Objektansichten nach links und rechts (Desktop)</label>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">Kein Abstand (Standard)</numIndex>
+										<numIndex index="1">0</numIndex>
+									</numIndex>									
+									<numIndex index="1" type="array">
+										<numIndex index="0">Extraklein</numIndex>
+										<numIndex index="1">1</numIndex>
+									</numIndex>									
+									<numIndex index="2" type="array">
+										<numIndex index="0">Klein</numIndex>
+										<numIndex index="1">2</numIndex>
+									</numIndex>									
+									<numIndex index="3" type="array">
+										<numIndex index="0">Mittel</numIndex>
+										<numIndex index="1">3</numIndex>
+									</numIndex>									
+									<numIndex index="4" type="array">
+										<numIndex index="0">Groß</numIndex>
+										<numIndex index="1">4</numIndex>
+									</numIndex>									
+									<numIndex index="5" type="array">
+										<numIndex index="0">Extragroß</numIndex>
+										<numIndex index="1">5</numIndex>
+									</numIndex>									
+								</items>
+							</config>
+					    </TCEforms>
+					</padding>
+					<textpos>
+					    <TCEforms>
+							<label>Position der Textinformationen der Objekte</label>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">Standarddarstellung</numIndex>
+										<numIndex index="1">0</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">Darstellung 1</numIndex>
+										<numIndex index="1">1</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">Darstellung 2</numIndex>
+										<numIndex index="1">2</numIndex>
+									</numIndex>
+								</items>
+							</config>
+					    </TCEforms>
+					</textpos>
+					<bgcolor>
+					    <TCEforms>
+							<label>Hintergrundfarbe für die Detailansicht dieses Objektes</label>
+							<config>
+								<type>input</type>
+								<renderType>colorpicker</renderType>
+							</config>
+					    </TCEforms>
+					</bgcolor>
+					<fontcolor>
+					    <TCEforms>
+							<label>Schriftfarbe für die Detailansicht dieses Objektes</label>
+							<config>
+								<type>input</type>
+								<renderType>colorpicker</renderType>
+							</config>
+					    </TCEforms>
+					</fontcolor>
+					<learnmore>
+					    <TCEforms>
+					        <label>Einblendung der Mehr wissen/ mehr sehen Detailansicht</label>
+					        <config>
+					            <type>select</type>
+					            <renderType>selectSingle</renderType>
+					            <items>
+					                <numIndex index="0">
+					                    <numIndex index="0">Overlay - Details schieben sich über die initiale Objektansicht</numIndex>
+					                    <numIndex index="1">1</numIndex>
+					                </numIndex>
+					                <numIndex index="1">
+					                    <numIndex index="0">Scroll - Details werden unterhalb der initialen Objektansicht nachgeladen</numIndex>
+					                    <numIndex index="1">2</numIndex>
+					                </numIndex>
+					            </items>
+					        </config>
+					    </TCEforms>
+					</learnmore>
+				</el>
+			</ROOT>
+		</sDEF>
+	</sheets>
+</T3DataStructure>

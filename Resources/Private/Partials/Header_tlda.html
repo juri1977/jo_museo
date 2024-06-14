@@ -1,0 +1,18 @@
+<f:render partial="HeaderTop" arguments="{_all}"/>
+<f:if condition='{fullscreen}'>
+	<f:then>
+		<div class="fullscreenbanner"><f:format.html parseFuncTSPath="">{fullscreen}</f:format.html></div>
+	</f:then>
+	<f:else>
+		<f:if condition='{header}'>
+			<div class="banner_pic"><f:format.html parseFuncTSPath="">{header}</f:format.html></div>
+		</f:if>
+	</f:else>
+</f:if>
+<f:if condition='{subMenu_1}'>
+	<div class="submenu clearfix">
+		<div class="container">
+			<f:format.html parseFuncTSPath="">{subMenu_1}</f:format.html>
+		</div>
+	</div>
+</f:if>

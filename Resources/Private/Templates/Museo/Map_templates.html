@@ -1,0 +1,39 @@
+<f:flashMessages />
+<div id="ol4-map-container">
+	<div id="ol4-mapdiv"></div>
+	<div id="popup" class="ol-popup">
+		<div id="popup-loader" style="display: none"></div>
+		<div id="popup-content"></div>
+	</div>
+</div>
+<div id="map-list">
+	<div class="row">
+		<div class="joMapTitle col-9"><h5>100 Seiten der Industrialisierung</h5></div>
+		<div class="joMapNav col-3 row">
+			<div class="col">
+				<nav class="navbar navbar-light">
+			        <div class="navbar-header ml-auto">
+			            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+			                <span class="navbar-toggler-icon"></span>
+			            </button>
+			        </div>
+			        <div class="navbar-collapse collapse" id="navbar">
+			            <f:cObject typoscriptObjectPath="lib.mainMenu_1" />
+			        </div>
+			        <div>
+			          <f:cObject typoscriptObjectPath="lib.mobileLogo" />
+			        </div>
+			    </nav>
+			</div>
+		    <div class="col">
+			    <f:cObject typoscriptObjectPath="lib.merkliste" />
+		    	<f:if condition="{merkliste}">
+			        <f:format.html parseFuncTSPath="">{merkliste}</f:format.html>
+		    	</f:if>
+			</div>
+		</div>
+	</div>
+	<div class="joScrollWrap">
+		<f:render partial="facettecontrols" arguments="{_all}"/>
+	</div>
+</div>

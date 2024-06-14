@@ -1,0 +1,24 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<f:section name="objviewer">
+	<f:if condition="{items.objmImages}">
+			<link href="/typo3conf/ext/jo_museo/Resources/Public/Css/objm/objvmain.css" type="text/css" rel="stylesheet">
+			<script type="text/javascript">
+				var imageList = <f:format.raw>{items.objmImages -> f:format.json()}</f:format.raw>;
+				var iiifImageApi = '{items.iiifImageApi}';
+			</script>
+			<script src="/typo3conf/ext/jo_museo/Resources/Public/JavaScript/objm/objviewer.js"></script>
+			<div class="objmviewer viewer-container">
+				<img class="objmviewer-img">
+				<div class="objmviewer-nav-container">
+					<div class="objmviewer-nav">
+						<i class="fas fa-arrow-left fa-lg objmviewer-left"></i>
+						<i class="fas fa-arrow-right fa-lg objmviewer-right"></i>
+						<i class="fas fa-plus fa-lg objmviewer-zoom"></i>
+						<i class="fas fa-minus fa-lg objmviewer-unzoom hidden"></i>
+						<i class="fas fa-play fa-lg objmviewer-play"></i>
+						<i class="fas fa-stop fa-lg objmviewer-stop hidden"></i>
+					</div>
+				</div>
+			</div>
+	</f:if>
+</f:section>

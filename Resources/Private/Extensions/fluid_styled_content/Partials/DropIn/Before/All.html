@@ -1,0 +1,6 @@
+<f:switch expression="{data.layout}">
+	<f:case value="1"><section id="ce{data.uid}" class="jo-ce layout-1"></f:case>
+	<f:case value="2"><section id="ce{data.uid}" class="jo-ce layout-2 clearfix"></f:case>
+	<f:case value="3"><section id="ce{data.uid}" class="jo-ce layout-3 clearfix"></f:case>
+	<f:defaultCase><section id="ce{data.uid}" class="jo-ce layout-0 <f:if condition='({data.colPos}!=0)'>container</f:if>"></f:defaultCase>
+</f:switch>	

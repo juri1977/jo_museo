@@ -1,0 +1,65 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<f:variable name="ajaxpagetype" value="0"/>
+<f:variable name="ajaxpagetypecssclass" value=""/>
+<f:if condition="{config.ajaxload}">
+	<f:variable name="ajaxpagetype" value="200"/>
+	<f:variable name="ajaxpagetypecssclass" value=" t200"/>
+</f:if>
+<div class="clearfix items joSubHierarchy joSliderShowItems" data-level="{facette_results.level}">
+	<div class="joSliderShow-Title">
+		<f:format.crop maxCharacters="40">
+			<f:if condition="{config.init.searchconfig.hierarchyconfig.{current_selected}.subnames}">
+				<f:then>
+					{config.init.searchconfig.hierarchyconfig.{current_selected}.subnames} {facette_results.level - 1}
+				</f:then>
+				<f:else>
+					{facette_results.rootline_item}
+				</f:else>
+			</f:if>
+		</f:format.crop>
+	</div>
+	<f:for each="{facette_results.content}" as="item_row" key="k">
+		<ul>
+			<f:for each="{item_row}" as="joSubIndex" key="Subkey" iteration="i">
+				<f:alias map="{name_array: '{joSubIndex.v->jo:explode(delimiter:\'$\')}'}">
+					<li class="<f:if condition='{joSubIndex.a}'>active</f:if><f:if condition='{joSubIndex.o}'> joCheckOpen</f:if>">
+						<div class="button_wrap">
+							<div class="joCheck-container">
+								<f:if condition="{joSubIndex.a} == '1'">
+									<f:then>
+										<f:link.action noCache="1" additionalParams="{ceid:'{extbase_config.ce_uid}'}" pageType="{ajaxpagetype}" class="joCheck joCheckColor_{joSubIndex.a}{ajaxpagetypecssclass}"  arguments="{jo:jomakearray(arraykey:'remove{joSubIndex.f}', arrayvalue:'{Subkey}')}">
+											&nbsp;
+										</f:link.action>
+									</f:then>
+									<f:else>
+										<f:link.action noCache="1" pageType="{ajaxpagetype}" class="joCheck joCheckColor_{joSubIndex.a}{ajaxpagetypecssclass}" additionalParams="{add:'1', ceid:'{extbase_config.ce_uid}'}" arguments="{jo:jomakearray(arraykey:'{joSubIndex.f}', arrayvalue:'{Subkey}')}">
+											&nbsp;
+										</f:link.action>
+									</f:else>
+								</f:if>
+							</div>
+							<f:if condition="{joSubIndex.a} == '1'">
+								<f:then>
+									<f:link.action noCache="1" additionalParams="{ceid:'{extbase_config.ce_uid}'}" pageType="{ajaxpagetype}" class="add joCheckColor_{joSubIndex.a}{ajaxpagetypecssclass}" arguments="{jo:jomakearray(arraykey:'remove{joSubIndex.f}', arrayvalue:'{Subkey}')}">
+										{name_array.0} ({joSubIndex.c})
+									</f:link.action>
+								</f:then>
+								<f:else>
+									<f:link.action noCache="1" pageType="{ajaxpagetype}" class="add joCheckColor_{joSubIndex.a}{ajaxpagetypecssclass}" additionalParams="{add:'1',ceid:'{extbase_config.ce_uid}'}" arguments="{jo:jomakearray(arraykey:'{joSubIndex.f}', arrayvalue:'{Subkey}')}">
+										{name_array.0} ({joSubIndex.c})
+									</f:link.action>
+								</f:else>
+							</f:if>
+							<div class="joOpener-container">
+								
+								<f:if condition="{joSubIndex.ch}">
+									<div class="joOpener joCheckColor_{joSubIndex.a}<f:if condition='{joSubIndex.o}'> active</f:if>" data-href="<f:uri.action action="ajax" controller="Museo" additionalParams="{ret:'h', ceid:'{extbase_config.ce_uid}'}" noCache="1" pageType="2345" arguments="{jo:jomakearray(arraykey:'{joSubIndex.f}', arrayvalue:'{Subkey}')}"/>" data-id="{joSubIndex.id}"></div>
+								</f:if>
+							</div>
+						</div>
+					</li>
+				</f:alias>
+			</f:for>
+		</ul>
+	</f:for>
+</div>

@@ -1,0 +1,51 @@
+<f:if condition="{userselected_facettes.timeline}">
+	<div class="joPageTimeline{ajaxpagetypecssclass}">
+		<f:if condition='{joSearcharraycomplete.content.timeline}'>
+			<div class="del_timefilter">
+				<f:link.action pageType="{ajaxpagetype}" class="{ajaxpagetypecssclass}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" noCache="1" arguments="{jodeletetimefilter:'1'}">
+					Zeitstrahl zurücksetzen
+					<div class="img-container">
+						<div class="joSprite" title="Zeitfilter löschen"></div>
+					</div>
+				</f:link.action>
+			</div>
+		</f:if>
+		<div class="joTimelineBody">
+			<f:if condition='{facettes_prepared.full_index.timeline}'>
+				<f:then>
+					<f:if condition="{facettes_prepared.full_index.timeline.headerdata.startpointinyears} != {facettes_prepared.full_index.timeline.headerdata.endpointinyears}">
+						<f:then>
+							<div class="chart_wrap">
+								<div id="chart_div"></div>
+							</div>
+							<div class="joPageTimelineScale d-flex flex-column">
+								<ul class="joObjekteTimeline">
+									<li class="joStartSlider" style="left:{facettes_prepared.full_index.timeline.headerdata.sliderpositionstart}%;"></li>
+									<li class="joBgSliderFocus" style="left:{facettes_prepared.full_index.timeline.headerdata.sliderpositionstart}%;right:{facettes_prepared.full_index.timeline.headerdata.sliderpositionendright}%;"></li>
+									<li class="joBgSlider"></li>
+									<li class="joEndSlider" style="left:{facettes_prepared.full_index.timeline.headerdata.sliderpositionend}%;"></li>
+								</ul>
+								<div class="time_wrap d-flex">
+									<div class="joObjekteTimelineStartJahr">
+										<span>{facettes_prepared.full_index.timeline.headerdata.startpointinyears}</span>
+									</div>
+									<div class="joObjekteTimelineEndJahr">
+										<span>{facettes_prepared.full_index.timeline.headerdata.endpointinyears}</span>
+									</div>
+								</div>
+							</div>
+						</f:then>
+						<f:else>
+							<div class="joSameYears">
+								<div class="joSameYears-text" style="border-color:{facettes_prepared.full_index.timeline.color.linecg};color:{facettes_prepared.full_index.timeline.color.linecs};background-color:{facettes_prepared.full_index.timeline.color.fillcs}">Jahr: {facettes_prepared.full_index.timeline.headerdata.startpointinyears}</div>
+							</div>
+						</f:else>
+					</f:if>
+				</f:then>
+				<f:else>
+					<div class="joNoTime">{jo:translate(key:'{langPath}:jo_bkr_base.timeline.nothing')}</div>
+				</f:else>
+			</f:if>
+		</div>
+	</div>
+</f:if>

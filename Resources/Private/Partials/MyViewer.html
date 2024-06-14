@@ -1,0 +1,15 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<f:section name="myviewer">
+	<f:if condition="{items.iiifManifest}">
+			<link href="/typo3conf/ext/jo_museo/Resources/Public/Css/viewer/myvdefault.css" type="text/css" rel="stylesheet">
+			<link href="/typo3conf/ext/jo_museo/Resources/Public/Css/viewer/myvmain.css" type="text/css" rel="stylesheet">
+			<script src="/typo3conf/ext/jo_museo/Resources/Public/JavaScript/viewer/iview-client-base.js"></script>
+			<script src="/typo3conf/ext/jo_museo/Resources/Public/JavaScript/viewer/iview-client-desktop.js"></script>
+			<script src="/typo3conf/ext/jo_museo/Resources/Public/JavaScript/viewer/iview-client-iiif.js"></script>
+			<script src="/typo3conf/ext/jo_museo/Resources/Public/JavaScript/viewer/iview-client-metadata.js"></script>
+			<!-- <script src="/typo3conf/ext/jo_museo/Resources/Public/JavaScript/viewer/iview-client-mobile.js"></script> -->
+			<script src="/typo3conf/ext/jo_museo/Resources/Public/JavaScript/viewer/manifesto.min.js"></script>
+			<script src="/typo3conf/ext/jo_museo/Resources/Public/JavaScript/viewer/myviewer.js"></script>
+			<div class="viewer-container mycore-viewer" iiif-imageapi="{items.iiifImageApi}" iiif-manifesturl="{items.iiifManifest}" iiif-filepath="{items.iiifMainFile}"></div>
+	</f:if>
+</f:section>

@@ -1,0 +1,317 @@
+<T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
+	<sheets>
+		<main>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>Allgemein</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<switchableControllerActions>
+                        <TCEforms>
+                            <label>Ansicht</label>
+                            <onChange>reload</onChange>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+                                <items type="array">
+                                    <numIndex index="1" type="array">
+                                        <numIndex index="0">Eine spezifische Ausstellung auswählen</numIndex>
+                                        <numIndex index="1">Exhibition->showexhibition;Exhibition->import;Exhibition->showfullindex;Exhibition->loadbook;Exhibition->showdata</numIndex>
+                                    </numIndex>
+                                    <numIndex index="2" type="array">
+                                        <numIndex index="0">Sektionen (nicht konfiguriert)</numIndex>
+                                        <numIndex index="1">Exhibition->showsection;Exhibition->showobject;Exhibition->ajax;Exhibition->showfullindex;Exhibition->loadbook;Exhibition->showdata</numIndex>
+                                    </numIndex>
+									<numIndex index="3" type="array">
+                                        <numIndex index="0">Alle Ausstellungen im Überblick anzeigen</numIndex>
+                                        <numIndex index="1">Exhibition->showall;Exhibition->import;Exhibition->showexhibition;Exhibition->showsection;Exhibition->showobject;Exhibition->ajax;Exhibition->showfullindex;Exhibition->loadbook;Exhibition->showdata</numIndex>
+                                    </numIndex>
+									<numIndex index="4" type="array">
+                                        <numIndex index="0">Ausstellungen Teaser (nicht konfiguriert)</numIndex>
+                                        <numIndex index="1">Exhibition->showteaser;Exhibition->import;Exhibition->showfullindex;Exhibition->loadbook;Exhibition->showdata</numIndex>
+                                    </numIndex>
+                                </items>
+                            </config>
+                        </TCEforms>
+                    </switchableControllerActions>
+					<settings.exhibition>
+						<TCEforms>
+							<label>Ausstellung auswählen</label>
+							<displayCond>FIELD:switchableControllerActions:=:Exhibition->showexhibition;Exhibition->import;Exhibition->showfullindex;Exhibition->loadbook;Exhibition->showdata</displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<foreign_table>tx_jomuseo_domain_model_exhibition</foreign_table>
+							</config>
+						</TCEforms>
+					</settings.exhibition>
+					<settings.exhibitionoverview>
+						<TCEforms>
+							<label>Darstellung der Ausstellungsübersicht</label>
+							<onChange>reload</onChange>
+							<displayCond>FIELD:switchableControllerActions:=:Exhibition->showall;Exhibition->import;Exhibition->showexhibition;Exhibition->showsection;Exhibition->showobject;Exhibition->ajax;Exhibition->showfullindex;Exhibition->loadbook;Exhibition->showdata</displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+						            <numIndex index="0" type="array">
+						            	<numIndex index="0">Vollflächig untereinander</numIndex>
+						            	<numIndex index="1">1</numIndex>
+						            </numIndex>
+					           		<numIndex index="1" type="array">
+						            	<numIndex index="0">Einen Teil der Ausstellungen über die ganze Seitenbreite und danach je 2 Kacheln nebeneinander</numIndex>
+						            	<numIndex index="1">2</numIndex>
+						            </numIndex>
+						            <numIndex index="2" type="array">
+						            	<numIndex index="0">4 Kacheln nebeneinander</numIndex>
+						            	<numIndex index="1">3</numIndex>
+						            </numIndex>
+					          	</items>
+							</config>
+						</TCEforms>
+					</settings.exhibitionoverview>
+					<settings.showallheadline>
+						<TCEforms>
+							<label>Text, der über der Ausstellungsübersicht platziert werden soll</label>
+							<displayCond>FIELD:settings.exhibitionoverview:=:2</displayCond>
+							<config>
+								<type>input</type>
+								<size>20</size>
+							</config>
+						</TCEforms>
+					</settings.showallheadline>
+					<settings.numberfullsize>
+					    <TCEforms>
+					    	<onChange>reload</onChange>
+					        <label>Anzahl der vollflächig eingeblendeten Ausstellungen</label>
+					        <description>Die Zahl, die Sie hier auswählen entspricht der Anzahl der vollflächig(von links nach rechts - nicht seitenfüllend) dargestellten Ausstellungseinstiege. Bitte leer lassen, wenn ALLE Ausstellungen vollflächig untereinander dargestellt werden sollen</description>
+					        <displayCond>FIELD:settings.exhibitionoverview:=:2</displayCond>
+					        <config>
+					            <type>select</type>
+					            <renderType>selectSingle</renderType>
+					            <items>
+					                <numIndex index="0">
+					                    <numIndex index="0">bitte auswählen oder leer lassen</numIndex>
+					                    <numIndex index="1">0</numIndex>
+					                </numIndex>
+					                <numIndex index="1">
+					                    <numIndex index="0">1</numIndex>
+					                    <numIndex index="1">1</numIndex>
+					                </numIndex>
+					                <numIndex index="2">
+					                    <numIndex index="0">2</numIndex>
+					                    <numIndex index="1">2</numIndex>
+					                </numIndex>
+					                <numIndex index="3">
+					                    <numIndex index="0">3</numIndex>
+					                    <numIndex index="1">3</numIndex>
+					                </numIndex>
+					                <numIndex index="4">
+					                    <numIndex index="0">4</numIndex>
+					                    <numIndex index="1">4</numIndex>
+					                </numIndex>
+					            </items>
+					        </config>
+					    </TCEforms>
+					</settings.numberfullsize>
+					<settings.showallheadlinebetween>
+						<TCEforms>
+							<label>Text, der dem zweiten Ausstellungsblock(Kacheln nebeneinander) platziert werden soll</label>
+							<displayCond>FIELD:settings.numberfullsize:!=:0</displayCond>
+							<config>
+								<type>input</type>
+								<size>20</size>
+							</config>
+						</TCEforms>
+					</settings.showallheadlinebetween>
+					<settings.showobjektnumbers>
+				    	<TCEforms>
+							<label>Objektnummern anzeigen</label>
+							<config>
+								<type>check</type>
+								<default>0</default>
+							</config>
+						</TCEforms>
+				    </settings.showobjektnumbers>
+				</el>
+			</ROOT>
+		</main>
+		<alternativ>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>Alternative Einstiege</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<settings.entrySection>
+				    	<TCEforms>
+							<label>Eintritt Section</label>
+							<config>
+								<type>check</type>
+								<default>0</default>
+							</config>
+							<onChange>reload</onChange>
+						</TCEforms>
+				    </settings.entrySection>
+				    <settings.displaySection>
+				    	<TCEforms>
+							<label>Eintritt Section Bild</label>
+							<displayCond>FIELD:settings.entrySection:=:1</displayCond>
+							<config>
+								<type>inline</type>
+				                <maxitems>1</maxitems>
+				                <foreign_table>sys_file_reference</foreign_table>
+				                <!--<foreign_field>uid_foreign</foreign_field>-->
+				                <foreign_table_field>tablenames</foreign_table_field>
+				                <foreign_label>uid_local</foreign_label>
+				                <foreign_sortby>sorting_foreign</foreign_sortby>
+				                <foreign_selector>uid_local</foreign_selector>
+				                <foreign_selector_fieldTcaOverride type="array">
+				                    <config>
+				                        <appearance>
+				                            <elementBrowserType>file</elementBrowserType>
+				                            <elementBrowserAllowed>jpg,png</elementBrowserAllowed>
+				                        </appearance>
+				                    </config>
+				                </foreign_selector_fieldTcaOverride>
+				                <foreign_match_fields type="array">
+				                    <fieldname>image</fieldname>
+				                </foreign_match_fields>
+				                <appearance type="array">
+				                    <newRecordLinkAddTitle>1</newRecordLinkAddTitle>
+				                    <headerThumbnail>
+				                        <field>uid_local</field>
+				                        <height>64</height>
+				                        <width>64</width>
+				                    </headerThumbnail>
+				                </appearance>
+							</config>
+						</TCEforms>
+				    </settings.displaySection>
+				    <settings.entryFacett>
+				    	<TCEforms>
+							<label>Eintritt Facetten</label>
+							<config>
+								<type>check</type>
+								<default>0</default>
+							</config>
+							<onChange>reload</onChange>
+						</TCEforms>
+				    </settings.entryFacett>
+				    <settings.displayFacett>
+				    	<TCEforms>
+							<label>Eintritt Facetten Bild</label>
+							<displayCond>FIELD:settings.entryFacett:=:1</displayCond>
+							<config>
+								<type>inline</type>
+				                <maxitems>4</maxitems>
+				                <foreign_table>sys_file_reference</foreign_table>
+				                <!--<foreign_field>uid_foreign</foreign_field>-->
+				                <foreign_table_field>tablenames</foreign_table_field>
+				                <foreign_label>uid_local</foreign_label>
+				                <foreign_sortby>sorting_foreign</foreign_sortby>
+				                <foreign_selector>uid_local</foreign_selector>
+				                <foreign_selector_fieldTcaOverride type="array">
+				                    <config>
+				                        <appearance>
+				                            <elementBrowserType>file</elementBrowserType>
+				                            <elementBrowserAllowed>jpg,png</elementBrowserAllowed>
+				                        </appearance>
+				                    </config>
+				                </foreign_selector_fieldTcaOverride>
+				                <foreign_match_fields type="array">
+				                    <fieldname>image</fieldname>
+				                </foreign_match_fields>
+				                <appearance type="array">
+				                    <newRecordLinkAddTitle>1</newRecordLinkAddTitle>
+				                    <headerThumbnail>
+				                        <field>uid_local</field>
+				                        <height>64</height>
+				                        <width>64</width>
+				                    </headerThumbnail>
+				                </appearance>
+							</config>
+						</TCEforms>
+				    </settings.displayFacett>
+				    <settings.entryJump>
+				    	<TCEforms>
+							<label>Eintritt Sprungmarken</label>
+							<config>
+								<type>check</type>
+								<default>0</default>
+							</config>
+							<onChange>reload</onChange>
+						</TCEforms>
+				    </settings.entryJump>
+				    <settings.displayJump>
+				    	<TCEforms>
+							<label>Eintritt Sprungmarken Bild</label>
+							<displayCond>FIELD:settings.entryJump:=:1</displayCond>
+							<config>
+								<type>inline</type>
+				                <maxitems>5</maxitems>
+				                <foreign_table>sys_file_reference</foreign_table>
+				                <!--<foreign_field>uid_foreign</foreign_field>-->
+				                <foreign_table_field>tablenames</foreign_table_field>
+				                <foreign_label>uid_local</foreign_label>
+				                <foreign_sortby>sorting_foreign</foreign_sortby>
+				                <foreign_selector>uid_local</foreign_selector>
+				                <foreign_selector_fieldTcaOverride type="array">
+				                    <config>
+				                        <appearance>
+				                            <elementBrowserType>file</elementBrowserType>
+				                            <elementBrowserAllowed>jpg,png,svg</elementBrowserAllowed>
+				                        </appearance>
+				                    </config>
+				                </foreign_selector_fieldTcaOverride>
+				                <foreign_match_fields type="array">
+				                    <fieldname>image</fieldname>
+				                </foreign_match_fields>
+				                <appearance type="array">
+				                    <newRecordLinkAddTitle>1</newRecordLinkAddTitle>
+				                    <headerThumbnail>
+				                        <field>uid_local</field>
+				                        <height>64</height>
+				                        <width>64</width>
+				                    </headerThumbnail>
+				                </appearance>
+							</config>
+						</TCEforms>
+				    </settings.displayJump>
+				    <settings.sectionAlternativ>
+				    	<TCEforms>
+							<label>Section Darstellung alternativ (3 x pro line)</label>
+							<config>
+								<type>check</type>
+								<default>0</default>
+							</config>
+						</TCEforms>
+				    </settings.sectionAlternativ>
+				</el>
+			</ROOT>
+		</alternativ>
+		<jumpmarks>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>Sprungmarken</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<settings.sectionVirtuellText3>
+				    	<TCEforms>
+							<label>Virtueller Rundgang Text</label>
+							<config>
+								<type>text</type>
+								<enableRichtext>true</enableRichtext>
+							</config>
+						</TCEforms>
+				    </settings.sectionVirtuellText3>
+				</el>
+			</ROOT>
+		</jumpmarks>
+	</sheets>
+</T3DataStructure>

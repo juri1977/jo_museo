@@ -1,0 +1,68 @@
+div.joDetail div.detailimage.viewer-layout {
+      -webkit-box-flex: 0;
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin: auto;
+    position: relative;
+    height: 600px;
+}
+
+.objmviewer {
+  width: 900px;
+  height: 600px;
+  overflow: hidden;
+  position: relative;
+  margin: auto;
+}
+.objmviewer-img {
+  width: 900px;
+  height: 600px;
+  background-position: center;
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
+.zoom {
+  width: 3840px;
+  height: 2560px;
+  /* margin-left: -960px;
+  margin-top: -640px; */
+}
+
+.objmviewer-nav-container {
+  position: absolute;
+  left: 50%;
+  bottom: 5px;
+}
+
+.objmviewer-nav {
+  display: block;
+  position: relative;
+  left: -50%;
+  color: black;
+  -webkit-user-select: none; /* Chrome/Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+  -o-user-select: none;
+  user-select: none;
+}
+.objmviewer .hidden{
+  display: none;
+}
+
+.objmviewer-nav > i {
+  padding-right: 10px;
+}
+
+@media (max-width: 900px) {
+  .objmviewer {
+    width: auto;
+  }
+/*
+  .objmviewer-img {
+    width: auto;
+  } */
+}

@@ -1,0 +1,83 @@
+<f:spaceless>
+<f:if condition="{exhibition}">
+	<div class="exhibition showindex">
+		<div class="overview-closer"></div>
+		<f:comment>
+			<h2 class="title">{exhibition.exhibition.title}</h2> 
+			<f:if condition="{exhibition.exhibition.subtitle}"> 
+				<h2 class="subtitle"> 
+					<f:for each="{exhibition.exhibition.subtitle}" as="items">
+						<div>{items.title}</div>
+					</f:for>
+				</h2>   
+			</f:if> 
+		</f:comment>
+		<ul class="row"> 
+			<li class="col-12" style="padding:0 10px;">
+				<f:link.action action="showexhibition" class="up d-block text-center" arguments="{ex:'{exhibition.exhibition.uid}'}">
+					<h2 class="text-overflow" >
+						Zur Ausstellungsübersicht
+					</h2>
+				</f:link.action>
+			</li>
+			<li class="col-12" style="padding:0 10px;">
+				<f:link.action action="showsection" class="up d-block text-center" arguments="{pid:'{exhibition.exhibition.pid}', parent:'{exhibition.exhibition.uid}'}">
+					<h2 class="text-overflow" >
+						Zur Sektions/Kapitelübersicht
+					</h2>
+				</f:link.action>
+			</li>
+		</ul>
+		<ul class="row"> 
+			<f:for each="{exhibition.sections}" as="items">
+				<li class="section_li col-sm-6 col-md-6 col-lg-4 col-xl-3<f:if condition='{items.uid} == {exhibition.cur_section}'> active</f:if>">
+					<div>
+						<div class="section-wrap">
+							<f:variable name="bg_image" value=""/>
+							<f:if condition="{items.derivate.0}"> 
+								<f:variable name="bg_image" value="{f:uri.image(image:items.derivate.0, maxWidth: '{settings.exhibition.parameter.section.overview.imagewidth}', width:'{settings.exhibition.parameter.section.overview.imagewidth}', minWidth: '{settings.exhibition.parameter.section.overview.imagewidth}')}"/>
+							</f:if>
+							<f:link.action class="d-block h-100" action="showobject" arguments="{pid:'{items.pid}', uid:'{items.uid}', parent:'{exhibition.exhibition.uid}'}">
+						    	<div class="img_bg h-100 w-100" style="background-image: url({bg_image})">
+						    		<div class="img_dark_wrapper h-100 d-flex flex-column">
+						    			<h3 class="section_title text-center text_shadow">{items.title}</h3> 
+						    		</div>
+						    	</div> 
+						    </f:link.action>
+					    </div>
+					</div>
+					<f:if condition="{items.exhibit}">
+						<div class="section_objects">  
+							<f:for each="{items.exhibit}" as="item">
+								<f:link.action class="d-block" action="showobject" arguments="{pid:'{items.pid}', uid:'{items.uid}', parent:'{exhibition.exhibition.uid}'}" section="obj{item.uid}">
+									<div class="d-flex overview-item"> 
+								    	<div class="overview-nr">{item.objektnummer}</div>
+								    	<div class="overview-img">
+								    		<f:if condition="{item.derivate.0}"> 
+								    			<f:then>
+										    		<div class="bg_image h-100" style="background-image: url({f:uri.image(image:item.derivate.0, maxWidth: '{settings.exhibition.parameter.section.overview.imagewidth}', width:'{settings.exhibition.parameter.section.overview.imagewidth}', minWidth: '{settings.exhibition.parameter.section.overview.imagewidth}')})"></div>
+										    	</f:then>
+										    	<f:else>
+										    		<f:if condition="{exhibition.exhibition.derivate.0}"> 
+										    			<f:then>
+										    				<div class="bg_image h-100" style="background-image: url({f:uri.image(image:exhibition.exhibition.derivate.0, maxWidth: '{settings.exhibition.parameter.section.overview.imagewidth}', width:'{settings.exhibition.parameter.section.overview.imagewidth}', minWidth: '{settings.exhibition.parameter.section.overview.imagewidth}')})"></div>
+										    			</f:then>
+										    			<f:else>
+										    				<div class="bg_image h-100"></div>
+										    			</f:else>
+										    		</f:if>
+										    	</f:else>
+									    	</f:if>
+									    </div>
+								    	<div class="overview-title">{item.title}</div>
+								    </div>
+								</f:link.action> 
+							</f:for>
+						</div>
+					</f:if>
+				</li>
+			</f:for>
+		</ul>
+	</div>
+</f:if>
+</f:spaceless>

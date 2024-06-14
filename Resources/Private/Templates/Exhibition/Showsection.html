@@ -1,0 +1,978 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<f:spaceless>
+<f:variable name="ncview"></f:variable>
+<f:if condition="{nc}">
+	<f:variable name="ncview"> singleitem</f:variable>
+</f:if>
+<div class="exhibition joSection_container position-relative w-100{ncview}">
+	<f:if condition="{nc}">
+		<f:render section="standalone_header" arguments="{_all}"/>
+	</f:if>
+	<f:if condition="!{nc}">
+		<div class="back"><div class="joSprite"></div></div>
+	</f:if>
+	<div id="overview-container"></div>
+	<div class="joExhibition_content w-100">
+		<f:if condition="{nc} != 1">
+			<f:render section="sitemap" arguments="{_all}"/>
+		</f:if>
+		<f:render section="objekte" arguments="{_all}"/>
+	</div>
+</div>
+
+<f:section name="sitemap">
+	<div class="joSitemap">
+		<div class="sitemap-icon-container d-block">
+			<div class="sitemap-icon"></div>
+		</div>
+		<div class="overview-icon-container d-block">
+			<f:link.action pageType="124" noCache="1" class="overview-link" action="showfullindex" arguments="{ex:'{parent}'}"></f:link.action>
+		</div>
+		<div id="carousel-sitemap" class="h-100 joSitemap-container section-sitemap">
+		  	<div class="carousel-sitemap-slick h-100" >
+		  		<f:for each="{sektionen}" as="sektion" iteration="i">
+		  			<f:variable name="var_derivate" value=""/>
+		  			<f:if condition="{sektion.orig.derivate.0}">
+		  				<f:variable name="var_derivate" value="background-image: url({f:uri.image(image:'{sektion.orig.derivate.0}', maxWidth: '{settings.exhibition.parameter.section.overview.imagewidth}', width:'{settings.exhibition.parameter.section.overview.imagewidth}', minWidth: '{settings.exhibition.parameter.section.overview.imagewidth}')})"/>
+		  			</f:if>
+				    <div class="h-100 sitemap-slick-item<f:if condition='{i.isFirst}'> active sitemap-slick-active</f:if>" data-target="#obj{sektion.orig.uid}" data-index="{i.index}" style="{var_derivate}">
+				    	<div class="img_bg h-100 w-100"><div class="sitemap-slick-title">{sektion.orig.title}</div></div>
+				    </div>
+				</f:for>
+	  		</div>
+		</div>
+	</div>
+</f:section>
+
+<f:section name="objekte">
+	<div class="section_container w-100">
+		<f:for each="{sektionen}" as="sektion" iteration="i" key="k">
+			<f:variable name="section_teaser_bg" value=""/>
+			<f:if condition="{sektion.orig.configuration.bgcolor.vDEF}">
+				<f:variable name="section_teaser_bg" value="background-color:{sektion.orig.configuration.bgcolor.vDEF};"/>
+			</f:if>
+	  		<f:variable name="section_teaser_color" value=""/>
+	  		<f:if condition="{sektion.orig.configuration.fontcolor.vDEF}">
+				<f:variable name="section_teaser_color" value="color:{sektion.orig.configuration.fontcolor.vDEF};"/>
+			</f:if>
+			<f:if condition="{sektion.orig.nextsectiontext}">
+				<f:render section="nextsectiontext" arguments="{_all}" />
+			</f:if>
+			<div id="obj{sektion.orig.uid}" class="section w-100 up-scroll<f:if condition='{i.isFirst}'> active isFirst</f:if>">
+				<div class="content-wrapper">
+					<f:switch expression="{sektion.orig.view}">
+					    <f:case value="2">
+					    	<f:render section="layout_2" arguments="{_all}" />
+						</f:case>
+						<f:case value="3">
+					    	<f:render section="layout_2" arguments="{_all}" />
+						</f:case>
+						<f:case value="4">
+					    	<f:render section="layout_4" arguments="{_all}" />
+						</f:case>
+						<f:case value="5">
+					    	<f:render section="layout_5" arguments="{_all}" />
+						</f:case>
+						<f:case value="7">
+					    	<f:render section="layout_7" arguments="{_all}" />
+						</f:case>
+						<f:case value="8">
+					    	<f:render section="layout_8" arguments="{_all}" />
+						</f:case>
+					    <f:defaultCase>
+					    	<f:render section="view_default" arguments="{_all}"/>
+						</f:defaultCase>
+					</f:switch>
+				</div>
+			</div>
+		</f:for>
+		<f:comment>
+			<!--
+			<f:if condition="{sektionen} && {jsontitle}">
+				<div class="section up-scroll map-scroll">
+					<div class="content-wrapper">
+						<div class="col-md-12 clearfix" id="map-container">
+						    <h3 id="map-jumper">{jsontitle}</h3>
+						    <div id="mapdiv" class="olMap col-12 map"></div>
+						    <div id="popup" class="ol-popup" style="background-color: white; display: block;">
+					      		<a href="#" id="popup-closer" class="ol-popup-closer"></a>
+					      		<div id="popup-content"></div>
+						    </div>
+						</div>
+					</div>
+				</div>
+			</f:if>
+			-->
+		</f:comment>
+	</div>		
+</f:section>
+
+<f:comment>
+	<!--
+		Text zur Überleitung auf diese Sektion
+	-->
+</f:comment>
+<f:section name="nextsectiontext">
+	<div class="sec sec-next padding_{sektion.orig.configuration.padding.vDEF} textpos_{sektion.orig.configuration.textpos.vDEF}" data-color="{sektion.orig.color}">
+		<div class="upper_text_wrap text-center" style="font-size: 27px; padding: 0 10vw;">
+			<div style="padding:20px;text-align: center;font-size: 43px; ">&#8285;</div>
+			<f:format.html>{sektion.orig.nextsectiontext}</f:format.html>
+			<div style="padding:20px;text-align: center;font-size: 43px; ">&#8964;</div>
+		</div>
+	</div>
+</f:section>
+
+<f:comment>
+	<!--
+		Defaultview - Bilder als Slideshow vollflächig / mit Abstand zum Rand / Text als Overlay vor der Slideshow, darüber oder darunter 
+	-->
+</f:comment>
+<f:section name="view_default">
+	<div class="sec sec-1 w-100 padding_{sektion.orig.configuration.padding.vDEF} textpos_{sektion.orig.configuration.textpos.vDEF}" data-color="{sektion.orig.color}">
+		<f:if condition="{sektion.orig.configuration.textpos.vDEF} == '1'">
+			<div class="upper_text_wrap" style="{section_teaser_color}{section_teaser_bg}">
+				<f:render section="standalone_text_all" arguments="{_all}"/>
+			</div>
+		</f:if>
+		<div class="img_wrap">
+			<div class="position-relative image_inner_wrap h-100">
+				<f:if condition="{sektion.orig.derivate}">
+					<f:then>
+						<div id="carouselIndicators_{i.index}" class="carousel slide carousel-fade" data-ride="carousel" data-pause="false" data-interval="6000">
+							<f:if condition="{sektion.orig.derivate -> f:count()} > 1">
+						  		<ol class="carousel-indicators d-none">
+						  			<f:for each="{sektion.orig.derivate}" as="img" iteration="j">
+							    		<li data-target="#carouselIndicators_{i.index}" data-slide-to="{i.index}" class="<f:if condition='{j.isFirst}'>active</f:if>"></li>
+						  			</f:for>
+							  	</ol>
+						  	</f:if>
+					  		<div class="carousel-inner h-100">
+								<f:for each="{sektion.orig.derivate}" as="img" iteration="j"> 
+							    	<div class="h-100 carousel-item<f:if condition='{j.isFirst}'> active</f:if>">
+										<div class="section_img h-100" style="background-image: url({f:uri.image(image:img, maxWidth: '{settings.exhibition.parameter.section.template.imagewidth}', width:'{settings.exhibition.parameter.section.template.imagewidth}', minWidth: '{settings.exhibition.parameter.section.template.imagewidth}')})"></div>
+										<f:if condition="{img.originalResource.description}">
+											<div id="img-desc-{img.uid}" class="img-description collapse">{img.originalResource.description}</div>
+										</f:if>
+							    	</div>
+								</f:for>
+						  	</div>
+						</div>
+					</f:then>
+					<f:else>
+						<div id="carouselIndicators_{i.index}" class="carousel slide carousel-fade" data-ride="carousel" data-pause="hover" data-interval="6000">
+							<f:comment>
+								<!--
+									schauen was hier passiert
+								-->
+							</f:comment>
+						</div>
+					</f:else>
+				</f:if>
+				<f:render section="overlay_text" arguments="{_all}" />
+			</div>
+		</div>
+		<f:if condition="{sektion.orig.configuration.textpos.vDEF} == '2' || {sektion.orig.configuration.textpos.vDEF} != '0'">
+			<div class="lower_text_wrap" style="{section_teaser_color}{section_teaser_bg}">
+				<f:if condition="{sektion.orig.configuration.textpos.vDEF} == '2'">
+					<div class="textcontent info_wrap">
+						<f:render section="teaser" arguments="{_all}"/>
+					</div>
+				</f:if>
+				<f:if condition="{sektion.orig.configuration.textpos.vDEF} != '0'">
+					<div class="cta_wrap">
+						<f:render section="cta_version_2" arguments="{_all}" />
+					</div>
+				</f:if>
+			</div>
+		</f:if>
+	</div>
+</f:section>
+
+<f:comment>
+	<!--
+		4 oder 2 Abbildungen nebeneinander vollflächig / mit Abstand zum Rand / Text als Overlay, im Bildcontainer oder darunter/darüber 
+	-->
+</f:comment>
+<f:section name="layout_4">
+	<div class="sec sec-4 padding_{sektion.orig.configuration.padding.vDEF} textpos_{sektion.orig.configuration.textpos.vDEF}" data-color="{sektion.orig.color}">
+		<f:if condition="{sektion.orig.configuration.textpos.vDEF} == '1'">
+			<div class="upper_text_wrap" style="{section_teaser_color}{section_teaser_bg}">
+				<f:render section="standalone_text_all" arguments="{_all}"/>
+			</div>
+		</f:if>
+		<div class="img_wrap">
+			<div class="image_inner_wrap position-relative h-100">
+	  			<div class="image_container w-100 h-100 row no-gutters">
+	  				<f:variable name="bootstrap_classes" value="h-50 col-6"/>
+	  				<f:variable name="loop" value="{0:0, 1:1, 2:2, 3:3}"/>
+	  				<f:if condition="{sektion.orig.derivate -> f:count()} < 3">
+	  					<f:variable name="bootstrap_classes" value="h-100 col-6"/>
+	  					<f:variable name="loop" value="{0:0, 1:1}"/>
+	  				</f:if>
+	  				<f:render section="image_loop_fixed_amount" arguments="{_all}"/>
+				</div>
+		  		<f:render section="overlay_text" arguments="{_all}" />
+			</div>
+		</div>
+		<f:if condition="{sektion.orig.configuration.textpos.vDEF} == '2' || {sektion.orig.configuration.textpos.vDEF} != '0'">
+			<div class="lower_text_wrap" style="{section_teaser_color}{section_teaser_bg}">
+				<f:if condition="{sektion.orig.configuration.textpos.vDEF} == '2'">
+					<div class="textcontent info_wrap">
+						<f:render section="teaser" arguments="{_all}"/>
+					</div>
+				</f:if>
+			  	<f:if condition="{sektion.orig.configuration.textpos.vDEF} != '0'">
+					<div class="cta_wrap">
+						<f:render section="cta_version_2" arguments="{_all}" />
+					</div>
+				</f:if>
+			</div>
+		</f:if>
+	</div>
+</f:section>
+
+<f:comment>
+	<!--
+		Textinformationen zwischen zwei Bildern oder rechts neben einem Bild
+	-->
+</f:comment>
+<f:section name="layout_5">
+	<div class="sec sec-5 padding_{sektion.orig.configuration.padding.vDEF} textpos_{sektion.orig.configuration.textpos.vDEF}" data-color="{sektion.orig.color}">
+		<f:if condition="{sektion.orig.configuration.textpos.vDEF} == '1'">
+			<div class="upper_text_wrap" style="{section_teaser_color}{section_teaser_bg}">
+				<f:render section="standalone_text_all" arguments="{_all}"/>
+			</div>
+		</f:if>
+		<div class="row no-gutters img_wrap">
+			<f:variable name="bootstrap_classes" value="col-sm-4 h-100"/>
+			<f:if condition="{sektion.orig.derivate.0}">
+				<f:render section="single_image_bg_by_number" arguments="{val:'{sektion.orig}',number:'0', bootstrap_classes:'{bootstrap_classes}'}" />
+			</f:if>
+			<div class="image_bg image_dummy_with_text image_dummy h-100 col-sm overflow-hidden">
+				<f:if condition="{sektion.orig.configuration.textpos.vDEF} == '2'">
+					<f:render section="title" arguments="{_all}"/>
+				</f:if>
+				<f:if condition="{sektion.orig.configuration.textpos.vDEF} == '1'">
+					<div class="cta_wrap">
+						<f:render section="cta_version_2" arguments="{_all}" />
+					</div>
+				</f:if>
+				<f:if condition="{sektion.orig.configuration.textpos.vDEF} == '0'">
+					<f:render section="overlay_text" arguments="{_all}" />
+				</f:if>		
+			</div>
+			<f:if condition="{sektion.orig.derivate.1}">
+				<f:render section="single_image_bg_by_number" arguments="{val:'{sektion.orig}',number:'1', bootstrap_classes:'{bootstrap_classes}'}" />
+			</f:if>
+		</div>
+		<f:if condition="{sektion.orig.configuration.textpos.vDEF} == '2'">
+			<div class="lower_text_wrap" style="{section_teaser_color}{section_teaser_bg}">
+				<div class="textcontent info_wrap" style="{section_teaser_color}{section_teaser_bg}">
+					<f:render section="teaser" arguments="{_all}"/>
+				</div>
+			</div>
+		</f:if>	
+		<f:if condition="{sektion.orig.configuration.textpos.vDEF} == '2'">
+			<div class="cta_wrap">
+				<f:render section="cta_version_2" arguments="{_all}" />
+			</div>
+		</f:if>	
+	</div>
+</f:section>
+
+<f:comment>
+	<!--
+		Beliebige Anzahl quadratischer Abbildungen in Dreierreihen vollflächig / mit Abstand zum Rand / Text als Overlay oder darüber 
+	-->
+</f:comment>
+<f:section name="layout_7">
+	<div class="sec sec-7 padding_{sektion.orig.configuration.padding.vDEF} textpos_{sektion.orig.configuration.textpos.vDEF}" data-color="{sektion.orig.color}">
+		<f:if condition="{sektion.orig.configuration.textpos.vDEF} == '1'">
+			<div class="upper_text_wrap" style="{section_teaser_color}{section_teaser_bg}">
+				<f:render section="standalone_text_all" arguments="{_all}"/>
+			</div>
+		</f:if>
+		<div class="img_wrap_auto_height">
+			<div class="image_inner_wrap position-relative">
+	  			<div class="image_container w-100 row no-gutters">
+	  				<f:variable name="bootstrap_classes" value="col-md-4 square"/>
+	  				<f:render section="image_loop" arguments="{_all}"/>
+				</div>
+		  		<f:render section="overlay_text" arguments="{_all}" />
+			</div>
+		</div>
+		<f:if condition="{sektion.orig.configuration.textpos.vDEF} == '2' || {sektion.orig.configuration.textpos.vDEF} != '0'">
+			<div class="lower_text_wrap" style="{section_teaser_color}{section_teaser_bg}">
+				<f:if condition="{sektion.orig.configuration.textpos.vDEF} == '2'">
+					<div class="textcontent info_wrap">
+						<f:render section="teaser" arguments="{_all}"/>
+					</div>
+				</f:if>
+			  	<f:if condition="{sektion.orig.configuration.textpos.vDEF} != '0'">
+					<div class="cta_wrap">
+						<f:render section="cta_version_2" arguments="{_all}" />
+					</div>
+				</f:if>
+			</div>
+		</f:if>
+	</div>
+</f:section>
+
+<f:comment>
+	<!--
+		Beliebige Anzahl von Abbildungen hochkant nebeneinander vollflächig / mit Abstand zum Rand / Text als Overlay oder darüber 
+	-->
+</f:comment>
+<f:section name="layout_8">
+	<div class="sec sec-8 padding_{sektion.orig.configuration.padding.vDEF} textpos_{sektion.orig.configuration.textpos.vDEF}" data-color="{sektion.orig.color}">
+		<f:if condition="{sektion.orig.configuration.textpos.vDEF} == '1'">
+			<div class="upper_text_wrap" style="{section_teaser_color}{section_teaser_bg}">
+				<f:render section="standalone_text_all" arguments="{_all}"/>
+			</div>
+		</f:if>
+		<div class="img_wrap">
+			<div class="image_inner_wrap position-relative h-100">
+	  			<div class="image_container w-100 h-100 row no-gutters">
+	  				<f:variable name="bootstrap_classes" value="col-md"/>
+	  				<f:render section="image_loop" arguments="{_all}"/>
+				</div>
+		  		<f:render section="overlay_text" arguments="{_all}" />
+			</div>
+		</div>
+		<f:if condition="{sektion.orig.configuration.textpos.vDEF} == '2' || {sektion.orig.configuration.textpos.vDEF} != '0'">
+			<div class="lower_text_wrap" style="{section_teaser_color}{section_teaser_bg}">
+				<f:if condition="{sektion.orig.configuration.textpos.vDEF} == '2'">
+					<div class="textcontent info_wrap">
+						<f:render section="teaser" arguments="{_all}"/>
+					</div>
+				</f:if>
+			  	<f:if condition="{sektion.orig.configuration.textpos.vDEF} != '0'">
+					<div class="cta_wrap">
+						<f:render section="cta_version_2" arguments="{_all}" />
+					</div>
+				</f:if>
+			</div>
+		</f:if>
+	</div>
+</f:section>
+
+
+
+<f:comment>
+	<!--
+		Teaserinformationen
+	-->
+</f:comment>
+<f:section name="teaser">
+	<f:if condition="{sektion.orig.teaser} || {sektion.orig.description}">
+		<div class="sectionText noSwipe">
+			<div class="text">
+				<f:if condition="{sektion.orig.teaser}">
+					<f:then>
+						<f:format.html>{sektion.orig.teaser}</f:format.html>
+					</f:then>
+					<f:else>
+						<f:format.crop maxCharacters="{settings.exhibition.parameter.section.template.cropdesription}" append="{settings.exhibition.parameter.section.template.append}">
+							<f:format.html>{sektion.orig.description}</f:format.html>
+						</f:format.crop>
+					</f:else>
+				</f:if>
+			</div>
+		</div>
+	</f:if>
+</f:section>
+
+<f:comment>
+	<!--
+		Textinformationen über oder unter dem Bildensemble
+	-->
+</f:comment>
+<f:section name="standalone_text_all">
+	<div class="textcontent">
+		<div class="info_wrap d-flex">
+			<div class="d-none d-sm-block text-center">
+				<f:render section="title" arguments="{_all}"/>
+			</div>
+			<f:render section="teaser" arguments="{_all}"/>
+		</div>
+	</div>
+</f:section>
+
+<f:comment>
+	<!--
+		Textinformationen exklusive Teaser  über oder unter dem Bildensemble
+	-->
+</f:comment>
+<f:section name="standalone_text_title">
+	<div class="textcontent">
+		<div class="info_wrap d-flex">
+			<div class="d-none d-sm-block text-center">
+				<f:render section="title" arguments="{_all}"/>
+			</div>
+		</div>
+	</div>
+</f:section>
+
+<f:comment>
+	<!--
+		Textinformationen als Overlay
+	-->
+</f:comment>
+<f:section name="overlay_text">
+	<f:if condition="{sektion.orig.configuration.textpos.vDEF} == '0'">
+		<div class="sectionInfo-container">
+			<div id="obj{sektion.orig.uid}" class="sectionInfo-c">
+				<div class="sectionInfo-c-content">
+					<f:render section="title" arguments="{_all}"/>
+					<f:render section="cta_version_1" arguments="{_all}"/>
+					<f:render section="teaser" arguments="{_all}"/>
+				</div>
+				<f:if condition="{jsontitle} || (!{jsontitle} && !{i.isLast})">
+					<div class="more-arrow"></div>
+				</f:if>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{sektion.orig.configuration.textpos.vDEF} == '2' && {sektion.orig.view} == '1'">
+		<div class="sectionInfo-container">
+			<div id="obj{sektion.orig.uid}" class="sectionInfo-c">
+				<div class="sectionInfo-c-content">
+					<f:render section="title" arguments="{_all}"/>
+				</div>
+				<f:if condition="{jsontitle} || (!{jsontitle} && !{i.isLast})">
+					<div class="more-arrow"></div>
+				</f:if>
+			</div>
+		</div>
+	</f:if>
+</f:section>
+
+<f:comment>
+	<!--
+		Loop über ein Array mit definierter Größe (2,4 etc.) und Übernahme dieser Anzahl von Bildern aus den Objektassets, insofern vorhanden. Wenn keine Bilder vorhanden sind, wird ein Placeholder eingebaut
+	-->
+</f:comment>
+<f:section name="image_loop_fixed_amount">
+	<f:for each="{loop}" as="sval" key="sk" iteration="si">
+		<f:variable name="index" value="{sval}"/>
+		<f:if condition="{sektion.orig.configuration.textpos.vDEF} == '2'">
+			<f:variable name="index" value="{sval - 1}"/>
+		</f:if>
+		<f:if condition="{si.isFirst} && {sektion.orig.configuration.textpos.vDEF} == '2'">
+			<f:then>
+				<div class="image_bg image_dummy_with_text image_dummy {bootstrap_classes}">
+					<f:render section="title" arguments="{_all}"/>
+				</div>
+			</f:then>
+			<f:else>
+				<f:if condition="{sektion.orig.derivate.{index}}">
+					<f:then>
+						<div class="image_bg {bootstrap_classes}" style="background-image: url({f:uri.image(image: '{sektion.orig.derivate.{index}}', width: '1500m', height:'1500m')});"></div>
+					</f:then>
+					<f:else>
+						<div class="image_bg image_dummy {bootstrap_classes}"></div>
+					</f:else>
+				</f:if>
+			</f:else>
+		</f:if>
+	</f:for>
+</f:section>
+
+<f:comment>
+	<!--
+		Loop über ein Array von Bildern aus den Objektassets. Es werden nur dann Bilder angezeigt, wenn tatsächl  welche vorhanden sind
+	-->
+</f:comment>
+<f:section name="image_loop">
+	<f:if condition="{sektion.orig.configuration.textpos.vDEF} == '2'">
+		<div class="image_bg image_dummy_with_text image_dummy {bootstrap_classes}">
+			<f:render section="title" arguments="{_all}"/>
+		</div>
+	</f:if>
+	<f:if condition="{sektion.orig.derivate}">
+		<f:then>
+			<f:for each="{sektion.orig.derivate}" as="sval" key="sk" iteration="si">
+				<div class="image_bg {bootstrap_classes}" style="background-image: url({f:uri.image(image: '{sval}', width: '1500m', height:'1500m')});"></div>
+			</f:for>
+		</f:then>
+		<f:else>
+			<div class="image_bg image_dummy {bootstrap_classes}"></div>
+		</f:else>
+	</f:if>
+</f:section>
+
+<f:comment>
+	<!--
+		Ausgabe einzelner Assets als Hintergrundgrafik auf Basis des Indexes
+	-->
+</f:comment>
+<f:section name="single_image_bg_by_number">
+	<div class="image_bg {bootstrap_classes}" style="background-image: url({f:uri.image(image: '{val.derivate.{number}}', width: '1500m', height:'1500m')});"></div>
+</f:section>
+
+<f:comment>
+	<!--
+		Ausgabe einzelner Assets als Image o.ä. auf Basis des Indexes
+	-->
+</f:comment>
+<f:section name="single_image_by_number">
+	<f:image image="{val.derivate.{number}}" width="1500m" height="1500m" class="image {bootstrap_classes}"/>
+</f:section>
+
+
+
+<f:section name="layout_2">
+	<f:comment>
+		<f:debug>{sektion.orig}</f:debug>
+		<!--
+			Bild links oder rechts neben den Texten - Auswahl durch User
+		-->
+	</f:comment>
+	<f:variable name="flex_direction" value=""/>
+	<f:variable name="bootstrap_classes" value="w-100"/>
+	<f:if condition="{sektion.orig.view}=='3'">
+		<f:variable name="flex_direction" value=" flex-row-reverse"/> 
+	</f:if>
+	<div class="sec sec-2 padding_{sektion.orig.configuration.padding.vDEF} textpos_{sektion.orig.configuration.textpos.vDEF}" style="{section_teaser_color}{section_teaser_bg}" data-color="{sektion.orig.color}">
+		<f:if condition="{sektion.orig.configuration.textpos.vDEF} == '1'">
+			<div class="upper_text_wrap">
+				<f:render section="standalone_text_all" arguments="{_all}"/>
+			</div>
+		</f:if>
+		<div class="row{flex_direction} no-gutters img_wrap img_wrap_auto_height">
+			<div class="col-sm-4 mainimage h-100">
+				<f:if condition="{sektion.orig.derivate}">
+					<f:render section="single_image_by_number" arguments="{val:'{sektion.orig}',number:'0',bootstrap_classes:'{bootstrap_classes}'}" />
+				</f:if>
+			</div>
+			<div class="moreimages col-sm-8">
+				<f:variable name="text_align" value="text-left"/>
+				<f:if condition="{sektion.orig.view}=='3'"> 
+					<f:variable name="text_align" value="text-right"/>
+				</f:if>
+				<f:if condition="{sektion.orig.derivate -> f:count()} > 1"> 
+					<f:variable name="text_align" value="text-center"/>
+				</f:if>
+				<div class="info_wrap d-flex h-100 {text_align}">
+					<f:if condition="{sektion.orig.configuration.textpos.vDEF} == '0'">
+						<div class="d-none d-sm-block info_inner_wrap">
+							<f:render section="title" arguments="{_all}"/>
+						</div>
+					</f:if>
+					<f:if condition="{sektion.orig.derivate} && {sektion.orig.derivate -> f:count()} > 1">
+						<f:then>
+							<div class="image_container w-100 h-100 row no-gutters">
+				  				<f:variable name="bootstrap_classes" value="h-50 col-6"/>
+				  				<f:variable name="loop" value="{0:1, 1:2, 2:3, 3:4}"/>
+				  				<f:render section="image_loop_fixed_amount" arguments="{_all}"/>
+							</div>
+							<f:comment>
+							<!--
+							<div class="more_image_wrap row no-gutters">
+								<f:variable name="image_width_height"><f:if condition="{sektion.orig.derivate -> f:count()} == 2"><f:then>500m</f:then><f:else>500c</f:else></f:if></f:variable>
+								<f:variable name="bootstrap_classes"><f:if condition="{sektion.orig.derivate -> f:count()} == 2"><f:then>col-12</f:then><f:else>col-6</f:else></f:if></f:variable>
+								<f:for each="{sektion.orig.derivate}" as="sval" key="sk" iteration="si">
+									<f:if condition="!{si.isFirst} && {si.index} < 5">
+										<div class="{bootstrap_classes}">
+											<f:image class="w-100 h-auto" image='{sval}' width='{image_width_height}' height='{image_width_height}'/>
+										</div>
+									</f:if>
+								</f:for>
+							</div>
+							-->
+							</f:comment>
+						</f:then>
+						<f:else>
+							<f:if condition="{sektion.orig.configuration.textpos.vDEF} == '0'">
+								<f:render section="teaser" arguments="{_all}"/>
+							</f:if>
+						</f:else>
+					</f:if>
+					<f:if condition="{sektion.orig.configuration.textpos.vDEF} == '0'">
+						<f:render section="cta_version_2" arguments="{_all}" />
+					</f:if>
+				</div>
+			</div>
+		</div>
+		<f:if condition="{sektion.orig.configuration.textpos.vDEF} == '2'">
+			<div class="textcontent info_wrap">
+				<f:render section="teaser" arguments="{_all}"/>
+			</div>
+		</f:if>
+		<f:if condition="{sektion.orig.configuration.textpos.vDEF} != '0'">
+			<div class="cta_wrap">
+				<f:render section="cta_version_2" arguments="{_all}" />
+			</div>
+		</f:if>			
+	</div>
+</f:section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<f:section name="view_default_orig">
+	<f:comment>
+		<f:debug>{sektion.orig}</f:debug>
+	</f:comment>
+	<div class="sec sec-1 w-100 padding_{sektion.orig.configuration.padding.vDEF}" data-color="{sektion.orig.color}">
+		<div class="position-relative">
+			<f:if condition="{sektion.orig.derivate}">
+				<f:then>
+					<div id="carouselIndicators_{i.index}" class="carousel slide carousel-fade" data-ride="carousel" data-pause="hover" data-interval="false">
+						<f:if condition="{sektion.orig.derivate -> f:count()} > 1">
+					  		<ol class="carousel-indicators">
+					  			<f:for each="{sektion.orig.derivate}" as="img" iteration="j">
+						    		<li data-target="#carouselIndicators_{i.index}" data-slide-to="{i.index}" class="<f:if condition='{j.isFirst}'>active</f:if>"></li>
+					  			</f:for>
+						  	</ol>
+					  	</f:if>
+				  		<div class="carousel-inner">
+							<f:for each="{sektion.orig.derivate}" as="img" iteration="j"> 
+						    	<div class="carousel-item<f:if condition='{j.isFirst}'> active</f:if>">
+									<div class="section_img" style="background-image: url({f:uri.image(image:img, maxWidth: '{settings.exhibition.parameter.section.template.imagewidth}', width:'{settings.exhibition.parameter.section.template.imagewidth}', minWidth: '{settings.exhibition.parameter.section.template.imagewidth}')})"></div>
+									<f:if condition="{img.originalResource.description}">
+										<div id="img-desc-{img.uid}" class="img-description collapse">{img.originalResource.description}</div>
+									</f:if>
+						    	</div>
+							</f:for>
+					  	</div>
+					</div>
+				</f:then>
+				<f:else>
+					<div id="carouselIndicators_{i.index}" class="carousel slide carousel-fade" data-ride="carousel" data-pause="hover" data-interval="false">
+						<f:comment>
+							<!--
+								schauen was hier passiert
+							-->
+						</f:comment>
+					</div>
+				</f:else>
+			</f:if>
+			<div class="sectionInfo-container">
+				<div id="obj{sektion.uid}" class="sectionInfo-c">
+					<div class="sectionInfo-c-content">
+						<f:render section="title" arguments="{_all}"/>
+						<f:render section="cta_version_1" arguments="{_all}"/>
+						<div class="sectionText noSwipe">
+							<div class="text">
+								<f:render section="teaser" arguments="{_all}"/>
+							</div>
+						</div>
+					</div>
+					<f:if condition="{jsontitle} || (!{jsontitle} && !{i.isLast})">
+						<div class="more-arrow"></div>
+					</f:if>
+				</div>
+			</div>
+		</div>
+	</div>
+</f:section>
+
+<f:section name="layout_5_orig">
+	<div class="sec sec-5 padding_{sektion.orig.configuration.padding.vDEF}" data-color="{sektion.orig.color}">
+		<div class="row no-gutters sec-5_wrap">
+			<div class="col-sm-4 h-100">
+				<div class="outer_wrap h-100 position-relative">
+					<f:if condition="{sektion.orig.derivate.0}">
+						<f:render section="single_image_bg_by_number" arguments="{val:'{sektion.orig}',number:'0'}" />
+					</f:if>
+				</div>
+			</div>
+			<div class="col-sm-4 h-100 textcontent">
+				<div class="info_wrap d-flex h-100">
+					<div class="d-none d-sm-block text-center">
+						<f:render section="title" arguments="{_all}"/>
+					</div>
+					<div class="sectionText noSwipe">
+						<div class="text">
+							<f:render section="teaser" arguments="{_all}"/>
+						</div>
+					</div>
+					<f:render section="cta_version_2" arguments="{_all}" />
+				</div>
+			</div>
+			<div class="col-sm-4 h-100">
+				<div class="outer_wrap h-100 position-relative">
+					<f:if condition="{sektion.orig.derivate.1}">
+						<f:render section="single_image_bg_by_number" arguments="{val:'{sektion.orig}',number:'1'}" />
+					</f:if>
+				</div>
+			</div>
+		</div>			
+	</div>
+</f:section> 
+
+<f:section name="layout_7_orig">
+	<div class="sec sec-7 padding_{sektion.orig.configuration.padding.vDEF}" data-color="{sektion.orig.color}">
+		<div class="row no-gutters">
+			<div class="col-sm-12 textcontent">
+				<div class="info_wrap d-flex h-100">
+					<div class="d-none d-sm-block text-center">
+						<f:render section="title" arguments="{_all}"/>
+					</div>
+					<div class="sectionText noSwipe">
+						<div class="text">
+							<f:render section="teaser" arguments="{_all}"/>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row col-12 img_wrap no-gutters">
+				<f:if condition="{sektion.orig.derivate.0}">
+					<div class="col-sm h-100">
+						<div class="outer_wrap h-100 position-relative">
+							<f:render section="single_image_bg_by_number" arguments="{val:'{sektion.orig}',number:'0'}" />
+						</div>
+					</div>
+				</f:if>
+				<f:if condition="{sektion.orig.derivate.1}">
+					<div class="col-sm h-100">
+						<div class="outer_wrap h-100 position-relative">
+							<f:render section="single_image_bg_by_number" arguments="{val:'{sektion.orig}',number:'1'}" />
+						</div>
+					</div>
+				</f:if>
+				<f:if condition="{sektion.orig.derivate.2}">
+					<div class="col-sm h-100">
+						<div class="outer_wrap h-100 position-relative">
+							<f:render section="single_image_bg_by_number" arguments="{val:'{sektion.orig}',number:'2'}" />
+						</div>
+					</div>
+				</f:if>
+			</div>
+			<div class="col-12 cta_wrap">
+				<f:render section="cta_version_2" arguments="{_all}" />
+			</div>
+		</div>			
+	</div>
+</f:section>
+
+<f:section name="layout_8_orig">
+	<div class="sec sec-8 padding_{sektion.orig.configuration.padding.vDEF} textpos_{sektion.orig.configuration.textpos.vDEF}" data-color="{sektion.orig.color}">
+		<div class="row no-gutters sec-8_wrap">
+			<f:if condition="{sektion.orig.derivate -> f:count()} > 2 && {sektion.orig.configuration.textpos.vDEF} != '0'">
+				<div class="col-12 textcontent">
+					<div class="info_wrap d-flex">
+						<div class="d-none d-sm-block text-center">
+							<f:render section="title" arguments="{_all}"/>
+						</div>
+						<div class="sectionText noSwipe">
+							<div class="text">
+								<f:render section="teaser" arguments="{_all}"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</f:if>
+			<div class="col-12 img_wrap">
+				<div class="row no-gutters position-relative h-100">
+					<f:if condition="{sektion.orig.derivate.0}">
+						<div class="col-sm-4 h-100">
+							<div class="outer_wrap h-100 position-relative">
+								<f:render section="single_image_bg_by_number" arguments="{val:'{sektion.orig}',number:'0'}" />
+							</div>
+						</div>
+					</f:if>
+					<f:if condition="{sektion.orig.derivate.1}">
+						<div class="col-sm-4 h-100">
+							<div class="outer_wrap h-100 position-relative">
+								<f:render section="single_image_bg_by_number" arguments="{val:'{sektion.orig}',number:'1'}" />
+							</div>
+						</div>
+					</f:if>
+					<f:if condition="{sektion.orig.derivate.2}">
+						<f:then>
+							<div class="col-sm-4 h-100">
+								<div class="outer_wrap h-100 position-relative">
+									<f:render section="single_image_bg_by_number" arguments="{val:'{sektion.orig}',number:'2'}" />
+								</div>
+							</div>
+						</f:then>
+						<f:else>
+							<div class="col-sm h-100 textcontent">
+								<div class="info_wrap d-flex h-100">
+									<div class="d-none d-sm-block text-center">
+										<f:render section="title" arguments="{_all}"/>
+									</div>
+									<div class="sectionText noSwipe">
+										<div class="text">
+											<f:render section="teaser" arguments="{_all}"/>
+										</div>
+									</div>
+									<f:render section="cta_version_2" arguments="{_all}" />
+								</div>
+							</div>
+						</f:else>
+					</f:if>
+					<f:if condition="{sektion.orig.derivate -> f:count()} > 2  && {sektion.orig.configuration.textpos.vDEF} == '0'">
+						<div class="sectionInfo-container overflow-hidden">
+							<div id="obj{sektion.uid}" class="sectionInfo-c">
+								<div class="sectionInfo-c-content">
+									<f:render section="title" arguments="{_all}"/>
+									<f:render section="cta_version_1" arguments="{_all}"/>
+									<div class="sectionText noSwipe">
+										<div class="text">
+											<f:render section="teaser" arguments="{_all}"/>
+										</div>
+									</div>
+								</div>
+								<f:if condition="{jsontitle} || (!{jsontitle} && !{i.isLast})">
+									<div class="more-arrow"></div>
+								</f:if>
+							</div>
+						</div>
+					</f:if>
+				</div>
+			</div>
+			<f:if condition="{sektion.orig.derivate -> f:count()} > 2  && {sektion.orig.configuration.textpos.vDEF} != '0'">
+				<div class="col-12 cta_wrap">
+					<f:render section="cta_version_2" arguments="{_all}" />
+				</div>
+			</f:if>
+		</div>			
+	</div>
+</f:section> 
+
+<f:section name="layout_55">
+	<div class="sec sec-5" data-color="{val.color}">
+  		<f:if condition="{val.derivate}">
+  			<div class="row no-gutters flex-row-reverse">
+  				<div class="col-sm-6 col-lg-5 h-100vh">
+  					<div class="outer_wrap h-100 position-relative">
+  						<div class="position-absolute background_black_20 top left z-index-1000 w-100 h-100 info_wrap col-12 d-flex d-sm-none">
+							<f:render section="title" arguments="{val:'{val}'}" />
+						</div>
+						<f:render section="single_image_bg_by_number" arguments="{val:'{val}',number:'0'}" />
+  					</div>
+  				</div>
+  				<div class="moreimages col-sm-6 col-lg-7 h-100vh">
+					<div class="info_wrap d-flex h-100">
+						<div class="d-none d-sm-block text-center">
+							<f:render section="title" arguments="{val:'{val}'}" />
+						</div>
+						<f:for each="{val.derivate}" as="sval" key="sk" iteration="si">
+							<div class="imagewrap row no-gutters">
+								<f:for each="{val.derivate}" as="sval" key="sk" iteration="si">
+									<f:if condition="!{si.isFirst}">
+										<div class="col-6"><f:image class="w-100 h-auto" image='{sval}' width='500c' height='500c'/></div>
+									</f:if>
+								</f:for>
+							</div>
+						</f:for>
+						<f:render section="link" arguments="{val:'{val}'}" />
+					</div>
+				</div>
+			</div>			
+  		</f:if>
+	</div>
+</f:section> 
+
+<f:section name="layout_3">
+	<div class="sec sec-1" data-color="{sektion.orig.color}">
+  		<f:if condition="{sektion.orig.derivate}">
+  			<div class="outer_wrap position-relative overflow-hidden h-100vh">
+  				<div class="carousel h-100 position-absolute w-100 slide carousel-fade" data-ride="carousel" data-interval="6000">
+				  <div class="carousel-inner h-100">
+				  	<f:for each="{sektion.orig.derivate}" as="sval" key="sk" iteration="si">
+						<div class="h-100 carousel-item <f:if condition='{si.isFirst}'>active</f:if>">
+  							<div class="image h-100 w-100 animate" style="background-image: url(<f:uri.image image='{sval}' width='2300'/>);"></div>
+  						</div>
+					</f:for>
+  				  </div>
+  				</div>
+  				<div class="info_wrap h-100 d-flex w-100 position-relative background_black_20 z-index-1000">
+					<f:render section="title" arguments="{_all}" />
+					<f:render section="link" arguments="{_all}" />
+				</div>
+			</div>		
+  		</f:if>
+	</div>
+</f:section>
+
+<f:section name="standalone_header">
+	<div class="single-logo text-center position-absolute">
+		<f:image src="fileadmin/user_upload/dag/dag_logo.svg" alt="logo" />
+		<div class="main_title">
+			<f:if condition="{parent.title}">
+				<f:then>
+					{parent.title}
+				</f:then>
+				<f:else>
+					Default title
+				</f:else>
+			</f:if>
+		</div>
+	</div>
+</f:section>
+
+<f:section name="layout_1">
+	<div class="sec sec-1" data-color="{val.color}">
+  		<f:if condition="{val.derivate}">
+  			<div class="outer_wrap position-relative overflow-hidden h-100vh">
+  				<div class="image w-100 animate position-absolute top left h-100" style="background-image: url(<f:uri.image image='{val.derivate.0}' width='2300'/>);"></div>
+  				<div class="info_wrap h-100 d-flex w-100 position-relative background_black_20 z-index-1000">
+					<f:render section="title" arguments="{val:'{val}'}" />
+					<f:render section="link" arguments="{val:'{val}'}" />
+				</div>
+			</div>	
+  		</f:if>
+	</div>
+</f:section>
+
+<f:section name="title">
+	<div class="sectionTitle-container">
+		<f:if condition="{sektion.orig.startdate}">
+			<div class="startdate">{sektion.orig.startdate}</div>
+		</f:if>
+		<div class="sectionTitle"><h3 class="maincolorfont noSwipe">{sektion.orig.title}</h3></div>
+		<f:if condition="{sektion.orig.subtitle}">
+			<f:for each="{sektion.orig.subtitle}" as="subitem">
+				<div class="sectionSubTitle noSwipe">{subitem.title}</div>
+			</f:for>
+		</f:if>
+	</div>
+</f:section>
+
+<f:section name="cta_version_1">
+	<div class="sectionInfo-c-btn-container">
+		<div class="sectionInfo-line"></div>
+		<div class="sectionInfo-c-btn maincolor">
+			<f:link.action action="showobject" pageType="{pagetype}" additionalParams="{nc:'{nc}'}" arguments="{pid:'{sektion.orig.pid}', uid:'{sektion.orig.uid}', parent:'{parent}'}">
+				<div class="sectionInfo-c-btn-icon"></div>
+			</f:link.action> 
+		</div>
+	</div>
+</f:section>
+
+<f:section name="cta_version_2">
+	<f:variable name="ctatext" value="mehr erfahren"/>
+	<f:if condition="{sektion.orig.configuration.ctatext.vDEF}">
+		<f:variable name="ctatext" value="{sektion.orig.configuration.ctatext.vDEF}"/>
+	</f:if>
+	<div class="more">
+		<f:link.action pageType="{pagetype}" action="showobject" class="text-uppercase d-inline-block" additionalParams="{nc:'{nc}'}" arguments="{pid:'{sektion.orig.pid}', uid:'{sektion.orig.uid}', parent:'{parent}'}">
+			<span class="d-inline-block align-middle text-uppercase">{ctatext}</span>
+		</f:link.action>
+	</div>
+</f:section>
+
+<f:section name="link">
+	<div class="more">
+		<f:link.action class="text-uppercase d-inline-block font-200" arguments="{item:'{val.uid}'}"><div class="sektion sprite position-relative align-middle d-inline-block"></div><span class="d-inline-block align-middle text-uppercase">explore this spot</span></f:link.action>
+	</div>
+</f:section>
+</f:spaceless>

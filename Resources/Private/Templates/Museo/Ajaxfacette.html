@@ -1,0 +1,85 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+
+<f:comment>
+  <!--
+  Schalter, um diverse Teile des Plugins via Ajax zu laden - kommt aus Flexform
+  -->
+</f:comment>
+<f:variable name="ajaxpagetype" value="0"/>
+<f:variable name="ajaxpagetypecssclass" value=""/>
+<f:if condition="{config.ajaxload}">
+  <f:variable name="ajaxpagetype" value="200"/>
+  <f:variable name="ajaxpagetypecssclass" value=" t200"/>
+</f:if>
+
+<f:if condition="{joSolrResults}">
+	<div class="joIndex {current_selected}">
+		<f:alias map="{searcharray: '{jo:jodynamicarray(arrayname:\'{joSearcharraycomplete.content}\', arraykey:\'{joSelectedVarArray.varname}\')}'}">			
+			<h3 class="joIndexHeadline">{joSelectedVarArray.letter}</h3>
+			<f:if condition="{joSolrResultsPrev}">
+				<div class="joLoadPrev">
+					<a href='#' class="joAjaxLoadPrev"></a>
+				</div>
+			</f:if>
+			<div class="index_wrapper clearfix row" data-index="{key}">
+				<f:for each="{joSolrResults}" as="joSubIndex">
+					<div class="index_col col-md-4">
+						<f:for each="{joSubIndex}" as="joSubSubIndex" key="key" iteration="josubiteration">
+							<div class="button_wrap">
+								<f:if condition="{jo:joinarray(arraycontains:'{searcharray}', keytofind:'{joSubSubIndex.orig}')}">
+									<f:then>
+										<div class="joCheck-container">
+											<f:link.action pageType="{ajaxpagetype}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" noCache="1" class="joCheck joCheckColor_active{ajaxpagetypecssclass}" arguments="{jo:jomakearray(arraykey:'remove{joSelectedVarArray.varname}', arrayvalue:'{joSubSubIndex.orig}')}">
+												&nbsp;
+											</f:link.action>
+										</div>
+										<f:link.action pageType="{ajaxpagetype}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" noCache="1" class="add joCheckColor_active{ajaxpagetypecssclass}" arguments="{jo:jomakearray(arraykey:'remove{joSelectedVarArray.varname}', arrayvalue:'{joSubSubIndex.orig}')}">
+											{joSubSubIndex.0} ({joSubSubIndex.number})
+										</f:link.action>
+									</f:then>
+									<f:else>
+										<div class="joCheck-container">
+											<f:link.action pageType="{ajaxpagetype}" noCache="1" class="joCheck joCheckColor_inactive{ajaxpagetypecssclass}" additionalParams="{add:'1',ceid:'{extbase_config.ce_uid}'}" arguments="{jo:jomakearray(arraykey:'{joSelectedVarArray.varname}', arrayvalue:'{joSubSubIndex.orig}')}">
+												&nbsp;
+											</f:link.action>
+										</div>
+										<f:link.action pageType="{ajaxpagetype}" noCache="1" class="add joCheckColor_inactive{ajaxpagetypecssclass}" additionalParams="{add:'1',ceid:'{extbase_config.ce_uid}'}" arguments="{jo:jomakearray(arraykey:'{joSelectedVarArray.varname}', arrayvalue:'{joSubSubIndex.orig}')}">
+											{joSubSubIndex.0} ({joSubSubIndex.number})
+										</f:link.action>
+									</f:else>
+								</f:if>
+								<f:if condition="{joSubSubIndex.quality}">
+									<f:render section="qualityCheck" arguments="{item:joSubSubIndex}"/>
+								</f:if>
+							</div>
+						</f:for>
+					</div>
+				</f:for>
+			</div>
+			<f:if condition="{nextExist}">
+				<div class="joLoadNext">
+					<f:comment>
+						<!--
+						@all -> das wird noch nicht funktionieren - müssen wir beim kartenspeicher testen
+						-->
+					</f:comment>
+					<f:link.action class="joAjaxLoadNext" pageType="2328" noCache="1" additionalParams="{ret:'fac', start:'{joSolrResultsStart}'}" action="ajax" arguments="{jo:jomakearray(arraykey:'{current_selected}', arrayvalue:'{joSelectedVarArray.letter}')}"></f:link.action>
+				</div>
+			</f:if>
+		</f:alias>
+	</div>
+</f:if>
+
+<f:section name="qualityCheck">
+	<div class="status-container">
+		<div class="{item.quality.rating}"></div>
+		<div class="status-info-box">
+			<h4>Status:</h4>
+			<ul>
+				<f:for each="{item.quality.status}" as="element" iteration="i">
+					<li>{element}</li>
+				</f:for>
+			</ul>
+		</div>
+	</div>
+</f:section>

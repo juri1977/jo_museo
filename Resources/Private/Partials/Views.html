@@ -1,0 +1,399 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<f:comment>
+	<!--
+		Darstellung der Kindobjekte - aktuell ist alles noch auf Gridview konfiguriert - müssen wir noch dynamisch machen
+	-->
+</f:comment>
+<f:section name="childobjects">
+	<f:comment>
+		<!-- Feldnamen des Konfigurationsblockes, der benutzt werden soll (z.B. listview, mapview, detailview, childobjects) -->
+	</f:comment>
+	<f:variable name="fieldname" value="childobjects"/>
+	<f:comment>
+		<!-- Name der Variable, die die Objekte enthält, die benutzt werden sollen (z.B. child_elements.response.docs) -->
+	</f:comment>
+	<f:variable name="objectcontainer" value="child_elements.response.docs"/>
+	<f:comment>
+		<!-- Name der Variable, die die Anzahl der Objekte enthält, die benutzt werden soll (z.B. child_elements.response.numFound) -->
+	</f:comment>
+	<f:variable name="numberfound" value="child_elements.response.numFound"/>
+	<f:comment>
+		<!-- Horizontale oder Vertikale Darstellung der Ergebnisfelder -->
+	</f:comment>
+	<f:variable name="vertical_or_horizontal" value=""/>
+	<f:if condition="{config.fieldlist.{fieldname}.fieldalignment}">
+		<f:variable name="vertical_or_horizontal" value="{config.fieldlist.{fieldname}.fieldalignment}"/>
+	</f:if>
+	<f:comment>
+		<!-- Name der Headline, die vor der Anzahl der gefundenen Objekte gestellt wird -->
+	</f:comment>
+	<f:variable name="headline_label_name" value="Enthaltene Objekte"/>
+	<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.detail.enthalteneobjekte')}">
+		<f:variable name="headline_label_name" value="{jo:translate(key:'{langPath}:jo_bkr_base.detail.enthalteneobjekte')}"/>
+	</f:if>
+	<f:comment>
+		<!-- Arguments für die Detailansicht Parameter, die in dem betreffenden Kontext nicht benötigt werden, werden ausgelassen oder auf 0 gesetzt 
+			Parameter für die Darstellung innerhalb der Detailansicht(Kindelemente) - {joDetailView:'{items.{alldata.config.init.authdata.idfield}}',jopaginatepage:'{alldata.extbase_config.paginate}',browse:'1'}
+			Parameter für die Darstellung in Liste/Grid/etc. Ansicht - {joDetailView:'{items.{alldata.config.init.authdata.idfield}}',jopaginatepage:'{extbase_config.paginate}',h:'1',startfrom:'{number}'}
+		-->
+	</f:comment>
+	<f:variable name="detail_arguments" value="{jopaginatepage:'{alldata.extbase_config.paginate}',browse:'1'}"/>
+	<div class="childobjects">
+		<f:comment>
+			<!-- Wenn die Daten über Ajax geladen werden, kommt keine Headline und kein ein anderen Button
+				@all -> prüfen, ob das so passen kann
+			-->
+		</f:comment>
+		<f:if condition='!{alldata.isajax}'>
+			<h2 class="subheadline">{headline_label_name} ({alldata.{numberfound}}):</h2>
+		</f:if>
+		<f:switch expression="{alldata.config.fieldlist.{fieldname}.view}">
+			<f:case value="table">
+				<div class="tableview results {alldata.vertical_or_horizontal}">
+			    	<f:if condition='{alldata.{objectcontainer}}'>
+			    		<f:variable name="itemclasses" value="tr_style"/>
+						<f:render section="tableview_block" arguments="{_all}"/>
+					</f:if>
+    			</div>
+			</f:case>
+			<f:defaultCase>
+				<div class="joGridview results {vertical_or_horizontal}">
+			      	<f:if condition='{alldata.{objectcontainer}}'>
+			        	<f:variable name="itemclasses" value="col-12 col-md-6 col-xl-4"/>
+			   			<f:if condition='{alldata.config.templates.overviewitemclasses_listgrid}'>
+			       			<f:variable name="itemclasses" value="col-12 col-md-4 col-xl-3"/>
+			        	</f:if>
+						<f:render section="gridview_block" arguments="{_all}"/>
+					</f:if>
+    			</div>
+			</f:defaultCase>
+		</f:switch>
+		<f:if condition='!{alldata.isajax}'>
+			<f:render arguments="{_all}" section="searchinstructure"/>
+		</f:if>
+		<f:if condition="{config.fieldlist.{fieldname}.loadmore} == 'true'">
+			<f:render arguments="{_all}" section="loadrelatedwithajax"/>
+		</f:if>
+	</div>
+</f:section>
+
+<f:comment>
+	<!--
+		Gridansicht
+	-->
+</f:comment>
+<f:section name="gridview_block">
+	<div class="row grid_inner_wrap">
+	  <f:for each="{alldata.{objectcontainer}}" as="items" key="number" iteration="counter">
+	  	<f:comment>
+			<!-- Die Parameter, die zum Aufruf der Detailansicht benutzt werden, werden hier dymnamisch zusammengebaut, {detail_arguments} sind die fixen Bestandteile und diese werden an den Stellen erzeugt, an denen die Views angesteuert werden {param_array} ist der variable Bestandteil, der in der nachfolgenden Iteration benutzt wird -  das gilt für alle Übersichtsviews(List/Grid/Table/etc. ) -->
+		</f:comment>
+	  	<f:variable name="param_array" value="{joDetailView:'{items.{alldata.config.init.authdata.idfield}}'}"/>
+	  	<f:if condition="{detail_arguments.startfrom} == 'empty'">
+	  		<f:variable name="param_array" value="{joDetailView:'{items.{alldata.config.init.authdata.idfield}}', startfrom:'{number}'}"/>
+	  	</f:if> 
+      	<f:variable name="detail_arguments_processed" value="{jo:arraymerge(primaryarray:'{detail_arguments}', arraytoadd:'{param_array}')}"/>
+	    <div class="grid-item overflow-hidden position-relative {itemclasses}">
+	      <div class="grid-wrap">
+	        <div class="grid-link d-flex">
+	          <f:if condition="{items.images} || (!{items.images} && !{alldata.config.fieldlist.{fieldname}.images.dontshowplaceholder})">
+	            <f:link.action additionalParams="{ceid:'{alldata.extbase_config.ce_uid}'}" pageType="{ajaxpagetype}" class="grid_img_link d-block{ajaxpagetypecssclass}" noCache="1" action="detailobject" arguments="{detail_arguments_processed}">
+	              <div class="img_grid_wrap row no-gutters">
+	                <f:if condition="{items.images}">
+	                  <f:then>
+	                  	<f:variable name="startcount" value="0"/>
+											<f:comment>
+												<!--
+													zur Abwärtskompatibilität:
+													Falls tatsächlich nur ein Bild hinterlegt wurde, wird dieses eine Bild benutzt
+												-->
+											</f:comment>
+											<f:if condition="{items.images -> f:count()} < 2">
+												<f:variable name="startcount" value="-1"/>
+											</f:if>
+	                    <f:for each="{items.images}" as="item" key="subnumber" iteration="subcounter">
+	                      <f:alias map="{imagedata: '{item->jo:explode(delimiter:\'$\')}'}">
+	                        <f:if condition="{subcounter.index} > {startcount} && {subcounter.index} <= {alldata.config.fieldlist.{fieldname}.images.count}"> 
+	                            <div class="grid-img col" <f:if condition='{imagedata.0}'>style="background-image:url('{imagedata.0}')"</f:if>></div>
+	                        </f:if>
+	                      </f:alias>
+	                    </f:for>
+	                  </f:then>
+	                  <f:else>  
+	                    <f:render partial="Sections" arguments="{_all}" section="placeholder-background"/>
+	                  </f:else>
+	                </f:if>
+	              </div>
+	            </f:link.action>
+	          </f:if>
+	          <div class="grid-text-container">
+	            <div class="grid-text">
+	              <f:if condition="{alldata.config.fieldlist.{fieldname}.headline.name} && {alldata.config.init.authdata.idfield}">
+	                <div class="title_or_symbols">
+	                  <f:link.action additionalParams="{ceid:'{alldata.extbase_config.ce_uid}'}" pageType="{ajaxpagetype}" class="d-block{ajaxpagetypecssclass}" noCache="1" action="detailobject" arguments="{detail_arguments_processed}">
+	                    <h2>
+	                      <f:render partial="Sections" arguments="{fields:'{fields}', items:'{items}', config:'{alldata.config}',langPath:'{alldata.langPath}'}" section="headline"/>
+	                    </h2>
+	                  </f:link.action>
+	                </div>
+	              </f:if>
+	              <f:if condition="{alldata.config.fieldlist.{fieldname}.fields}">
+	                <f:spaceless>
+	                  <f:for each="{alldata.config.fieldlist.{fieldname}.fields}" as="fields" key="fk" iteration="fi">
+	                    <f:render partial="Sections" arguments="{_all}" section="buildfieldsandsegments"/>
+	                    <f:if condition="{alldata.vertical_or_horizontal} == 'horizontal' && !{fi.isLast} && {items.{fields.name}}">
+	                      <div class="sw delimiter">|</div>
+	                    </f:if>
+	                  </f:for>
+	                </f:spaceless>
+	              </f:if>
+	            </div>
+	          </div>
+	          <f:if condition="{fieldname} != 'childobjects'">
+		          <div class="control_wrap">
+					<f:render partial="Sections" arguments="{_all}" section="merkliste"/>
+				  </div>
+			  </f:if>
+	        </div>
+	      </div>
+	    </div>
+	  </f:for>
+	</div>
+</f:section>
+
+<f:comment>
+	<!--
+		Galleryview
+	-->
+</f:comment>
+<f:section name="galleryview_block">
+	<div class="grid_inner_wrap">
+		<f:for each="{alldata.{objectcontainer}}" as="items" key="number" iteration="counter">
+		 	<f:comment>
+			<!-- Die Parameter, die zum Aufruf der Detailansicht benutzt werden, werden hier dymnamisch zusammengebaut, {detail_arguments} sind die fixen Bestandteile und diese werden an den Stellen erzeugt, an denen die Views angesteuert werden {param_array} ist der variable Bestandteil, der in der nachfolgenden Iteration benutzt wird -  das gilt für alle Übersichtsviews(List/Grid/Table/etc. ) -->
+			</f:comment>
+		  	<f:variable name="param_array" value="{joDetailView:'{items.{alldata.config.init.authdata.idfield}}'}"/>
+		  	<f:if condition="{detail_arguments.startfrom} == 'empty'">
+		  		<f:variable name="param_array" value="{joDetailView:'{items.{alldata.config.init.authdata.idfield}}', startfrom:'{number}'}"/>
+		  	</f:if> 
+	      	<f:variable name="detail_arguments_processed" value="{jo:arraymerge(primaryarray:'{detail_arguments}', arraytoadd:'{param_array}')}"/>
+			<div class="grid-item overflow-hidden position-relative">
+				<div class="grid-wrap">
+					<div class="d-flex flex-column position-relative">
+						<div class="img_grid_wrap row no-gutters">
+							<f:if condition="{items.images}">
+								<f:then>
+									<f:for each="{items.images}" as="item" key="subnumber" iteration="subcounter">
+										<f:alias map="{imagedata: '{item->jo:explode(delimiter:\'$\')}'}">
+					                      <f:if condition="{subcounter.cycle} <= {alldata.config.fieldlist.{fieldname}.images.count}"> 
+				                      			<img src="{imagedata.0}" class="col"/>
+					                      </f:if>
+					                    </f:alias>
+				                    </f:for>
+		           				 </f:then>
+					            <f:else>  
+	            					<f:render partial="Sections" arguments="{_all}" section="placeholder-img"/>
+					        	</f:else>
+	                    	</f:if>
+	                    </div>
+	                    <div class="grid-text-container">
+	                        <div class="grid-text">
+	                            <f:if condition="{alldata.config.fieldlist.{fieldname}.headline.name} && {alldata.config.init.authdata.idfield}">
+									<div class="title_or_symbols">
+										<f:link.action noCache="1" pageType="{ajaxpagetype}" action="detailobject" class="{ajaxpagetypecssclass}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" title="Objektdetails öffnen" arguments="{detail_arguments_processed}">
+											<h2>
+												<f:render partial="Sections" arguments="{fields:'{fields}', items:'{items}', config:'{alldata.config}',langPath:'{langPath}'}" section="headline"/>
+											</h2>
+										</f:link.action>
+									</div>
+								</f:if>
+								<f:if condition="{alldata.config.fieldlist.{fieldname}.fields}">
+									<f:for each="{alldata.config.fieldlist.{fieldname}.fields}" as="fields" key="fk" iteration="fi">
+										<f:render partial="Sections" arguments="{_all}" section="buildfieldsandsegments"/>
+									</f:for>
+								</f:if>
+	                        </div>
+	                        <div class="control_wrap">
+								<f:render partial="Sections" arguments="{_all}" section="controls"/>
+							</div>
+	                    </div>
+	                </div>
+				</div>
+			</div>
+		</f:for>
+	</div>
+</f:section>
+
+<f:comment>
+	<!--
+		Listenansicht
+	-->
+</f:comment>
+<f:section name="listview_block">
+	<div class="joListNotableContainer">
+		<f:for each="{alldata.{objectcontainer}}" as="items" key="number" iteration="counter">
+			<f:comment>
+			<!-- Die Parameter, die zum Aufruf der Detailansicht benutzt werden, werden hier dymnamisch zusammengebaut, {detail_arguments} sind die fixen Bestandteile und diese werden an den Stellen erzeugt, an denen die Views angesteuert werden {param_array} ist der variable Bestandteil, der in der nachfolgenden Iteration benutzt wird -  das gilt für alle Übersichtsviews(List/Grid/Table/etc. ) -->
+			</f:comment>
+		  	<f:variable name="param_array" value="{joDetailView:'{items.{alldata.config.init.authdata.idfield}}'}"/>
+		  	<f:if condition="{detail_arguments.startfrom} == 'empty'">
+		  		<f:variable name="param_array" value="{joDetailView:'{items.{alldata.config.init.authdata.idfield}}', startfrom:'{number}'}"/>
+		  	</f:if> 
+	      	<f:variable name="detail_arguments_processed" value="{jo:arraymerge(primaryarray:'{detail_arguments}', arraytoadd:'{param_array}')}"/>
+			<div class="row no-gutters list_notable<f:if condition='{jo:joinarray(arraycontains:\'{hidden_items}\', keytofind:\'{items.id}\')}'> inactive</f:if>" data-id="{items.id}">
+				<f:if condition="{alldata.config.fieldlist.{fieldname}.images.count} > 0">
+					<div class="col-md-{imagecol} img">
+						<f:link.action pageType="{ajaxpagetype}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" class="row no-gutters h-100 list-view flex_link{ajaxpagetypecssclass}" noCache="1" action="detailobject" arguments="{detail_arguments_processed}">
+							<f:comment>
+								<!--
+									Das wenn mehr als ein Bild vorhanden ist und in der Vorschau angezeigt werden soll, wird das erste Bild (Maindoc) übersprungen
+								-->
+							</f:comment>
+							<f:if condition="{items.images}">
+								<f:then>
+									<f:variable name="startcount" value="0"/>
+									<f:comment>
+										<!--
+											zur Abwärtskompatibilität:
+											Falls tatsächlich nur ein Bild hinterlegt wurde, wird dieses eine Bild benutzt
+										-->
+									</f:comment>
+									<f:if condition="{items.images -> f:count()} < 2">
+										<f:variable name="startcount" value="-1"/>
+									</f:if>
+									<f:for each="{items.images}" as="item" key="subnumber" iteration="subcounter">
+										<f:alias map="{imagedata: '{item->jo:explode(delimiter:\'$\')}'}">
+											<f:if condition="{subcounter.index} > {startcount} && {subcounter.index} <= {alldata.config.fieldlist.{fieldname}.images.count}"> 
+												<div class="grid-img col" <f:if condition='{imagedata.0}'>style="background-image:url('{imagedata.0}')"</f:if>></div>
+											</f:if>
+					                    </f:alias>
+				                    </f:for>
+		           				 </f:then>
+					            <f:else>  
+	            					<f:render partial="Sections" arguments="{_all}" section="placeholder-background"/>
+					        	</f:else>
+	                    	</f:if>
+						</f:link.action>
+					</div>
+				</f:if>
+				<div class="col-md txt d-flex">
+					<div class="teaser">
+						<f:if condition="{alldata.config.fieldlist.{fieldname}.headline.name} && {alldata.config.init.authdata.idfield}">
+							<div class="title_or_symbols">
+								<h2>
+									<f:link.action noCache="1" pageType="{ajaxpagetype}" action="detailobject" class="{ajaxpagetypecssclass}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" title="Objektdetails öffnen" arguments="{detail_arguments_processed}">
+										<f:render partial="Sections" arguments="{fields:'{fields}', items:'{items}', config:'{alldata.config}',langPath:'{alldata.langPath}'}" section="headline"/>
+									</f:link.action>
+								</h2>
+							</div>
+						</f:if>
+						<f:if condition="{alldata.config.fieldlist.{fieldname}.fields}">
+							<f:for each="{alldata.config.fieldlist.{fieldname}.fields}" as="fields" key="fk" iteration="fi">
+								<f:render partial="Sections" arguments="{_all}" section="buildfieldsandsegments"/>
+							</f:for>
+						</f:if>
+					</div>
+					<div class="control_wrap">
+						<f:render partial="Sections" arguments="{_all}" section="controls"/>
+					</div>
+				</div>
+			</div>
+		</f:for>
+	</div>
+</f:section>
+
+<f:comment>
+	<!--
+		Tabellenansicht
+	-->
+</f:comment>
+<f:section name="tableview_block">
+    <table class="table_inner_wrap">
+      <f:for each="{alldata.{objectcontainer}}" as="items" key="number" iteration="counter">
+      	<f:variable name="param_array" value="{joDetailView:'{items.{alldata.config.init.authdata.idfield}}'}"/>
+      	<f:if condition="{detail_arguments.startfrom} == 'empty'">
+	  		<f:variable name="param_array" value="{joDetailView:'{items.{alldata.config.init.authdata.idfield}}', startfrom:'{number}'}"/>
+	  	</f:if> 
+      	<f:variable name="detail_arguments_processed" value="{jo:arraymerge(primaryarray:'{detail_arguments}', arraytoadd:'{param_array}')}"/>
+        <tr class="table-item {itemclasses}">
+          <f:if condition="{items.images} || (!{items.images} && !{alldata.config.fieldlist.{fieldname}.images.dontshowplaceholder})">
+          	<td>
+                <f:link.action additionalParams="{ceid:'{alldata.extbase_config.ce_uid}'}" pageType="{alldata.ajaxpagetype}" class="table_img_link d-block{ajaxpagetypecssclass}" noCache="1" action="detailobject" arguments="{detail_arguments_processed}">
+                  <div class="img_table_wrap row no-gutters">
+                    <f:if condition="{items.images}">
+                      <f:then>
+                        <f:for each="{items.images}" as="item" key="subnumber" iteration="subcounter">
+                          <f:alias map="{imagedata: '{item->jo:explode(delimiter:\'$\')}'}">
+                            <f:if condition="{subcounter.cycle} <= {alldata.config.fieldlist.{fieldname}.images.count}"> 
+                                <div class="table-img col" <f:if condition='{imagedata.0}'>style="background-image:url('{imagedata.0}')"</f:if>></div>
+                            </f:if>
+                          </f:alias>
+                        </f:for>
+                      </f:then>
+                      <f:else>  
+                        <f:render partial="Sections" arguments="{_all}" section="placeholder-background"/>
+                      </f:else>
+                    </f:if>
+                  </div>
+                </f:link.action>
+            </td>
+          </f:if>
+          <f:if condition="{alldata.config.fieldlist.{fieldname}.headline.name} && {alldata.config.init.authdata.idfield}">
+            <td class="title_or_symbols">
+              <f:link.action additionalParams="{ceid:'{alldata.extbase_config.ce_uid}'}" pageType="{alldata.ajaxpagetype}" class="d-block{ajaxpagetypecssclass}" noCache="1" action="detailobject" arguments="{detail_arguments_processed}">
+                <h2>
+                  <f:render partial="Sections" arguments="{fields:'{fields}', items:'{items}', config:'{alldata.config}',langPath:'{alldata.langPath}'}" section="headline"/>
+                </h2>
+              </f:link.action>
+            </td>
+          </f:if>
+          <f:if condition="{alldata.config.fieldlist.{fieldname}.fields}">
+            <f:spaceless>
+				<f:for each="{alldata.config.fieldlist.{fieldname}.fields}" as="fields" key="fk" iteration="fi">
+					<td>
+				    	<f:render partial="Sections" arguments="{_all}" section="buildfieldsandsegments"/>
+					    <f:if condition="{alldata.vertical_or_horizontal} == 'horizontal' && !{fi.isLast} && {items.{fields.name}}">
+					      <div class="sw delimiter">|</div>
+					    </f:if>
+					</td>
+				</f:for>
+           		<td>
+			  		<f:link.action additionalParams="{ceid:'{alldata.extbase_config.ce_uid}'}" pageType="{alldata.ajaxpagetype}" class="d-block{ajaxpagetypecssclass}" noCache="1" action="detailobject" arguments="{detail_arguments_processed}">
+			      		<span class="d-flex">{jo:translate(key:'{alldata.langPath}:jo_bkr_base.details')}</span>
+					    <div class="addGradient">
+					        <div class="joSprite"></div>
+					    </div>
+			    	</f:link.action>
+				</td>
+            </f:spaceless>
+          </f:if>
+        </tr>
+      </f:for>
+    </table>
+</f:section>
+
+<f:comment>
+	<!--
+		Link zur Suche innerhalb einer Parent/Child-Struktur
+	-->
+</f:comment>
+<f:section name="searchinstructure">
+	<f:if condition="{config.fieldlist.childobjects.searchinstructure}">
+		<div class="searchinstructure_wrap">
+			<f:link.action noCache="1" class="searchinstructure" additionalParams="{add:'1'}" arguments="{bcpId:'{alldata.baseid}', setsubsearch:'1'}" title="{jo:translate(key:'{alldata.langPath}:jo_bkr_base.structure')}">Suche innerhalb der Struktur</f:link.action>
+		</div>
+	</f:if>
+</f:section>
+
+<f:comment>
+	<!--
+		Childelements mit Ajax laden
+	-->
+</f:comment>
+<f:section name="loadrelatedwithajax">
+	<f:if condition="{alldata.calculate_offset}">
+		<div class="loadrelatedwithajax_wrap">
+	    	<f:link.action pageType="200" action="ajax" noCache="1" arguments="{prl:'{alldata.parent_relation}', chs:'{alldata.calculate_offset}'}" additionalParams="{ret:'chl'}" class="loadrelatedwithajax" title="{jo:translate(key:'{langPath}:jo_bkr_base.loadrelatedwithajax')}">Weitere Elemente laden</f:link.action>
+	    </div>
+	</f:if>
+</f:section>

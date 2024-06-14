@@ -1,0 +1,378 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<div class="results clearfix container">
+	<f:if condition="{joSolrObjects.response.docs}">
+		<f:then>
+			<div id="delete_selected"<f:if condition="{hidden_items -> f:count()} == 0"> style="display:none;"</f:if>>
+				<f:link.action class="toggleMapIcon" noCache="1" action="ajax" pageType="2328" arguments="{toggle_id:'all'}" additionalParams="{ret:'json'}">
+					{jo:translate(key:'{langPath}:jo_bkr_base.show.all.items')}
+				</f:link.action>
+			</div>
+			<div class="joListNotableContainer">
+				<f:for each="{joSolrObjects.response.docs}" as="items" key="number" iteration="counter">
+					<div class="clearfix row list_notable<f:if condition='{jo:joinarray(arraycontains:\'{hidden_items}\', keytofind:\'{items.id}\')}'> inactive</f:if>" data-id="{items.id}">
+						<f:if condition="{extbase_config.action} == 'map'">
+							<div class="map-item-header row justify-content-between">
+								<f:if condition="{settings.showMapNumbers}">
+									<div class="joNummer-container"><div class="joNummer">#<f:if condition="{items.sorting}">{items.sorting}</f:if></div></div>
+								</f:if>
+								<div class="map-item-header-title"><h2><f:format.html>{items.title}</f:format.html></h2></div>
+								<f:if condition="!{settings.hideMapPinSwitcher}">
+									<div class="joSwitch-container">
+										<label class="joSwitch" data-href="{f:uri.action(action: 'ajax', arguments: '{toggle_id: \'{items.id}\'}', noCache: '1', pageType: '2328', additionalParams: '{ret:\'json\'}')}">
+									  		<input class="joCheck" type="checkbox" <f:if condition="!{jo:joinarray(arraycontains:'{hidden_items}', keytofind:'{items.id}')}">checked</f:if> data-id="{items.id}">
+									  		<span class="slider round"></span>
+										</label>
+									</div>
+								</f:if>
+							</div>
+						</f:if>
+						<f:if condition="{settings.showRoute} == '1'">
+							<div class="col-md-2 joTime-container">
+								<div class="joTime-content">
+									<div class="joTime-zeit">
+										<f:if condition="{items.zeit}">
+												{items.zeit} min
+										</f:if>
+									</div>
+									<div class="joTime-distanz">
+										<f:if condition="{items.distanz}">
+												{items.distanz} km
+										</f:if>
+									</div>
+								</div>
+							</div>
+						</f:if>
+						
+						<div class="SmallFlexLeft col-md-3 img fixSquare">
+						<div class="borderSquare">
+						<div class="internalSquare">
+							<f:if condition="{items.images}">
+								<f:then>
+									<f:for each="{items.images}" as="subitems" key="subnumber" iteration="subcounter">
+										<f:if condition="{subcounter.isFirst}">
+											<f:alias map="{imagedata: '{subitems->jo:explode(delimiter:\'$\')}'}"> 
+												<f:if condition="{imagedata.1}">
+													<f:then>
+														<f:link.action noCache="1" action="detailobject" arguments="{joDetailView:'{items.id}',jopaginatepage:'{extbase_config.paginate}',h:'1'}">
+															<f:if condition="{imagedata.0}">
+																<f:then>
+																	<img src="{imagedata.0}" class="NoneBorder joResponseImage" alt="{imagedata.2}" title="{imagedata.2}">
+																</f:then>
+																<f:else>
+																	<f:if condition="{settings.imgplaceholder}">
+																		<f:then>
+																			<f:image class="img-placeholder" src="{settings.imgplaceholder}" treatIdAsReference="1" width="300" />
+																		</f:then>
+																		<f:else>
+																			<f:image class="img-placeholder" src="/typo3conf/ext/jo_museo/Resources/Public/Images/platzhalter.jpg" width="300" />
+																		</f:else>
+																	</f:if>
+																</f:else>
+															</f:if>
+														</f:link.action>
+													</f:then>
+													<f:else>
+														<img src="{imagedata.0}" class="NoneBorder joResponseImage" alt="{imagedata.2}" title="{imagedata.2}">
+													</f:else>
+												</f:if>
+												<f:if condition="{imagedata.3}">
+													<div class="img-proof">{jo:translate(key:'{langPath}:jo_bkr_base.img.proof')} {imagedata.3}</div>
+												</f:if>
+											</f:alias>
+										</f:if>
+									</f:for>
+								</f:then>
+								<f:else>
+									<f:if condition="{settings.imgplaceholder}">
+										<f:then>
+											<f:image class="img-placeholder" src="{settings.imgplaceholder}" treatIdAsReference="1" width="300" />
+										</f:then>
+										<f:else>
+											<f:image class="img-placeholder" src="/typo3conf/ext/jo_museo/Resources/Public/Images/platzhalter.jpg" width="300" />
+										</f:else>
+									</f:if>
+								</f:else>
+							</f:if>
+						</div>
+						</div>
+						</div>
+						<div class="SmallFlexRight col-md-<f:if condition='{settings.showRoute} == \'1\''><f:then>7</f:then><f:else>9</f:else></f:if> txt row">
+							<div class="col-md-9 joListText">
+								<div class="clearfix title_or_symbols">
+									<f:if condition="{extbase_config.action} != 'map'">
+										<f:then>
+											<h2>
+												<f:link.action noCache="1" action="detailobject" title="Objektdetails öffnen" arguments="{joDetailView:'{items.id}',jopaginatepage:'{extbase_config.paginate}',h:'1'}">
+													<f:format.html>{items.title}</f:format.html>
+												</f:link.action>
+											</h2>
+										</f:then>
+										<f:else>
+											<f:render section="controls" arguments="{_all}"/>
+										</f:else>
+									</f:if>
+								</div>
+								<f:if condition="{items.titleAlt} && !{settings.excludefields.list.titleAlt}">
+									<div class="clearfix row">
+										<div class="SmallFix col-md-5"><b>Alternative Titel:</b></div>
+										<div class="col-md-7 titleAlt">
+											<f:for each="{items.titleAlt}" as="joSubIndex">
+												<div><f:format.html>{joSubIndex}</f:format.html></div>
+											</f:for>
+										</div>
+									</div>
+								</f:if>
+								<f:if condition="!{settings.excludefields.list.classification} && {items.classification}">
+									<div class="clearfix row">
+										<div class="SmallFix col-md-5"><b>{jo:translate(key:'{langPath}:jo_bkr_base.sachgruppe')}:</b></div>
+										<div class="col-md-7">
+											<f:for each="{items.classification}" as="subitems" key="sk" iteration="si">
+												<f:format.html>{subitems}</f:format.html><f:if condition="{si.isLast}!=1">, </f:if>	
+											</f:for>
+										</div>
+									</div>
+								</f:if>
+								<f:if condition="{items.objectTypeHierarchy} && !{settings.excludefields.list.objectTypeHierarchy}">
+									<div class="clearfix row">
+										<div class="SmallFix col-md-5"><b>Objekttyp:</b></div>
+										<div class="col-md-7">
+											<f:for each="{items.objectTypeHierarchy}" as="subitems" key="sk" iteration="si">
+												<f:alias map="{dataitem: '{subitems->jo:explode(delimiter:\'$\')}'}">
+													<div>{dataitem.0}</div>
+												</f:alias>
+											</f:for>
+										</div>
+									</div>
+								</f:if>
+								<f:if condition="!{settings.excludefields.list.tenant} && {items.tenant}">
+									<div class="clearfix row">
+										<div class="SmallFix col-md-5"><b>{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.tenant')}</b></div>
+										<div class="col-md-7">
+											<f:for each="{items.tenant}" as="subitems" key="sk" iteration="si">
+												<div><f:alias map="{arr: '{subitems->jo:explode(delimiter:\'$\')}'}">{arr.0}</f:alias></div>
+											</f:for>
+										</div>
+									</div>
+								</f:if>
+								<f:if condition="!{settings.excludefields.list.location} && {items.location}">
+									<div class="clearfix row">
+										<div class="SmallFix col-md-5"><b>{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.territory3')}<f:if condition="{items.territory}"><f:then>, {jo:translate(key:'{langPath}:jo_bkr_base.district')}</f:then><f:else>:</f:else></f:if></b> </div>
+										<div class="col-md-7">			
+											<f:for each="{items.location}" as="subitems" key="sk" iteration="si">
+												<f:alias map="{segments: '{subitems->jo:explode(delimiter:\'$\')}'}">
+													<f:link.action noCache="1" class="underline" arguments="{location:'{subitems}'}" title="Alle Objekte dieser Klassifikation anzeigen">{segments.0}</f:link.action><f:if condition="{si.isLast}!=1">, </f:if>
+												</f:alias>	
+											</f:for><f:if condition="{items.territory}">, <f:link.action noCache="1" class="underline" arguments="{territory:'{items.territory}'}" title="Alle Objekte dieser Klassifikation anzeigen">{items.territory}</f:link.action></f:if>
+										</div>
+									</div>
+								</f:if>	
+								<f:if condition="!{settings.excludefields.list.classificationtime} && {items.classificationtime}">
+									<div class="clearfix row">
+										<div class="SmallFix col-md-5"><b>{jo:translate(key:'{langPath}:jo_bkr_base.times')}</b></div>
+										<div class="col-md-7">
+											<f:for each="{items.classificationtime}" as="subitems" key="sk" iteration="si">
+												<f:if condition="{settings.allowed_facettes.classificationtime}">
+													<f:then>
+														<f:link.action noCache="1" class="underline" arguments="{classificationtime:'{subitems}'}" title="Alle Objekte dieser Klassifikation anzeigen"><f:alias map="{name_array: '{subitems->jo:explode(delimiter:\'#\')}'}">{name_array.1}</f:alias></f:link.action><f:if condition="{si.isLast}!=1">, </f:if>
+													</f:then>
+													<f:else>
+														<f:alias map="{name_array: '{subitems->jo:explode(delimiter:\'#\')}'}">{name_array.1}</f:alias><f:if condition="{si.isLast}!=1">, </f:if>
+													</f:else>
+												</f:if>	
+											</f:for>
+										</div>
+									</div>
+								</f:if>
+								<f:if condition="!{settings.excludefields.list.showtime} && {items.showtime}">
+									<div class="clearfix row">
+										<div class="SmallFix col-md-5"><b>{jo:translate(key:'{langPath}:jo_bkr_base.period')}</b></div>
+										<div class="col-md-7">
+											<f:for each="{items.showtime}" as="subitems" key="sk" iteration="si">
+												{subitems}<f:if condition="{si.isLast}!=1">, </f:if>
+											</f:for>
+										</div>
+									</div>
+								</f:if>
+								<f:if condition="!{settings.excludefields.list.category} && {items.category}">
+									<div class="clearfix row">
+										<div class="SmallFix col-md-5"><b>{jo:translate(key:'{langPath}:jo_bkr_base.classification.archiolog')}</b></div>
+										<div class="col-md-7">
+											<f:for each="{items.category}" as="subitems" key="sk" iteration="si">
+												<f:alias map="{dataitem: '{subitems->jo:explode(delimiter:\'$\')}'}">
+													<f:if condition="{settings.allowed_facettes.category}">
+														<f:then>
+															<f:link.action noCache="1" class="underline" arguments="{category:'{subitems}'}" title="Alle Objekte dieser Klassifikation anzeigen">{dataitem.0}</f:link.action><f:if condition="{si.isLast}!=1">, </f:if>
+														</f:then>
+														<f:else>
+															{dataitem.0}<f:if condition="{si.isLast}!=1">, </f:if>
+														</f:else>
+													</f:if>	
+												</f:alias>
+											</f:for>
+										</div>
+									</div>
+								</f:if>
+								<f:if condition="!{settings.excludefields.list.bemerkung} && {items.bemerkung}">
+									<div class="clearfix row">
+										<div class="SmallFix col-md-5"><b>{jo:translate(key:'{langPath}:jo_bkr_base.description')}</b></div>
+										<div class="col-md-7">
+											<f:link.action noCache="1" class="detail_link" action="detailobject" title="Objektdetails öffnen" arguments="{joDetailView:'{items.id}',jopaginatepage:'{extbase_config.paginate}',h:'1'}">
+												<f:format.html><f:format.crop maxCharacters="140" append="..." respectWordBoundaries="TRUE" respectHtml="TRUE">{items.bemerkung}</f:format.crop></f:format.html>
+											</f:link.action>
+										</div>
+									</div>
+								</f:if>
+							</div>
+							<f:if condition="{extbase_config.action} != 'map'">
+								<div class="col-md-3 joListLinks">
+									 <f:render section="controls" arguments="{_all}"/>
+								</div>
+							</f:if>
+						</div>
+					</div>
+				</f:for>
+				<f:if condition="{settings.showRoute} == '1'">
+					<div class="joStreifen"></div>
+				</f:if>
+			</div>
+			<f:render partial="Paginator" arguments="{_all}"/>
+		</f:then>
+		<f:else>
+			<h1 class="joNothingFound">{jo:translate(key:'{langPath}:jo_bkr_base.noobjects')}</h1>
+		</f:else>
+	</f:if>
+</div>
+
+<f:section name="controls">
+	<div class="detail control_button">
+		<f:link.action noCache="1" action="detailobject" arguments="{joDetailView:'{items.id}',jopaginatepage:'{extbase_config.paginate}',h:'1'}">
+			<span>{jo:translate(key:'{langPath}:jo_bkr_base.details')}</span>
+			<div class="addGradient">
+				<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+					<f:then>
+						<div class="joSprite" title="{jo:translate(key:'{langPath}:jo_bkr_base.details')}" ></div>
+					</f:then>
+					<f:else>
+						<f:image src="{f:uri.resource(path:'Images/sprite.svg')}" alt="{jo:translate(key:'{langPath}:jo_bkr_base.details')}" title="{jo:translate(key:'{langPath}:jo_bkr_base.details')}" />
+					</f:else>
+				</f:if>
+			</div>
+		</f:link.action>
+	</div>
+	<f:if condition="{items.images}">
+		<f:then>
+			<f:for each="{items.images}" as="subitems" key="sk" iteration="si">
+				<f:if condition="{si.isFirst}">
+					<f:alias map="{imagedata: '{subitems->jo:explode(delimiter:\'$\')}'}">
+						<f:if condition="{imagedata.1}">
+							<f:then>
+								<div class="viewer control_button">
+									<f:link.external uri="{imagedata.1}" >
+										<span>{jo:translate(key:'{langPath}:jo_bkr_base.digitizer')}</span>
+											<div class="addGradient">
+												<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+													<f:then>
+														<div class="joSprite" title="{jo:translate(key:'{langPath}:jo_bkr_base.digitizer.inview')}" ></div>
+													</f:then>
+													<f:else>
+														<f:image src="{f:uri.resource(path:'Images/sprite.svg')}" alt="{jo:translate(key:'{langPath}:jo_bkr_base.digitizer.inview')}" title="{jo:translate(key:'{langPath}:jo_bkr_base.digitizer.inview')}" />
+													</f:else>
+												</f:if>
+											</div>
+									</f:link.external>
+								</div>
+							</f:then>
+							<f:else>
+								<div class="viewer control_button">
+									<div class="inactive_link">
+										<span>{jo:translate(key:'{langPath}:jo_bkr_base.digitizer')}</span>
+										<div class="addGradient">
+											<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+												<f:then>
+													<div class="joSprite" title="{jo:translate(key:'{langPath}:jo_bkr_base.digitizer.inview')}" ></div>
+												</f:then>
+												<f:else>
+													<f:image src="{f:uri.resource(path:'Images/sprite.svg')}" alt="{jo:translate(key:'{langPath}:jo_bkr_base.digitizer.inview')}" title="{jo:translate(key:'{langPath}:jo_bkr_base.digitizer.inview')}" />
+												</f:else>
+											</f:if>
+										</div>
+									</div>
+								</div>
+							</f:else>
+						</f:if>
+					</f:alias>
+				</f:if>
+			</f:for>
+		</f:then>
+		<f:else>
+			<div class="viewer control_button">
+				<div class="inactive_link">
+					<span>{jo:translate(key:'{langPath}:jo_bkr_base.digitizer')}</span>
+					<div class="addGradient">
+						<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+							<f:then>
+								<div class="joSprite" title="{jo:translate(key:'{langPath}:jo_bkr_base.digitizer.inview')}" ></div>
+							</f:then>
+							<f:else>
+								<f:image src="{f:uri.resource(path:'Images/sprite.svg')}" alt="{jo:translate(key:'{langPath}:jo_bkr_base.digitizer.inview')}" title="{jo:translate(key:'{langPath}:jo_bkr_base.digitizer.inview')}" />
+							</f:else>
+						</f:if>
+					</div>
+				</div>
+			</div>
+		</f:else>
+	</f:if>
+	<f:if condition="{settings.merkliste}">
+		<div class="colbox control_button">
+			<f:if condition="{jo:joinarray(arraycontains:'{collbox_content}', keytofind:'{items.id}')}">
+				<f:then>
+					<f:link.action noCache="1" class="listBookmarkRemove" arguments="{remove_from_box:'{items.id}',jopaginatepage:'{extbase_config.paginate}'}" >
+						<span>{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks.remove')}</span>
+						<div class="addGradient">
+							<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+								<f:then>
+									<div class="joSprite" title="{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks.remove')}" ></div>
+								</f:then>
+								<f:else>
+									<f:image src="{f:uri.resource(path:'Images/sprite.svg')}" alt="{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks.remove')}" title="{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks.remove')}" />
+								</f:else>
+							</f:if>
+						</div>
+					</f:link.action>
+				</f:then>
+				<f:else>
+					<f:link.action noCache="1" class="listBookmark" arguments="{add_to_box:'{items.id}',jopaginatepage:'{extbase_config.paginate}'}" >
+						<span>{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks')}</span>
+						<div class="addGradient">
+							<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+								<f:then>
+									<div class="joSprite" title="{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks')}" ></div>
+								</f:then>
+								<f:else>
+									<f:image src="{f:uri.resource(path:'Images/sprite.svg')}" alt="{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks')}" title="{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks')}" />
+								</f:else>
+							</f:if>
+						</div>
+					</f:link.action>
+				</f:else>
+			</f:if>
+		</div>
+	</f:if>
+	<f:if condition="{items.lonlat} && {collbox_page} != 1">
+		<div class="localize control_button">
+			<a class="locatePoint" href="#">
+				<span>Gebiet lokalisieren</span>
+				<div class="addGradient">
+					<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+						<f:then>
+							<div class="joSprite" title="Gebiet lokalisieren" ></div>
+						</f:then>
+						<f:else>
+							<f:image src="{f:uri.resource(path:'Images/sprite.svg')}" alt="Gebiet lokalisieren" title="Gebiet lokalisieren" />
+						</f:else>
+					</f:if>
+				</div>
+			</a>
+		</div>
+	</f:if>
+</f:section>

@@ -1,0 +1,249 @@
+<T3DataStructure>
+	<meta>
+		<langDisable>1</langDisable>
+	</meta>
+	<sheets>
+		<main>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>LLL:EXT:jo_museo/Resources/Private/Language/locallang.xlf:flexform.pi2010.main</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<switchableControllerActions>
+                        <TCEforms>
+                            <label>Ansicht</label>
+                            <onChange>reload</onChange>
+                            <config>
+                                <type>select</type>
+                                <renderType>selectSingle</renderType>
+                                <items type="array">
+                                    <numIndex index="1" type="array">
+                                        <numIndex index="0">Bilder Slider (Pyramide)</numIndex>
+                                        <numIndex index="1">Content->imagerotate</numIndex>
+                                    </numIndex>
+                                    <numIndex index="2" type="array">
+                                        <numIndex index="0">Bildrenderer (zoomen und drehen)</numIndex>
+                                        <numIndex index="1">Content->imagezoom</numIndex>
+                                    </numIndex>
+                                </items>
+                            </config>
+                        </TCEforms>
+                    </switchableControllerActions>
+					<settings.slider type="array">
+						<title>LLL:EXT:jo_museo/Resources/Private/Language/locallang.xlf:flexform.pi2010.main.slider</title>
+						<type>array</type>
+						<section>1</section>
+						<displayCond>FIELD:switchableControllerActions:=:Content->imagerotate</displayCond>
+						<el>
+							<sliderConfiguration>
+								<type>array</type>
+								<title>LLL:EXT:jo_museo/Resources/Private/Language/locallang.xlf:flexform.pi2010.main.slider.slide</title>
+								<el>
+									<image>
+										<TCEforms>
+											<label>LLL:EXT:jo_museo/Resources/Private/Language/locallang.xlf:flexform.pi2010.main.slider.image</label>
+											<config>
+												<type>group</type>
+												<internal_type>file</internal_type>
+												<allowed>jpg, jpeg, gif, png</allowed>
+												<show_thumbs>1</show_thumbs>
+												<minitems>0</minitems>
+												<maxitems>1</maxitems>
+												<size>1</size>
+											</config>
+										</TCEforms>
+									</image>
+									<imageActive>
+										<TCEforms>
+											<label>LLL:EXT:jo_museo/Resources/Private/Language/locallang.xlf:flexform.pi2010.main.slider.active</label>
+											<config>
+												<type>check</type>
+												<default>0</default>
+											</config>
+										</TCEforms>
+									</imageActive>
+									<title>
+										<TCEforms>
+											<label>LLL:EXT:jo_museo/Resources/Private/Language/locallang.xlf:flexform.pi2010.main.slider.title</label>
+											<config>
+												<type>input</type>
+												<size>20</size>
+												<max>40</max>
+												<eval>trim</eval>
+											</config>
+										</TCEforms>
+									</title>
+									<subtitle>
+										<TCEforms>
+											<label>LLL:EXT:jo_museo/Resources/Private/Language/locallang.xlf:flexform.pi2010.main.slider.subtitle</label>
+											<config>
+												<type>input</type>
+												<size>20</size>
+												<max>40</max>
+												<eval>trim</eval>
+											</config>
+										</TCEforms>
+									</subtitle>
+									<position>
+										<TCEforms>
+											<label>LLL:EXT:jo_museo/Resources/Private/Language/locallang.xlf:flexform.pi2010.main.slider.position</label>
+											<config>
+												<type>input</type>
+												<size>20</size>
+												<max>40</max>
+												<eval>trim</eval>
+											</config>
+										</TCEforms>
+									</position>
+									<link>
+										<TCEforms>
+											<label>LLL:EXT:jo_museo/Resources/Private/Language/locallang.xlf:flexform.pi2010.main.slider.link</label>
+											<config>
+												<type>input</type>
+												<eval>trim</eval>
+												<size>30</size>
+												<wizards type="array">
+													<link type="array">
+														<type>popup</type>
+														<title>Link</title>
+														<icon>EXT:backend/Resources/Public/Images/FormFieldWizard/wizard_link.gif</icon>
+														<module type="array">
+															<name>wizard_link</name>
+															<urlParameters type="array">
+																<mode>wizard</mode>
+															</urlParameters>
+														</module>
+														<JSopenParams>height=300,width=500,status=0,menubar=0,scrollbars=1</JSopenParams>
+													</link>
+												</wizards>
+											</config>
+										</TCEforms>
+									</link>
+									<bodytext>
+										<TCEforms>
+											<label>LLL:EXT:jo_museo/Resources/Private/Language/locallang.xlf:flexform.pi2010.main.slider.bodytext</label>
+											<config>
+												<type>text</type>
+												<cols>48</cols>
+												<rows>5</rows>
+												<enableRichtext>1</enableRichtext>
+											</config>
+										</TCEforms>
+									</bodytext>
+								</el>
+							</sliderConfiguration>
+						</el>
+					</settings.slider>					
+					<settings.zoomSetup>
+						<TCEforms>
+							<displayCond>FIELD:switchableControllerActions:=:Content->imagezoom</displayCond>
+							<label>Verhalten</label>
+							<config>
+								<type>select</type>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">Zoomen</numIndex>
+										<numIndex index="1">-zoom</numIndex>
+									</numIndex>
+									<numIndex index="1" type="array">
+										<numIndex index="0">Drehen</numIndex>
+										<numIndex index="1">-rot</numIndex>
+									</numIndex>
+									<numIndex index="2" type="array">
+										<numIndex index="0">Deckkraft</numIndex>
+										<numIndex index="1">-opc</numIndex>
+									</numIndex>
+								</items>                                                          
+								<renderMode>checkbox</renderMode>
+							</config>
+						</TCEforms>
+					</settings.zoomSetup>
+					<settings.zoom type="array">
+						<title>LLL:EXT:jo_museo/Resources/Private/Language/locallang.xlf:flexform.pi2010.main.slider</title>
+						<type>array</type>
+						<section>1</section>
+						<displayCond>FIELD:switchableControllerActions:=:Content->imagezoom</displayCond>
+						<el>
+							<zoomConfiguration>
+								<type>array</type>
+								<title>LLL:EXT:jo_museo/Resources/Private/Language/locallang.xlf:flexform.pi2010.main.slider.slide</title>
+								<el>
+									<backGroundImage>
+										<TCEforms>
+											<label>Hintergrundbild?</label>
+											<config>
+												<type>check</type>
+												<default>0</default>
+											</config>
+										</TCEforms>
+									</backGroundImage>
+									<image>
+										<TCEforms>
+											<label>LLL:EXT:jo_museo/Resources/Private/Language/locallang.xlf:flexform.pi2010.main.slider.image</label>
+											<config>
+												<type>group</type>
+												<internal_type>file</internal_type>
+												<allowed>jpg, jpeg, gif, png</allowed>
+												<show_thumbs>1</show_thumbs>
+												<minitems>0</minitems>
+												<maxitems>1</maxitems>
+												<size>1</size>
+											</config>
+										</TCEforms>
+									</image>
+									<title>
+										<TCEforms>
+											<label>LLL:EXT:jo_museo/Resources/Private/Language/locallang.xlf:flexform.pi2010.main.slider.title</label>
+											<config>
+												<type>input</type>
+												<size>20</size>
+												<max>40</max>
+												<eval>trim</eval>
+											</config>
+										</TCEforms>
+									</title>
+									<link>
+										<TCEforms>
+											<label>LLL:EXT:jo_museo/Resources/Private/Language/locallang.xlf:flexform.pi2010.main.slider.link</label>
+											<config>
+												<type>input</type>
+												<eval>trim</eval>
+												<size>30</size>
+												<wizards type="array">
+													<link type="array">
+														<type>popup</type>
+														<title>Link</title>
+														<icon>EXT:backend/Resources/Public/Images/FormFieldWizard/wizard_link.gif</icon>
+														<module type="array">
+															<name>wizard_link</name>
+															<urlParameters type="array">
+																<mode>wizard</mode>
+															</urlParameters>
+														</module>
+														<JSopenParams>height=300,width=500,status=0,menubar=0,scrollbars=1</JSopenParams>
+													</link>
+												</wizards>
+											</config>
+										</TCEforms>
+									</link>
+									<inlinecss>
+										<TCEforms>
+											<label>Specielles CSS</label>
+											<config>
+												<type>input</type>
+												<size>20</size>
+												<max>40</max>
+												<eval>trim</eval>
+											</config>
+										</TCEforms>
+									</inlinecss>
+								</el>
+							</zoomConfiguration>
+						</el>
+					</settings.zoom>
+				</el>
+			</ROOT>
+		</main>
+	</sheets>
+</T3DataStructure>

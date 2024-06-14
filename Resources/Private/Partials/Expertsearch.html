@@ -1,0 +1,103 @@
+<div class="searchform expert col">
+	<f:variable name="placeholder" value="{jo:translate(key:'{langPath}:jo_bkr_base.bestanddurchsuchen')}"/>
+	<f:if condition='{config.placeholder}'>
+		<f:variable name="placeholder" value="{config.placeholder}"/>
+	</f:if>
+	<f:variable name="style1" value="display: block;"/>
+	<f:variable name="style2" value="display: none;"/>
+	<f:variable name="searchmasktoggle" value="display: none;"/>
+	<f:variable name="fuzzysearchactive" value=" active"/>
+	<f:variable name="expertsearchactive" value=""/>
+	<f:if condition="{config.init.searchconfig.activateexpertsearchmask}">
+		<f:then>
+			<f:variable name="style1" value="display: none;"/>
+			<f:variable name="style2" value="display: block;"/>
+			<f:variable name="fuzzysearchactive" value=""/>
+			<f:variable name="expertsearchactive" value=" active"/>
+		</f:then>
+		<f:else>
+
+		</f:else>
+	</f:if>
+	<f:if condition="{config.init.searchconfig.expertsearchpermitted}">
+		<div class="search_type_wrap flex-column d-flex-bak">
+			<div class="fuzzy_search{fuzzysearchactive}" data-toggle="jostab" data-target="#joSearch">Einfache Suche</div>
+			<div class="expert_search{expertsearchactive}" data-toggle="jostab" data-target="#joExpertSearch">Erweitere Suche</div>	
+		</div>
+	</f:if>
+	<f:form id="joSearch" name="suche" noCache="1" method="POST"  additionalAttributes="{style: style1}">
+		<f:form.textfield class="search_box d-inline-block" name="fulltext" value="" placeholder="{placeholder}"/><f:form.submit class="d-inline-block search_button" name="search_submit" value="" />
+	</f:form>
+	<f:if condition="{config.init.searchconfig.expertsearchpermitted}">
+		<f:form id="joExpertSearch" class="expertmask" name="suche" noCache="1" method="POST" additionalAttributes="{style: style2}">
+			<div class="row no-gutters">
+				<div class="col-md-12">
+					<f:form.hidden name="expertensearch" value="1" />
+					<f:form.textfield class="search_box d-inline-block" name="fulltext" value="{joSearcharraycomplete.content.fulltext->jo:implode(delimiter:' ')}" placeholder="Suche im Volltext"/>
+					<f:form.textfield class="search_box d-inline-block" name="locationTokenizedExpert" value="{joSearcharraycomplete.content.locationTokenizedExpert->jo:implode(delimiter:' ')}" placeholder="Ort/Münzstand/Münzstätte"/>
+					<f:form.textfield class="search_box d-inline-block" name="entityTokenizedExpert" value="{joSearcharraycomplete.content.entityTokenizedExpert->jo:implode(delimiter:' ')}" placeholder="Personen"/>
+					<f:comment>
+						<!--
+						<div class="w-100">
+							
+							<label class="fuzzySwitch joAnd">
+						  		<input class="joAndOrCheck" name="tx_jomuseo_pi1009[locationTokenizedExpert]" type="checkbox" value="1">
+						  		<span class="slider square"></span>
+						  		<span class="joAndText">unscharf</span>
+						  		<span class="joOrText">scharf</span>
+							</label>
+						</div>
+						<div class="w-100">
+							
+							<label class="fuzzySwitch joAnd">
+						  		<input class="joAndOrCheck" name="tx_jomuseo_pi1009[entityTokenizedExpert]" type="checkbox" value="1">
+						  		<span class="slider square"></span>
+						  		<span class="joAndText">unscharf</span>
+						  		<span class="joOrText">scharf</span>
+							</label>
+						</div>
+							<f:form.textfield class="search_box d-inline-block" name="nominalExpert" value="" placeholder="Nominal"/>
+							<f:form.textfield class="search_box d-inline-block" name="locationTokenizedExpert" value="" placeholder="Ort (tokenized)"/>
+							<f:form.textfield class="search_box d-inline-block" name="entityTokenizedExperta" value="" placeholder="Person (tokenized)"/>
+						-->
+					</f:comment>
+					<f:if condition="{jo:joinarray(arraycontains:'{config.init.searchconfig.expertsearchfields}', keytofind:'nkid')}">
+						<f:form.textfield class="search_box d-inline-block" name="titleExpert" value="{joSearcharraycomplete.content.entityTokenizedExpert->jo:implode(delimiter:' ')}" placeholder="Fundkomplex-ID"/>
+					</f:if>
+					<f:if condition="{jo:joinarray(arraycontains:'{config.init.searchconfig.expertsearchfields}', keytofind:'noteBundled___fundort')}">
+						<f:form.textfield class="search_box d-inline-block" name="noteBundled___fundort" value="" placeholder="Fundkomplex-Fundort" value="{joSearcharraycomplete.content.noteBundled___fundort->jo:implode(delimiter:' ')}"/>
+					</f:if>
+					<f:if condition="{jo:joinarray(arraycontains:'{config.init.searchconfig.expertsearchfields}', keytofind:'noteBundled___Inhalt')}">
+						<f:form.textfield class="search_box d-inline-block" name="noteBundled___Inhalt" value="" placeholder="Fundkomplex-Inhalt" value="{joSearcharraycomplete.content.noteBundled___Inhalt->jo:implode(delimiter:' ')}"/>
+					</f:if>
+
+					<f:comment>
+						<!--
+							<f:if condition="{jo:joinarray(arraycontains:'{config.init.searchconfig.expertsearchfields}', keytofind:'material')}">
+								<f:form.select name="material" options="{material}"/>
+							</f:if>
+							<f:if condition="{jo:joinarray(arraycontains:'{config.init.searchconfig.expertsearchfields}', keytofind:'classificationtags')}">
+								<f:form.textfield class="search_box d-inline-block" name="classificationtags" value="" placeholder="Schlagworte"/>
+							</f:if>
+						-->
+					</f:comment>
+				</div>
+				<div class="col-md-6 left-side">
+					<f:form.textfield class="search_box d-inline-block" name="starttime" value="{joSearcharraycomplete.content.timeline.start}" placeholder="Zeitraum von (z.B. -100)"/>
+				</div>
+
+				<div class="col-md-6 right-side">
+					<f:form.textfield class="search_box d-inline-block" name="endtime" value="{joSearcharraycomplete.content.timeline.end}" placeholder="Zeitraum bis  (z.B. 1000)"/>
+				</div>
+				<div class="col-12 submit-container">
+					<f:spaceless>
+						<div class="submit-content">
+							<label for="expertSubmit" class="submit-label">Suchen</label>
+							<f:form.submit id="expertSubmit" class="d-inline-block search_button" name="search_submit" value="" />
+						</div>
+					</f:spaceless>
+				</div>
+			</div>
+		</f:form>
+	</f:if>
+</div>

@@ -1,0 +1,58 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<div class="joStruktureLine-container"><div class="joStruktureLine"></div></div>
+<ul class="joStruktureRek-Menu" <f:if condition="{hidden} == 'true'">style="display:none"</f:if>>
+	<f:for each="{content}" as="val" key="key" iteration="josubiteration">
+		<f:if condition="{val.children}">
+			<f:then>
+				<f:alias map="{found: '{jo:joinarraycontains(arraycontains:\'{val.path}\', keytofind:\'{searcharray}\')}'}">
+					<li class="<f:if condition='{allchecked} == \'true\' || {found}'>active</f:if>">
+						<f:if condition="{jo:joinarray(arraycontains:'{searcharray}', keytofind:'{val.path}')}">
+							<f:then>
+								<f:link.action noCache="1" class="joCheck" arguments="{jo:jomakearray(arraykey:'remove{searchkey}', arrayvalue:'{val.path}')}">
+									&#10003;
+								</f:link.action>
+							</f:then>
+							<f:else>
+								<f:link.action noCache="1" class="joCheck" additionalParams="{add:'1'}" arguments="{jo:jomakearray(arraykey:'{searchkey}', arrayvalue:'{val.path}')}">
+									&#10003;
+								</f:link.action>
+							</f:else>
+						</f:if>
+						<div class="joStruktureRek-link">
+							<f:alias map="{arr: '{key->jo:explode(delimiter:\'$\')}'}">{arr.0}</f:alias> ({val.value})
+						</div>
+						<f:if condition="{found}">
+							<f:then>
+								<div class="joOpener active"></div>
+								<f:render partial="RekursivStrukture" arguments="{content: val.children, allchecked: 'false', searchkey: searchkey, searcharray: searcharray, hidden: 'false'}"/>
+							</f:then>
+							<f:else>
+								<div class="joOpener"></div>
+								<f:render partial="RekursivStrukture" arguments="{content: val.children, allchecked: 'false', searchkey: searchkey, searcharray: searcharray, hidden: 'true'}"/>
+							</f:else>
+						</f:if>
+					</li>
+				</f:alias>
+			</f:then>
+			<f:else>
+				<li class="<f:if condition='{allchecked} == \'true\' || {jo:joinarraycontains(arraycontains:\'{val.path}\', keytofind:\'{searcharray}\')}'>active</f:if>">
+					<f:if condition="{jo:joinarray(arraycontains:'{searcharray}', keytofind:'{val.path}')}">
+						<f:then>
+							<f:link.action noCache="1" class="joCheck" arguments="{jo:jomakearray(arraykey:'remove{searchkey}', arrayvalue:'{val.path}')}">
+								&#10003;
+							</f:link.action>
+						</f:then>
+						<f:else>
+							<f:link.action noCache="1" class="joCheck" additionalParams="{add:'1'}" arguments="{jo:jomakearray(arraykey:'{searchkey}', arrayvalue:'{val.path}')}">
+								&#10003;
+							</f:link.action>
+						</f:else>
+					</f:if>
+					<div class="joStruktureRek-link">
+						<f:alias map="{arr: '{key->jo:explode(delimiter:\'$\')}'}">{arr.0}</f:alias> ({val.value})
+					</div>
+				</li>
+			</f:else>
+		</f:if>
+	</f:for>
+</ul>

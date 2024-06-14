@@ -1,0 +1,139 @@
+<f:spaceless>
+<f:if condition="{items}">
+	<f:then>
+		<ul class="exhibition showall list-unstyled row view_{settings.exhibitionoverview} no-gutters">
+			<f:for each="{items}" as="item" iteration="i">
+				<f:variable name="bg_color" value=""/>
+				<f:variable name="title" value=""/>
+				<f:variable name="overlay" value=""/>
+				<f:if condition="{items.derivate}">
+					<f:variable name="overlay" value=" overlay"/>
+				</f:if>
+				<f:if condition="{item.maincolor} && !{item.derivate}">
+					<f:variable name="bg_color" value="background-color:{item.maincolor};"/>
+				</f:if>
+				<f:if condition="{item.title}">
+					<f:variable name="title" value=" teasertext"/>
+				</f:if>
+				<f:switch expression="{settings.exhibitionoverview}">
+				    <f:case value="2">
+				    	<f:render section="view_2" arguments="{_all}" />
+					</f:case>
+					<f:case value="3">
+				    	<f:render section="view_3" arguments="{_all}" />
+					</f:case>
+				    <f:defaultCase>
+				    	<f:render section="view_default" arguments="{_all}"/>
+					</f:defaultCase>
+				</f:switch>
+			</f:for>
+		</ul>
+	</f:then>
+	<f:else>
+		<h2>keine Ausstellungen angelegt...</h2>
+	</f:else>
+</f:if>
+
+<f:section name="view_2">
+	<f:if condition="{settings.numberfullsize}">
+		<f:then>
+			<f:if condition="{i.index} < {settings.numberfullsize}">
+				<f:then>
+					<f:if condition="{i.index} == 0 && {settings.showallheadline}">
+						<li class="col-12 h2">{settings.showallheadline}</li>
+					</f:if>
+					<f:render section="view_default" arguments="{_all}"/>
+				</f:then>
+				<f:else>
+					<f:if condition="{i.index} == {settings.numberfullsize}">
+						<f:if condition="{settings.showallheadlinebetween}">
+							<li class="col-12 h2">{settings.showallheadlinebetween}</li>
+						</f:if>
+					</f:if>
+					<f:render section="view_6col" arguments="{_all}"/>
+				</f:else>
+			</f:if>
+		</f:then>
+		<f:else>
+			<f:if condition="{i.index} == 0 && {settings.showallheadline}">
+				<li class="col-12 h2">{settings.showallheadline}</li>
+			</f:if>
+			<f:render section="view_default" arguments="{_all}"/>
+		</f:else>
+	</f:if>
+</f:section>
+
+<f:section name="view_3">
+	
+</f:section>
+
+<f:section name="view_6col">
+	<li class="col-6 view_6col item{title}{overlay} <f:if condition='{item.vorschauseite}'><f:then>right</f:then><f:else>left</f:else></f:if>" style="{bg_color}">
+		<f:link.action class="more_link" action="showexhibition" arguments="{ex:'{item.uid}'}">
+			<f:if condition="{item.derivate}">
+				<f:for each="{item.derivate}" as="img" iteration="j">
+					<f:if condition="{j.isFirst}">
+						<div class="item-img" style="background-image: url(<f:uri.image image='{img}' width='{settings.cropWidth}c' height='{settings.cropHeight}c' maxHeight='{settings.cropHeight}' maxWidth='{settings.cropWidth}' minWidth='{settings.cropWidth}' minHeight='{settings.cropHeight}' />)"></div>
+						<div class="item-img-desc">
+							<f:format.html>{img.originalResource.description}</f:format.html>
+						</div>
+					</f:if>
+				</f:for>
+			</f:if>
+			<div class="text_layer">
+				<f:if condition="{item.subtitle}">
+					<f:for each="{item.subtitle}" as="subitem">
+						<h4>{subitem.title}</h4>
+					</f:for>
+				</f:if>
+				<f:if condition="{item.title}"><h3<f:if condition="{color_config.{i.index}.maincolorfont}"> style="color: {color_config.{i.index}.maincolorfont};"</f:if>>{item.title}</h3></f:if>
+				<f:if condition="{item.period}">
+					<div class="item-period">{item.period}</div>
+				</f:if>
+				<f:comment>
+					<!--
+					<f:link.action class="more_link" action="showexhibition" arguments="{ex:'{item.uid}'}">
+						Ausstellung starten
+					</f:link.action>
+					-->
+				</f:comment>
+			</div>
+		</f:link.action>
+	</li>
+</f:section>
+
+<f:section name="view_default">
+	<li class="col-12 view_default item{title}{overlay} <f:if condition='{item.vorschauseite}'><f:then>right</f:then><f:else>left</f:else></f:if>" style="{bg_color}">
+		<f:link.action class="more_link" action="showexhibition" arguments="{ex:'{item.uid}'}">
+			<f:if condition="{item.derivate}">
+				<f:for each="{item.derivate}" as="img" iteration="j">
+					<f:if condition="{j.isFirst}">
+						<div class="item-img" style="background-image: url(<f:uri.image image='{img}' width='{settings.cropWidth}c' height='{settings.cropHeight}c' maxHeight='{settings.cropHeight}' maxWidth='{settings.cropWidth}' minWidth='{settings.cropWidth}' minHeight='{settings.cropHeight}' />)"></div>
+						<div class="item-img-desc">
+							<f:format.html>{img.originalResource.description}</f:format.html>
+						</div>
+					</f:if>
+				</f:for>
+			</f:if>
+			<div class="text_layer">
+				<f:if condition="{item.title}"><h3<f:if condition="{color_config.{i.index}.maincolorfont}"> style="color: {color_config.{i.index}.maincolorfont};"</f:if>>{item.title}</h3></f:if>
+				<f:if condition="{item.subtitle}">
+					<f:for each="{item.subtitle}" as="subitem">
+						<h4>{subitem.title}</h4>
+					</f:for>
+				</f:if>
+				<f:comment>
+					<f:if condition="{item.period}">
+						<div class="item-period">{item.period}</div>
+					</f:if>
+					<!--
+					<f:link.action class="more_link" action="showexhibition" arguments="{ex:'{item.uid}'}">
+						Ausstellung starten
+					</f:link.action>
+					-->
+				</f:comment>
+			</div>
+		</f:link.action>
+	</li>
+</f:section>
+</f:spaceless>

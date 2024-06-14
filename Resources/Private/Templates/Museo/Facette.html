@@ -1,0 +1,132 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<f:switch expression="{settings.facettetype}">
+   <f:case value="1">
+		<f:render section="facettes_with_numbers" arguments="{_all}"/>
+   </f:case>
+   	<f:case value="2">
+		<f:render section="facettes_links_only" arguments="{_all}"/>
+	</f:case>
+   <f:defaultCase>
+   		<f:render section="facettes_with_numbers" arguments="{_all}"/>
+   </f:defaultCase>
+</f:switch>
+
+<f:comment>
+	<!--
+		@all 
+		Das ist noch etwas undynamisch - wir suchen aktuell nur nach der Objekttypfacette - kann man besser machen - u.U. sollen andere Facetten ähnlich dargestellt werden
+	-->
+</f:comment>
+<f:section name="facettes_links_only">
+	<f:if condition='{joSolrFacettes.objectType}'>
+		<ul class="facettes-links-only row list-unstyled g-0">
+			<f:for each="{joSolrFacettes.objectType}" as="item" key="key" iteration="counter">
+				<li>
+					<f:link.action noCache="1" pageUid="{settings.link}" action="list" title="{key}" arguments="{joDel:'1',objectType:'{key}'}">{key}</f:link.action>
+				</li>
+			</f:for>
+		</ul>
+	</f:if>
+</f:section>
+
+<f:section name="facettes_with_numbers">
+	<f:if condition='{joSolrFacettes.objectType}'>
+		<ul class="row facetteview standard list-unstyled g-0">
+			<f:for each="{joSolrFacettes.objectType}" as="item" key="key" iteration="counter">
+				<li class="col-md-3">
+					<f:if condition='{settings.link}'>
+						<f:then>
+							<f:link.action noCache="1" pageUid="{settings.link}" action="list" title="{key}" arguments="{joDel:'1',objectType:'{key}'}">
+								<f:render section="content" arguments="{_all}"/>
+							</f:link.action>
+						</f:then>
+						<f:else>
+							<f:render section="content" arguments="{_all}"/>
+						</f:else>
+					</f:if>
+				</li>
+			</f:for>
+		</ul>
+	</f:if>
+
+	<f:if condition='{joSolrFacettes.entityFirstletter}'>
+		<ul class="row facetteview alphabetic list-unstyled g-0">
+			<f:for each="{joSolrFacettes.entityFirstletter}" as="item" key="key" iteration="counter">
+				<li class="col-">
+					<f:if condition="{item}">
+						<f:then>
+							<f:link.action pageType="200" noCache="1" additionalParams="{ret:'fac',ceid:'{extbase_config.ce_uid}'}" action="ajax" arguments="{entityFirstletter:'{key}'}">{key}</f:link.action>
+						</f:then>
+						<f:else>
+							<span>{key}</span>
+						</f:else>
+					</f:if>
+				</li>
+			</f:for>
+		</ul>
+		<div class="joFacettesContainer facetteaction"></div>
+	</f:if>
+</f:section>
+
+
+
+
+<f:section name="content">
+	<div>{item}</div>
+	<div>{key}</div>
+</f:section>
+
+<f:section name="old_stuff">
+	<div class="joKachelview joClearfix joSpaceLeftRight container" data-option="1">
+		<f:if condition='{joSolrFacettes.category}'>
+			<ul class="tile_view_controls">
+				<li id="joOption_1" class="joActive" title="Kachelansicht mit Bildern"></li>
+				<li id="joOption_2" title="Kachelansicht mit Schlagworten"></li>
+			</ul>
+			<ul class="hover-effekt tile_view clearfix row">
+				<f:for each="{joSolrFacettes.category}" as="items" key="number" iteration="counter">
+					<f:alias map="{catdata: '{number->jo:explode(delimiter:\'$\')}'}">
+						<li class="col-md-3 col-4<f:if condition='!{catdata.2}'> no-img</f:if>" <f:if condition='{catdata.2}'>style="background-image:url('{f:uri.image(src:'fileadmin/tlda/{catdata.2}', minWidth: 400, maxWidth: 400, minHeight:400, maxHeight:400)}')"</f:if>>
+							<f:link.action noCache="1" pageUid="{settings.link}" action="list" title="{catdata.0}" arguments="{joDel:'1',category:'{number}'}">
+								<div class="hover-effekt-text">
+									<span>{catdata.0} ({items})</span>
+								</div>
+							</f:link.action>
+						</li>
+					</f:alias>
+				</f:for>
+			</ul>
+		</f:if>
+		<f:if condition='{joSolrFacettes.tenant}'>
+			<ul class="hover-effekt tile_view clearfix row">
+				<f:for each="{joSolrFacettes.tenant}" as="items" key="number" iteration="counter">
+					<f:alias map="{catdata: '{number->jo:explode(delimiter:\'$\')}'}">
+						<li class="col-md-3 col-4<f:if condition='!{catdata.2}'> no-img</f:if>" <f:if condition='{catdata.2}'>style="background-image:url('{f:uri.image(src:'fileadmin/tlda/{catdata.2}', minWidth: 400, maxWidth: 400, minHeight:400, maxHeight:400)}')"</f:if>>
+							<f:link.action noCache="1" pageUid="{settings.link}" action="list" title="{catdata.0}" arguments="{joDel:'1',tenant:'{number}'}">
+								<div class="hover-effekt-text">
+									<span>{catdata.0} ({items})</span>
+								</div>
+							</f:link.action>
+						</li>
+					</f:alias>
+				</f:for>
+			</ul>
+		</f:if>
+		<f:if condition='{joSolrFacettes.classification}'>
+			<ul class="hover-effekt tile_view clearfix row<f:if condition='{settings.imgfacett}'> imgfacett</f:if>" <f:if condition='{settings.imgfacett}'>style="background-image:url('{f:uri.image(src:settings.imgfacett, treatIdAsReference: '1')}')"</f:if>>
+				<f:for each="{joSolrFacettes.classification}" as="items" key="number" iteration="counter">
+					<f:alias map="{catdata: '{number->jo:explode(delimiter:\'$\')}'}">
+						<li class="col-md-3 col-4<f:if condition='!{catdata.2}'> no-img</f:if>" <f:if condition='{catdata.2}'>style="background-image:url('{f:uri.image(src:'fileadmin/tlda/{catdata.2}', minWidth: 400, maxWidth: 400, minHeight:400, maxHeight:400)}')"</f:if>>
+							<f:link.action noCache="1" pageUid="{settings.link}" action="list" title="{catdata.0}" arguments="{joDel:'1',classification:'{number}'}">
+								<div class="hover-effekt-text">
+									<span>{catdata.0} ({items})</span>
+								</div>
+							</f:link.action>
+						</li>
+					</f:alias>
+				</f:for>
+				<f:if condition="{settings.imgfacett}"><li class="imgfacett_last"></li></f:if>
+			</ul>
+		</f:if>
+	</div>
+</f:section>

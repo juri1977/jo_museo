@@ -1,0 +1,75 @@
+<div class="news_wrap">
+	<div class="jo-slider">
+		<div class="viewport">
+			<f:if condition="{objects}">
+				<ul class="newslist clearfix slides">
+					<f:for each="{objects}" as="newsItem" key="itemkey" iteration="i">
+						<li>
+							<f:if condition="{i.isFirst}">
+								<f:then>
+									<div class="col-md-7 left" >
+										<f:if condition="{newsItem.falMedia.0}">
+											<f:then>
+												<figure style="background-image:url({f:uri.image(src:'{newsItem.falMedia.0.uid}', treatIdAsReference:1, width:'800c', height:'500c')})"></figure>
+											</f:then>
+											<f:else><div class="no-img">{newsItem.title}</div></f:else>
+										</f:if>
+									</div>
+									<div class="col-md-5 right clearfix">
+										<div class="col-md-6 subleft" >
+											<div class="top">
+												<h1>{newsItem.title}</h1>
+												<div class="white">
+													<f:format.crop maxCharacters="150">{newsItem.teaser}</f:format.crop>
+												</div>
+												<f:if condition="{settings.morelink}">
+													<f:then>
+														<f:link.page pageUid="{settings.morelink}" class="news_detail_link">mehr erfahren</f:link.page>
+													</f:then>
+													<f:else>
+														<f:link.action action="detail" class="news_detail_link" arguments="{id:'{newsItem.uid}'}">
+															mehr erfahren
+														</f:link.action>
+													</f:else>
+												</f:if>
+											</div>
+											<div class="bottom">
+												<f:if condition="{newsItem.falMedia.1}">
+													<f:then>
+														<figure style="background-image:url({f:uri.image(src:'{newsItem.falMedia.1.uid}', treatIdAsReference:1, width:'500c', height:'300c')})"></figure>
+													</f:then>
+													<f:else><div class="no-img">{newsItem.title}</div></f:else>
+												</f:if>
+											</div>
+										</div>
+										<div class="col-md-6 subright" >
+											<div class="top">
+												<f:if condition="{newsItem.falMedia.2}">
+													<f:then>
+														<figure style="background-image:url({f:uri.image(src:'{newsItem.falMedia.2.uid}', treatIdAsReference:1, width:'500c', height:'300c')})"></figure>
+													</f:then>
+													<f:else><div class="no-img">{newsItem.title}</div></f:else>
+												</f:if>
+											</div>
+											<div class="bottom">
+												<f:if condition="{newsItem.falMedia.3}">
+													<f:then>
+														<figure style="background-image:url({f:uri.image(src:'{newsItem.falMedia.3.uid}', treatIdAsReference:1, width:'500c', height:'300c')})"></figure>
+													</f:then>
+													<f:else><div class="no-img">{newsItem.title}</div></f:else>
+												</f:if>
+											</div>
+										</div>
+									</div>
+								</f:then>
+								<f:else>
+									
+								</f:else>
+							</f:if>
+						</li>
+					</f:for>
+				</ul>
+			</f:if>
+		</div>
+	</div>
+</div>

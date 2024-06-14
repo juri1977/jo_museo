@@ -1,0 +1,22 @@
+# Configuration/Services.yaml
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  JO\JoMuseo\:
+    resource: '../Classes/*'
+    exclude: '../Classes/Helper/*'
+
+  PhpOffice\PhpSpreadsheet\:
+    resource: '../Classes/Helper/PhpSpreadsheet/*'
+
+  Psr\SimpleCache\:
+    resource: '../Classes/Helper/simple-cache/*'
+
+  ZipStream\:
+    resource: '../Classes/Helper/ZipStream-PHP-2.2.0/*'
+
+  MyCLabs\Enum\:
+    resource: '../Classes/Helper/php-enum-1.8.3/*'

@@ -1,0 +1,268 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<div class="clearfix">
+	<f:render partial="Facettecontrols" arguments="{_all}"/>
+</div>
+<div class="results clearfix container">
+	<h3>{jo:translate(key:'{langPath}:founditems')}</h3>
+	<f:if condition="{joSolrObjects.response.docs}">
+		<f:then>
+			<table class="table table-responsive table-bordered table-hover table-condensed joSolrTable joListTable">
+				<tr> 
+					<th class="joImageCol"></th>
+					<f:if condition="{jo:joinarray(arraycontains:'{selectedTableFields}', keytofind:'title')}">
+						<th>
+							{jo:translate(key:'{langPath}:jo_bkr_base.titleAndText')}
+						</th>
+					</f:if>
+					<f:if condition="{jo:joinarray(arraycontains:'{selectedTableFields}', keytofind:'objectTypeHierarchy')}">
+						<th class="joTable-Type">
+							{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.label_objectTypeHierarchy')}
+						</th>
+					</f:if>
+					<f:if condition="{jo:joinarray(arraycontains:'{selectedTableFields}', keytofind:'category')}">
+						<th class="joTable-category">{jo:translate(key:'{langPath}:jo_bkr_base.category')}</th>
+					</f:if>
+					<f:if condition="{jo:joinarray(arraycontains:'{selectedTableFields}', keytofind:'entity')}">
+						<th class="joTable-Personen">{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.label_entityFirstletter')}</th>
+					</f:if>
+					<f:if condition="{jo:joinarray(arraycontains:'{selectedTableFields}', keytofind:'location')}">
+						<th class="joTable-Ort">Orte</th>
+					</f:if>
+					<f:if condition="{jo:joinarray(arraycontains:'{selectedTableFields}', keytofind:'showtime')}">
+						<th class="joTable-Zeitraum">{jo:translate(key:'{langPath}:jo_bkr_base.label_period')}</th>
+					</f:if>
+					<f:if condition="{jo:joinarray(arraycontains:'{selectedTableFields}', keytofind:'classification')}">
+						<th class="col3">
+							{jo:translate(key:'{langPath}:jo_bkr_base.sachgruppe')}
+						</th>
+					</f:if>
+					<th class="col5">&nbsp;</th>
+				</tr>
+				<f:for each="{joSolrObjects.response.docs}" as="items" key="number" iteration="counter">
+					<tr class="bt">
+						<td class="joImageCol">
+							<f:if condition="{items.images}">
+								<f:then>
+									<f:alias map="{imagedata: '{items.images.0->jo:explode(delimiter:\'$\')}'}">
+										<f:if condition="{imagedata.1} && false">
+											<f:then>
+												<f:link.external class="img-viewer-external" uri="{imagedata.1}" style="background-image: url('{imagedata.0}')">
+													&nbsp;
+												</f:link.external>
+											</f:then>
+											<f:else>
+												<f:link.action class="d-block" noCache="1" action="detailobject" arguments="{joDetailView:'{items.id}',jopaginatepage:'{extbase_config.paginate}',h:'1'}">
+													<div class="table-img" style="background-image: url('{imagedata.0}')"></div>
+												</f:link.action>
+											</f:else>
+										</f:if>
+										<f:if condition="{imagedata.3}">
+											<!--<div class="img-proof">{jo:translate(key:'{langPath}:jo_bkr_base.img.proof')} {imagedata.3}</div>-->
+										</f:if>
+									</f:alias>
+								</f:then>
+								<f:else>
+									<f:if condition="{settings.imgplaceholder}">
+										<f:then>
+											<div class="table-img" style="background-image: url('{f:uri.image(src:'{settings.imgplaceholder}', treatIdAsReference: 1, width: 300)}')"></div>
+										</f:then>
+										<f:else>
+											<div class="table-img" style="background-image: url('{f:uri.image(src:'/typo3conf/ext/jo_museo/Resources/Public/Images/platzhalter.jpg', width: 300)}')"></div>
+										</f:else>
+									</f:if>
+								</f:else>
+							</f:if>
+						</td>
+						<f:if condition="{jo:joinarray(arraycontains:'{selectedTableFields}', keytofind:'title')}">
+							<td>
+								<f:link.action noCache="1" action="detailobject" arguments="{joDetailView:'{items.id}',jopaginatepage:'{extbase_config.paginate}',h:'1'}">
+									<div class="table-text"><f:format.crop maxCharacters="50" respectWordBoundaries="TRUE" respectHtml="TRUE" ><f:format.html>{items.title}</f:format.html></f:format.crop></div>
+								</f:link.action>
+							</td>
+						</f:if>
+						<f:if condition="{jo:joinarray(arraycontains:'{selectedTableFields}', keytofind:'objectTypeHierarchy')}">
+							<td>
+								<!-- Objekttype -->
+								<f:if condition="{items.objectTypeHierarchy}">
+									<div class="table-text" title="{items.objectTypeHierarchy.0}">
+										<f:alias map="{classi: '{items.objectTypeHierarchy.0->jo:explode(delimiter:\'/\', last: \'1\')}'}">{classi}</f:alias>
+										<f:if condition="{items.objectTypeHierarchy.1}">, ...</f:if>
+									</div>
+								</f:if>
+							</td>
+						</f:if>
+						<f:if condition="{jo:joinarray(arraycontains:'{selectedTableFields}', keytofind:'category')}">
+							<td>
+								<!-- Kategory -->
+								<f:if condition="{items.category}">
+									<f:alias map="{val: '{items.category.0->jo:explode(delimiter:\'$\')}'}">
+										<div class="table-text">
+											{val.0}<f:if condition="{items.category.1}">, ...</f:if>
+										</div>
+									</f:alias>
+								</f:if>
+							</td>
+						</f:if>
+						<f:if condition="{jo:joinarray(arraycontains:'{selectedTableFields}', keytofind:'entity')}">
+							<td>
+								<!-- Person -->
+								<f:if condition="{items.entity}">
+									<div class="table-text">
+										<f:if condition="{items.entity -> f:count()} == '0'">
+											<f:then>-</f:then>
+											<f:else>
+												{items.entity -> f:count()}
+											</f:else>
+										</f:if>
+									</div>
+								</f:if>
+							</td>
+						</f:if>
+						<f:if condition="{jo:joinarray(arraycontains:'{selectedTableFields}', keytofind:'location')}">
+							<td>
+								<!-- Orte -->
+								<f:if condition="{items.location}">
+									<div class="table-text">
+										<f:format.html>{items.location.0}</f:format.html><f:if condition="{items.location.1}">, ...</f:if>
+									</div>
+								</f:if>
+							</td>
+						</f:if>
+						<f:if condition="{jo:joinarray(arraycontains:'{selectedTableFields}', keytofind:'showtime')}">
+							<td>
+								<!-- Zeitraum -->
+								<f:if condition="{items.showtime}">
+									<div class="table-text">
+										<f:format.html>{items.showtime.0}</f:format.html>
+									</div>
+								</f:if>
+							</td>
+						</f:if>
+						<f:if condition="{jo:joinarray(arraycontains:'{selectedTableFields}', keytofind:'classification')}">
+							<td>
+								<!-- Sachgruppe -->
+								<f:if condition="{items.classification}">
+									<div class="table-text">
+										<f:format.html>{items.classification.0}</f:format.html><f:if condition="{items.classification.1}">, ...</f:if>
+									</div>
+								</f:if>
+							</td>
+						</f:if>
+						<td>
+							<div class="detail control_button">
+								<f:link.action noCache="1" action="detailobject" arguments="{joDetailView:'{items.id}',jopaginatepage:'{extbase_config.paginate}',h:'1'}">
+									<div class="addGradient">
+										<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+											<f:then>
+												<div class="joSprite" title="{jo:translate(key:'{langPath}:jo_bkr_base.details')}"></div>
+											</f:then>
+											<f:else>
+												<f:image src="{f:uri.resource(path:'Images/sprite.svg')}" alt="{jo:translate(key:'{langPath}:jo_bkr_base.details')}" title="{jo:translate(key:'{langPath}:jo_bkr_base.details')}" />
+											</f:else>
+										</f:if>
+									</div>
+								</f:link.action>
+							</div>
+							<f:if condition="{items.images}">
+								<f:then>
+									<f:for each="{items.images}" as="subitems" key="subnumber" iteration="subcounter">
+										<f:if condition="{subcounter.isFirst}">
+											<f:alias map="{imagedata: '{subitems->jo:explode(delimiter:\'$\')}'}">
+												<f:if condition="{imagedata.1}">
+													<f:then>
+														<div class="viewer control_button">
+															<f:link.external uri="{imagedata.1}" >
+																<div class="addGradient">
+																	<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+																		<f:then>
+																			<div class="joSprite" title="{jo:translate(key:'{langPath}:jo_bkr_base.digitizer.inview')}"></div>
+																		</f:then>
+																		<f:else>
+																			<f:image src="{f:uri.resource(path:'Images/sprite.svg')}" alt="{jo:translate(key:'{langPath}:jo_bkr_base.digitizer.inview')}" title="{jo:translate(key:'{langPath}:jo_bkr_base.digitizer.inview')}" />
+																		</f:else>
+																	</f:if>
+																</div>
+															</f:link.external>
+														</div>
+													</f:then>
+													<f:else>
+														<div class="viewer control_button">
+															<div class="inactive_link">
+																<div class="addGradient">
+																	<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+																		<f:then>
+																			<div class="joSprite"></div>
+																		</f:then>
+																		<f:else>
+																			<f:image src="{f:uri.resource(path:'Images/sprite.svg')}" alt="{jo:translate(key:'{langPath}:jo_bkr_base.digitizer.inview')}" title="{jo:translate(key:'{langPath}:jo_bkr_base.digitizer.inview')}" />
+																		</f:else>
+																	</f:if>
+																</div>
+															</div>
+														</div>
+													</f:else>
+												</f:if>
+											</f:alias>
+										</f:if>
+									</f:for>
+								</f:then>
+								<f:else>
+									<div class="viewer control_button">
+										<div class="inactive_link">
+											<div class="addGradient">
+												<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+													<f:then>
+														<div class="joSprite"></div>
+													</f:then>
+													<f:else>
+														<f:image src="{f:uri.resource(path:'Images/sprite.svg')}" alt="{jo:translate(key:'{langPath}:jo_bkr_base.digitizer.inview')}" title="{jo:translate(key:'{langPath}:jo_bkr_base.digitizer.inview')}" />
+													</f:else>
+												</f:if>
+											</div>
+										</div>
+									</div>
+								</f:else>
+							</f:if>
+							<div class="detail control_button">
+								<f:if condition="{jo:joinarray(arraycontains:'{collbox_content}', keytofind:'{items.id}')}">
+									<f:then>
+										<f:link.action noCache="1" class="listBookmarkRemove" arguments="{remove_from_box:'{items.id}',jopaginatepage:'{extbase_config.paginate}'}" >
+											<div class="addGradient">
+												<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+													<f:then>
+														<div class="joSprite" title="{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks.remove')}"></div>
+													</f:then>
+													<f:else>
+														<f:image src="{f:uri.resource(path:'Images/sprite.svg')}" alt="{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks.remove')}" title="{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks.remove')}" />
+													</f:else>
+												</f:if>
+											</div>
+										</f:link.action>
+									</f:then>
+									<f:else>
+										<f:link.action noCache="1" class="listBookmark" arguments="{add_to_box:'{items.id}',jopaginatepage:'{extbase_config.paginate}'}" >
+											<div class="addGradient">
+												<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+													<f:then>
+														<div class="joSprite" title="{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks')}"></div>
+													</f:then>
+													<f:else>
+														<f:image src="{f:uri.resource(path:'Images/sprite.svg')}" alt="{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks')}" title="{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks')}" />
+													</f:else>
+												</f:if>
+											</div>
+										</f:link.action>
+									</f:else>
+								</f:if>
+							</div>
+						</td>
+					</tr>
+				</f:for>
+			</table>
+			<f:render partial="Paginator" arguments="{_all}"/>
+		</f:then>
+		<f:else>
+			<h1 class="joNothingFound">{jo:translate(key:'{langPath}:jo_bkr_base.noobjects')}</h1>
+		</f:else>
+	</f:if>
+</div>

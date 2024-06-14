@@ -1,0 +1,27 @@
+<div class="joTop clearfix">
+	<div class="navbar-header">
+		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+			<span class="sr-only">{jo:translate(key:'{langPath}:jo_museo.togglenavigation')}</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+	</div>
+	<div class="icon"></div>
+	<div class="logo">
+		<f:cObject typoscriptObjectPath="lib.mountpointsubtitle" />
+	</div>	
+	<div class="mainmenu">
+		<div class="collapse navbar-collapse" id="navbar">
+			<f:cObject typoscriptObjectPath="lib.mainMenu" />
+		</div>	
+	</div>
+</div>
+<div class="second_control clearfix">
+	<div class="col-md-3 pull-right col-4">
+		<f:cObject typoscriptObjectPath="lib.sprachen" />
+	</div>
+	<f:if condition="{merkliste}">
+		<f:format.html parseFuncTSPath="">{merkliste}</f:format.html>
+	</f:if>
+</div>

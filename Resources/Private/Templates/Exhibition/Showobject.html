@@ -1,0 +1,1755 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<f:spaceless>
+<f:comment>
+	<!--
+	einzelne Objektansicht ohne Ausstellungskontext
+	-->
+</f:comment>
+<f:if condition="{obj}">
+	<f:variable name="selectedview" value=""/>
+	<f:if condition="{soloview}">
+		<f:variable name="selectedview" value="soloview"/>
+	</f:if>
+	<div id="obj{obj.uid}" class="exhibition joObject padding_{obj.configuration.padding.vDEF} textpos_{obj.configuration.textpos.vDEF} single{selectedview}">
+		<f:variable name="learnmore">1</f:variable>
+		<f:if condition="{obj.configuration.learnmore.vDEF}">
+			<f:variable name="learnmore">{obj.configuration.learnmore.vDEF}</f:variable>
+		</f:if>
+		<f:variable name="slideeffect">1</f:variable>
+		<f:if condition="{config.slideeffect}">
+			<f:variable name="slideeffect">{config.slideeffect}</f:variable>
+		</f:if>
+		<f:render section="standalone_header" arguments="{_all}"/>
+		<div class="content-wrapper d-flex flex-column singleitem overflow-hidden position-relative subtype{obj.datasubtype} sl-effect-{slideeffect} lrn-effect-{learnmore}">
+			<f:render section="object_switchcase" arguments="{_all}"/>
+		</div>
+	</div>
+</f:if>
+
+<f:comment>
+	<!--
+	Objektübersicht einschließlich der einführenden und nächsten Sektion
+	Wenn die Sektion OHNE Ausstellungskontext in Gänze abgerufen wird, werden die Inhalte der einführenden und nächsten Sektion NICHT gerendet
+	-->
+</f:comment>
+<f:if condition="{sektion}">
+	<f:variable name="single"></f:variable>
+	<f:if condition="{nc}">
+		<f:variable name="single"> singleitem</f:variable>
+	</f:if>
+	<div class="exhibition showobject joObject_container{single}">
+		<f:if condition="{nc}">
+			<f:render section="standalone_header" arguments="{_all}"/>
+		</f:if>
+		<f:if condition="!{nc}">
+			<div id="overview-container"></div>
+			<div class="joSitemap d-flex flex-column">
+				<div class="sitemap-icon-container d-block">
+					<div class="sitemap-icon"></div>
+				</div>
+				<div class="overview-icon-container d-block">
+					<f:link.action pageType="124" noCache="1" class="overview-link" action="showfullindex" arguments="{ex:'{parent}'}"></f:link.action>
+				</div>
+				<div class="chapter d-flex">
+					<div class="c-wrap prev">
+						<f:if condition="{sektion.prev}">
+							<f:then>
+								<f:link.action action="showobject" class="d-block text-right overflow-hidden" arguments="{pid:'{sektion.prev.pid}', uid:'{sektion.prev.uid}', parent:'{parent}'}">
+									<h2 class="text-overflow" >
+										{sektion.prev.title}
+									</h2>
+									<div class="backlink d-inline-block">
+										<div class="joSprite"></div>
+									</div>
+								</f:link.action>
+							</f:then>
+							<f:else>
+								<f:link.action action="showexhibition" class="d-block text-right overflow-hidden" arguments="{ex:'{parent}'}">
+									<h2 class="text-overflow" >
+										Zur Ausstellungsübersicht
+									</h2>
+									<div class="backlink d-inline-block">
+										<div class="joSprite"></div>
+									</div>
+								</f:link.action>
+							</f:else>
+						</f:if>
+					</div>
+					<div class="c-wrap current">
+						<div class="text-center no-link-wrap overflow-hidden">
+							<h2 class="text-overflow">{sektion.orig.title}</h2>
+							<div class="arrowdown d-inline-block">
+								<div class="joSprite"></div>
+							</div>
+						</div>
+					</div>
+					<div class="c-wrap next">
+						<f:if condition="{sektion.next}">
+							<f:then>
+								<f:link.action action="showobject" class="d-block overflow-hidden text-left" arguments="{pid:'{sektion.next.pid}', uid:'{sektion.next.uid}', parent:'{parent}'}">
+									<h2 class="text-overflow">
+										{sektion.next.title}
+									</h2>
+									<div class="backlink d-inline-block">
+										<div class="joSprite"></div>
+									</div>
+								</f:link.action>
+							</f:then>
+							<f:else>
+								<f:link.action action="showexhibition" class="d-block overflow-hidden text-left" arguments="{ex:'{parent}'}">
+									<h2 class="text-overflow" >
+										Zur Ausstellungsübersicht
+									</h2>
+									<div class="backlink d-inline-block">
+										<div class="joSprite"></div>
+									</div>
+								</f:link.action>
+							</f:else>
+						</f:if>
+					</div>
+				</div>
+				<div id="carousel-sitemap" class="object-view joSitemap-container section-sitemap">
+				  	<div class="carousel-sitemap-slick h-100" >
+				  		<f:for each="{sektion.orig.exhibit}" as="item" iteration="i">
+				    		<f:if condition="{item.derivate}">
+							    <div class="d-flex sitemap-slick-item<f:if condition='{i.isFirst}'> active sitemap-slick-active</f:if>" data-target="#obj{item.uid}" data-index="{i.index}">
+							    	<div class="sitemap-nr">{item.objektnummer}</div>
+							    	<div class="sitemap-img" >
+							    		<div class="bg_image h-100" style="background-image: url({f:uri.image(image:item.derivate.0, maxWidth: '{settings.exhibition.parameter.section.overview.imagewidth}', width:'{settings.exhibition.parameter.section.overview.imagewidth}', minWidth: '{settings.exhibition.parameter.section.overview.imagewidth}')})"></div>
+							    	</div>
+							    	<div class="sitemap-title">{item.title}</div>
+							    </div>
+							</f:if>
+						</f:for>
+			  		</div>
+				</div>
+			</div>
+		</f:if>
+		<f:link.action class="controlAjaxLink" action="showfullindex" style="display: none;" arguments="{ex: parent, section: sektion.uid}" additionalParams="{type: '124'}">link</f:link.action>
+		<div class="controlAjaxOut"></div>
+		<div>
+			<f:comment>
+			<!--
+				Sektionsinfos werden ausgeblendet, wenn die Seite standalone gezogen wird. wurde wieder deaktiviert.
+				<f:if condition="!{nc}">
+					<f:render section="currentsection" arguments="{_all}"/>
+				</f:if>
+			-->
+			</f:comment>
+			<f:render section="currentsection" arguments="{_all}"/>
+			<f:for each="{sektion.orig.exhibit}" as="obj" iteration="i">
+				<f:variable name="evenodd" value="even"/>
+				<f:if condition="{i.isOdd}">
+					<f:variable name="evenodd" value="odd"/>
+				</f:if>
+				<div id="obj{obj.uid}" class="joObject up-scroll {evenodd} padding_{obj.configuration.padding.vDEF} textpos_{obj.configuration.textpos.vDEF}">
+					<f:variable name="learnmore">1</f:variable>
+					<f:if condition="{obj.configuration.learnmore.vDEF}">
+						<f:variable name="learnmore">{obj.configuration.learnmore.vDEF}</f:variable>
+					</f:if>
+					<f:variable name="slideeffect">1</f:variable>
+					<f:if condition="{config.slideeffect}">
+						<f:variable name="slideeffect">{config.slideeffect}</f:variable>
+					</f:if>
+					<div class="content-wrapper d-flex flex-column subtype{obj.datasubtype} sl-effect-{slideeffect} lrn-effect-{learnmore}">
+						<f:render section="object_switchcase" arguments="{_all}"/>
+					</div>
+				</div>
+			</f:for>
+			<f:if condition="{sektion.next}">
+				<div id="obj-next" class="joObject up-scroll">
+					<div class="content-wrapper d-flex flex-column">
+						<f:render section="nextsection" arguments="{_all}"/>
+					</div>
+				</div>
+			</f:if>
+		</div>
+	</div>
+</f:if>
+<f:if condition="{nc}">
+	<div id="joAjaxloader" style="display: none;">
+	    <div class="joLoader"></div>
+	</div>
+</f:if>
+
+
+<f:section name="object_switchcase">
+	<f:switch expression="{obj.datasubtype}">
+		<f:case value="2"><f:render section="alternative_view_2" arguments="{_all}"/></f:case>
+		<f:case value="3"><f:render section="alternative_view_2" arguments="{_all}"/></f:case>
+		<f:case value="4"><f:render section="alternative_view_4" arguments="{_all}"/></f:case>
+		<f:case value="5"><f:render section="alternative_view_4" arguments="{_all}"/></f:case>
+		<f:case value="6"><f:render section="alternative_view_4" arguments="{_all}"/></f:case>
+		<f:case value="7"><f:render section="alternative_view_7" arguments="{_all}"/></f:case>
+		<f:case value="8"><f:render section="alternative_view_8" arguments="{_all}"/></f:case>
+		<f:case value="9"><f:render section="alternative_view_8" arguments="{_all}"/></f:case>
+		<f:case value="10"><f:render section="alternative_view_8" arguments="{_all}"/></f:case>
+		<f:case value="20"><f:render section="zitat" arguments="{_all}"/></f:case>
+		<f:case value="21"><f:render section="zitat" arguments="{_all}"/></f:case>
+		<f:case value="22"><f:render section="zitat" arguments="{_all}"/></f:case>
+		<f:case value="23"><f:render section="zitat" arguments="{_all}"/></f:case>
+		<f:case value="24"><f:render section="bgvideo_image" arguments="{_all}"/></f:case>
+		<f:case value="100"><f:render section="map" arguments="{_all}"/></f:case>
+		<f:case value="60"><f:render section="booksites" arguments="{_all}"/></f:case>
+		<f:case value="61"><f:render section="booksites2" arguments="{_all}"/></f:case>
+		<f:case value="62"><f:render section="booksites2" arguments="{_all}"/></f:case>
+		<f:case value="63"><f:render section="booksites2" arguments="{_all}"/></f:case>
+		<f:defaultCase><f:render section="standard_view" arguments="{_all}"/></f:defaultCase>
+	</f:switch>
+</f:section>
+
+<f:comment>
+	<!--
+		Darstellung des Templates 8 - Assets in Reihen zu jeweils drei/Text darüber oder darunter
+	-->
+</f:comment>
+<f:section name="alternative_view_8">
+	<f:variable name="flex_direction" value="row textright"/>
+	<f:variable name="img_block_classes" value="col-12 col-sm col-md"/>
+	<f:variable name="text_block_classes" value="col-12 col-md-7"/>
+	<f:if condition="{obj.datasubtype}=='9'">
+		<f:variable name="flex_direction" value="row flex-row-reverse textleft"/>
+	</f:if>
+	<f:if condition="{obj.datasubtype}=='10'">
+		<f:variable name="flex_direction" value="row item-flex-column img_text_vertical"/>
+		<f:variable name="img_block_classes" value="col-12"/>
+		<f:variable name="text_block_classes" value="col-12"/>
+	</f:if>
+	<div class="obj_wrap view_8_alt no-gutters {flex_direction}">
+		<f:if condition="{obj.configuration.textpos.vDEF} == 2">
+			<div class="text_info_upper col-12">
+				<f:render section="title_information_block" arguments="{_all}"/>
+			</div>
+		</f:if>
+		<div class="img-container {img_block_classes}">
+			<f:if condition="{obj.derivate}">
+				<div class="img-inner-container">
+					<f:for each="{obj.derivate}" as="img" iteration="j">
+						<div class="img-outer-wrapper">
+							<div class="img-wrapper position-relative">
+								<div class="img-load-overlay"><div class="loader"></div></div>
+								<f:variable name="url_section_img" value="{f:uri.image(image: img,width:2000m, width:2000m)}" />
+								<div class="img_inner_wrap">
+									<f:image class="object_image" image="{img}" width="1000m" height='1000m' additionalAttributes="{data-url: url_section_img}"/>
+
+									<f:if condition="{img.originalResource.description} || {img.originalResource.alternative} || {img.originalResource.title}">
+										<div class="view8-overlay-text">
+											<f:if condition="{img.originalResource.title}">
+												<div class="asset_title"><f:format.html>{img.originalResource.title}</f:format.html></div>
+											</f:if>
+											<f:if condition="{img.originalResource.alternative}">
+												<div class="asset_alt"><f:format.html>{img.originalResource.alternative}</f:format.html></div>
+											</f:if>
+											<f:if condition="{img.originalResource.description}">
+												<div class="asset_desc"><f:format.html>{img.originalResource.description}</f:format.html></div>
+											</f:if>
+										</div>
+									</f:if>
+								</div>
+							</div>
+							<div class="obj-buttons">
+								<button type="button" class="closescreen btn d-block btn-jo">
+					                <span class="d-block">&gt;</span>
+					            </button>
+								<button type="button" class="togglefullscreen_ex btn d-block btn-jo">
+					                <span class="d-block">&gt;</span>
+					            </button>
+					            <button type="button" class="img_zoom_in btn d-block btn-jo">
+					                <span class="d-block">&gt;</span>
+				              	</button>
+					            <button type="button" class="img_zoom_out btn d-block btn-jo">
+					                <span class="d-block">&gt;</span>
+				              	</button>
+							</div>
+						</div>
+					</f:for>
+				</div>
+				<f:if condition="{obj.derivate -> f:count()} > 1">
+					<div class="all_images">
+						<f:for each="{obj.derivate}" as="img" iteration="j">
+							<f:variable name="url" value="{f:uri.image(image: img)}" />
+							<f:image class="small_img{f:if(condition: '{j.isFirst}', then: ' active', else: '')}" image="{img}" width="200" minWidth='200' height='' additionalAttributes="{data-url: url}" />
+						</f:for>
+					</div>
+				</f:if>
+			</f:if>
+		</div>
+		<div class="text_wrap {text_block_classes}">
+			<div class="d-flex flex-column min-height-100 align-items-stretch">
+				<f:if condition="{obj.configuration.textpos.vDEF} == 1 || {obj.configuration.textpos.vDEF} == 0">
+					<f:if condition="{obj.title} || {obj.subtitle}">
+						<f:render section="title_information_block" arguments="{_all}"/>
+					</f:if>
+				</f:if>
+				<f:if condition="{obj.configuration.textpos.vDEF} == 0 || {obj.configuration.textpos.vDEF} == 2">
+					<f:render section="textinformation_block" arguments="{_all}"/>
+					<f:render section="audio_video_block" arguments="{_all}"/>
+					<f:render section="ctabutton" arguments="{_all}"/>
+				</f:if>
+			</div>
+		</div>
+	</div>
+	<f:if condition="{obj.configuration.textpos.vDEF} == 1">
+		<div class="text_info_lower">
+			<f:render section="textinformation_block" arguments="{_all}"/>
+			<f:render section="audio_video_block" arguments="{_all}"/>
+			<f:render section="ctabutton" arguments="{_all}"/>
+		</div>
+	</f:if>
+	<f:render section="learnmore" arguments="{_all}"/>
+</f:section>
+
+<f:comment>
+	<!--
+		Darstellung des Templates 7 - 4 Abbildungen - jeweils 2 nebeneinander
+	-->
+</f:comment>
+<f:section name="alternative_view_7">
+	<f:variable name="flex_direction" value="row textright"/>
+	<f:variable name="img_block_classes" value="col-12 col-sm col-md"/>
+	<f:variable name="text_block_classes" value="col-12 col-md-7"/>
+	<f:if condition="{obj.datasubtype}=='5'">
+		<f:variable name="flex_direction" value="row flex-row-reverse textleft"/>
+	</f:if>
+	<f:if condition="{obj.datasubtype}=='6'">
+		<f:variable name="flex_direction" value="row flex-column img_text_vertical"/>
+		<f:variable name="img_block_classes" value="col-12"/>
+		<f:variable name="text_block_classes" value="col-12"/>
+	</f:if>
+	<div class="obj_wrap view_4_alt no-gutters {flex_direction}">
+		<f:if condition="{obj.derivate.0.originalResource.description} || {obj.derivate.0.originalResource.alternative} || {obj.derivate.0.originalResource.title}">
+			<div class="view2-overlay">
+				<div class="view2-overlay-text">
+					<f:if condition="{obj.derivate.0.originalResource.title}">
+						<div class="asset_title"><f:format.html>{obj.derivate.0.originalResource.title}</f:format.html></div>
+					</f:if>
+					<f:if condition="{obj.derivate.0.originalResource.alternative}">
+						<div class="asset_alt"><f:format.html>{obj.derivate.0.originalResource.alternative}</f:format.html></div>
+					</f:if>
+					<f:if condition="{obj.derivate.0.originalResource.description}">
+						<div class="asset_desc"><f:format.html>{obj.derivate.0.originalResource.description}</f:format.html></div>
+					</f:if>
+					<div class="view2-overlay-close">&nbsp;</div>
+				</div>
+			</div>
+		</f:if>
+		<f:if condition="{obj.configuration.textpos.vDEF} == 2">
+			<div class="text_info_upper col-12">
+				<f:render section="title_information_block" arguments="{_all}"/>
+			</div>
+		</f:if>
+		<div class="img-container {img_block_classes}">
+			<div class="d-flex flex-column">
+				<f:if condition="{obj.derivate}">
+					<f:for each="{obj.derivate}" as="img" iteration="j">
+						<f:if condition="{j.index} < 4">
+							<div class="img-wrapper position-relative">
+								<div class="img-load-overlay"><div class="loader"></div></div>
+								<f:variable name="url_section_img" value="{f:uri.image(image: img,width:2000m, width:2000m)}" />
+								<div class="section_img position-relative">
+									<div class="img_inner_wrap" style="flex:1;overflow: hidden;">
+										<f:image class="object_image" image="{img}" width="600m" height='600m' additionalAttributes="{data-url: url_section_img}"/>
+									</div>
+									<f:render section="asset_info" arguments="{_all}"/>
+								</div>
+							</div>
+							<div class="obj-buttons">
+								<button type="button" class="closescreen btn d-block btn-jo">
+					                <span class="d-block">&gt;</span>
+					            </button>
+								<button type="button" class="togglefullscreen_ex btn d-block btn-jo">
+					                <span class="d-block">&gt;</span>
+					            </button>
+					            <button type="button" class="img_zoom_in btn d-block btn-jo">
+					                <span class="d-block">&gt;</span>
+				              	</button>
+					            <button type="button" class="img_zoom_out btn d-block btn-jo">
+					                <span class="d-block">&gt;</span>
+				              	</button>
+							</div>
+						</f:if>
+					</f:for>
+					
+					<f:if condition="{obj.derivate -> f:count()} > 1">
+						<div class="all_images">
+							<f:for each="{obj.derivate}" as="img" iteration="j">
+								<f:variable name="url" value="{f:uri.image(image: img)}" />
+								<f:image class="small_img{f:if(condition: '{j.isFirst}', then: ' active', else: '')}" image="{img}" width="200" minWidth='200' height='' additionalAttributes="{data-url: url}" />
+							</f:for>
+						</div>
+					</f:if>
+				</f:if>
+			</div>
+		</div>
+		<div class="text_wrap {text_block_classes}">
+			<div class="d-flex flex-column min-height-100 align-items-stretch">
+				<f:if condition="{obj.configuration.textpos.vDEF} == 1 || {obj.configuration.textpos.vDEF} == 0">
+					<f:if condition="{obj.title} || {obj.subtitle}">
+						<f:if condition="{obj.audio} && {obj.audio -> f:count()} > 0">
+							<f:then>
+								<div class="col-md-12 sbt">
+									<f:render section="title_information_block" arguments="{_all}"/>
+								</div>
+							</f:then>
+							<f:else>
+								<f:render section="title_information_block" arguments="{_all}"/>
+							</f:else>
+						</f:if>
+					</f:if>
+				</f:if>
+				<f:if condition="{obj.configuration.textpos.vDEF} == 0 || {obj.configuration.textpos.vDEF} == 2">
+					<f:render section="textinformation_block" arguments="{_all}"/>
+					<f:render section="audio_video_block" arguments="{_all}"/>
+					<f:render section="ctabutton" arguments="{_all}"/>
+				</f:if>
+			</div>
+		</div>
+	</div>
+	<f:if condition="{obj.configuration.textpos.vDEF} == 1">
+		<div class="text_info_lower">
+			<f:render section="textinformation_block" arguments="{_all}"/>
+			<f:render section="audio_video_block" arguments="{_all}"/>
+			<f:render section="ctabutton" arguments="{_all}"/>
+		</div>
+	</f:if>
+	<f:render section="learnmore" arguments="{_all}"/>
+</f:section>
+
+<f:comment>
+	<!--
+		Darstellung des Templates 4 - wird das Template 2/3 ersetzen wenn alles fertig ist
+	-->
+</f:comment>
+<f:section name="alternative_view_4">
+	<f:variable name="has_asset" value="0"/>
+	<f:variable name="flex_direction" value="row textright"/>
+	<f:variable name="img_block_classes" value="col-12 col-sm col-md"/>
+	<f:variable name="text_block_classes" value="col-12"/>
+	<f:if condition="{obj.derivate}">
+		<f:variable name="has_asset" value="1"/>
+		<f:variable name="text_block_classes" value="col-12 col-md-7"/>
+	</f:if>
+	<f:if condition="{obj.datasubtype}=='5'">
+		<f:variable name="flex_direction" value="row flex-row-reverse textleft"/>
+	</f:if>
+	<f:if condition="{obj.datasubtype}=='6'">
+		<f:variable name="flex_direction" value="row item-flex-column img_text_vertical"/>
+		<f:variable name="img_block_classes" value="col-12"/>
+		<f:variable name="text_block_classes" value="col-12"/>
+	</f:if>
+	<div class="obj_wrap view_4_alt no-gutters {flex_direction}">
+		<f:if condition="{has_asset} == 1">
+			<f:if condition="{obj.derivate.0.originalResource.description} || {obj.derivate.0.originalResource.alternative} || {obj.derivate.0.originalResource.title}">
+				<div class="view2-overlay">
+					<div class="view2-overlay-text">
+						<f:if condition="{obj.derivate.0.originalResource.title}">
+							<div class="asset_title"><f:format.html>{obj.derivate.0.originalResource.title}</f:format.html></div>
+						</f:if>
+						<f:if condition="{obj.derivate.0.originalResource.alternative}">
+							<div class="asset_alt"><f:format.html>{obj.derivate.0.originalResource.alternative}</f:format.html></div>
+						</f:if>
+						<f:if condition="{obj.derivate.0.originalResource.description}">
+							<div class="asset_desc"><f:format.html>{obj.derivate.0.originalResource.description}</f:format.html></div>
+						</f:if>
+						<div class="view2-overlay-close">&nbsp;</div>
+					</div>
+				</div>
+			</f:if>
+		</f:if>
+		<f:if condition="{obj.configuration.textpos.vDEF} == 2">
+			<div class="text_info_upper col-12">
+				<f:render section="title_information_block" arguments="{_all}"/>
+			</div>
+		</f:if>
+		<f:if condition="{has_asset} == 1">
+			<div class="img-container {img_block_classes}">
+				<div class="d-flex flex-column">
+					<f:for each="{obj.derivate}" as="img" iteration="j">
+						<f:if condition="{j.isFirst}">
+							<div class="img-wrapper position-relative">
+								<div class="img-load-overlay"><div class="loader"></div></div>
+								<f:variable name="url_section_img" value="{f:uri.image(image: img,width:2000m, width:2000m)}" />
+								<div class="section_img position-relative">
+									<div class="img_inner_wrap" style="flex:1;overflow: hidden;">
+										<f:image class="object_image" image="{img}" width="600m" height='600m' additionalAttributes="{data-url: url_section_img}"/>
+									</div>
+									<f:render section="asset_info" arguments="{_all}"/>
+								</div>
+							</div>
+							<div class="obj-buttons">
+								<button type="button" class="closescreen btn d-block btn-jo">
+					                <span class="d-block">&gt;</span>
+					            </button>
+								<button type="button" class="togglefullscreen_ex btn d-block btn-jo">
+					                <span class="d-block">&gt;</span>
+					            </button>
+					            <button type="button" class="img_zoom_in btn d-block btn-jo">
+					                <span class="d-block">&gt;</span>
+				              	</button>
+					            <button type="button" class="img_zoom_out btn d-block btn-jo">
+					                <span class="d-block">&gt;</span>
+				              	</button>
+							</div>
+						</f:if>
+					</f:for>
+					<f:if condition="{obj.derivate -> f:count()} > 1">
+						<div class="all_images">
+							<f:for each="{obj.derivate}" as="img" iteration="j">
+								<f:variable name="url" value="{f:uri.image(image: img)}" />
+								<f:variable name="img_detail"><f:format.html>{img.originalResource.description}</f:format.html></f:variable>
+								<f:image class="small_img{f:if(condition: '{j.isFirst}', then: ' active', else: '')}" image="{img}" width="200" minWidth='200' height='' additionalAttributes="{data-url: url, data-info: img_detail}" />
+							</f:for>
+						</div>
+					</f:if>
+				</div>
+			</div>
+		</f:if>
+		<div class="text_wrap {text_block_classes}">
+			<div class="d-flex flex-column min-height-100 align-items-stretch">
+				<f:if condition="{obj.configuration.textpos.vDEF} == 1 || {obj.configuration.textpos.vDEF} == 0">
+					<f:if condition="{obj.title} || {obj.subtitle}">
+						<f:render section="title_information_block" arguments="{_all}"/>
+					</f:if>
+				</f:if>
+				<f:if condition="{obj.configuration.textpos.vDEF} == 0 || {obj.configuration.textpos.vDEF} == 2">
+					<f:render section="textinformation_block" arguments="{_all}"/>
+					<f:render section="learn_more_multimedia" arguments="{_all}"/>
+					<f:render section="ctabutton" arguments="{_all}"/>
+				</f:if>
+				<f:comment>
+				<!--
+					<f:if condition="{obj.configuration.textpos.vDEF} == 0 || {obj.configuration.textpos.vDEF} == 2">
+						<f:render section="textinformation_block" arguments="{_all}"/>
+						<f:render section="audio_video_block" arguments="{_all}"/>
+						<f:render section="ctabutton" arguments="{_all}"/>
+					</f:if>
+				-->
+				</f:comment>
+			</div>
+		</div>
+	</div>
+	<f:if condition="{obj.configuration.textpos.vDEF} == 1">
+		<div class="text_info_lower">
+			<f:render section="textinformation_block" arguments="{_all}"/>
+			<f:render section="audio_video_block" arguments="{_all}"/>
+			<f:render section="ctabutton" arguments="{_all}"/>
+		</div>
+	</f:if>
+	<f:render section="learnmore" arguments="{_all}"/>
+</f:section>
+
+<f:comment>
+	<!--
+		Zusätzliche Informationen zum Asset - es wird ein "i" - Button gerendert
+	-->
+</f:comment>
+<f:section name="asset_info">
+	<f:if condition="{img.originalResource.description} || {img.originalResource.alternative} || {img.originalResource.title}">
+		<button class="i-icon img-btn">i</button>
+	</f:if>
+</f:section>
+
+<f:comment>
+	<!--
+		Infoblock für Titel und Subtitel
+	-->
+</f:comment>
+<f:section name="title_information_block">
+	<f:if condition="{settings.showobjektnumbers}">
+		<f:if condition="{obj.objektnummer}">
+			<div class="obj-nr">
+				<div class="d-inline-block object-number maincolor fontcolor noSwipe">
+					{obj.objektnummer}
+				</div>
+			</div>
+		</f:if>
+	</f:if>
+	<f:if condition="{obj.title}">
+		<div class="text-title noSwipe">
+			<f:if condition="{beuser}">
+				<f:link.action class="direktlink" pageType="125" action="showobject" arguments="{parent:'{parent}'}" additionalParams="{nc:'{obj.uid}'}">Direktlink</f:link.action> 
+			</f:if>
+			<h3>{obj.title}</h3>
+		</div>
+	</f:if>
+	<f:if condition="{obj.subtitle}">
+		<f:for each="{obj.subtitle}" as="subitem">
+			<h4 class="text-subtitle noSwipe">{subitem.title}</h4>
+		</f:for>
+	</f:if>
+</f:section>
+
+<f:section name="textinformation_block">
+	<div class="text_outer">
+		<div class="text_inner_wrap">
+			<f:if condition="{obj.shorttext}">
+				<div class="obj_teaser_txt noSwipe">
+					<f:format.html>{obj.shorttext}</f:format.html>
+				</div>
+			</f:if>
+		</div>
+	</div>
+</f:section>
+
+<f:section name="learn_more_multimedia">
+	<f:if condition="{obj.audio} && {obj.audio -> f:count()} > 0">
+		<f:variable name="audio_headline" value="play audio"/>
+		<f:if condition="{obj.audiotitel}">
+			<f:variable name="audio_headline" value="{obj.audiotitel}" />
+		</f:if>
+		<div class="learn_more">
+			<div class="btn btn-outline-dark audio_trigger">{audio_headline}</div>
+		</div>
+	</f:if>
+	<f:if condition="{obj.video} && {obj.video -> f:count()} > 0">
+		<f:variable name="video_headline" value="play video"/>
+		<f:if condition="{obj.videotitel}">
+			<f:variable name="video_headline" value="{obj.videotitel}" />
+		</f:if>
+		<div class="learn_more">
+			<div class="btn btn-outline-dark video_trigger">{video_headline}</div>
+		</div>
+	</f:if>
+</f:section>
+
+<f:section name="audio_video_block">
+	<f:if condition="{obj.audio} && {obj.audio -> f:count()} == 1">
+		<div class="intr col-md-4">
+			<f:variable name="audio_overlay" value="1" />
+			<f:for each="{obj.audio}" as="aud" iteration="j">
+				<f:render partial="Exhibitiontemplates" section="audio" arguments="{_all}"/>
+			</f:for>
+		</div>
+	</f:if>
+	<f:if condition="{obj.audio} && {obj.audio -> f:count()} > 1">
+		<div class="row no-gutters audio_multiple intr">
+			<f:variable name="audio_overlay" value="1" />
+			<f:for each="{obj.audio}" as="aud" iteration="j">
+				<f:render partial="Exhibitiontemplates" section="audio" arguments="{_all}"/>
+			</f:for>
+		</div>
+	</f:if>
+	<f:if condition="{obj.video} && {obj.video -> f:count()} > 0">
+		<div class="flex-adjust d-flex flex-column align-items-stretch hidden-arrows">
+			<f:render section="videoslider" arguments="{_all}"/>
+		</div>
+	</f:if>
+</f:section>
+
+<f:section name="standalone_header">
+			<f:comment>
+			<!--
+		<div class="single-logo text-center position-absolute">
+
+		<f:image src="fileadmin/user_upload/dag/dag_logo.svg" alt="logo" />
+		
+		<div class="main_title">
+			<f:if condition="{parent.title}">
+				<f:then>
+					{parent.title}
+				</f:then>
+				<f:else>
+					Default title
+				</f:else>
+			</f:if>
+		</div>
+
+		<f:if condition="{showobjectsfromsinglesection}">
+			<div class="back"><div class="joSprite"></div></div>
+		</f:if>
+	</div>
+	-->
+		</f:comment>
+</f:section>
+
+<f:section name="map">
+	<f:if condition="{obj.jsonfile} || {obj.datapage}">
+		<div class="map-container">
+		    <div class="olMap mapdiv map" data-id="{obj.uid}">
+		    	<div class="map-overlay flex-column">
+		    		<div>
+					    <div class="text-title noSwipe">
+					    	<f:if condition="{beuser}">
+					    		<f:link.action class="d-none" pageType="125" action="showobject" arguments="{parent:'{parent}'}" additionalParams="{nc:'{obj.uid}'}">Direktlink</f:link.action> 
+					    	</f:if>
+							<h3>{obj.title}</h3>
+						</div>
+						<f:if condition="{obj.subtitle}">
+							<f:for each="{obj.subittle}" as="subitem">
+								<h3 class="mt-0 mb-1 noSwipe">{subitem.title}</h3>
+							</f:for>
+						</f:if>
+						<div class="obj_teaser_txt noSwipe">
+							<f:format.html>{obj.shorttext}</f:format.html>
+						</div>
+					</div>
+					<div class="advice">Aktivieren Sie die Karte mit einem Klick.</div>
+		    	</div>
+		    	<div class="map-overlay2 flex-column">
+		    		<div class="map-overlay2-con"></div>
+		    	</div>
+		    	<div class="map-closer" title="Karten Ansicht schließen"></div>
+		    </div>
+
+		    <div class="ol-popup" style="background-color: white; display: block;">
+		      <a href="#" class="ol-popup-closer"></a>
+		      <div class="ol-popup-content"></div>
+		    </div>            
+		</div>
+	</f:if>
+</f:section>
+
+<f:section name="booksites">
+	<div class="pd book bb-custom-wrapper">
+		<div id="bb-bookblock" class="bb-bookblock bb-vertical">
+			<f:if condition="{obj.booksites}">
+				<f:for each="{obj.booksites}" as="img" iteration="i">
+					<f:if condition="{i.index} % 2 == 0">
+						<div class="bb-item">
+					</f:if>
+
+					<div class="bb-custom-side">
+						<a href="#"><f:image class="bookimg" image="{img}" /></a>
+					</div>
+					
+					<f:if condition="{i.index} % 2 == 1">
+						</div>
+					</f:if>
+
+					<f:if condition="{i.index} % 2 == 0 && {i.isLast}">
+						<div class="bb-custom-side"></div>
+						</div>
+					</f:if>
+				</f:for>
+			</f:if>
+		</div>
+		<nav>
+			<a id="bb-nav-first" href="#" class="bb-custom-icon bb-custom-icon-first">First page</a>
+			<a id="bb-nav-prev" href="#" class="bb-custom-icon bb-custom-icon-arrow-left">Previous</a>
+			<a id="bb-nav-next" href="#" class="bb-custom-icon bb-custom-icon-arrow-right">Next</a>
+			<a id="bb-nav-last" href="#" class="bb-custom-icon bb-custom-icon-last">Last page</a>
+		</nav>
+	</div>
+</f:section>
+
+<f:section name="subtitle">
+	<f:if condition="{obj.subtitle}">
+		<div class="text-subtitle">
+			<f:for each="{obj.subtitle}" as="subitem">
+				<h3>{subitem.title}</h3>
+			</f:for>
+		</div>
+	</f:if>
+</f:section>
+
+
+
+
+<f:section name="booksites2">
+	<f:variable name="flex_direction" value="flex-column"/>
+	<f:if condition="{obj.datasubtype} == 62">
+		<f:variable name="flex_direction" value="flex-row"/>
+	</f:if>
+	<f:if condition="{obj.datasubtype} == 63">
+		<f:variable name="flex_direction" value="flex-row-reverse"/>
+	</f:if>
+	<div class="book-con d-flex flex-column">
+		<f:comment>
+		<!--
+		<f:if condition="{soloview}">
+			<div class="back d-inline-block">
+				<div class="joSprite"></div>
+			</div>
+		</f:if>
+		-->
+		</f:comment>
+		<div class="book-link-con">
+			<div class="text-wrap d-flex h-100 {flex_direction}">
+				<f:if condition="{obj.datasubtype} == 61">
+					<div class="text-title noSwipe">
+						<f:if condition="{beuser}">
+							<f:link.action class="" pageType="125" action="showobject" arguments="{parent:'{parent}'}" additionalParams="{nc:'{obj.uid}'}">Direktlink</f:link.action>
+						</f:if>
+						<h2>{obj.title}</h2>
+					</div>
+					<f:render section="subtitle" arguments="{_all}"/>
+				</f:if>
+				<f:if condition="{obj.derivate}">
+					<div class="image">
+						<f:variable name="bg_image" value="background-image: url({f:uri.image(image:obj.derivate.0, maxWidth:800m, width:800m)});"/>	
+						<f:variable name="aspect_ratio" value="{obj.derivate.0.originalResource.properties.height / obj.derivate.0.originalResource.properties.width * 100}"/>	
+						<f:if condition="{obj.bookfolder}">
+							<f:then>
+								<f:link.action class="d-block position-relative h-100 book-link" action="loadbook" arguments="{path:'{obj.bookfolder}'}" pageType="2328">
+									<div class="bg_image_div" style="{bg_image} aspect-ratio:100/{aspect_ratio};"></div>
+								</f:link.action>
+							</f:then>
+							<f:else>
+								<div class="bg_image_div" style="{bg_image} aspect-ratio:100/{aspect_ratio};"></div>
+							</f:else>
+						</f:if>
+					</div>
+				</f:if>
+				<div class="text_block">
+					<f:if condition="{obj.datasubtype} != 61">
+						<div class="text-title noSwipe">
+							<f:if condition="{beuser}">
+								<f:link.action class="" pageType="125" action="showobject" arguments="{parent:'{parent}'}" additionalParams="{nc:'{obj.uid}'}">Direktlink</f:link.action>
+							</f:if>
+							<h2>{obj.title}</h2>
+						</div>
+						<f:render section="subtitle" arguments="{_all}"/>
+					</f:if>
+					<f:if condition="{obj.shorttext}">
+						<div class="obj_teaser_txt noSwipe">
+							<f:format.html>{obj.shorttext}</f:format.html>
+						</div>
+					</f:if>
+					<f:if condition="{obj.bookfolder}">
+						<f:link.action class="d-inline-block book-link" action="loadbook" arguments="{path:'{obj.bookfolder}'}" pageType="2328">
+							<f:if condition="{obj.ctatext}">
+								<f:then>
+									{obj.ctatext}
+								</f:then>
+								<f:else>
+									Im Buch blättern
+								</f:else>
+							</f:if>
+						</f:link.action>
+					</f:if>
+				</div>
+			</div>
+		</div>
+		<div class="book-out"></div>
+	</div>
+</f:section>
+
+<f:section name="bgvideo_image">
+	<div class="view_24 vh-100">
+		<f:if condition="{obj.derivate} && {obj.derivate -> f:count()} > 0">
+			<f:then>
+				<f:for each="{obj.derivate}" as="img" iteration="j">
+					<f:if condition="{j.isFirst}">
+						<div class="h-100">
+							<f:image class="w-100 h-100 c-img" image="{img}" width="1200m" height=''/>
+							<f:if condition="{obj.title} || {obj.subtitle} || {obj.shorttext} || {img.originalResource.description}">
+								<div class="c-img-overlay d-flex flex-column">
+									<f:render section="text_block" arguments="{_all}"/>
+									<f:if condition="{img.originalResource.description}">
+										<figcaption><f:format.nl2br>{img.originalResource.description}</f:format.nl2br></figcaption>
+									</f:if>
+								</div>
+							</f:if>
+						</div>
+					</f:if>
+				</f:for>
+			</f:then>
+			<f:else>
+				<f:if condition="{obj.video} && {obj.video -> f:count()} > 0">
+					<div class="flex-adjust d-flex flex-column align-items-stretch hidden-arrows">
+						<f:render section="videoslider" arguments="{_all}"/>
+					</div>
+				</f:if>
+			</f:else>
+		</f:if>
+	</div>
+</f:section>
+
+
+
+<f:section name="zitat">
+	<div class="pd zitat obj_wrap d-flex zitat_{obj.datasubtype}">
+		<f:if condition="{obj.derivate}">
+			<div class="image">
+				<f:image class="object_img" image="{obj.derivate.0}" width="200m" height="" />
+			</div>
+		</f:if>
+		<div class="text-wrap">
+			<div class="text-title noSwipe">
+				<h2>{obj.title}</h2>
+			</div>
+			<f:if condition="{obj.subtitle}">
+				<div class="text-subtitle">
+					<f:for each="{obj.subtitle}" as="subitem">
+						<h3 class="noSwipe">{subitem.title}</h3>
+					</f:for>
+				</div>
+			</f:if>
+			<f:if condition="{obj.shorttext}">
+				<div class="obj_teaser_txt noSwipe">
+					<f:format.html>{obj.shorttext}</f:format.html>
+				</div>
+			</f:if>
+		</div>
+	</div>
+</f:section>
+
+<f:section name="standard_view">
+	<div class="pd row h-100 no-gutters<f:if condition='{i.isOdd}'><f:then></f:then><f:else> flex-row-reverse</f:else></f:if>">
+		<div class="img-container h-100 col-12 col-sm col-md">
+			<div class="d-flex h-100 flex-column">
+				<f:if condition="{obj.derivate}">
+					<f:for each="{obj.derivate}" as="img" iteration="j">
+						<f:if condition="{j.isFirst}">
+							<div class="img-wrapper position-relative">
+								<div class="img-load-overlay"><div class="loader"></div></div>
+								<f:variable name="url_section_img" value="{f:uri.image(image: img,width:2000m,width:2000m)}" />
+								<f:image class="section_img" image="{img}" width="600m" height='' additionalAttributes="{data-url: url_section_img}"/>
+							</div>
+							<f:if condition="{img.originalResource.title} || {img.originalResource.description}">
+								<div class="section_img_info-c">
+									<span data-toggle="collapse-next">
+										<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="85.3px" y="85.3px" viewBox="0 0 85.3 85.3" style="enable-background:new 0 0 85.3 85.3;" xml:space="preserve">
+											<g>
+												<path class="svg_path" d="M42.7,0.2C19.3,0.2,0.2,19.3,0.2,42.7c0,23.4,19.1,42.5,42.5,42.5s42.5-19.1,42.5-42.5S66.1,0.2,42.7,0.2z
+													 M42.7,77.5c-19.2,0-34.8-15.6-34.8-34.8S23.5,7.9,42.7,7.9s34.8,15.6,34.8,34.8C77.4,61.9,61.8,77.5,42.7,77.5z"/>
+												<path class="svg_path" d="M37.9,28.6c0.6,0.6,1.3,1.1,2.1,1.5s1.7,0.5,2.6,0.5c0.9,0,1.8-0.2,2.6-0.5c0.8-0.4,1.5-0.8,2.1-1.5
+													c0.6-0.6,1.1-1.3,1.4-2.2c0.4-0.8,0.5-1.7,0.5-2.6S49,22,48.7,21.2c-0.4-0.8-0.8-1.5-1.4-2.1c-0.6-0.6-1.3-1.1-2.1-1.4
+													c-0.8-0.4-1.7-0.5-2.6-0.5c-0.9,0-1.8,0.2-2.6,0.5c-0.8,0.4-1.5,0.8-2.1,1.4s-1.1,1.3-1.5,2.1c-0.4,0.8-0.5,1.7-0.5,2.6
+													s0.2,1.8,0.5,2.6C36.8,27.2,37.3,27.9,37.9,28.6z"/>
+												<path class="svg_path" d="M48.7,59.9V34.6H30.9v5.3c3.8,0,5.6,1,5.6,3v17c0,2-1.9,3-5.6,3v5.4h23.4v-5.4C50.5,62.8,48.6,61.8,48.7,59.9z
+													"/>
+											</g>
+										</svg>
+									</span>
+									<div class="section_img_info-cc text-center collapse">
+										<f:if condition="{img.originalResource.description}">
+											<div class="section_img_desc noSwipe"><f:format.html>{img.originalResource.description}</f:format.html></div>
+										</f:if>
+									</div>
+								</div>
+								<div class="section_img_btn"><div class="section_img_btn_icon"></div></div>
+							</f:if>
+							<div class="obj-buttons">
+								<button type="button" class="closescreen btn d-block btn-jo">
+					                <span class="d-block">&gt;</span>
+					            </button>
+								<button type="button" class="togglefullscreen_ex btn d-block btn-jo">
+					                <span class="d-block">&gt;</span>
+					            </button>
+					            <button type="button" class="img_zoom_in btn d-block btn-jo">
+					                <span class="d-block">&gt;</span>
+				              	</button>
+					            <button type="button" class="img_zoom_out btn d-block btn-jo">
+					                <span class="d-block">&gt;</span>
+				              	</button>
+							</div>
+						</f:if>
+					</f:for>
+					
+					<f:if condition="{obj.derivate -> f:count()} > 1">
+						<div class="all_images">
+							<f:for each="{obj.derivate}" as="img" iteration="j">
+								<f:variable name="url" value="{f:uri.image(image: img)}" />
+								<f:variable name="img_detail"><f:format.html>{img.originalResource.description}</f:format.html></f:variable>
+								<f:image class="small_img{f:if(condition: '{j.isFirst}', then: ' active', else: '')}" image="{img}" width="200" minWidth='200' height='' additionalAttributes="{data-url: url, data-info: img_detail}"  />
+							</f:for>
+						</div>
+					</f:if>
+				</f:if>
+			</div>
+		</div>
+		<div class="text_wrap col-12 col-md-5 col-sm-5 col-lg-5 d-flex flex-column">
+			<f:if condition="{settings.showobjektnumbers}">
+				<f:if condition="{obj.objektnummer}">
+					<div class="obj-nr">
+						<div class="d-inline-block object-number maincolor fontcolor noSwipe">
+							{obj.objektnummer}
+						</div>
+					</div>
+				</f:if>
+			</f:if>
+			<div class="text-title noSwipe">
+				<h3>{obj.title}</h3>
+			</div>
+			<f:if condition="{obj.subtitle}">
+				<f:for each="{obj.subittle}" as="subitem">
+					<h3 class="mt-0 mb-1 noSwipe">{subitem.title}</h3>
+				</f:for>
+			</f:if>
+			<div class="obj_teaser_txt noSwipe">
+				<f:format.html>{obj.shorttext}</f:format.html>
+			</div>
+			<f:if condition="{obj.derivate}">
+				<f:for each="{obj.derivate}" as="img" iteration="j">
+					<f:if condition="{j.isFirst}">
+						<f:if condition="{img.originalResource.title}">
+							<div class="section_img_title noSwipe">Abbildung: {img.originalResource.title}</div>
+						</f:if>
+					</f:if>
+				</f:for>
+			</f:if>
+			<f:render section="ctabutton" arguments="{_all}"/>
+		</div>
+	</div>
+	<f:render section="learnmore" arguments="{_all}"/>
+</f:section>
+
+<f:section name="text_block">
+	<f:if condition="{obj.title}">
+		<div class="text-title">
+			<h3>{obj.title}</h3>
+		</div>
+	</f:if>
+	<f:if condition="{obj.subtitle}">
+		<f:for each="{obj.subtitle}" as="subitem">
+			<h4>{subitem.title}</h4>
+		</f:for>
+	</f:if>
+	<f:if condition="{obj.shorttext}">
+		<div class="text-content">
+			<f:format.html>{obj.shorttext}</f:format.html>
+		</div>
+	</f:if>
+</f:section>
+
+
+<f:section name="alternative_view_2">
+	<f:variable name="flex_direction">
+		<f:if condition="{obj.datasubtype}=='3'"><f:then>row flex-row-reverse</f:then><f:else>row</f:else></f:if>
+	</f:variable>
+	<div class="pd view_2_alt no-gutters {flex_direction}">
+		<f:if condition="{obj.derivate.0.originalResource.description}">
+			<div class="view2-overlay">
+				<div class="view2-overlay-text"><f:format.html>{obj.derivate.0.originalResource.description}</f:format.html><div class="view2-overlay-close">&nbsp;</div></div>
+			</div>
+		</f:if>
+		<div class="img-container col-12 col-sm col-md">
+			<div class="d-flex h-100 flex-column">
+				<f:if condition="{obj.derivate}">
+					<f:for each="{obj.derivate}" as="img" iteration="j">
+						<f:if condition="{j.isFirst}">
+							<div class="img-wrapper position-relative">
+								<div class="img-load-overlay"><div class="loader"></div></div>
+								<f:variable name="url_section_img" value="{f:uri.image(image: img,width:2000m, width:2000m)}" />
+								<div class="section_img">
+									<f:image class="w-auto h-100" image="{img}" width="600m" height='' additionalAttributes="{data-url: url_section_img}"/>
+									<f:render section="asset_info" arguments="{_all}"/>
+								</div>
+							</div>
+							<div class="obj-buttons">
+								<button type="button" class="closescreen btn d-block btn-jo">
+					                <span class="d-block">&gt;</span>
+					            </button>
+								<button type="button" class="togglefullscreen_ex btn d-block btn-jo">
+					                <span class="d-block">&gt;</span>
+					            </button>
+					            <button type="button" class="img_zoom_in btn d-block btn-jo">
+					                <span class="d-block">&gt;</span>
+				              	</button>
+					            <button type="button" class="img_zoom_out btn d-block btn-jo">
+					                <span class="d-block">&gt;</span>
+				              	</button>
+							</div>
+						</f:if>
+					</f:for>
+					
+					<f:if condition="{obj.derivate -> f:count()} > 1">
+						<div class="all_images">
+							<f:for each="{obj.derivate}" as="img" iteration="j">
+								<f:variable name="url" value="{f:uri.image(image: img)}" />
+								<f:image class="small_img{f:if(condition: '{j.isFirst}', then: ' active', else: '')}" image="{img}" width="200" minWidth='200' height='' additionalAttributes="{data-url: url}" />
+							</f:for>
+						</div>
+					</f:if>
+				</f:if>
+			</div>
+		</div>
+		<div class="text_wrap col-12 col-md-7">
+			<div class="d-flex flex-column min-height-100 align-items-stretch">
+				<div class="row no-gutters">
+					<f:if condition="{obj.title} || {obj.subtitle}">
+						<f:variable name="sbttitle">
+							<f:if condition="{obj.title}">
+								<div class="text-title noSwipe">
+									<f:if condition="{beuser}">
+										<f:link.action class="" pageType="125" action="showobject" arguments="{parent:'{parent}'}" additionalParams="{nc:'{obj.uid}'}">Direktlink</f:link.action> 
+									</f:if>
+									<h3>{obj.title}</h3>
+								</div>
+							</f:if>
+							<f:if condition="{obj.subtitle}">
+								<f:for each="{obj.subtitle}" as="subitem">
+									<h4 class="mt-0 mb-1 noSwipe">{subitem.title}</h4>
+								</f:for>
+							</f:if>
+						</f:variable>
+						<f:if condition="{obj.audio} && {obj.audio -> f:count()} > 0">
+							<f:then><div class="col-md-12 sbt"><f:format.raw>{sbttitle}</f:format.raw></div></f:then>
+							<f:else><f:format.raw>{sbttitle}</f:format.raw></f:else>
+						</f:if>
+					</f:if>
+					<div class="col-md t">
+						<div class="text_inner_wrap">
+							<f:if condition="{settings.showobjektnumbers}">
+								<f:if condition="{obj.objektnummer}">
+									<div class="obj-nr">
+										<div class="d-inline-block object-number maincolor fontcolor noSwipe">
+											{obj.objektnummer}
+										</div>
+									</div>
+								</f:if>
+							</f:if>
+							<f:if condition="{obj.shorttext}">
+								<div class="obj_teaser_txt noSwipe">
+									<f:format.html>{obj.shorttext}</f:format.html>
+								</div>
+							</f:if>
+						</div>
+					</div>
+					<f:if condition="{obj.audio} && {obj.audio -> f:count()} == 1">
+						<div class="intr col-md-4">
+							<f:variable name="audio_overlay" value="1" />
+							<f:for each="{obj.audio}" as="aud" iteration="j">
+								<f:render partial="Exhibitiontemplates" section="audio" arguments="{_all}"/>
+							</f:for>
+						</div>
+					</f:if>
+				</div>
+				<f:if condition="{obj.audio} && {obj.audio -> f:count()} > 1">
+					<div class="row no-gutters audio_multiple intr">
+						<f:variable name="audio_overlay" value="1" />
+						<f:for each="{obj.audio}" as="aud" iteration="j">
+							<f:render partial="Exhibitiontemplates" section="audio" arguments="{_all}"/>
+						</f:for>
+					</div>
+				</f:if>
+				<f:if condition="{obj.video} && {obj.video -> f:count()} > 0">
+					<div class="flex-adjust d-flex flex-column align-items-stretch hidden-arrows">
+						<f:render section="videoslider" arguments="{_all}"/>
+					</div>
+				</f:if>
+				<f:render section="ctabutton" arguments="{_all}"/>
+			</div>
+		</div>
+	</div>
+	<f:render section="learnmore" arguments="{_all}"/>
+</f:section>
+
+<f:comment>
+<!--
+	"Mehr erfahren Button"
+	Es wird nur ein "Mehr-Button" gerendert, wenn zusätzliche Infos hinterlegt sind:
+	Bodytext, morevideo, moreaudio, morederivate
+-->
+</f:comment>
+<f:section name="ctabutton">
+	<f:if condition="{obj.bodytext} || {obj.morevideo} || {obj.moreaudio} || {obj.morederivate}">
+		<div class="learn_more">
+			<div class="btn btn-outline-dark">
+				<f:if condition="{obj.ctatext}">
+					<f:then>
+						{obj.ctatext}
+					</f:then>
+					<f:else>
+						Mehr erfahren
+					</f:else>
+				</f:if>
+			</div>
+		</div>
+	</f:if>
+</f:section>
+
+<f:comment>
+	<!--
+		Videoelement - verknüpfung zu internen Videos, Youtube und Vimeo sind möglich		
+	-->
+</f:comment>
+<f:section name="videoslider">
+	<f:if condition="{obj.video} && {obj.video -> f:count} > 0">
+		<div class="video-slick-con position-relative row no-gutters">
+			<f:if condition="{obj.videotitel} && !{no_vid_title}">
+				<div class="video-slick-title col-12">
+					<h3>{obj.videotitel}</h3>
+				</div>
+			</f:if>
+			<div class="col-12 row no-gutters video_wrap">
+				<div class="video-slick {f:if(condition: '{obj.video} && {obj.video -> f:count()} > 1', then: 'col-md-8', else: 'col-md-12')}">
+					<f:for each="{obj.video}" as="vid" iteration="v">
+						<f:variable name="poster_image"></f:variable>
+						<f:if condition="{vid.related} && {vid.related -> f:count()} > 0">
+							<f:variable name="poster_image">{f:uri.image(image:'{vid.related.0}')}</f:variable>
+						</f:if>
+						<div class="">
+							<div class="embed-responsive embed-responsive-16by9">
+								<f:media file="{vid}" class="embed-responsive-item" additionalAttributes="{poster:'{poster_image}'}" width="" height="" />
+								<div class="video-poster-overlay position-absolute" style="background-image:  url('{poster_image}')"></div>
+							</div>
+						</div>
+					</f:for>
+				</div>
+				<f:if condition="{obj.video} && {obj.video -> f:count()} > 1">
+					<div class="video-nav col-md-4">
+						<div class="video-nav-slick w-100 h-100">
+							<f:for each="{obj.video}" as="vid" iteration="v">
+								<div>
+									<f:if condition="{vid.related}">
+										<f:then>
+											<div class="slick-nav-item slick-img-item" title="{vid.originalResource.title}" style="background-image: url({f:uri.image(image:vid.related.0)});">&nbsp;</div>
+										</f:then>
+										<f:else>
+											<div class="slick-nav-item"><f:if condition="{vid.originalResource.title}">
+												<f:then>{vid.originalResource.title}</f:then>
+												<f:else>Standardtext zum Video</f:else>
+											</f:if></div>
+										</f:else>
+									</f:if>
+								</div>
+							</f:for>
+						</div>
+					</div>
+				</f:if>
+			</div>
+		</div>
+	</f:if>
+</f:section>
+
+
+<f:section name="learnmore">
+	<f:comment>
+	<!--
+		Es wird nur ein "Learnmore-Overlay" gerendert, wenn zusätzliche Infos hinterlegt sind:
+		Bodytext, morevideo, moreaudio, morederivate
+	-->
+	</f:comment>
+	<f:if condition="{obj.bodytext} || {obj.morevideo} || {obj.moreaudio} || {obj.morederivate}">
+		<f:variable name="learnmore">1</f:variable>
+		<f:variable name="slideeffect">1</f:variable>
+		<f:comment>
+			<!--
+				Variablen, die durch das Datenmodel "Exhibition" gesetzt bzw. überschrieben werden
+			-->
+		</f:comment>
+		<f:if condition="{config.slideeffect}">
+			<f:variable name="slideeffect">{config.slideeffect}</f:variable>
+		</f:if>
+		<f:comment>
+			<!--
+				Variablen, die durch das Datenmodel "Exhibit" gesetzt bzw. überschrieben werden
+			-->
+			<!--
+			<f:if condition="{obj.configuration.learnmore.vDEF}">
+				<f:variable name="learnmore">{obj.configuration.learnmore.vDEF}</f:variable>
+			</f:if>
+			-->
+		</f:comment>
+		<div class="closer"></div>
+		<div class="obj_txt">
+			<div class="obj_txt-dialog">
+				<button type="button" class="close" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<div class="obj_txt-content row">
+					<div class="col-md-8 left-side noSwipe">
+						<div class="obj_txt-header">
+							<h3 class="modal-title" id="modal_label{i.cycle}">{obj.title}</h3>
+						</div>
+						<f:if condition="{obj.subtitle}">
+							<f:for each="{obj.subtitle}" as="subitem">
+								<h4>{subitem.title}</h4>
+							</f:for>
+						</f:if>
+						<div class="obj_txt-body">
+							<f:format.html>{obj.bodytext}</f:format.html>
+						</div>
+						<f:if condition="{obj.transkript}">
+							<f:render section="transkript" arguments="{_all}"/>
+						</f:if>
+						<f:if condition="{obj.publikation}">
+							<f:render section="publikation" arguments="{_all}"/>
+						</f:if>
+						<f:if condition="{obj.kontextinfo}">
+							<f:render section="learn_more" arguments="{_all}"/>
+						</f:if>
+					</div>
+					<div class="col-md-4 right-side noSwipe">
+						<f:if condition="{obj.tags}">
+							<h4>Schlagworte</h4>
+							<span>{obj.tags}</span>
+							<f:comment>
+								<!-- <f:render section="explode_list" arguments="{content:'{obj.tags}', delimiter:','}"/> -->
+							</f:comment>
+						</f:if>
+						<f:if condition="{obj.locationprocessed}">
+							<h4>Relevante und verbundene Orte</h4>
+							<f:render section="explode_list" arguments="{content:'{obj.locationprocessed}', delimiter:'##'}"/>
+						</f:if>
+						<f:if condition="{obj.entityprocessed}">
+							<h4>Relevante und verbundene Personen</h4>
+							<div class="gnd-list">
+								<f:render section="explode_list" arguments="{content:'{obj.entityprocessed}', delimiter:'##'}"/>
+							</div>
+						</f:if>
+						<f:if condition="{obj.links}">
+							<h4>Weiterführende Links</h4>
+							<div class="more-links">
+								<f:render section="explode_list" arguments="{content:'{obj.links}', delimiter:','}"/>
+							</div>
+						</f:if>
+					</div>
+				</div>
+			</div>
+		</div>
+	</f:if>
+
+	<f:comment>
+		<!--
+			Learn more - Audio overlay oder Slide
+		-->
+	</f:comment>
+	<f:if condition="{obj.audio}">
+		<div class="closer"></div>
+		<div class="audio_overlay_or_slider">
+			<div class="obj_txt">
+				<button type="button" class="close" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<div class="obj_txt-dialog row">
+					<f:if condition="{obj.audio -> f:count()} == 1">	
+						<div class="intr col-md">
+							<f:variable name="audio_overlay" value="1" />
+							<f:for each="{obj.audio}" as="aud" iteration="j">
+								<f:render partial="Exhibitiontemplates" section="audio" arguments="{_all}"/>
+							</f:for>
+						</div>
+					</f:if>
+					<f:if condition="{obj.audio -> f:count()} > 1">
+						<div class="row no-gutters audio_multiple intr col-md">
+							<f:variable name="audio_overlay" value="1" />
+							<f:for each="{obj.audio}" as="aud" iteration="j">
+								<f:render partial="Exhibitiontemplates" section="audio" arguments="{_all}"/>
+							</f:for>
+						</div>
+					</f:if>
+					<f:if condition="{obj.audiotext} || {obj.audiotitel}">
+						<div class="aud_txt col-md-5">
+							<f:if condition="{obj.audiotitel}">
+								<h4>{obj.audiotitel}</h4>
+							</f:if>
+							<f:if condition="{obj.audiotext}">
+								<f:format.html>{obj.audiotext}</f:format.html>
+							</f:if>
+						</div>
+					</f:if>
+				</div>
+			</div>
+		</div>
+	</f:if>
+	<f:comment>
+		<!--
+			Learn more - Video overlay oder Slide
+		-->
+	</f:comment>
+	<f:if condition="{obj.video}">
+		<div class="closer"></div>
+		<div class="video_overlay_or_slider">
+			<div class="obj_txt">
+				<div class="row">
+					<button type="button" class="close" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<f:variable name="no_vid_title" value="'1'" />
+					<f:if condition="{obj.videotitel}">
+						<div class="col-12">
+							<h3 class="vid_header">{obj.videotitel}</h3>
+						</div>
+					</f:if>
+					<div class="col-md-7">
+						<div class="flex-adjust d-flex flex-column align-items-stretch hidden-arrows">
+							<f:render section="videoslider" arguments="{_all}"/>
+						</div>
+					</div>
+					<f:if condition="{obj.videotext}">
+						<div class="vid_txt col-md-5">
+							<f:comment>
+							<!--
+							<f:if condition="{obj.videotitel}">
+								<h4>{obj.videotitel}</h4>
+							</f:if>
+							-->
+							</f:comment>
+							<f:if condition="{obj.videotext}">
+								<f:format.html>{obj.videotext}</f:format.html>
+							</f:if>
+						</div>
+					</f:if>
+				</div>
+			</div>
+		</div>
+	</f:if>
+</f:section>
+
+<f:section name="explode_list">
+	<f:alias map="{array_content:'{content->jo:explode(delimiter:\'{delimiter}\')}'}">
+		<ul class="list-unstyled">
+			<f:for each="{array_content}" as="item" iteration="it">
+				<li>
+					<f:alias map="{item_content:'{item->jo:explode(delimiter:\'$\')}'}">
+						<f:if condition="{item_content.1}">
+							<f:then>
+								<f:link.external uri="{item_content.1}" target="_blank" class="link_external">
+									<f:format.html>{item_content.0}</f:format.html>
+								</f:link.external>
+							</f:then>
+							<f:else>
+								<f:format.html>{item_content.0}</f:format.html>
+							</f:else>
+						</f:if>
+					</f:alias>
+				</li>	
+			</f:for>
+		</ul>
+	</f:alias>
+</f:section>
+
+<f:section name="publikation">
+	<div class="d-block">
+		<a class="joCollapse-link collapsed" data-toggle="collapse" href="#collapsePublikation" role="button" aria-expanded="false" aria-controls="collapsePublikation">Veröffentlichungen</a>
+		<div class="collapse" id="collapsePublikation">
+			<div class="joCollapse-content">
+				<f:format.html>{obj.publikation}</f:format.html>
+			</div>
+		</div>
+	</div>
+</f:section>
+<f:section name="transkript">
+	<div class="d-block">
+		<a class="joCollapse-link collapsed" data-toggle="collapse" href="#collapseTranskript" role="button" aria-expanded="false" aria-controls="collapseTranskript">Transkription</a>
+		<div class="collapse" id="collapseTranskript">
+			<div class="joCollapse-content">
+				<f:format.html>{obj.transkript}</f:format.html>
+			</div>
+		</div>
+	</div>
+</f:section>
+
+<f:section name="learn_more">
+	<div class="d-block">
+		<a class="joCollapse-link collapsed" data-toggle="collapse" href="#collapseLearnmore" role="button" aria-expanded="false" aria-controls="collapseLearnmore">Mehr wissen</a>
+		<div class="collapse" id="collapseLearnmore">
+			<div class="joCollapse-content">
+				<f:format.html>{obj.kontextinfo}</f:format.html>
+			</div>
+		</div>
+	</div>
+</f:section>
+
+<f:section name="image_item">
+	<a href="{f:uri.image(src: '{subimg.3}', treatIdAsReference: '1', width:'1000c', minWidth: '1000', maxWidth: '1000')}" data-lightbox="gallery" data-zoom-image="{f:uri.image(src: '{subimg.3}', treatIdAsReference: '1', width: '1500c', minWidth: '1500')}">
+		<f:image class="zoomImg" src="{subimg.3}" treatIdAsReference='TRUE' width="1500c" height="" alt="{subimg.2}"/>
+	</a>
+</f:section>
+
+<f:section name="image_item_solo">
+	<a href="{f:uri.image(src: '{subimg.3}', treatIdAsReference: '1', width:'1000c', minWidth: '1000', maxWidth: '1000')}" data-rel="lightbox" data-zoom-image="{f:uri.image(src: '{subimg.3}', treatIdAsReference: '1', width: '1500c', minWidth: '1500')}">
+		<f:image class="zoomImg" src="{subimg.3}" treatIdAsReference='TRUE' width="1500c" height="" alt="{subimg.2}"/>
+	</a>
+</f:section>
+
+<f:comment>
+	<!--
+	Sektionsblöcke - Ausgewählte Sektion und die darauf folgende
+	-->
+</f:comment>
+<f:section name="currentsection">
+	<f:variable name="bg_image" value=""/>
+	<f:if condition="{sektion.orig.derivate}">
+		<f:variable name="bg_image" value="background-image: url({f:uri.image(image: sektion.orig.derivate.0, maxWidth: 1500m, width:1500m)})"/>
+	</f:if>
+	<div class="joObject with_image position-relative section_entry_image up-scroll active isFirst" style="{bg_image}">
+		<div class="content-wrapper position-relative d-flex flex-column justify-content-center">
+			<f:if condition="{beuser}">
+				<f:link.action class="direktlink" pageType="125" action="showobject" arguments="{parent:'{parent}',uid:'{sektion.orig.uid}',pid:'{parent.pid}'}" additionalParams="{nc:'{sektion.orig.uid}'}">Direktlink</f:link.action> 
+			</f:if>
+			<h2 class="sektion-title noSwipe">{sektion.orig.title}</h2>
+			<div class="more-arrow"></div>
+			<f:if condition="{sektion.orig.subtitle}">
+				<div class="section-subtitle">
+					<f:for each="{sektion.orig.subtitle}" as="subitem">
+						<h3 class="noSwipe">{subitem.title}</h3>
+					</f:for>
+				</div>
+			</f:if>
+		</div>
+	</div>
+	<f:if condition="{sektion.orig.description}">
+		<div id="obj{obj.uid}" class="joObject section_entry_description up-scroll desc-con">
+			<div class="content-wrapper d-flex flex-column">
+				<div class="content-text">
+					<div class="sec_description noSwipe">
+						<f:variable name="fullText"><f:format.html>{sektion.orig.description}</f:format.html></f:variable>
+						<f:variable name="scroppedText"><f:format.crop maxCharacters="1000" append="''"><f:format.html>{sektion.orig.description}</f:format.html></f:format.crop></f:variable>
+
+						<f:if condition="{fullText} == {scroppedText}">
+							<f:then>
+								<div class="no-cropped">
+									<f:format.html>{fullText}</f:format.html>
+								</div>
+							</f:then>
+							<f:else>
+								<div class="cropped">
+									<f:format.html>{scroppedText}</f:format.html>
+									<div class="button_wrap position-relative">
+										<button class='show-more'>Mehr erfahren</button>
+									</div>
+								</div>
+								<div class="full">
+									<f:format.html>{fullText}</f:format.html>
+									<div class="button_wrap position-relative">
+										<button class="show-less">Schließen</button>
+									</div>
+								</div>	
+							</f:else>
+						</f:if>
+					</div>
+				</div>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="({sektion.orig.audio} && {sektion.orig.audio -> f:count} > 0) || {sektion.orig.literature}">
+		<div class="joObject up-scroll desc-con-audio section_audio_literature">
+			<div class="content-wrapper d-flex justify-content-center flex-column">
+				<f:if condition="{sektion.orig.audio} && {sektion.orig.audio -> f:count} > 0">
+					<div class="section_audio_wrapper justify-content-center align-items-center">
+						<f:variable name="audio_overlay" value="0" />
+						<f:for each="{sektion.orig.audio}" as="aud" iteration="j">
+							<f:render partial="Exhibitiontemplates" section="audio" arguments="{_all}"/>
+						</f:for>
+					</div>
+				</f:if>
+				<f:if condition="{sektion.orig.literature}">
+					<div class="d-flex flex-column text-center literature align-items-center noSwipe">
+						<f:format.html>{sektion.orig.literature}</f:format.html>
+					</div>
+				</f:if>
+			</div>
+		</div>
+	</f:if>
+</f:section>
+
+<f:section name="nextsection">
+	<div class="nextsection">
+		<f:if condition="{sektion.next.nextsectiontext}">
+			<div class="nextintro">
+				<f:format.html>{sektion.next.nextsectiontext}</f:format.html>
+			</div>
+		</f:if>
+		<f:if condition="{sektion.next.derivate}">
+			<div class="image" style="background-image: url({f:uri.image(image: sektion.next.derivate.0, maxWidth='1800')})">
+			</div>
+		</f:if>
+		<div class="text-wrap">
+			<div class="text-title noSwipe">
+				<h2>{sektion.next.title}</h2>
+			</div>
+			<f:if condition="{sektion.next.subtitle}">
+				<div class="text-subtitle">
+					<f:for each="{sektion.next.subtitle}" as="subitem">
+						<h3 class="mt-0 mb-1 noSwipe">{subitem.title}</h3>
+					</f:for>
+				</div>
+			</f:if>
+			<f:link.action action="showobject" arguments="{pid:'{sektion.next.pid}', uid:'{sektion.next.uid}', parent:'{parent}'}" additionalAttributes="{title: 'zum nächsten Objekt'}" >
+				<div class="sectionInfo-c-btn-icon"></div>
+			</f:link.action> 
+		</div>
+	</div>
+</f:section>
+
+<f:comment>
+	<!--
+		Unbenutzte Blöcke
+	-->
+	<!--
+
+	<f:section name="text_item">
+		<h2>{sektionen.title}</h2>
+		<f:if condition="{sektionen.summary}">
+			<div class="bodytext">
+				<f:format.html>{sektionen.summary}</f:format.html>
+			</div>
+		</f:if>
+		<f:if condition="{subimg.2}">
+			<h3>Bildlegende: </h3>
+			<div>{subimg.2}</div>
+		</f:if>
+		<div class="collapse">
+			<f:if condition="{sektionen.bemerkung}">
+				<div class="teaser">
+					<f:format.html>{sektionen.bemerkung}</f:format.html>
+				</div>
+			</f:if>
+			<f:if condition="{sektionen.classificationtags}">
+				<h3>Schlagworte: </h3>
+				<div>
+					<f:for each="{sektionen.classificationtags}" as="items" iteration="i">
+						{items}<f:if condition="{i.isLast}!='1'">,</f:if>
+					</f:for>
+				</div>
+			</f:if>
+			<f:if condition="{sektionen.entity}">
+				<h3>Relevante Personen: </h3>
+				<div>
+					<f:for each="{sektionen.entity}" as="items" iteration="i">
+						<f:alias map="{submedia: '{items->jo:explode(delimiter:\'$\')}'}">
+							<div>{submedia.0} <f:if condition="{submedia.1}"><f:link.external uri="{submedia.1}" class="gnd" target="_blank">GND</f:link.external></f:if></div>
+						</f:alias>
+					</f:for>
+				</div>
+			</f:if>
+			<f:if condition="{sektionen.literatur}">
+				<h3>Weiterführende Informationen: </h3>
+				<div>
+					<f:for each="{sektionen.literatur}" as="items" iteration="i">
+						<f:alias map="{submedia: '{items->jo:explode(delimiter:\'$\')}'}">
+							<div><f:link.external uri="{submedia.0}" target="_blank">{submedia.1}</f:link.external></div>
+						</f:alias>
+					</f:for>
+				</div>
+			</f:if>
+		</div>
+	</f:section>
+
+	<f:section name="show_section_slider">
+		<div class="joExhibition_content ">
+			<nav class="navigator">
+			  	<ul class="pagination">
+			  		<li class="page-item{f:if(condition: '{i.isFirst}', then: ' active', else: '')} joPrev">
+			    		<span class="page-link">&laquo;</span >
+			    	</li>
+				    <f:for each="{sektion.Sektion}" as="sektionen" iteration="i">
+				    	<li class="page-item{f:if(condition: '{i.isFirst}', then: ' active', else: '')}" data-id="{sektionen.id}">
+				    		<span class="page-link">{sektionen.title}</span >
+				    	</li>
+					</f:for>
+					<li class="page-item{f:if(condition: '{i.isFirst}', then: ' active', else: '')} joNext">
+			    		<span class="page-link">&raquo;</span >
+			    	</li>
+			  	</ul>
+			</nav>
+			<div class="joObject_main_container clearfix">
+				<f:for each="{sektion.Sektion}" as="sektionen" iteration="i">
+					<f:alias map="{subimg:'{sektionen.images.0->jo:explode(delimiter:\'$\')}'}">
+						<div id="{sektionen.id}" class="clearfix section_slide joObject_main{f:if(condition: '{i.isFirst}', then: ' active', else: '')}">
+							<f:if condition="{subimg.0 -> jo:getimgformat()} == 'l'">
+								<f:then>
+									<div class="item_img">
+										<f:render section="image_item_solo" arguments="{_all}"/>
+									</div>
+									<div class="item_txt container" style="padding-bottom:20px;border-top:#ffffff 1px solid;">
+										<f:render section="text_item" arguments="{_all}"/>
+										<f:if condition="{sektionen.bemerkung} || {sektionen.entity} || {sektionen.literatur} || {sektionen.classificationtags}">
+											<div class="more_div"><div class="more showMore"><span class="plus">+</span> Mehr ...</div></div>
+										</f:if>
+									</div>
+									<f:if condition="{sektionen.children}">
+										<input class="ajaxLink" type="hidden" value="{f:uri.action(pageType: '124', action: 'ajax', arguments: '{s: \'{sektionen.id}\'}')}"/>
+									</f:if>
+								</f:then>
+								<f:else>
+									<div class="item_img col-sm-5">
+										<f:render section="image_item_solo" arguments="{_all}"/>
+									</div>
+									<div class="item_txt col-sm-6">
+										<f:render section="text_item" arguments="{_all}"/>
+										<f:if condition="{sektionen.bemerkung} || {sektionen.entity} || {sektionen.literatur} || {sektionen.classificationtags}">
+											<div class="more_div"><div class="more showMore"><span class="plus">+</span> Mehr ...</div></div>
+										</f:if>
+									</div>
+									<f:if condition="{sektionen.children}">
+										<input class="ajaxLink" type="hidden" value="{f:uri.action(pageType: '124', action: 'ajax', arguments: '{s: \'{sektionen.id}\'}')}"/>
+									</f:if>
+								</f:else>
+							</f:if>
+							<div class="joPrev" style="display:none"></div>
+							<div class="joNext"></div>
+						</div>
+					</f:alias>
+				</f:for>
+			</div>
+			<div class="col-sm-12 loadMore-container" style="display: none">
+				<a class="loadMore" href="#">
+					<div class="more_div"><div class="more"><span>Objekte laden</span></div></div>
+				</a>
+			</div>
+			<div class="col-sm-12" style="display: none">
+				<div class="joLoader-container"><img src="typo3conf/ext/jo_museo/Resources/Public/Images/loading.gif"></div>
+			</div>
+			<div class="joObject_extra">
+				<f:for each="{sektion.Objekte}" as="sektionen">
+					<f:alias map="{subimg:'{sektionen.images.0->jo:explode(delimiter:\'$\')}'}">
+						<div class="joObject_item clearfix container">
+							<f:if condition="{subimg.0 -> jo:getimgformat()} == 'l'">
+								<f:then>
+									<div class="item_img">
+										<f:render section="image_item" arguments="{_all}"/>
+									</div>
+									<div class="item_txt container" style="padding-bottom:20px;border-top:#ffffff 1px solid;">
+										<f:render section="text_item" arguments="{_all}"/>
+										<f:if condition="{sektionen.bemerkung} || {sektionen.entity} || {sektionen.literatur} || {sektionen.classificationtags}">
+											<div class="more_div"><div class="more showMore"><span class="plus">+</span> Mehr ...</div></div>
+										</f:if>
+									</div>
+								</f:then>
+								<f:else>
+									<div class="item_img col-sm-5">
+										<f:render section="image_item" arguments="{_all}"/>
+									</div>
+									<div class="item_txt col-sm-6">
+										<f:render section="text_item" arguments="{_all}"/>
+										<f:if condition="{sektionen.bemerkung} || {sektionen.entity} || {sektionen.literatur} || {sektionen.classificationtags}">
+											<div class="more_div"><div class="more showMore"><span class="plus">+</span> Mehr ...</div></div>
+										</f:if>
+									</div>
+								</f:else>
+							</f:if>
+						</div>
+					</f:alias>
+				</f:for>
+			</div>
+		</div>
+	</f:section>
+
+	<f:section name="single_object">
+		<f:render section="headline_single_object" arguments="{_all}"/>
+		<div class="joExhibition_content">
+			<div class="joObject_extra">
+				<f:for each="{sektion}" as="sektionen">
+					<f:alias map="{subimg:'{sektionen.images.0->jo:explode(delimiter:\'$\')}'}">
+						<div class="joObject_item clearfix container">
+							<f:if condition="{subimg.0 -> jo:getimgformat()} == 'l'">
+								<f:then>
+									<div class="item_img">
+										<f:render section="image_item" arguments="{_all}"/>
+									</div>
+									<div class="item_txt container" style="padding-bottom:20px;border-top:#ffffff 1px solid;">
+										<f:render section="text_item" arguments="{_all}"/>
+										<div class="more_div"><div class="more showMore"><span class="plus">+</span> Mehr ...</div></div>
+									</div>
+								</f:then>
+								<f:else>
+									<div class="item_img col-sm-5">
+										<f:render section="image_item" arguments="{_all}"/>
+									</div>
+									<div class="item_txt col-sm-7">
+										<f:render section="text_item" arguments="{_all}"/>
+										<div class="more_div"><div class="more showMore"><span class="plus">+</span> Mehr ...</div></div>
+									</div>
+								</f:else>
+							</f:if>
+						</div>
+					</f:alias>
+				</f:for>
+			</div>
+		</div>
+	</f:section>
+
+	<f:section name="headline_single_object">
+		<div style="background-color: rgba(0,0,0,.05);padding:30px 0;text-align:center;">
+			<h3 style="position: relative;display: inline-block;margin-bottom: 25px;text-align: center;text-transform: uppercase;font-weight: 500; font-size:32px;">{headline}</h3>
+			<div class="container"><h3 style="text-align:center;">Eine Auflistung aller verknüpften Objekte</h3></div>
+		</div>
+	</f:section>
+	-->
+</f:comment>
+</f:spaceless>

@@ -1,0 +1,201 @@
+.viewer img{
+    top: -483px;
+	left: 2px;
+}
+.detail img{
+    top: -592px;
+    left: -171px;
+}
+.toggleMapIcon img {
+    top: -452px;
+    left: -96px;
+}
+.listBookmark img {
+    top: -563px;
+    left: -58px;
+}
+.listBookmarkRemove img{
+    top: -451px;
+    left: -125px;
+}
+.detail_controls .pdf.addGradient #export-pdf img {
+	top: -654px;
+    left: 0px;
+    width: 400px;
+}
+.detail_controls .bookmark.add img {
+    top: -576px;
+    left: -89px;
+}
+.detail_controls .bookmark.remove img {
+    top: -423px;
+    left: -182px;
+}
+#del img {
+    top: -405px;
+    left: -205px;
+}
+#export img {
+    top: -578px;
+    left: -386px;
+}
+#export-pdf img {
+    top: -668px;
+    left: 3px;
+}
+#export-gpx img {
+	top: -668px;
+    left: -391px;
+}
+#fulltext {
+    top: -342px;
+    left: -276px;
+}
+#objectType {
+    top: -342px;
+	left: -365px;
+}
+#objectTypeHierarchy {
+    top: -342px;
+    left: -365px;
+}
+#tenant {
+    top: -340px;
+    left: 1px;
+}
+#tenantHierarchy {
+    top: -624px;
+    left: -423px;
+}
+#pid {
+    top: -624px;
+    left: -423px;
+}
+#material {
+    top: -342px;
+    left: -414px;
+}
+#classification {
+    top: -342px;
+	left: -321px;
+}
+#Boundingbox {
+    top: -342px;
+    left: -321px;
+}
+#sortvar {
+    top: -439px;
+	left: -294px;
+}
+#entitynorole {
+    top: -342px;
+	left: -42px;
+}
+#joDeleteIcon img{
+    top: -388px;
+    left: -208px;
+}
+#classificationtime {
+    top: -359px;
+    left: -86px;
+}
+#timeline {
+    top: -342px;
+    left: -86px;
+}
+#territory {
+    top: -342px;
+    left: -174px;
+}
+#location {
+    top: -342px;
+    left: -174px;
+}
+#category {
+    top: -342px;
+    left: -365px;
+}
+#title {
+    top: -718px;
+    left: 5px;
+}
+.joCategoryContent #entitynorole {
+    top: -24px;
+	left: -24px;
+}
+.c_button[href="#material"] img{ 
+    top: -388px;
+    left: -389px;
+}
+.c_button[href="#objectType"] img{ 
+    top: -388px;
+    left: -121px;
+}
+.c_button[href="#objectTypeHierarchy"] img{ 
+    top: -388px;
+    left: -118px;
+}
+.c_button[href="#tenant"] img{ 
+    top: -388px;
+    left: 8px;
+}
+.c_button[href="#tenantHierarchy"] img {
+    top: -616px;
+    left: -396px;
+}
+.c_button[href="#category"] img {
+    top: -388px;
+    left: -342px;
+}
+.c_button[href="#classification"] img { 
+    top: -388px;
+    left: -298px;
+}
+.c_button[href="#classificationtime"] img{ 
+    top: -388px;
+    left: -75px;
+}
+.c_button[href="#territory"] img {
+    top: -388px;
+    left: -160px;
+}
+.c_button[href="#timeline"] img { 
+    top: -346px;
+    left: -75px;
+}
+.c_button[href="#locationFirstletter"] img{ 
+    top: -360px;
+    left: -161px;
+}
+.c_button[href="#entityFirstletter"] img{
+    top: -345px;
+    left: -35px;
+}
+.c_button[href="#facette_info"] img{ 
+    top: -405px;
+	left: -437px;
+    width: 430px;
+	opacity:0.8;
+}
+.c_button[href="#title"] img { 
+    top: -707px;
+    left: 12px;
+}
+.joFacettedSearch a img {
+    top: -484px;
+    left: -87px;
+}
+html body .table a.asc.sorttitle .sortmask img {
+    top: -485px;
+    left: -114px;
+}
+html body .table a.desc.sorttitle .sortmask img {
+    top: -485px;
+	left: -138px;
+}
+.tile_view_controls #joOption_1 {
+	background-position: -145px -398px;
+}
+.tile_view_controls #joOption_2 {
+	background-position: -256px -398px;
+}

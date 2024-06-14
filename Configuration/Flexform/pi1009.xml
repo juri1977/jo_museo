@@ -1,0 +1,1435 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3DataStructure>
+   <sheets>
+     <sJoSearchMask>
+       <ROOT>
+         <TCEforms>
+           <sheetTitle>Konfiguration der Sucheinstiege</sheetTitle>
+         </TCEforms>
+         <type>array</type>
+         <el>
+           <switchableControllerActions>
+             <TCEforms>
+               <onChange>reload</onChange>
+               <label>Select function</label>
+               <config>
+               <type>select</type>
+				<renderType>selectSingle</renderType>
+               	<items>
+                 <numIndex index="0">
+                   <numIndex index="0">Listeneinstieg allgemein</numIndex>
+                   <numIndex index="1">Museo->list;Museo->detailobject;Museo->collbox;Museo->ajax;Museo->entityfacts;Museo->map;Museo->suggest;Museo->downloadimage</numIndex>
+                 </numIndex>
+				<numIndex index="4">
+                   <numIndex index="0">Facetteneinstiege</numIndex>
+                   <numIndex index="1">Museo->facette;Museo->list;Museo->detailobject;Museo->collbox;Museo->ajax;Museo->entityfacts;Museo->map;Museo->suggest</numIndex>
+				</numIndex>
+				<numIndex index="5">
+                   <numIndex index="0">Karteneinstieg</numIndex>
+                   <numIndex index="1">Museo->map;Museo->detailobject;Museo->collbox;Museo->ajax;Museo->entityfacts;Museo->suggest;Museo->downloadimage</numIndex>
+				</numIndex>
+				<numIndex index="6">
+                   <numIndex index="0">Meine Merkliste</numIndex>
+                   <numIndex index="1">Museo->collbox;Museo->detailobject;Museo->entityfacts;Museo->list;Museo->downloadimage</numIndex>
+				</numIndex>
+				<numIndex index="7">
+                   <numIndex index="0">Suchschlitz mit oder ohne Hintergrundbild</numIndex>
+                   <numIndex index="1">Museo->entrymask;Museo->detailobject;Museo->listitems;Museo->searchentry;Museo->detailobject;Museo->collbox;Museo->ajax;Museo->entityfacts;Museo->map</numIndex>
+				</numIndex>
+               </items>
+             </config>
+           </TCEforms>
+         </switchableControllerActions>
+		 <settings.listview>
+			<TCEforms>
+				<label>Auswahl der initialen und erweiterten Ansichten</label>
+				<description>Bei Auswahl des obenstehenden Listeneinstieges, haben Sie die Möglichkeit, weitere alternative Ansichten auszuspielen. Diese werden in der Reihenfolge ausgespielt, die Sie hier festlegen.</description>
+				<displayCond>
+					<OR>
+						<numIndex index="0">FIELD:switchableControllerActions:=:Museo->list;Museo->detailobject;Museo->collbox;Museo->ajax;Museo->entityfacts;Museo->map;Museo->suggest;Museo->downloadimage</numIndex>
+						<numIndex index="1">FIELD:switchableControllerActions:=:Museo->map;Museo->detailobject;Museo->collbox;Museo->ajax;Museo->entityfacts;Museo->suggest;Museo->downloadimage</numIndex>
+					</OR>
+				</displayCond>
+				<config>
+					<type>select</type>
+					<renderType>selectMultipleSideBySide</renderType>
+					<items type="array">
+						<numIndex index="0" type="array">
+							<numIndex index="0">Standardlistenübersicht - Abbildungen auf der linken Seite und Metadaten rechts</numIndex>
+							<numIndex index="1">List</numIndex>
+						</numIndex>
+						<numIndex index="4" type="array">
+							<numIndex index="0">Gridansicht - Abbildungen und Metadaten darunter</numIndex>
+							<numIndex index="1">Listgrid</numIndex>
+						</numIndex>
+						<numIndex index="9" type="array">
+							<numIndex index="0">Galerieansicht - Nur Abbildungen und Metadaten bei Mouseover über den Abbildungen</numIndex>
+							<numIndex index="1">Listgallery</numIndex>
+						</numIndex>
+						<numIndex index="10" type="array">
+							<numIndex index="0">Ordnerübersicht - Hierarchische Ordnerstruktur und zugehörige Objekte</numIndex>
+							<numIndex index="1">Listfolders</numIndex>
+						</numIndex>
+					</items>
+				</config>
+			</TCEforms>
+		</settings.listview>
+		<settings.facettetype>
+			<TCEforms>
+				<label>Darstellung der Facetteneinstiege</label>
+				<displayCond>
+					<OR>
+						<numIndex index="0">FIELD:switchableControllerActions:=:Museo->facette;Museo->list;Museo->detailobject;Museo->collbox;Museo->ajax;Museo->entityfacts;Museo->map;Museo->suggest;Museo->downloadimage</numIndex>
+					</OR>
+				</displayCond>
+				<config>
+					<type>select</type>
+					<renderType>selectSingle</renderType>
+					<items type="array">
+						<numIndex index="0" type="array">
+							<numIndex index="0">Facetten mit Nummer und Name und ggf. Link</numIndex>
+							<numIndex index="1">1</numIndex>
+						</numIndex>
+						<numIndex index="1" type="array">
+							<numIndex index="0">Facetten als Link nur mit Namen und ggf. Nummer</numIndex>
+							<numIndex index="1">2</numIndex>
+						</numIndex>
+					</items>
+				</config>
+			</TCEforms>
+		</settings.facettetype>
+		<settings.ajaxload>
+			<TCEforms>
+				<label>Beta - please don't use - Pluginaktionen via Ajax laden</label>
+				<displayCond>
+					<OR>
+						<numIndex index="0">FIELD:switchableControllerActions:=:Museo->list;Museo->detailobject;Museo->collbox;Museo->ajax;Museo->entityfacts;Museo->map;Museo->suggest;Museo->downloadimage</numIndex>
+						<numIndex index="1">FIELD:switchableControllerActions:=:Museo->map;Museo->detailobject;Museo->collbox;Museo->ajax;Museo->entityfacts;Museo->suggest;Museo->downloadimage</numIndex>
+					</OR>
+				</displayCond>
+				<config>
+					<type>check</type>
+				</config>
+			</TCEforms>
+		</settings.ajaxload>
+		<settings.masktype>
+			<TCEforms>
+				<label>Darstellung der Einstiegsmaske/des Suchschlitzes</label>
+				<displayCond>
+					<OR>
+						<numIndex index="0">FIELD:switchableControllerActions:=:Museo->entrymask;Museo->detailobject;Museo->listitems;Museo->searchentry;Museo->detailobject;Museo->collbox;Museo->ajax;Museo->entityfacts;Museo->map</numIndex>
+					</OR>
+				</displayCond>
+				<onChange>reload</onChange>
+				<config>
+					<type>select</type>
+					<renderType>selectSingle</renderType>
+					<items type="array">
+						<numIndex index="0" type="array">
+							<numIndex index="0">Suchschlitz mit Hintergrundbild oder Slideshow</numIndex>
+							<numIndex index="1">1</numIndex>
+						</numIndex>
+						<numIndex index="1" type="array">
+							<numIndex index="0">Suchschlitz ohne Hintergrund</numIndex>
+							<numIndex index="1">2</numIndex>
+						</numIndex>
+					</items>
+				</config>
+			</TCEforms>
+		</settings.masktype>
+		<settings.showimageswitch>
+			<TCEforms>
+				<label>Schalter für die Option, Objekte nur mit Abbildungen zu selektieren</label>
+				<description>Diese Option gibt dem Nutzer die Möglichkeit, nur Objekte auszuwählen, die mit einem Digitalisat verknüpft sind.</description>
+				<displayCond>
+					<OR>
+						<numIndex index="0">FIELD:switchableControllerActions:=:Museo->list;Museo->detailobject;Museo->collbox;Museo->ajax;Museo->entityfacts;Museo->map;Museo->suggest;Museo->downloadimage</numIndex>
+						<numIndex index="1">FIELD:switchableControllerActions:=:Museo->map;Museo->detailobject;Museo->collbox;Museo->ajax;Museo->entityfacts;Museo->suggest;Museo->downloadimage</numIndex>
+					</OR>
+				</displayCond>
+				<config>
+					<type>check</type>
+				</config>
+			</TCEforms>
+		</settings.showimageswitch>
+		<settings.hidefromsearch>
+			<TCEforms>
+				<label>Versteckte Datensätze nicht mit ausgeben</label>
+				<description>Die Aktivierung dieses Schalters verbirgt Datensätze, die eventuell noch nicht freigegeben sind und bei denen der Schalter "hiddenFromSearch" auf 1 gesetzt ist.</description>
+				<config>
+					<type>check</type>
+				</config>
+			</TCEforms>
+		</settings.hidefromsearch>
+		<settings.neverhidesearchfilter>
+			<TCEforms>
+				<label>Ausgewählte Suchfilter permanent anzeigen</label>
+				<description>Aktivieren Sie diesen Schalter, wenn der Nutzer die von ihm gewählten Suchparameter stets und ständig sehen soll.</description>
+				<config>
+					<type>check</type>
+				</config>
+			</TCEforms>
+		</settings.neverhidesearchfilter>
+		<settings.aggregatefilters>
+			<TCEforms>
+				<label>Filter unter einem Button aggregieren</label>
+				<description>Alle vom Nutzer auswählbaren Filter werden erst nach Klick auf einen Button sichtbar.</description>
+				<config>
+					<type>check</type>
+				</config>
+			</TCEforms>
+		</settings.aggregatefilters>
+		<settings.expertsearch>
+			<TCEforms>
+				<label>Expertensuche aktivieren</label>
+				<description>Beta - Im Moment noch prototypisch implementiert. Mit Bedacht einsetzen.</description>
+				<config>
+					<type>check</type>
+				</config>
+			</TCEforms>
+		</settings.expertsearch>
+		<settings.showNumbers>
+			<TCEforms>
+				<label>Anzahl gefundener Objekte bei Facette anzeigen</label>
+				<displayCond>
+					<OR>
+						<numIndex index="0">FIELD:switchableControllerActions:=:Museo->list;Museo->detailobject;Museo->collbox;Museo->ajax;Museo->entityfacts;Museo->map;Museo->suggest;Museo->downloadimage</numIndex>
+						<numIndex index="1">FIELD:switchableControllerActions:=:Museo->map;Museo->detailobject;Museo->collbox;Museo->ajax;Museo->entityfacts;Museo->suggest;Museo->downloadimage</numIndex>
+					</OR>
+				</displayCond>
+				<config>
+					<type>check</type>
+				</config>
+			</TCEforms>
+		</settings.showNumbers>
+		<settings.showAutocomplete>
+			<TCEforms>
+				<label>Autovervollständigung Input anzeigen</label>
+				<displayCond>
+					<OR>
+						<numIndex index="0">FIELD:switchableControllerActions:=:Museo->list;Museo->detailobject;Museo->collbox;Museo->ajax;Museo->entityfacts;Museo->map;Museo->suggest;Museo->downloadimage</numIndex>
+						<numIndex index="1">FIELD:switchableControllerActions:=:Museo->map;Museo->detailobject;Museo->collbox;Museo->ajax;Museo->entityfacts;Museo->suggest;Museo->downloadimage</numIndex>
+					</OR>
+				</displayCond>
+				<config>
+					<type>check</type>
+				</config>
+			</TCEforms>
+		</settings.showAutocomplete>
+		<settings.hideinitialresults>
+			<TCEforms>
+				<label>Trefferübersicht nicht anzeigen, wenn keine Suchparameter gesetzt wurden</label>
+				<description>Die Übersicht der Treffer kann hier ausgeblendet werden, so dass initial keine Objekte angezeigt werden, wenn der Nutzer keine Suchparameter eingegeben hat. (aktuell nur in Listenansicht implementiert)</description>
+				<config>
+					<type>check</type>
+				</config>
+			</TCEforms>
+		</settings.hideinitialresults>
+		<settings.dataprovider>
+			<TCEforms>
+				<label>Datentypen - solr-Field: tenant</label>
+				<config>
+					<type>select</type>
+					<renderType>selectMultipleSideBySide</renderType>
+					<items type="array">
+						<numIndex index="1" type="array">
+							<numIndex index="0">Thüringer Universitäts- und Landesbibliothek</numIndex>
+							<numIndex index="1">Thüringer Universitäts- und Landesbibliothek$tenant$AND</numIndex>
+						</numIndex>
+					</items>
+					<maxitems>10</maxitems>
+					<size>10</size>
+				</config>
+			</TCEforms>
+		</settings.dataprovider>
+		<settings.aggregate>
+			<TCEforms>
+				<label>Aggegierte Bestände - solr-Field: classProject</label>
+				<config>
+					<type>select</type>
+					<renderType>selectMultipleSideBySide</renderType>
+					<items type="array">
+						<numIndex index="12" type="array">
+						  <numIndex index="0">Staatliche Münzsammlung München</numIndex>
+						  <numIndex index="1">SMM$classProject$AND</numIndex>
+						</numIndex>
+						<numIndex index="13" type="array">
+						  <numIndex index="0">LVR Fotoportal</numIndex>
+						  <numIndex index="1">LVR-Fotoportal$classProject$AND</numIndex>
+						</numIndex>
+						<numIndex index="14" type="array">
+						  <numIndex index="0">Pilgerzeichen Projekt</numIndex>
+						  <numIndex index="1">Pilgerzeichen Projekt$classProject$AND</numIndex>
+						</numIndex>
+						<numIndex index="15" type="array">
+						  <numIndex index="0">Kartenspeicher</numIndex>
+						  <numIndex index="1">Kartenspeicher$classProject$AND</numIndex>
+						</numIndex>
+						<numIndex index="16" type="array">
+						  <numIndex index="0">Jüdisches Leben</numIndex>
+						  <numIndex index="1">opjln Projekt$classProject$AND</numIndex>
+						</numIndex>
+						<numIndex index="17" type="array">
+						  <numIndex index="0">IRS</numIndex>
+						  <numIndex index="1">IRS$classProject$AND</numIndex>
+						</numIndex>
+						<numIndex index="18" type="array">
+						  <numIndex index="0">BPI</numIndex>
+						  <numIndex index="1">BPI$classProject$AND</numIndex>
+						</numIndex>
+						<numIndex index="19" type="array">
+						  <numIndex index="0">Languages of diplomacy</numIndex>
+						  <numIndex index="1">languages diplomacy$classProject$AND</numIndex>
+						</numIndex>
+						<numIndex index="20" type="array">
+						  <numIndex index="0">Theaterzettel Weimar</numIndex>
+						  <numIndex index="1">Theaterzettel Weimar$classProject$AND</numIndex>
+						</numIndex>
+						<numIndex index="21" type="array">
+						  <numIndex index="0">Tagebuch Eva Schiffmann</numIndex>
+						  <numIndex index="1">Eva Schiffmann$classProject$AND</numIndex>
+						</numIndex>
+						<numIndex index="22" type="array">
+						  <numIndex index="0">Gotha Imdas</numIndex>
+						  <numIndex index="1">imdas$classProject$AND</numIndex>
+						</numIndex>
+					</items>
+					<maxitems>10</maxitems>
+					<size>10</size>
+				</config>
+			</TCEforms>
+		</settings.aggregate>
+		<settings.portal>
+			<TCEforms>
+				<label>Ausspielung in Portalen (classPortal - AND)</label>
+				<config>
+					<type>select</type>
+					<renderType>selectMultipleSideBySide</renderType>
+					<items type="array">
+						<numIndex index="0" type="array">
+							<numIndex index="0">Numismatische Kommission Deutschland</numIndex>
+							<numIndex index="1">NK-DE</numIndex>
+						</numIndex>
+						<numIndex index="1" type="array">
+							<numIndex index="0">Numismatische Kommission Österreich</numIndex>
+							<numIndex index="1">NK-AT</numIndex>
+						</numIndex>
+						<numIndex index="2" type="array">
+							<numIndex index="0">Divers</numIndex>
+							<numIndex index="1">Divers</numIndex>
+						</numIndex>
+					</items>
+					<maxitems>10</maxitems>
+					<size>10</size>
+				</config>
+			</TCEforms>
+		</settings.portal>
+		<settings.classificationTopic>
+			<TCEforms>
+				<label>Inhaltliche Zusammenhänge</label>
+				<config>
+					<type>select</type>
+					<renderType>selectMultipleSideBySide</renderType>
+					<items type="array">
+						<numIndex index="0" type="array">
+							<numIndex index="0">Sammlung Seetzen</numIndex>
+							<numIndex index="1">Sammlung Seetzen</numIndex>
+						</numIndex>
+						<numIndex index="1" type="array">
+							<numIndex index="0">Kunstkammer Gotha</numIndex>
+							<numIndex index="1">Kunstkammer Gotha</numIndex>
+						</numIndex>
+					</items>
+					<maxitems>10</maxitems>
+					<size>10</size>
+				</config>
+			</TCEforms>
+		</settings.classificationTopic>
+		<settings.datatype>
+			<TCEforms>
+				<label>Datentypen - solr-Field: objectType</label>
+				<config>
+					<type>select</type>
+					<renderType>selectMultipleSideBySide</renderType>
+					<items type="array">
+						<numIndex index="0" type="array">
+							<numIndex index="0">Alle Dokumenttypen</numIndex>
+							<numIndex index="1">*$objectType$AND</numIndex>
+						</numIndex>
+						<numIndex index="1" type="array">
+							<numIndex index="0">Druck (Band mit mehreren Werken)</numIndex>
+							<numIndex index="1">Druck (Band mit mehreren Werken)</numIndex>
+						</numIndex>
+						<numIndex index="2" type="array">
+							<numIndex index="0">Druck (Einbändiges Werk)</numIndex>
+							<numIndex index="1">Druck (Einbändiges Werk)</numIndex>
+						</numIndex>
+						<numIndex index="3" type="array">
+							<numIndex index="0">Karte</numIndex>
+							<numIndex index="1">Karte</numIndex>
+						</numIndex>
+						<numIndex index="4" type="array">
+							<numIndex index="0">Karte als Teil eines mehrbändigen Kartenwerkes</numIndex>
+							<numIndex index="1">Karte als Teil eines mehrbändigen Kartenwerkes</numIndex>
+						</numIndex>
+						<numIndex index="5" type="array">
+							<numIndex index="0">Mehrbändiges Kartenwerk</numIndex>
+							<numIndex index="1">Mehrbändiges Kartenwerk</numIndex>
+						</numIndex>
+						<numIndex index="6" type="array">
+							<numIndex index="0">enthaltene Karte</numIndex>
+							<numIndex index="1">enthaltene Karte</numIndex>
+						</numIndex>
+						<numIndex index="7" type="array">
+							<numIndex index="0">Handschrift (Einbändiges Werk)</numIndex>
+							<numIndex index="1">Handschrift (Einbändiges Werk)$objectType$OR</numIndex>
+						</numIndex>
+						<numIndex index="8" type="array">
+							<numIndex index="0">POIs (point of interest)</numIndex>
+							<numIndex index="1">poi$objectType$OR</numIndex>
+						</numIndex>
+						<numIndex index="9" type="array">
+							<numIndex index="0">Befund (tldabefunde)</numIndex>
+							<numIndex index="1">befund$objectType$OR</numIndex>
+						</numIndex>
+						<numIndex index="11" type="array">
+							<numIndex index="0">Münzfundkomplexe TLDA und POIs gemeinsam (POI und NK Münzfundkomplexe)</numIndex>
+							<numIndex index="1">NK Münzfundkomplexe#poi$objectType$OR</numIndex>
+						</numIndex>
+						<numIndex index="10" type="array">
+							<numIndex index="0">Orte (place)</numIndex>
+							<numIndex index="1">place$objectType$AND</numIndex>
+						</numIndex>
+						<numIndex index="12" type="array">
+							<numIndex index="0">Münzfundkomplexe TLDA, Münzen und POIs gemeinsam </numIndex>
+							<numIndex index="1">NK Münzfundkomplexe#poi#Fundmünze$objectType$OR</numIndex>
+						</numIndex>
+						<numIndex index="13" type="array">
+							<numIndex index="0">Natural Law Personen</numIndex>
+							<numIndex index="1">Natural Law Personen$objectType$AND</numIndex>
+						</numIndex>
+						<numIndex index="14" type="array">
+							<numIndex index="0">Münzfundkomplexe NK und Numismatische Objekte gemeinsam </numIndex>
+							<numIndex index="1">NK Münzfundkomplexe#ING Münzfundkomplexe#Numismatisches Objekt$objectType$OR</numIndex>
+						</numIndex>
+						<numIndex index="15" type="array">
+							<numIndex index="0">Basisdatensatz DOM</numIndex>
+							<numIndex index="1">Basisdatensatz DOM$objectType$AND</numIndex>
+						</numIndex>
+						<numIndex index="16" type="array">
+							<numIndex index="0">Glossar</numIndex>
+							<numIndex index="1">Glossar$objectType$AND</numIndex>
+						</numIndex>
+						<numIndex index="17" type="array">
+							<numIndex index="0">Personen</numIndex>
+							<numIndex index="1">Personen$objectType$AND</numIndex>
+						</numIndex>
+						<numIndex index="18" type="array">
+							<numIndex index="0">Orte</numIndex>
+							<numIndex index="1">Orte$objectType$AND</numIndex>
+						</numIndex>
+						<numIndex index="19" type="array">
+							<numIndex index="0">Orte, Personen und POIs</numIndex>
+							<numIndex index="1">Orte#Personen#POI$objectType$OR</numIndex>
+						</numIndex>
+						<numIndex index="20" type="array">
+							<numIndex index="0">Münzfundkomplexe NK und ING</numIndex>
+							<numIndex index="1">NK Münzfundkomplexe#ING Münzfundkomplexe$objectType$OR</numIndex>
+						</numIndex>
+						<numIndex index="21" type="array">
+							<numIndex index="0">Münzen allgemein ("Numismatisches Objekt")</numIndex>
+							<numIndex index="1">Numismatisches Objekt$objectType$OR</numIndex>
+						</numIndex>
+						<numIndex index="22" type="array">
+							<numIndex index="0">Pilgerzeichen ("pilgerzeichen")</numIndex>
+							<numIndex index="1">Pilgerzeichen$objectType$OR</numIndex>
+						</numIndex>
+						<numIndex index="23" type="array">
+							<numIndex index="0">Pilgerzeichen Wallfahrtsorte("Wallfahrtsorte")</numIndex>
+							<numIndex index="1">Wallfahrtsorte$objectType$OR</numIndex>
+						</numIndex>
+						<numIndex index="24" type="array">
+							<numIndex index="0">Pilgerzeichen Fundorte("Fundorte")</numIndex>
+							<numIndex index="1">Fundorte$objectType$OR</numIndex>
+						</numIndex>
+						<numIndex index="25" type="array">
+							<numIndex index="0">Pilgerzeichen Testimonien("Testimonien")</numIndex>
+							<numIndex index="1">Testimonien$objectType$OR</numIndex>
+						</numIndex>
+						<numIndex index="26" type="array">
+							<numIndex index="0">Werke, Aufführungen und Personen</numIndex>
+							<numIndex index="1">Aufführung#Werk#Person$objectType$OR</numIndex>
+						</numIndex>
+						<numIndex index="27" type="array">
+							<numIndex index="0">Münzfundkomplexe NK</numIndex>
+							<numIndex index="1">NK Münzfundkomplexe$objectType$OR</numIndex>
+						</numIndex>
+						<numIndex index="28" type="array">
+							<numIndex index="0">Münzfundkomplexe ING</numIndex>
+							<numIndex index="1">ING Münzfundkomplexe$objectType$OR</numIndex>
+						</numIndex>
+						<numIndex index="30" type="array">
+							<numIndex index="0">Handschrift</numIndex>
+							<numIndex index="1">Handschrift$objectType$OR</numIndex>
+						</numIndex>
+						<numIndex index="31" type="array">
+							<numIndex index="0">Handschrift und Handschrift (Einbändiges Werk)</numIndex>
+							<numIndex index="1">Handschrift (Einbändiges Werk)#Handschrift$objectType$OR</numIndex>
+						</numIndex>
+					</items>
+					<maxitems>10</maxitems>
+					<size>10</size>
+				</config>
+			</TCEforms>
+		</settings.datatype>
+		<settings.facettenselect>
+			<TCEforms>
+				<label>Facettenauswahl</label>
+				<config>
+					<type>select</type>
+					<renderType>selectMultipleSideBySide</renderType>
+					<items type="array">
+						<numIndex index="1" type="array">
+							<numIndex index="0">Objekttypfacette (objectType)</numIndex>
+							<numIndex index="1">objectType$extended$objex</numIndex>
+						</numIndex>
+						<numIndex index="4" type="array">
+							<numIndex index="0">ID-Koordinaten Facette (simple - lonlatidFacette)</numIndex>
+							<numIndex index="1">lonlatidFacette$simple$idlo</numIndex>
+						</numIndex>
+						<numIndex index="14" type="array">
+							<numIndex index="0">Kategorie (simple)</numIndex>
+							<numIndex index="1">category$simple$cat</numIndex>
+						</numIndex>
+						<numIndex index="15" type="array">
+							<numIndex index="0">Kategorie (exclude)</numIndex>
+							<numIndex index="1">category$extended$catex</numIndex>
+						</numIndex>
+						<numIndex index="16" type="array">
+							<numIndex index="0">Territorium (exclude)</numIndex>
+							<numIndex index="1">territory$extended$terrex</numIndex>
+						</numIndex>
+						<numIndex index="17" type="array">
+							<numIndex index="0">Zeiträume (exclude)</numIndex>
+							<numIndex index="1">classificationtime$extended$ctimeex</numIndex>
+						</numIndex>
+						<numIndex index="18" type="array">
+							<numIndex index="0">Material (exclude)</numIndex>
+							<numIndex index="1">material$extended$matex</numIndex>
+						</numIndex>
+						<numIndex index="19" type="array">
+							<numIndex index="0">Klassification (exclude)</numIndex>
+							<numIndex index="1">classification$extended$classex</numIndex>
+						</numIndex>
+						<numIndex index="20" type="array">
+							<numIndex index="0">Personenindex einfach (entitynorole)</numIndex>
+							<numIndex index="1">entitynorole$extended$enr</numIndex>
+						</numIndex>
+						<numIndex index="21" type="array">
+							<numIndex index="0">Personenindex alphabetisch (entityFirstletter)</numIndex>
+							<numIndex index="1">entityFirstletter$extended$efl</numIndex>
+						</numIndex>
+						<numIndex index="22" type="array">
+							<numIndex index="0">Ortsindex alphabetisch (locationFirstletter)</numIndex>
+							<numIndex index="1">locationFirstletter$extended$lfl</numIndex>
+						</numIndex>
+						<numIndex index="23" type="array">
+							<numIndex index="0">Zeitstrahl</numIndex>
+							<numIndex index="1">timeline$simple$tl</numIndex>
+						</numIndex>
+						<numIndex index="24" type="array">
+							<numIndex index="0">Ortklassifikation z.B. Themenrouten (locationClassification)</numIndex>
+							<numIndex index="1">locationClassification$extended$lcl</numIndex>
+						</numIndex>
+						<numIndex index="25" type="array">
+							<numIndex index="0">Titelindex (title)</numIndex>
+							<numIndex index="1">title$extended$tit</numIndex>
+						</numIndex>
+						<numIndex index="26" type="array">
+							<numIndex index="0">Datenprovider (tenant)</numIndex>
+							<numIndex index="1">tenant$extended$ten</numIndex>
+						</numIndex>
+						<numIndex index="27" type="array">
+							<numIndex index="0">Normdaten</numIndex>
+							<numIndex index="1">norm$extended$nod</numIndex>
+						</numIndex>
+						<numIndex index="28" type="array">
+							<numIndex index="0">Projektklassifikation (classProject)</numIndex>
+							<numIndex index="1">classProject$extended$cp</numIndex>
+						</numIndex>
+						<numIndex index="29" type="array">
+							<numIndex index="0">Datenprovider hierarchisch(tenantHierarchy)</numIndex>
+							<numIndex index="1">tenantHierarchy$extended$tes$hierarchical</numIndex>
+						</numIndex>
+						<numIndex index="30" type="array">
+							<numIndex index="0">Personenindex alphabetisch simple (entityFirstletter)</numIndex>
+							<numIndex index="1">entityFirstletter$simple$efl</numIndex>
+						</numIndex>
+						<numIndex index="31" type="array">
+							<numIndex index="0">Objektklassifikation hierarchisch(objectTypeHierarchy)</numIndex>
+							<numIndex index="1">objectTypeHierarchy$extended$coth$hierarchical</numIndex>
+						</numIndex>
+						<numIndex index="32" type="array">
+							<numIndex index="0">Polygone und Hashwert(locationPolygonesHash)</numIndex>
+							<numIndex index="1">locationPolygonesHash$simple$lph</numIndex>
+						</numIndex>
+						<numIndex index="33" type="array">
+							<numIndex index="0">Location hierarchisch(locationHierarchy)</numIndex>
+							<numIndex index="1">locationHierarchy$extended$loch$hierarchical</numIndex>
+						</numIndex>
+						<numIndex index="34" type="array">
+							<numIndex index="0">Pflanzenindex alphabetisch(objectsPlantsFirstletter)</numIndex>
+							<numIndex index="1">objectsPlantsFirstletter$simple$opfl</numIndex>
+						</numIndex>
+						<numIndex index="35" type="array">
+							<numIndex index="0">Keywords alphabetisch(classificationtagsFirstletter)</numIndex>
+							<numIndex index="1">classificationtagsFirstletter$extended$ctfl</numIndex>
+						</numIndex>
+						<numIndex index="36" type="array">
+							<numIndex index="0">Keywords(classificationtags)</numIndex>
+							<numIndex index="1">classificationtags$extended$clt</numIndex>
+						</numIndex>
+						<numIndex index="37" type="array">
+							<numIndex index="0">Location(location)</numIndex>
+							<numIndex index="1">location$simple$locs</numIndex>
+						</numIndex>
+						<numIndex index="38" type="array">
+							<numIndex index="0">Keywords alphabetisch(classificationtagsAllFirstletter)</numIndex>
+							<numIndex index="1">classificationtagsAllFirstletter$simple$ctfla</numIndex>
+						</numIndex>
+						<numIndex index="39" type="array">
+							<numIndex index="0">Keywords(classificationtagsAll)</numIndex>
+							<numIndex index="1">classificationtagsAll$extended$clta</numIndex>
+						</numIndex>
+						<numIndex index="40" type="array">
+							<numIndex index="0">Ortsindex alphabetisch (locationAllFirstletter)</numIndex>
+							<numIndex index="1">locationAllFirstletter$extended$lfla</numIndex>
+						</numIndex>
+						<numIndex index="41" type="array">
+							<numIndex index="0">Publisher (publisher)</numIndex>
+							<numIndex index="1">publisher$extended$opubex</numIndex>
+						</numIndex>
+						<numIndex index="42" type="array">
+							<numIndex index="0">Publisher alphabetisch (publisherFirstletter)</numIndex>
+							<numIndex index="1">publisherFirstletter$extended$pfl</numIndex>
+						</numIndex>
+						<numIndex index="43" type="array">
+							<numIndex index="0">Sprache (language)</numIndex>
+							<numIndex index="1">language$extended$lan</numIndex>
+						</numIndex>
+						<numIndex index="44" type="array">
+							<numIndex index="0">Datenquelle (datasource)</numIndex>
+							<numIndex index="1">datasource$extended$dat</numIndex>
+						</numIndex>
+						<numIndex index="45" type="array">
+							<numIndex index="0">Sammlung (classCollection)</numIndex>
+							<numIndex index="1">classCollection$extended$ccl</numIndex>
+						</numIndex>
+						<numIndex index="46" type="array">
+							<numIndex index="0">Maßstab (scaleMetric)</numIndex>
+							<numIndex index="1">scaleMetric$range$scm</numIndex>
+						</numIndex>
+						<numIndex index="47" type="array">
+							<numIndex index="0">Genre (genre)</numIndex>
+							<numIndex index="1">genre$extended$gnr</numIndex>
+						</numIndex>
+						<numIndex index="48" type="array">
+							<numIndex index="0">Thematische Zusammenhänge (classificationTopic)</numIndex>
+							<numIndex index="1">classificationTopic$extended$cft</numIndex>
+						</numIndex>
+						<numIndex index="49" type="array">
+							<numIndex index="0">Personenindex komplett alphabetisch (entityAllFirstletter)</numIndex>
+							<numIndex index="1">entityAllFirstletter$extended$efla</numIndex>
+						</numIndex>
+						<numIndex index="50" type="array">
+							<numIndex index="0">Sammlungen/Sammlungssystematik hierarchisch(classCollectionHierarchy)</numIndex>
+							<numIndex index="1">classCollectionHierarchy$extended$cch$hierarchical</numIndex>
+						</numIndex>
+						<numIndex index="100" type="array">
+							<numIndex index="0">Facettenkategorie 1</numIndex>
+							<numIndex index="1">delimiter_1$structure</numIndex>
+						</numIndex>
+						<numIndex index="101" type="array">
+							<numIndex index="0">Facettenkategorie 2</numIndex>
+							<numIndex index="1">delimiter_2$structure</numIndex>
+						</numIndex>
+						<numIndex index="102" type="array">
+							<numIndex index="0">Facettenkategorie 3</numIndex>
+							<numIndex index="1">delimiter_3$structure</numIndex>
+						</numIndex>
+						<numIndex index="103" type="array">
+							<numIndex index="0">Facettenkategorie 4</numIndex>
+							<numIndex index="1">delimiter_4$structure</numIndex>
+						</numIndex>
+					</items>
+					<size>15</size>
+				</config>
+			</TCEforms>
+		</settings.facettenselect>
+		<settings.openfirstfacette>
+			<TCEforms>
+				<label>Erste Facette ausklappen</label>
+				<description>
+					Diese Option öffnet initial die Übersicht über alle auszuwählenden Optionen der ersten Facette in der Liste.
+				</description>
+				<config>
+					<type>check</type>
+				</config>
+			</TCEforms>
+		</settings.openfirstfacette>
+		<settings.link>
+			<TCEforms>
+				<label>
+					Link zur weiterführenden Seite oder zur zentralen Suchanwendung
+				</label>
+				<description>
+					Wenn hier ein Link gesetzt wurde, werden alle Suchanfragen an diese Seite weitergeleitet. Dort muss dann ein entsprechendes Plugin mit der gewünschten Konfiguration hinterlegt werden. Eine Übernahme der Einstellungen des Plugins, das Sie in diesem Augenblick bearbeiten, erfolgt NICHT!
+				</description>
+				<config>
+					<type>input</type>
+					<size>30</size>
+					<eval>trim</eval>
+					<softref>typolink,typolink_tag,images,url</softref>
+					<wizards>
+						<_PADDING>2</_PADDING>
+						<link>
+							<type>popup</type>
+							<title>Link</title>
+							<module>
+								<name>wizard_element_browser</name>
+								<urlParameters>
+									<mode>wizard</mode>
+								</urlParameters>
+							</module>
+							<icon>link_popup.gif</icon>
+							<script>browse_links.php?mode=wizard</script>
+							<params>
+								<!--<blindLinkOptions>page,file,folder,url,spec</blindLinkOptions>-->
+							</params>
+							<JSopenParams>height=500,width=500,status=0,menubar=0,scrollbars=1</JSopenParams>
+						</link>
+					</wizards>
+				</config>
+			</TCEforms>
+		</settings.link>
+		<settings.limit>
+			<TCEforms>
+				<label>Limit - wieviele Objekte sollen in Liste, Tabelle oder Karte ausgegeben werden</label>
+				<description>
+					Wenn diese Zahl kleiner, als die Gesamtzahl der verfügbaren Objekte ist, wird automatisch ein Paginator zum Durchblättern der Suchergebnisse gerendert. Die Zahl beeinflusst jedoch NICHT die Darstellung facettierter Daten z.B. auf der Kartenansicht. Auch wenn hier eine Null eingetragen ist, werden diese Daten ausgespielt.
+				</description>
+				<config>
+					<placeholder>z.B. 30, 40 oder 0 wenn keine Objekte ausgelesen werden sollen</placeholder>
+					<type>input</type>
+					<size>30</size>
+				</config>
+			</TCEforms>
+		</settings.limit>
+		<settings.paginatorjumper>
+			<TCEforms>
+				<label>Paginator Eingabe zum Sprung zur Seite einschalten</label>
+				<config>
+					<type>check</type>
+				</config>
+			</TCEforms>
+		</settings.paginatorjumper>
+		<settings.placeholder>
+			<TCEforms>
+				<label>Placeholdertext im Suchfeld</label>
+				<config>
+					<type>input</type>
+					<size>20</size>
+				</config>
+			</TCEforms>
+		</settings.placeholder>
+		<settings.objectsfound>
+			<TCEforms>
+				<label>Text für die gefundenen Objekte</label>
+				<config>
+					<type>input</type>
+					<size>20</size>
+				</config>
+			</TCEforms>
+		</settings.objectsfound>
+		<settings.imgplaceholder>
+			<TCEforms>
+				<label>Bilder Platzhalter</label>
+				<config>
+				  <type>inline</type>
+				  <maxitems>10</maxitems>
+				  <foreign_table>sys_file_reference</foreign_table>
+				  <foreign_field>uid_foreign</foreign_field>
+				  <foreign_sortby>sorting_foreign</foreign_sortby>
+				  <foreign_table_field>tablenames</foreign_table_field>
+				  <foreign_match_fields type="array">
+					  <fieldname>image</fieldname>
+				  </foreign_match_fields>
+				  <foreign_label>uid_local</foreign_label>
+				  <foreign_selector>uid_local</foreign_selector>
+				  <overrideChildTca>
+					  <columns>
+						  <uid_local>
+							  <config>
+								  <appearance>
+									  <elementBrowserType>file</elementBrowserType>
+									  <elementBrowserAllowed>jpg,jpeg,png,svg</elementBrowserAllowed>
+								  </appearance>
+							  </config>
+						  </uid_local>
+					  </columns>
+					  <types type="array">
+						  <numIndex index="2">
+							  <showitem>--palette--;LLL:EXT:core/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,--palette--;;filePalette</showitem>
+						  </numIndex>
+					  </types>
+				  </overrideChildTca>
+				  <appearance type="array">
+					  <newRecordLinkAddTitle>1</newRecordLinkAddTitle>
+					  <headerThumbnail>
+						  <field>uid_local</field>
+						  <height>64</height>
+						  <width>64</width>
+					  </headerThumbnail>
+				  </appearance>
+				</config>
+			</TCEforms>
+		</settings.imgplaceholder>
+		<settings.imgfacett>
+			<TCEforms>
+				<label>Bild Hintergrund der Facette</label>
+				<displayCond>FIELD:switchableControllerActions:=:Museo->facette;Museo->list;Museo->detailobject;Museo->collbox</displayCond>
+				<config>
+	                <type>inline</type>
+	                <maxitems>1</maxitems>
+	                <foreign_table>sys_file_reference</foreign_table>
+	                <foreign_table_field>tablenames</foreign_table_field>
+	                <foreign_label>uid_local</foreign_label>
+	                <foreign_sortby>sorting_foreign</foreign_sortby>
+	                <foreign_selector>uid_local</foreign_selector>
+	                <foreign_selector_fieldTcaOverride type="array">
+	                    <config>
+	                        <appearance>
+	                            <elementBrowserType>file</elementBrowserType>
+	                            <elementBrowserAllowed>jpg,png</elementBrowserAllowed>
+	                        </appearance>
+	                    </config>
+	                </foreign_selector_fieldTcaOverride>
+	                <foreign_match_fields type="array">
+	                    <fieldname>image</fieldname>
+	                </foreign_match_fields>
+	                <appearance type="array">
+	                    <newRecordLinkAddTitle>1</newRecordLinkAddTitle>
+	                    <headerThumbnail>
+	                        <field>uid_local</field>
+	                        <height>64</height>
+	                        <width>64</width>
+	                    </headerThumbnail>
+	                </appearance>
+	            </config>
+			</TCEforms>
+		</settings.imgfacett>
+       </el>
+     </ROOT>
+   </sJoSearchMask>
+   <sJoSearchColor>
+		<ROOT>
+			<TCEforms>
+				<sheetTitle>Farbkonfiguration</sheetTitle>
+			</TCEforms>
+			<type>array</type>
+			<el>
+				<settings.fillcg>
+					<TCEforms>
+						<label>Farbe unter dem Graphen</label>
+						<config>
+							<type>input</type>
+							<size>20</size>
+						</config>
+					</TCEforms>
+				</settings.fillcg>
+				<settings.linecg>
+					<TCEforms>
+						<label>Farbe der Graphlinie</label>
+						<config>
+							<type>input</type>
+							<size>20</size>
+						</config>
+					</TCEforms>
+				</settings.linecg>
+				<settings.fillcs>
+					<TCEforms>
+						<label>Füllfarbe der Seite</label>
+						<config>
+							<type>input</type>
+							<size>20</size>
+						</config>
+					</TCEforms>
+				</settings.fillcs>
+				<settings.linecs>
+					<TCEforms>
+						<label>Linienfarbe der Seite</label>
+						<config>
+							<type>input</type>
+							<size>20</size>
+						</config>
+					</TCEforms>
+				</settings.linecs>
+			</el>
+		</ROOT>
+	</sJoSearchColor>
+	<sJoFacetteHelp>
+		<ROOT>
+			<TCEforms>
+				<sheetTitle>Hilfekonfiguration</sheetTitle>
+			</TCEforms>
+			<type>array</type>
+			<el>
+				<settings.helpTitle>
+					<TCEforms>
+						<label>Titel der Hilfe eingeben</label>
+						<config>
+							<type>input</type>
+							<size>100</size>
+						</config>
+					</TCEforms>
+				</settings.helpTitle>
+				<settings.helpText>
+					<TCEforms>
+						<label>Hilfe Text eingeben</label>
+						<config>
+							<type>text</type>
+							<enableRichtext>1</enableRichtext>
+						</config>
+					</TCEforms>
+				</settings.helpText>
+			</el>
+		</ROOT>
+	</sJoFacetteHelp>
+	<sJoMask>
+		<ROOT>
+			<TCEforms>
+				<sheetTitle>Konfiguration der Einstiegsmaske</sheetTitle>
+			</TCEforms>
+			<type>array</type>
+			<el>
+				<settings.maskTitle>
+					<TCEforms>
+						<label>Titel über der Suchmaske eingeben</label>
+						<config>
+							<type>input</type>
+							<size>100</size>
+						</config>
+					</TCEforms>
+				</settings.maskTitle>
+				<settings.maskText>
+					<TCEforms>
+						<label>Text über der Suchmaske eingeben</label>
+						<config>
+							<type>text</type>
+							
+						</config>
+					</TCEforms>
+				</settings.maskText>
+				<settings.hideResults>
+					<TCEforms>
+						<label>Ergebnisse der Suche ausblenden</label>
+						<config>
+							<type>check</type>
+						</config>
+					</TCEforms>
+				</settings.hideResults>
+				<settings.showindexsearchfield>
+					<TCEforms>
+						<label>Auswahl für die Suchkriterien für den Suchschlitz einblenden</label>
+						<config>
+							<type>check</type>
+						</config>
+					</TCEforms>
+				</settings.showindexsearchfield>
+				<settings.maskImages>
+          <TCEforms>
+            <label>Bilder auswählen</label>
+            <displayCond>FIELD:sJoSearchMask.settings.masktype:=:1</displayCond>
+            <config>
+              <type>inline</type>
+              <maxitems>10</maxitems>
+              <foreign_table>sys_file_reference</foreign_table>
+              <foreign_field>uid_foreign</foreign_field>
+              <foreign_sortby>sorting_foreign</foreign_sortby>
+              <foreign_table_field>tablenames</foreign_table_field>
+              <foreign_match_fields type="array">
+                <fieldname>maskimages</fieldname>
+              </foreign_match_fields>
+              <foreign_label>uid_local</foreign_label>
+              <foreign_selector>uid_local</foreign_selector>
+              <overrideChildTca>
+                <columns>
+                    <uid_local>
+                        <config>
+                            <appearance>
+                                <elementBrowserType>file</elementBrowserType>
+                                <elementBrowserAllowed>jpg,jpeg,png,svg</elementBrowserAllowed>
+                            </appearance>
+                        </config>
+                    </uid_local>
+                </columns>
+                <types type="array">
+                    <numIndex index="2">
+                        <showitem>--palette--;LLL:EXT:core/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,--palette--;;filePalette</showitem>
+                    </numIndex>
+                </types>
+              </overrideChildTca>
+              <appearance type="array">
+                  <newRecordLinkAddTitle>1</newRecordLinkAddTitle>
+                  <headerThumbnail>
+                      <field>uid_local</field>
+                      <height>64</height>
+                      <width>64</width>
+                  </headerThumbnail>
+              </appearance>
+            </config>
+          </TCEforms>
+    		</settings.maskImages>
+    		<settings.linkdesc>
+					<TCEforms>
+						<label>Verwende den Bilderlink bei der Beschreibung, sonst extra Feld mit mit "Zum Objekt"</label>
+						<config>
+							<type>check</type>
+						</config>
+					</TCEforms>
+				</settings.linkdesc>
+    		<settings.maskInterval>
+					<TCEforms>
+						<label>Interval der Slideshow hinter dem Suchschlitz in Millisekunden</label>
+						<displayCond>FIELD:sJoSearchMask.settings.masktype:=:1</displayCond>
+						<config>
+							<type>input</type>
+							<size>100</size>
+						</config>
+					</TCEforms>
+				</settings.maskInterval>
+				<settings.maskprogressbar>
+					<TCEforms>
+						<displayCond>FIELD:sJoSearchMask.settings.masktype:=:1</displayCond>
+						<label>Anzeige eines Progressbars zur Angabe der Zeit zwischen zwei Slides</label>
+						<config>
+							<type>check</type>
+						</config>
+					</TCEforms>
+				</settings.maskprogressbar>
+		        <settings.maskLogo>
+		          <TCEforms>
+		            <label>Logo auswählen</label>
+		            <config>
+		              <type>inline</type>
+		              <maxitems>1</maxitems>
+		              <foreign_table>sys_file_reference</foreign_table>
+		              <foreign_field>uid_foreign</foreign_field>
+		              <foreign_sortby>sorting_foreign</foreign_sortby>
+		              <foreign_table_field>tablenames</foreign_table_field>
+		              <foreign_match_fields type="array">
+		                  <fieldname>masklogo</fieldname>
+		              </foreign_match_fields>
+		              <foreign_label>uid_local</foreign_label>
+		              <foreign_selector>uid_local</foreign_selector>
+		              <overrideChildTca>
+		                  <columns>
+		                      <uid_local>
+		                          <config>
+		                              <appearance>
+		                                  <elementBrowserType>file</elementBrowserType>
+		                                  <elementBrowserAllowed>jpg,jpeg,png,svg</elementBrowserAllowed>
+		                              </appearance>
+		                          </config>
+		                      </uid_local>
+		                  </columns>
+		                  <types type="array">
+		                      <numIndex index="2">
+		                          <showitem>--palette--;LLL:EXT:core/Resources/Private/Language/locallang_tca.xlf:sys_file_reference.imageoverlayPalette;imageoverlayPalette,--palette--;;filePalette</showitem>
+		                      </numIndex>
+		                  </types>
+		              </overrideChildTca>
+		              <appearance type="array">
+		                  <newRecordLinkAddTitle>1</newRecordLinkAddTitle>
+		                  <headerThumbnail>
+		                      <field>uid_local</field>
+		                      <height>64</height>
+		                      <width>64</width>
+		                  </headerThumbnail>
+		              </appearance>
+		            </config>
+		          </TCEforms>
+		        </settings.maskLogo>
+				<settings.masklink>
+					<TCEforms>
+						<label>Link einfügen</label>
+						<exclude>0</exclude>
+						<config>
+								<type>group</type>
+								<internal_type>db</internal_type>
+								<allowed>pages</allowed>
+								<size>1</size>
+								<maxitems>1</maxitems>
+								<minitems>0</minitems>
+								<show_thumbs>1</show_thumbs>
+							</config>
+					</TCEforms>
+				</settings.masklink>
+				<settings.maskmenu>
+					<TCEforms>
+						<label>Menüpunkte</label>
+						<exclude>0</exclude>
+						<config>
+								<type>group</type>
+								<internal_type>db</internal_type>
+								<allowed>pages</allowed>
+								<maxitems>10</maxitems>
+								<minitems>0</minitems>
+							</config>
+					</TCEforms>
+				</settings.maskmenu>
+				<settings.maskindicators>
+					<TCEforms>
+						<label>Einstiegmaske Indikatoren darstellen</label>
+						<displayCond>FIELD:sJoSearchMask.settings.masktype:=:1</displayCond>
+						<config>
+							<type>check</type>
+						</config>
+					</TCEforms>
+				</settings.maskindicators>
+				<settings.hideMaskLogo>
+					<TCEforms>
+						<label>Logo verstecken</label>
+						<config>
+							<type>check</type>
+						</config>
+					</TCEforms>
+				</settings.hideMaskLogo>
+			</el>
+		</ROOT>
+	</sJoMask>
+	<sJoDetail>
+		<ROOT>
+			<TCEforms>
+				<sheetTitle>Kartenkonfiguration</sheetTitle>
+			</TCEforms>
+			<type>array</type>
+			<el>
+				<settings.mapTitle>
+					<TCEforms>
+						<label>Titel, der als Overlay über der Karte dargestellt werden soll</label>
+						<description>
+							Dieser Titel erscheint als Overlay über der Kartendarstellung. Leer lassen, wenn kein Overlay ausgespielt werden soll
+						</description>
+						<config>
+							<type>input</type>
+							<size>100</size>
+						</config>
+					</TCEforms>
+				</settings.mapTitle>
+				<settings.mapText>
+					<TCEforms>
+						<label>Text, der als Overlay über der Karte dargestellt werden soll</label>
+						<description>
+							Dieser Text erscheint als Overlay über der Kartendarstellung. Leer lassen, wenn kein Overlay ausgespielt werden soll
+						</description>
+						<config>
+							<type>text</type>
+						</config>
+					</TCEforms>
+				</settings.mapText>
+				<settings.maplayout>
+					<TCEforms>
+						<label>Darstellung der Karteneinstiege</label>
+						<description>Wählen Sie hier verschiedene Darstellungsmodi der Kartenanwendung</description>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="0">Klassische Darstellung - Karte links und Liste rechts</numIndex>
+									<numIndex index="1">1</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="0">Alternative Darstellung I - Karte oben, dann Facetten, dann Liste</numIndex>
+									<numIndex index="1">2</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="0">Alternative Darstellung II - Kartenansicht ohne Liste und Facetten</numIndex>
+									<numIndex index="1">3</numIndex>
+								</numIndex>
+							</items>
+						</config>
+					</TCEforms>
+				</settings.maplayout>
+				<settings.geodatasource>
+					<TCEforms>
+						<label>Feld, aus dem die Geodaten rekrutiert werden sollen</label>
+						<config>
+							<type>select</type>
+							<renderType>selectSingle</renderType>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="0">keine Auswahl</numIndex>
+									<numIndex index="1">default</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="0">locationPolygones</numIndex>
+									<numIndex index="1">locationPolygones</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="0">lonlatidFacette</numIndex>
+									<numIndex index="1">lonlatidFacette</numIndex>
+								</numIndex>
+							</items>
+							<size>1</size>
+						</config>
+					</TCEforms>
+				</settings.geodatasource>
+				<settings.geolocation>
+					<TCEforms>
+						<label>Standortlokalisierung auf der Karte aktivieren</label>
+						<description>Wenn diese Checkbox aktiviert ist, können die Nutzer den eigenen Standort auf der Karte ermitteln lassen und so die Umkreissuche aktivieren</description>
+						<config>
+							<type>check</type>
+						</config>
+					</TCEforms>
+				</settings.geolocation>
+				<settings.dotcolor>
+					<TCEforms>
+						<label>RGB-Code für die Punkte auf der Karte</label>
+						<config>
+							<type>input</type>
+						</config>
+					</TCEforms>
+				</settings.dotcolor>
+				
+				<settings.hideMapDetail>
+					<TCEforms>
+						<label>Detail Ansicht - Karte verbergen</label>
+						<config>
+							<type>check</type>
+						</config>
+					</TCEforms>
+				</settings.hideMapDetail>
+				<settings.showSubmenu>
+					<TCEforms>
+						<label>Karte - Rechts oben das Submenu anzeigen</label>
+						<config>
+							<type>check</type>
+						</config>
+					</TCEforms>
+				</settings.showSubmenu>
+				<settings.showBoundingBox>
+					<TCEforms>
+						<label>Bounding Box zuschalten</label>
+						<config>
+							<type>check</type>
+						</config>
+					</TCEforms>
+				</settings.showBoundingBox>
+				<settings.alternativPin>
+					<TCEforms>
+						<label>Alternative Pins</label>
+						<config>
+							<type>check</type>
+						</config>
+					</TCEforms>
+				</settings.alternativPin>
+				<settings.iiifoverlay>
+					<TCEforms>
+						<label>IIIF-Abbildung als Overlay über die OSM</label>
+						<description>Geben Sie hier die URL zu einem IIIF Manifest an, um eine Abbildung über die Karte zu legen</description>
+						<config>
+							<type>input</type>
+						</config>
+					</TCEforms>
+				</settings.iiifoverlay>
+				<settings.iiifoverlaycoord>
+					<TCEforms>
+						<label>Geoverortung der IIIF Daten</label>
+						<description>Tragen sie die obere linke und den untere rechte Koordinate im korrekten Format ein, um das Overlay an die entsprechende Position zu setzen.</description>
+						<config>
+							<placeholder>z.B.: 50.11,11.12 51.11,12.12</placeholder>
+							<type>input</type>
+						</config>
+					</TCEforms>
+				</settings.iiifoverlaycoord>
+				<!--
+				<settings.overlay>
+					<TCEforms>
+						<label>Weitere Layers angebene (GEOJSON) - not working at the moment</label>
+						<config>
+							<type>inline</type>
+							<maxitems>10</maxitems>
+							<foreign_table>sys_file_reference</foreign_table>
+							<foreign_table_field>tablenames</foreign_table_field>
+							<foreign_label>uid_local</foreign_label>
+							<foreign_sortby>sorting_foreign</foreign_sortby>
+							<foreign_selector>uid_local</foreign_selector>
+							<foreign_selector_fieldTcaOverride type="array">
+								<config>
+									<appearance>
+										<elementBrowserType>file</elementBrowserType>
+										<elementBrowserAllowed>json,geojson</elementBrowserAllowed>
+									</appearance>
+								</config>
+							</foreign_selector_fieldTcaOverride>
+							<appearance type="array">
+								<createNewRelationLinkTitle>Add layer</createNewRelationLinkTitle>
+								<useSortable>TRUE</useSortable>
+								<showPossibleLocalizationRecords>FALSE</showPossibleLocalizationRecords>
+								<showRemovedLocalizationRecords>FALSE</showRemovedLocalizationRecords>
+								<showSynchronizationLink>FALSE</showSynchronizationLink>
+								<enabledControls type="array">
+									<info>TRUE</info>
+									<new>TRUE</new>
+									<dragdrop>TRUE</dragdrop>
+									<sort>TRUE</sort>
+									<hide>TRUE</hide>
+									<delete>TRUE</delete>
+									<localize></localize>
+								</enabledControls>
+								<levelLinksPosition>both</levelLinksPosition>
+							</appearance>
+						</config>
+					</TCEforms>
+				</settings.overlay>
+				<settings.showRoute>
+					<TCEforms>
+						<label>Route anzeigen - not working at the moment</label>
+						<onChange>reload</onChange>
+						<config>
+							<type>check</type>
+						</config>
+					</TCEforms>
+				</settings.showRoute>
+				<settings.routeUrl>
+					<TCEforms>
+						<label>Route API URL - not working at the moment</label>
+						<displayCond>FIELD:settings.showRoute:=:1</displayCond>
+						<config>
+							<type>input</type>
+						</config>
+					</TCEforms>
+				</settings.routeUrl>
+				<settings.routeKey>
+					<TCEforms>
+						<label>Route API Key - not working at the moment</label>
+						<displayCond>FIELD:settings.showRoute:=:1</displayCond>
+						<config>
+							<type>input</type>
+						</config>
+					</TCEforms>
+				</settings.routeKey>
+				<settings.routeMode>
+					<TCEforms>
+						<label>Verkehrsmittel - not working at the moment</label>
+						<displayCond>FIELD:settings.showRoute:=:1</displayCond>
+						<config>
+							<type>select</type>
+							<items type="array">
+								<numIndex index="0" type="array">
+									<numIndex index="0">Schnellste Fahrzeit Route.</numIndex>
+									<numIndex index="1">fastest</numIndex>
+								</numIndex>
+								<numIndex index="1" type="array">
+									<numIndex index="0">Kürzeste Fahrstrecke.</numIndex>
+									<numIndex index="1">shortest</numIndex>
+								</numIndex>
+								<numIndex index="2" type="array">
+									<numIndex index="0">Zu Fuß Route; Vermeidet begrenzte Zufahrtsstraßen; Ignoriert Abbiegebeschränkungen.</numIndex>
+									<numIndex index="1">pedestrian</numIndex>
+								</numIndex>
+								<numIndex index="3" type="array">
+									<numIndex index="0">Kombination von Gehen und (wenn verfügbar) öffentlichen Verkehrsmitteln.</numIndex>
+									<numIndex index="1">multimodal</numIndex>
+								</numIndex>
+								<numIndex index="4" type="array">
+									<numIndex index="0">Wird nur Straßen benutzen, auf denen das Radfahren geeignet ist.</numIndex>
+									<numIndex index="1">bicycle</numIndex>
+								</numIndex>
+							</items>
+						</config>
+					</TCEforms>
+				</settings.routeMode>
+				-->
+				<settings.hideMapFacette>
+					<TCEforms>
+						<label>Suchfilter(Facettenübersicht) nicht anzeigen</label>
+						<description>Wenn diese Checkbox aktiviert ist, werden keine Suchfilter neben oder unter der Karte ausgespielt</description>
+						<config>
+							<type>check</type>
+						</config>
+					</TCEforms>
+				</settings.hideMapFacette>
+				<settings.hideMapList>
+					<TCEforms>
+						<label>Objektliste, Tabelle oder Grid nicht anzeigen</label>
+						<description>Es wird keine, in irgendeiner Art konfigurierte, Ergebnisliste unter oder neben der Karte angezeigt, wenn diese Option gesetzt wurde.</description>
+						<config>
+							<type>check</type>
+						</config>
+					</TCEforms>
+				</settings.hideMapList>
+			</el>
+		</ROOT>
+	</sJoDetail>
+	<sJoDetail2>
+		<ROOT>
+			<TCEforms>
+				<sheetTitle>Detailkonfiguration</sheetTitle>
+			</TCEforms>
+			<type>array</type>
+			<el>
+				<settings.notes>
+					<TCEforms>
+						<label>Detailseite Notizen</label>
+						<config>
+							<type>text</type>
+							
+						</config>
+					</TCEforms>
+				</settings.notes>
+				<settings.showContrastswitch>
+					<TCEforms>
+						<label>Kontrastregler einblenden</label>
+						<config>
+							<type>check</type>
+						</config>
+					</TCEforms>
+				</settings.showContrastswitch>
+				<settings.citation>
+					<TCEforms>
+						<label>Zitierform ([title] - Titel, [cur_date] - Derzeitiges Datum, [classProject] - Projekt Name, [cur_url] - Url, [img_url] - Bild Url)</label>
+						<config>
+							<type>text</type>
+							
+						</config>
+					</TCEforms>
+				</settings.citation>
+			</el>
+		</ROOT>
+	</sJoDetail2>
+	<sJoCollbox>
+		<ROOT>
+			<TCEforms>
+				<sheetTitle>Merkliste</sheetTitle>
+			</TCEforms>
+			<type>array</type>
+			<el>
+				<settings.collboxText>
+					<TCEforms>
+						<label>Hilfe Text eingeben</label>
+						<config>
+							<type>text</type>
+							<enableRichtext>1</enableRichtext>
+							<default>Diese Seite fasst alle ausgewählten Objekte zusammen und zeigt eine Übersicht. Sie haben die Möglichkeit diese Liste in unterschiedlichen Formaten zu exportieren. Bitte beachten Sie, dass Ihre Zusammenstellung nur gespeichert wird, während Sie mit Ihren Login-Daten angemeldet sind. Ansonsten werden die Einträge automatisch nach dem Schließen des Browserfensters gelöscht. Account erstellen</default>
+						</config>
+					</TCEforms>
+				</settings.collboxText>
+			</el>
+		</ROOT>
+	</sJoCollbox>
+ </sheets>
+</T3DataStructure>

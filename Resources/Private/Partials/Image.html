@@ -1,0 +1,795 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<f:comment>
+  <!--
+    Viewer für IIIF, lokale Bilddateien, Placeholder und Kartendarstellungen einschließlich Annotationen
+    @todo: Implementierung von Audio und Videoplayern
+  -->
+</f:comment>
+<f:section name="asset_licence">
+  <f:spaceless>
+    <f:if condition="{imagedata.3}">{imagedata.3}<br/></f:if>
+    <f:if condition="{imagedata.4}">
+      <f:switch expression="{imagedata.4}">
+        <f:case value="Public Domain Mark 1.0">
+          <a href='https://creativecommons.org/publicdomain/mark/1.0' target='_blank'>{imagedata.4}</a>
+        </f:case>
+        <f:defaultCase>{imagedata.4}</f:defaultCase>
+        <br/>
+      </f:switch>
+    </f:if>
+    <f:if condition="{imagedata.5}">{imagedata.5}<br/></f:if>
+  </f:spaceless>
+</f:section>
+
+
+<f:section name="image_viewer">
+  <f:if condition="{items.images} || (!{items.images} && !{config.fieldlist.detailview.images.dontshowplaceholder})">
+    <f:comment>
+    <!--
+      das ist zu starr - muss man auch konfigurieren können 
+    -->
+  </f:comment>
+    <f:variable name="image_col" value="col-md-8"/>
+    <f:if condition="{items.fulltextTei}">
+       <f:variable name="image_col" value="col-md-6"/>
+    </f:if>
+    <f:if condition="{fields.imageviewer_css_classes}">
+       <f:variable name="image_col" value="{fields.imageviewer_css_classes}"/>
+    </f:if>
+    <f:variable name="data_user" value=""/>
+    <f:if condition="{extbase_config.registereduser}">
+      <f:variable name="data_user" value="user"/>
+    </f:if>
+    <div class="row no-gutters">
+      <div id="content" class="detailimage {image_col} asset_view_{config.fieldlist.detailview.images.multipleimages.view}">
+        <div class="detailimage_con position-relative d-flex flex-column">
+          <f:if condition="{config.fieldlist.detailview.images.useopenlayers}">
+            <f:then>
+              <f:variable name="is_pdf">0</f:variable>
+              <f:if condition="{items.images}">
+                <f:then>
+                  <f:variable name="startcount" value="0"/>
+                  <f:comment>
+                    <!--
+                      zur Abwärtskompatibilität:
+                      Falls tatsächlich nur ein Bild hinterlegt wurde, wird dieses eine Bild benutzt
+                    -->
+                  </f:comment>
+                  <f:if condition="{items.images -> f:count()} < 2">
+                    <f:variable name="startcount" value="-1"/>
+                  </f:if>
+
+                  <f:for each="{items.images}" as="item" key="subnumber" iteration="subcounter">
+                    <f:if condition="{subcounter.index} > {startcount} && {subcounter.index} <= {config.fieldlist.detailview.images.count}">
+                      <f:alias map="{imagedata: '{item->jo:explode(delimiter:\'$\')}'}">
+                        <f:if condition="'pdf' == {imagedata.6}">
+                          <f:then>
+                            <embed src="{imagedata.1}" width="600" height="500" alt="pdf" />
+                            <f:variable name="is_pdf">1</f:variable>
+                          </f:then>
+                          <f:else>
+                            <f:variable name="first_img_url"><f:if condition="{imagedata.6}"><f:then>{imagedata.6}</f:then><f:else><f:if condition="{imagedata.0}">{imagedata.0}</f:if></f:else></f:if></f:variable>
+                            <div class="map-image" data-lizenz="{imagedata.4}" data-iiif="{imagedata.6}" data-img="{imagedata.0}" data-img-name="{imagedata.2}" data-id="{items.id}" data-user="{data_user}" data-lizenztext="{f:render(section: 'asset_licence', arguments: _all)}">
+                              <f:if condition="{config.fieldlist.detailview.images.vieweroverlay}">
+                                <div class="image_overlay"><div class="image_overlay_text">Zum Benutzen des Bildbetrachters bitte darauf klicken.</div></div>
+                              </f:if>
+                              <f:if condition="{items.allmedia.{subcounter.index}.filetype} == '3d'">
+                                <div class="detail-3d-link-wrapper"><a class="detail-3d-link" target="_blank" href="{items.allmedia.{subcounter.index}.viewer}">zum 3D Objekt</a></div>
+                              </f:if>
+                              <f:if condition="{imagedata.7} == '360grad_view'">
+                                <div class="detail-360grad_view-link-wrapper"><a class="detail-360grad_view-link" title="360° Darstellung" href="#" data-manifest="{imagedata.8}">360° Darstellung</a></div>
+                              </f:if>
+                            </div>
+                            <f:render section="annotation" arguments="{_all}" />
+                          </f:else>
+                        </f:if>
+                      </f:alias>
+                    </f:if>
+                  </f:for>
+                  <f:switch expression="{config.fieldlist.detailview.images.viewercontrolview}">
+                    <f:case value="1">
+                      <div class="viewercontrolview_1_wrapper">
+                        <f:render section="gridbutton" arguments="{_all}" />
+                        <f:if condition="{is_pdf} == 0">
+                          <f:render section="annotationbutton" arguments="{_all}" />
+                        </f:if>
+                        <f:render section="prevnextbutton" arguments="{_all}" />
+                        <f:render section="enlargeviewercontrols" arguments="{_all}" />
+                        <f:render section="miradorbutton" arguments="{_all}" />
+                        <f:render section="mycorebutton" arguments="{_all}" />
+                        <f:comment>
+                        <!--
+                        <f:render section="360gradViewer" arguments="{_all}" />
+                        -->
+                        </f:comment>
+                        <f:render section="zoombuttons" arguments="{_all}" />
+                        <f:render section="infobutton" arguments="{_all}" />
+                      </div>
+                    </f:case>
+                    <f:defaultCase>
+                      <f:render section="gridbutton" arguments="{_all}"/>
+                      <f:render section="prevnextbutton" arguments="{_all}"/>
+                      <f:render section="enlargeviewercontrols" arguments="{_all}"/>
+                      <f:render section="miradorbutton" arguments="{_all}"/>
+                      <f:render section="mycorebutton" arguments="{_all}" />
+                    </f:defaultCase>
+                  </f:switch>
+                </f:then>
+                <f:else>
+                  <f:render arguments="{_all}" section="placeholder"/>
+                </f:else> 
+              </f:if>
+              <f:if condition="{config.fieldlist.detailview.images.useopenlayers} && {items.images->f:count()}> {config.fieldlist.detailview.images.count}">
+                <f:render section="more_asset_block" arguments="{_all}"/>
+              </f:if>
+            </f:then>
+            <f:else>
+              <f:render section="zoombuttons" arguments="{_all}"/>
+              <f:if condition="{items.images}">
+                <f:then>
+                  <div class="bigimg_wrap h-100">
+                    <div class="img_big h-100 row">
+                      <f:for each="{items.images}" as="item" key="subnumber" iteration="subcounter">
+                        <f:if condition="{subcounter.cycle} <= {config.fieldlist.detailview.images.count}"> 
+                          <div class="img_item h-100 col-md d-flex flex-column">
+                              <f:render arguments="{item:'{item}',settings:'{settings}', config:'{config}'}" section="image"/>
+                          </div>
+                        </f:if>
+                      </f:for>
+                    </div>
+                  </div>
+                </f:then>
+                <f:else>
+                  <f:if condition="{showmap}">
+                    <f:then>
+                      <f:render arguments="{_all}" section="map"/>
+                    </f:then>
+                    <f:else>
+                      <f:render arguments="{_all}" section="placeholder"/>
+                    </f:else>
+                  </f:if>
+                </f:else> 
+              </f:if>
+            </f:else>
+          </f:if>
+        </div>
+      </div>
+    </f:if>
+    <f:if condition="{items.fulltextTei}">
+      <f:render section="tei_viewer" arguments="{_all}"/>   
+    </f:if>
+  </div>
+</f:section>
+
+<f:comment>
+  <!--
+    Infobutton zur Ausgabe eines OSM Disclaimers oder Assetinformationen
+  -->
+</f:comment>
+<f:section name="infobutton">
+  <button type="button" class="img_info btn btn-jo" title="{jo:translate(key:'{langPath}:detail.button.info')}">
+    <span class="d-block">&nbsp;</span>
+  </button>
+</f:section>
+
+<f:comment>
+  <!--
+    Button zum Zoomen in die Abbildungen
+  -->
+</f:comment>
+<f:section name="zoombuttons">
+  <div class="btn_container bottom">
+    <button type="button" class="img_zoom_in btn btn-jo" title="{jo:translate(key:'{langPath}:detail.button.zoomin')}">
+      <span class="d-block">&nbsp;</span>
+    </button>
+    <button type="button" class="img_zoom_out btn btn-jo" title="{jo:translate(key:'{langPath}:detail.button.zoomout')}">
+      <span class="d-block">&nbsp;</span>
+    </button>
+  </div>
+</f:section>
+
+<f:comment>
+  <!--
+    Button zum Ausspielen von Vor- und Zurückbuttons im Viewer
+  -->
+</f:comment>
+<f:section name="prevnextbutton">
+  <f:if condition="{config.fieldlist.detailview.images.viewerprevnext} && {items.images->f:count()} > 1">
+    <div class="img-prev-next">
+        <button class="btn img-prev" title="{jo:translate(key:'{langPath}:detail.button.previmage')}">&nbsp;</button>
+        <button class="btn img-next" title="{jo:translate(key:'{langPath}:detail.button.nextimage')}">&nbsp;</button>
+      </div>
+  </f:if>
+</f:section>
+
+<f:comment>
+  <!--
+    Button zum Ausspielen einer Gridübersicht im Viewer
+  -->
+</f:comment>
+<f:section name="gridbutton">
+  <f:if condition="{config.fieldlist.detailview.images.viewergridview} && {items.images->f:count()} > 1">
+    <div class="detail-gallery-btn-con">
+      <button class="btn detail-gallery-btn" title="{jo:translate(key:'{langPath}:detail.button.gallery')}">&nbsp;</button>
+    </div>
+  </f:if>
+</f:section>
+
+<f:comment>
+  <!--
+    Button zum Ausspielen einer Gridübersicht im Viewer
+  -->
+</f:comment>
+<f:section name="annotationbutton">
+  <f:if condition="{extbase_config.registereduser}">
+    <div class="detail-annotationbutton-btn-con">
+      <button class="btn annotationbutton-btn" title="{jo:translate(key:'{langPath}:detail.button.annotation')}">&nbsp;</button>
+    </div>
+  </f:if>
+</f:section>
+
+<f:comment>
+  <!--
+    Button zum Ausspielen eines Buttons, der die Daten in den Miradorviewer lädt
+  -->
+</f:comment>
+<f:section name="miradorbutton">
+  <f:if condition="{config.fieldlist.detailview.images.showmiradorlink} && {items.iiifManifest}">
+    <div class="mirador-btn-wrapper">
+      <button class="mirador-btn" data-manifest="{items.iiifManifest}" title="{jo:translate(key:'{langPath}:detail.button.mirador')}">&nbsp;</button>
+    </div>
+  </f:if>
+</f:section>
+
+<f:comment>
+  <!--
+    Button zum Ausspielen eines Buttons, der die Daten in den ThULB/MyCoreviewer lädt - von dort kann das Dokument per PDF heruntergeladen werden
+    @alex - hier müsste für das jewelige bild die imagdata.1 (viewerlink als externer link gezündet werden)
+  -->
+</f:comment>
+<f:section name="mycorebutton">
+  <f:if condition="{config.fieldlist.detailview.images.showmycorelink} && {items.images} && {items.images->f:count()} >= 1">
+    <f:alias map="{imagedata: '{items.images.0->jo:explode(delimiter:\'$\')}'}">
+      <div class="mycore-btn-wrapper">
+        <a class="mycore-btn d-block" href="{imagedata.1}" target="_blank" title="{jo:translate(key:'{langPath}:detail.button.mycore')}">&nbsp;</a>
+      </div>
+    </f:alias>
+  </f:if>
+</f:section>
+
+
+<f:comment>
+  <!--
+    Button zum Ausspielen eines Buttons, der die Daten in den 360° Viewer lädt
+  -->
+  <!--
+  <f:section name="360gradViewer">
+    <f:if condition="{config.fieldlist.detailview.images.showmiradorlink} && {items.iiifManifest}">
+      <div class="_360viewer-btn-wrapper">
+        <button class="_360viewer-btn" data-manifest="{items.iiifManifest}" title="360° Viewer">360° Viewer</button>
+      </div>
+    </f:if>
+  </f:section>
+  -->
+</f:comment>
+
+<f:comment>
+  <!--
+    Button zum Laden des Fullscreenmodus
+  -->
+</f:comment>
+<f:section name="enlargeviewercontrols">
+  <div class="btn_container">
+      <f:comment>
+        <!--
+        <button type="button" id="sidebarCollapse" class="toggletext btn btn-jo" title="{jo:translate(key:'{langPath}:detail.sidebarcollapsetooggle')}">
+          <span class="d-block">&nbsp;</span>
+        </button>
+        -->
+      </f:comment>
+      <button type="button" class="togglefullscreen btn d-block btn-jo" title="{jo:translate(key:'{langPath}:detail.button.fullscreentoggle')}">
+        <span class="d-block">&nbsp;</span>
+      </button>
+    </div>
+</f:section>
+
+<f:comment>
+  <!--
+    Weitere Abbildungen werden in als Liste unterhalb der Canvas mit dem Hauptbild abgelegt
+  -->
+</f:comment>
+<f:section name="list_image_noslider">
+  <div class="row no-gutters item_info_wrap ">
+    <div class="col-md-3 label">Übersicht</div>
+    <div class="more_img_wrap col-md value">
+      <f:for each="{items.images}" as="item" key="subnumber" iteration="subcounter">
+        <f:if condition="!{subcounter.isFirst}">
+          <f:alias map="{imagedata: '{item->jo:explode(delimiter:\'$\')}'}">
+            <f:variable name="act_clas" value=""/>
+            <f:if condition="{first_img_url} == {imagedata.6} || {first_img_url} == {imagedata.0}">
+              <f:variable name="act_clas" value=" img-act"/>
+            </f:if>
+            <div class="row no-gutters{act_clas}">
+              <div class="col-md-2 detail-img-no-slick-wrapper">
+                <img class="detail-img-no-slick" src="{imagedata.0}" alt="{imagedata.4}" data-lizenz="{imagedata.4}" data-iiif="{imagedata.6}" data-id="{items.id}" data-user="{data_user}" data-lazy="{imagedata.0}" data-viewerlink="{imagedata.1}" data-num="{subcounter.index}" data-img="{imagedata.0}" data-img-name="{imagedata.2}" data-lizenztext="{f:render(section: 'asset_licence', arguments: _all)}" />
+              </div>
+              <div class="col-md">
+                <f:if condition="{items.allmedia.{subcounter.index}.extended_image_information}">
+                  <f:if condition="{config.fieldlist.detailview.images.multipleimages.extended-metadata-visibility} == 'collapse' && {config.fieldlist.detailview.images.multipleimages.view} != 'slider'">
+                    <f:then>
+                      <div class="collapse-button-wrap">
+                        <button class="btn btn-primary collapse-button collapsed" type="button" data-toggle="collapse" data-target="#clps-{subcounter.index}" aria-expanded="false" aria-controls="clps-{subcounter.index}">Quellennachweis/weitere Informationen anzeigen</button>
+                      </div>
+                      <div class="collapse" id="clps-{subcounter.index}">
+                        <f:render section="extended_image_information" arguments="{_all}"/>
+                      </div>
+                    </f:then>
+                    <f:else>
+                      <f:render section="extended_image_information" arguments="{_all}"/>
+                    </f:else>
+                  </f:if>
+                </f:if>
+              </div>
+            </div>
+          </f:alias>
+        </f:if>
+      </f:for>
+    </div>
+  </div>
+</f:section>
+
+<f:comment>
+  <!--
+    Weitere Abbildungen werden als Slider unterhalb des Hauptbilders abgelegt
+  -->
+</f:comment>
+<f:section name="slick_image_slider">
+  <div class="detail-img-slick-container">
+    <div class="detail-img-slick">
+      <f:for each="{items.images}" as="item" key="subnumber" iteration="subcounter">
+        <f:if condition="!{subcounter.isFirst}">
+          <f:alias map="{imagedata: '{item->jo:explode(delimiter:\'$\')}'}">
+            <f:variable name="act_clas" value=""/>
+            <f:if condition="{first_img_url} == {imagedata.6} || {first_img_url} == {imagedata.0}">
+              <f:variable name="act_clas" value="slick-img-act"/>
+            </f:if>
+            <div class="{act_clas}">
+              <div class="slick-item-wrapper">
+                <f:if condition="{items.allmedia.{subcounter.index}.filetype} == '3d'">
+                  <f:then>
+                    <img class="detail-img-slick-img" src="/typo3conf/ext/jo_museo/Resources/Public/Images/platzhalter.jpg" data-lizenz="{imagedata.4}" data-iiif="{imagedata.6}" data-id="{items.id}" data-img="{imagedata.0}" data-img-name="{imagedata.2}" data-user="{data_user}" data-lazy="{imagedata.0}" alt="Slider Bild - {imagedata.4}" data-externlink="{items.allmedia.{subcounter.index}.viewer}" data-lizenztext="{f:render(section: 'asset_licence', arguments: _all)}" data-viewerlink="{imagedata.1}" />
+                  </f:then>
+                  <f:else if="{imagedata.7} == '360grad_view'">
+                    <img class="detail-img-slick-img" src="/typo3conf/ext/jo_museo/Resources/Public/Images/platzhalter.jpg" data-lizenz="{imagedata.4}" data-iiif="{imagedata.6}" data-id="{items.id}" data-img="{imagedata.0}" data-img-name="{imagedata.2}" data-user="{data_user}" data-lazy="{imagedata.0}" alt="Slider Bild - {imagedata.4}" data-d360grad="{imagedata.8}" data-lizenztext="{f:render(section: 'asset_licence', arguments: _all)}" data-viewerlink="{imagedata.1}" />
+                  </f:else>
+                  <f:else>
+                    <img class="detail-img-slick-img" src="/typo3conf/ext/jo_museo/Resources/Public/Images/platzhalter.jpg" data-lizenz="{imagedata.4}" data-iiif="{imagedata.6}" data-id="{items.id}" data-img="{imagedata.0}" data-img-name="{imagedata.2}" data-user="{data_user}" data-lazy="{imagedata.0}" alt="Slider Bild - {imagedata.4}" data-lizenztext="{f:render(section: 'asset_licence', arguments: _all)}" data-viewerlink="{imagedata.1}" />
+                  </f:else>
+                </f:if>
+                <f:comment>
+                <!--
+                <div class="detail-img-slick-text">{subcounter.index}</div>
+                -->
+                </f:comment>
+              </div>
+            </div>
+          </f:alias>
+        </f:if>
+      </f:for>
+    </div>
+  </div>
+  <div class="page_count text-center">
+    <f:variable name="count" value="{items.images->f:count()}" />
+    <span class="current-img-count">1</span><span class="img-count-seperator">/</span><span class="img-count">{count - 1}</span>
+  </div>
+</f:section>
+
+<f:comment>
+  <!--
+    Erweitere Metadaten der Assets rendern
+  -->
+</f:comment>
+<f:section name="extended_image_information">
+  <f:for each="{items.allmedia.{subcounter.index}.extended_image_information}" as="dynamicblock" key="dynamickey">
+      <div class="row no-gutters item_info_wrap">
+        <div class="label{f:if(condition: '{parent.fieldalignment}', then: ' col-12', else: ' col-md-5')}">
+          <f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.{dynamickey}')}">
+            <f:then>
+              {jo:translate(key:'{langPath}:jo_bkr_base.extendedmetadata.{dynamickey}')}
+            </f:then>
+            <f:else>
+              {dynamickey}:
+            </f:else>
+          </f:if>
+        </div>
+        <div class="value col-md">
+          <f:if condition="{jo:joisarray(array:'{dynamicblock}')}">
+            <f:then>
+              <f:for each="{dynamicblock}" as="dynamicblockitem">
+                <div class="item_wrap"><f:format.nl2br>{dynamicblockitem}</f:format.nl2br></div>
+              </f:for>
+            </f:then>
+            <f:else>
+              <div class="item_wrap"><f:format.nl2br>{dynamicblock}</f:format.nl2br></div>
+            </f:else>
+          </f:if>
+        </div>
+      </div>
+  </f:for>
+</f:section>
+
+<f:comment>
+  <!--
+    Weitere Abbildungen werden in einem Imageslider hinterlegt, der unterhalb der Canvas dargestellt wird
+  -->
+</f:comment>
+<f:section name="more_asset_block">
+  <f:comment>
+    <!--
+      die nachfolgende Condition kann noch ausgearbeitet werden - aktuell kommt der slider NUR wenn es sich um IIIF images handelt und NUR im Classic view
+    -->
+  </f:comment>
+  <f:if condition="{items.docStructure}">
+    <div class="strukture-container hide">
+      <ul>
+        <f:for each="{items.docStructure}" as="val" key="key" iteration="iter">
+          <f:alias map="{imagedata: '{val->jo:explode(delimiter:\'$\')}'}">
+            <li data-img="{imagedata.0}">{imagedata.1}</li>
+          </f:alias>
+        </f:for>
+      </ul>
+    </div>
+  </f:if>
+  <div class="detail-gallery-container row hide">
+    <f:for each="{items.images}" as="item" key="subnumber" iteration="subcounter">
+      <f:if condition="!{subcounter.isFirst}">
+        <f:alias map="{imagedata: '{item->jo:explode(delimiter:\'$\')}'}">
+          <f:variable name="act_clas" value=""/>
+          <f:if condition="{first_img_url} == {imagedata.6} || {first_img_url} == {imagedata.0}">
+            <f:variable name="act_clas" value=" img-act"/>
+          </f:if>
+          <f:variable name="img_src">
+            <f:if condition="{subcounter.cycle} < 32"><f:then>{imagedata.0}</f:then><f:else><f:if condition="{alldata.placeholerimage}"><f:then><f:uri.image src="{alldata.placeholerimage.uid}" treatIdAsReference="1" width="400" /></f:then><f:else><f:uri.image src="/typo3conf/ext/jo_museo/Resources/Public/Images/platzhalter.jpg" width="400" /></f:else></f:if></f:else></f:if></f:variable>
+          <div class="col-3 detail-gallery-item-wrapper{act_clas}">
+            <img class="detail-img-gallery-img" src="{img_src}" data-lizenz="{imagedata.4}" data-iiif="{imagedata.6}" data-id="{items.id}" data-user="{data_user}" data-lazy="{imagedata.0}" data-num="{subcounter.index}" alt="Slider Bild - {imagedata.4}" />
+          </div>
+        </f:alias>
+      </f:if>
+    </f:for>
+  </div>
+  <f:if condition="{config.showContrastswitch}">
+    <f:comment>
+      <!--
+        @all
+        Das ist nur prototyopisch integriert und funktioniert noch nicht richtig
+        <div id="slider-vertical" class="" style="height: 200px; position: absolute; right: 15px; bottom: 22%;"><div id="custom-handle" class="ui-slider-handle" style="bottom: 0%; width: 50px; height: 30px; left: -19px; text-align: center;"></div></div>
+      -->
+    </f:comment>
+  </f:if>
+  <f:switch expression="{config.fieldlist.detailview.images.multipleimages.view}">
+    <f:case value="list">
+      <f:render section="list_image_noslider" arguments="{_all}"/>
+    </f:case>
+    <f:defaultCase>
+      <f:if condition="{config.fieldlist.detailview.images.count} == 1">
+        <f:render section="slick_image_slider" arguments="{_all}"/>
+      </f:if>
+    </f:defaultCase>
+  </f:switch>
+</f:section>
+
+<f:section name="image">                  
+  <f:alias map="{imagedata: '{item->jo:explode(delimiter:\'$\')}'}">
+    <f:if condition="{imagedata.1}">
+      <f:then>
+        <f:link.external class="external d-block h-100" style="flex:1;" target="_blank" uri="{imagedata.1}">
+          <f:if condition="{imagedata.0}">
+            <f:render section="image-data" arguments="{imagedata:'{imagedata}'}"/>
+          </f:if>
+        </f:link.external>
+      </f:then>
+      <f:else>
+        <f:if condition="{imagedata.0}">
+          <a href="{imagedata.0}" class="d-block h-100" style="flex:1;">
+            <f:render section="image-data" arguments="{imagedata:'{imagedata}'}"/>
+          </a>
+        </f:if>
+      </f:else>
+    </f:if>
+    <f:if condition="{imagedata.2} || {imagedata.3} || {imagedata.4} || {imagedata.5}">
+      <div class="img_caption">
+        <span data-toggle="collapse-next">caption einblenden</span>
+        <div class="img-main-text collapse">
+          <f:render arguments="{catdata:imagedata, langPath:langPath}" section="image-detail-full"/>
+        </div>
+      </div>
+    </f:if>
+   </f:alias>
+</f:section>
+
+<f:section name="image-data">
+  <f:alias map="{imagemetadata: '{imagedata.0->jo:explode(delimiter:\'/\')}'}">
+    <f:if condition="{imagemetadata.0} == 'uploads'">
+      <f:then>
+        <f:image class="joResponseImage joImageNumber_{subcounter.index}" src="{imagedata.0}" treatIdAsReference="0" width="400" />
+      </f:then>
+      <f:else>
+        <img src="{imagedata.0}" class="joResponseImage joImageNumber_{subcounter.index}" alt="{imagedata.2}" title="{imagedata.2}">
+      </f:else>
+    </f:if>
+  </f:alias>
+</f:section>
+
+<f:section name="image-detail-full">
+  <f:if condition="{catdata.2}">
+    {catdata.2}<br>
+  </f:if>
+  <f:if condition="{catdata.3}">
+    Abbildung: {catdata.3}, 
+  </f:if>
+  <f:if condition="{catdata.5}">
+    Rechteinhaber: {catdata.5}
+  </f:if>
+  <br>
+  <f:if condition="{catdata.4}">
+    <div class="img-detail-licenc"><span class="licenc-icon" title="{catdata.4}"></span>{catdata.4}</div>
+  </f:if>
+</f:section>
+
+<f:section name="placeholder">
+    <div class="img-placeholder-wrap d-flex h-100">
+      <f:if condition="{placeholerimage}">
+      <f:then>
+        <f:image class="img-placeholder" src="{placeholerimage.uid}" treatIdAsReference="1" width="400" />
+      </f:then>
+      <f:else>
+        <f:variable name="objecttype">unspecified</f:variable>
+        <f:if condition="{items.objectType}">
+           <f:variable name="objecttype">{items.objectType}</f:variable>
+        </f:if>
+        <div class="markup-pl-wrap {jo:cleanstring(string: objecttype)}">
+          <div class="markup-pl">
+            <div class="sprite"></div>
+            <div class="pl-text">Keine Abbildung vorhanden</div>
+          </div>
+        </div>
+        <f:comment>
+          <!--
+          <f:image class="img-placeholder" src="/typo3conf/ext/jo_museo/Resources/Public/Images/platzhalter.jpg" width="400" />
+          -->
+        </f:comment>
+      </f:else>
+    </f:if>
+  </div>    
+</f:section>
+
+<f:section name="annotation">
+  <f:if condition="{extbase_config.registereduser}">
+        <div class="map-image-info new show">
+          <div class="img-info-icon"></div>
+          <f:form action="detailobject" name="usernote" pageType="2345">
+            <f:form.hidden name="id" value="{items.id}" />
+            <f:form.hidden class="img_name" name="img_name" value="" />
+            <f:form.hidden class="coords" name="coords" />
+            <f:form.hidden class="noteId" name="note_id" value="" />
+            <f:form.hidden class="inpdelete" name="delete" value="0" />
+            <f:form.textarea class="form-control" name="text" />
+            <input type="button" class="btn btn-secondary tohide" value="Verstecken" />
+            <input type="button" class="btn btn-danger todelete" value="Löschen" />
+            <f:form.submit class="btn btn-primary submit" value="Speichern" />
+          </f:form>
+        </div>
+        <f:if condition="{alldata.usernote_clean}">
+          <f:for each="{alldata.usernote_clean}" as="usr_note">
+            <div class="map-image-info old hid">
+              <div class="img-info-icon"></div>
+              <f:form action="detailobject" name="usernote" pageType="2345">
+                <f:form.hidden name="id" value="{items.id}" />
+                <f:form.hidden class="img_name" name="img_name" value="{usr_note.asset}" />
+                <f:form.hidden class="noteId" name="note_id" value="{usr_note.id}" />
+                <f:form.hidden class="inpdelete" name="delete" value="0" />
+                <f:form.hidden class="coords" name="coords" value="{usr_note.coords}" />
+                <f:form.textarea class="form-control" name="text" value="{usr_note.note}" />
+                <input type="button" class="btn btn-secondary tohide" value="Verstecken" />
+                <input type="button" class="btn btn-danger todelete" value="Löschen" />
+                <f:form.submit class="btn btn-primary submit" value="Speichern" />
+              </f:form>
+            </div>
+          </f:for>
+        </f:if>
+    </f:if>
+</f:section>
+
+<f:section name="map">
+  <div id="map-container" class="h-100">
+      <div id="mapdiv" class="olMap h-100" ></div>
+      <div id="popup" class="ol-popup">
+        <div id="popup-loader" style="display: none"></div>
+        <div id="popup-content"></div>
+      </div>
+    </div>
+</f:section>
+
+ <f:comment>
+    <!--
+      TEI Templates
+    -->
+  </f:comment>
+  <f:section name="tei_viewer">
+    <div class="col-md">
+      <div class="row no-gutters">
+        <div class="tei_text_wrap col-md-9">
+          <f:render section="tei_annotation_toggle" arguments="{_all}"/>
+          <f:render section="tei_text" arguments="{_all}"/>
+        </div>
+        <f:render section="tei_index" arguments="{_all}"/>
+      </div>
+    </div>
+  </f:section>
+
+  <f:section name="tei_annotation_toggle">
+    <f:if condition="{config.fieldlist.detailview.tei.controls.show_annotationtoggle}">
+      <div class="marks_control col-md-12">
+        <f:link.page additionalParams="{eID: 'hideandshowannotations',pid:'{extbase_config.ce_pid}'}" class="marks_control_link<f:if condition='{extbase_config.page_config.showteiannotion}'> active</f:if>" target="_blank">
+          <input type="checkbox" class="ck_box" <f:if condition='{extbase_config.page_config.showteiannotion}'>checked="checked"</f:if>/>
+          <label for="ck_box"></label> 
+          <span class="ck_box_text ein">Annotationen einblenden</span>
+          <span class="ck_box_text aus">Annotationen ausblenden</span>
+        </f:link.page>
+      </div>
+    </f:if>
+  </f:section>
+
+  <f:section name="tei_text">
+    <div class="teiText<f:if condition='{extbase_config.page_config.showteiannotion}'> hide_marks</f:if>">
+      <f:if condition="{items.fulltextTei -> f:count()} == '1'">
+        <f:then>
+          <f:alias map="{kindobjekt: '{items.fulltextTei.0 -> jo:explode(delimiter:\'$\')}'}">
+            <f:if condition="{kindobjekt.1}">
+              <f:then>
+                <div><f:format.htmlentitiesDecode>{kindobjekt.1}</f:format.htmlentitiesDecode></div>
+              </f:then>
+              <f:else>
+                <div><f:format.htmlentitiesDecode>{kindobjekt.0}</f:format.htmlentitiesDecode></div>
+              </f:else>
+            </f:if>
+          </f:alias>
+        </f:then>
+        <f:else>
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <f:for each="{items.fulltextTei}" as="joSubIndex" iteration="it">
+              <f:alias map="{kindobjekt: '{joSubIndex -> jo:explode(delimiter:\'$\')}'}">
+                <li class="nav-item">
+                    <a class="nav-link{f:if(condition: it.isFirst, then: ' active')}" data-toggle="tab" href="#{kindobjekt.0}" role="tab">{jo:translate(key:'{langPath}:jo_bkr_base.{kindobjekt.0}')}</a>
+                  </li>
+                </f:alias>
+            </f:for>
+          </ul>
+          <div class="tab-content" id="myTabContent">
+            <f:for each="{items.fulltextTei}" as="joSubIndex" iteration="it">
+              <f:alias map="{kindobjekt: '{joSubIndex -> jo:explode(delimiter:\'$\')}'}">
+                <div class="tab-pane fade{f:if(condition: it.isFirst, then: ' show active')}" id="{kindobjekt.0}" role="tabpanel">
+                  <f:format.htmlentitiesDecode>{kindobjekt.1}</f:format.htmlentitiesDecode>
+                </div>
+              </f:alias>
+            </f:for>
+          </div>
+        </f:else>
+      </f:if>
+    </div>
+  </f:section>
+
+  <f:section name="tei_index">
+    <f:comment>
+      <!--
+        ToDo - muss noch gebaut werden
+      --> 
+    </f:comment>
+    <f:if condition="{config.fieldlist.detailview.tei.indices}">
+      <div class="detailtext col-md-3 right-side">
+        <f:for each="{config.fieldlist.detailview.tei.indices}" as="in" key="inkey">
+          <f:if condition="{items.{in}}">
+            <div class="tei-category">
+              <span class="joIcon {in}_icon"></span>
+              <f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.tei.{in}')}">
+                <f:then>
+                  {jo:translate(key:'{langPath}:jo_bkr_base.tei.{in}')}
+                </f:then>
+                <f:else>
+                  {in}
+                </f:else>
+              </f:if>
+              <span class="num">(<f:count>{items.{in}}</f:count>)</span>
+            </div>
+            <div class="tei-category-items">
+              <f:comment>
+                <!--
+                  ToDo - muss noch geprüft werden, ob das ein array ist
+                  Die Elemente werden mit literal$interne_id abgespeichert und in spezielle Felder abgelegt
+                  entityAll, locationAll - diese Felder enthalten ALLE Personen/Ortsdaten entity und location enthalten NUR die spezifischen Personen
+                --> 
+              </f:comment>
+              <f:for each="{items.{in}}" as="el">
+                <f:alias map="{teielements: '{el->jo:explode(delimiter:\'$\')}'}">
+                  <div class="teiItem" data-id="{teielements.1}">{teielements.0}</div>
+                </f:alias>
+              </f:for>
+            </div>
+          </f:if>
+        </f:for>
+      </div>
+    </f:if>
+  </f:section>
+
+  <f:comment>
+      <!--
+        ToDo - so sah das vorher aus
+      --> 
+    </f:comment>
+  <f:section name="tei_index_orig">
+    <f:if condition="{items.entityQualified} && !{extbase_config.unused_fields.entityQualified}">
+      <f:for each="{items.entityQualified -> jo:splitroles(delimiter:'$',position:'2')}" as="splititems" key="splitkey" iteration="it">
+        <f:if condition="{splitkey} == 'mentioned'">
+          <div class="row no-gutters">
+            <div class="tei-category col-md-12"><span class="joIcon person_icon"></span>{jo:translate(key:'{langPath}:jo_bkr_base.tei.person')}<span class="num"><f:count>{splititems}</f:count></span></div>
+            <div class="joCategoryContent col-md-12">
+              <f:for each="{splititems -> jo:sortarray(ascdesc:'asc')}" as="subsubitems" key="subsubkey" iteration="si">
+                <f:alias map="{kindobjekt: '{subsubitems -> jo:highlight( highlightarray:\'{joSolrObjects.response.docs.highlighting}\', id:\'{items.id}\', fieldname:\'entity\') -> jo:explode(delimiter:\'$\')}'}">
+                  <div class="teiItem person" data-id="{kindobjekt.3}">&bull; <f:format.html>{kindobjekt.0}</f:format.html></div>
+                </f:alias>
+              </f:for>      
+            </div>
+          </div>
+        </f:if>
+      </f:for>
+    </f:if>
+    <f:if condition="{items.locationQualified} && !{extbase_config.unused_fields.locationQualified}">
+      <f:for each="{items.locationQualified -> jo:splitroles(delimiter:'$',position:'3')}" as="splititems" key="splitkey" iteration="it">
+        <f:if condition="{splitkey} == 'mentioned'">
+          <div class="row">
+            <div class="tei-category col-md-12"><span class="joIcon ort_icon"></span>{jo:translate(key:'{langPath}:jo_bkr_base.tei.orte')}<span class="num"><f:count>{splititems}</f:count></span>
+            </div>
+            <div class="joCategoryContent col-md-12">
+              <f:for each="{splititems}" as="subsubitems" key="subsubkey" iteration="si">
+                <f:alias map="{kindobjekt: '{subsubitems -> jo:explode(delimiter:\'$\')}'}">
+                  <div class="teiItem keyword" data-id="{kindobjekt.4}">&bull; <f:format.html>{kindobjekt.1}</f:format.html></div>
+                </f:alias>
+              </f:for>
+            </div>
+          </div>
+        </f:if>
+      </f:for>
+    </f:if>
+    <f:if condition="{items.objectsPlants} && !{extbase_config.unused_fields.objectsPlants}">
+      <div class="row">
+        <div class="tei-category col-md-12"><span class="joIcon plant_icon"></span>{jo:translate(key:'{langPath}:jo_bkr_base.tei.plant')}<span class="num"><f:count>{items.objectsPlants}</f:count></span></div>
+        <div class="joCategoryContent col-md-12">
+          <f:for each="{items.objectsPlants -> jo:sortarray(ascdesc:'asc')}" as="joSubIndex" iteration="si">
+            <f:alias map="{kindobjekt: '{joSubIndex -> jo:explode(delimiter:\'$\')}'}">
+              <div class="teiItem plant" data-id="{kindobjekt.3}">&bull; <f:format.html>{kindobjekt.0}</f:format.html></div>
+            </f:alias>
+          </f:for>
+        </div>
+      </div>
+    </f:if>
+    <f:if condition="{items.classificationtags} && !{extbase_config.unused_fields.classificationtags}">
+      <div class="row">
+        <div class="tei-category col-md-12"><span class="joIcon keyword_icon"></span>{jo:translate(key:'{langPath}:jo_bkr_base.tei.keywords')}<span class="num"><f:count>{items.classificationtags}</f:count></span></div>
+        <div class="joCategoryContent col-md-12">
+          <f:for each="{items.classificationtags -> jo:sortarray(ascdesc:'asc')}" as="joSubIndex" iteration="si">
+            <f:alias map="{kindobjekt: '{joSubIndex -> jo:explode(delimiter:\'$\')}'}">
+              <div class="teiItem plant" data-id="{kindobjekt.1}">&bull; <f:format.html>{kindobjekt.0}</f:format.html></div>
+            </f:alias>
+          </f:for>
+        </div>
+      </div>
+    </f:if>
+    <f:if condition="{settings.notes}">
+      <div class="joCategoryWrapper row">
+        <div class="tei-category col-md-12">{jo:translate(key:'{langPath}:jo_bkr_base.tei.editor')}</span></div>
+        <div class="joCategoryContent col-md-12">
+          <f:format.html>{settings.notes}</f:format.html>
+        </div>
+      </div>
+    </f:if>
+</f:section>

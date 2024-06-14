@@ -1,0 +1,71 @@
+<f:if condition="{detail}=='1'">
+	<f:then>
+		 <f:render section="detail_view_1" arguments="{_all}"/>
+	</f:then>
+	<f:else>
+		<f:render section="list_view_1" arguments="{_all}"/>
+	</f:else>
+</f:if>
+
+
+<f:section name="list_view_1">
+	<div class="soloshow-wrapper list">
+		<f:if condition="{settings.title}"><h2><f:format.html>{settings.title}</f:format.html></h2></f:if>
+		<f:if condition="{results} && {results.response.docs}">
+			<f:then>
+				<div class="soloshow-container row">
+					<f:for each="{results.response.docs}" as="item">
+						<div class="soloshow-item col-md-3">
+							<f:link.action action="soloshow" arguments="{detail: item.id}">
+								<div class="image-container">
+									<f:if condition="{item.allmedia}">
+										<f:then>
+											<img src="{item.allmedia.0.uri}" title="{item.title}" alt="{item.title}" />
+										</f:then>
+										<f:else>
+										</f:else>
+									</f:if>
+								</div>
+								<h3>{item.title}</h3>
+							</f:link.action>
+						</div>
+					</f:for>
+				</div>
+			</f:then>
+			<f:else>
+				<h4 class="nothing-found-h">Leider keine Ergebnisse.</h4>
+			</f:else>
+		</f:if>
+	</div>
+</f:section>
+
+<f:section name="detail_view_1">
+	
+	<div class="soloshow-wrapper detail" style="padding: 50px 5%;">
+		<f:if condition="{settings.title}"><h2><f:format.html>{settings.title}</f:format.html></h2></f:if>
+		<f:if condition="{results} && {results.response.docs}">
+			<f:then>
+				<div class="soloshow-container row" >
+					<f:for each="{results.response.docs}" as="item">
+						<div class="col-12">
+							<h3>{item.title}</h3>
+							<div style="padding: 20px 0">{item.note}</div>
+							<div class="image-container">
+								<f:if condition="{item.allmedia}">
+									<f:then>
+										<img src="{item.allmedia.0.uri}" title="{item.title}" alt="{item.title}" />
+									</f:then>
+									<f:else>
+									</f:else>
+								</f:if>
+							</div>
+						</div>
+					</f:for>
+				</div>
+			</f:then>
+			<f:else>
+				<h4 class="nothing-found-h">Leider keine Ergebnisse.</h4>
+			</f:else>
+		</f:if>
+	</div>
+</f:section>

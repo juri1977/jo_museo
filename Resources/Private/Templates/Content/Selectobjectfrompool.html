@@ -1,0 +1,167 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<f:variable name="cta_label">zum Objekt</f:variable>
+<f:if condition="{settings.cta_label}">
+	<f:variable name="cta_label">{settings.cta_label}</f:variable>
+</f:if>
+<div class="pi1019_wrap">
+	<div class="pi1019_container option_{settings.externaldatasource}">
+		<f:switch expression="{settings.externaldatasource}">
+		   <f:case value="1">
+		   		<f:render section="digicult_last_item" arguments="{_all}"/>
+		   </f:case>
+		   <f:defaultCase>
+		   		<div class="row">
+		   			<f:render section="solrdata" arguments="{_all}"/>
+		   		</div>
+		   </f:defaultCase>
+		</f:switch>
+	</div>		
+</div>
+
+<f:comment>
+	<!--
+		Ausgabe der Daten aus dem JO Solrschema
+	-->
+</f:comment>
+<f:section name="solrdata">
+	<f:if condition="{result.response.docs}">
+		<f:then>
+			<f:if condition="{settings.slick}">
+				<f:then>
+					<f:render section="slick" arguments="{_all}"/>
+				</f:then>
+				<f:else>
+					<f:render section="normal" arguments="{_all}"/>
+				</f:else>
+			</f:if>
+		</f:then>
+		<f:else>
+			<div>Keine Daten gefunden</div>
+		</f:else>
+	</f:if>
+</f:section>
+
+<f:comment>
+	<!--
+		Ausgabe der Daten aus der DigiCULT API
+	-->
+</f:comment>
+<f:section name="digicult_last_item">
+	<f:if condition="{result}">
+		<f:then>
+			<f:for each="{result}" as="item" iteration="i" key="k">
+				<div class="pi1019_item">
+					<div class="position-relative pi1091_image_wrap">
+						<f:if condition="{item.preview_image}">
+							<f:then>
+								<img src="{item.preview_image}"/>
+							</f:then>
+							<f:else>
+								<div class="pl"></div>
+							</f:else>
+						</f:if>
+						<f:if condition="{item.profil.value}">
+							<div class="cat">{item.profil.value}</div>
+						</f:if>
+					</div>
+					<f:if condition="{item.repository_name}">
+						<h3>{item.repository_name}</h3>
+					</f:if>
+					<f:if condition="{item.title.value}">
+						<h2>{item.title.value}</h2>
+					</f:if>
+					<f:if condition="{item.isShownAt.0.uri}">
+						<f:link.external class="pi1019_link_external d-inline-block" uri="{item.isShownAt.0.uri}">{cta_label}</f:link.external>
+					</f:if>
+				</div>
+			</f:for>
+		</f:then>
+		<f:else>
+			<div>Keine Daten gefunden</div>
+		</f:else>
+	</f:if>
+</f:section>
+
+
+
+<f:section name="normal">
+	<f:for each="{result.response.docs}" as="item" iteration="i" key="k">
+		<div class="pi1019_item col-md-12">
+			<f:if condition="{item.allmedia}">
+				<div class="pi1091_image_wrap">
+					<f:for each="{item.allmedia}" as="si" iteration="i">
+						<f:if condition="{i.isFirst}">
+			            	<img class="pi1019_img" src="{si.uri}"/>
+			            </f:if>
+					</f:for>
+				</div>
+			</f:if>
+			<f:if condition="{item.title}">
+				<h2>{item.title}</h2>
+			</f:if>
+			<f:if condition="{item.showtime}">
+				<div class="pi1019_date_wrap row">
+					<div class="pi1019_date_label col">Datum:</div>
+					<div class="pi1019_date col">
+						<f:for each="{item.showtime}" as="si">
+				            <div>{si}</div>
+						</f:for>
+					</div>
+				</div>
+			</f:if>
+			<f:if condition="{item.canonical}">
+				<f:link.external class="pi1019_link_external d-inline-block" uri="{item.canonical}">{cta_label}</f:link.external>
+			</f:if>
+		</div>
+	</f:for>
+</f:section>
+
+<f:section name="slick">
+	<div class="pi1019SlickSlider-wrap">
+		<div class="pi1019SlickSlider" data-slidenum="{settings.imageperslide}">
+			<f:for each="{result.response.docs}" as="item" iteration="i" key="k">
+				<div class="pi1019_item">
+					<f:if condition="{item.allmedia}">
+						<div class="pi1091_image_wrap">
+							<f:if condition="{settings.lightbox}">
+								<f:then>
+									<a href="{item.allmedia.0.uri}" class="lightbox-link" data-lightbox="lightbox">
+										<img class="pi1019_img" src="{item.allmedia.0.uri}"/>
+									</a>
+								</f:then>
+								<f:else>
+									<img class="pi1019_img" src="{item.allmedia.0.uri}"/>
+								</f:else>
+							</f:if>
+						</div>
+					</f:if>
+					<f:if condition="{item.title} || {item.showtime} || {item.canonical}">
+						<div class="pi1091_text_wrap">
+							<f:if condition="{item.title}">
+								<h2>{item.title}</h2>
+							</f:if>
+							<f:if condition="{item.showtime}">
+								<div class="pi1019_date_wrap row">
+									<div class="pi1019_date_label col">Datum:</div>
+									<div class="pi1019_date col">
+										<f:for each="{item.showtime}" as="si">
+								            <div>{si}</div>
+										</f:for>
+									</div>
+								</div>
+							</f:if>
+							<f:if condition="{item.canonical}">
+								<f:link.action pageUid="{settings.canonicaluid}" controller="Museo" pluginName="Pi1009" class="pi1019_link_external d-inline-block" noCache="1" action="detailobject" arguments="{joDetailView:'{item.id}'}" title="{cta_label}">{cta_label}</f:link.action>
+		                        <f:comment>
+		                        	<!--
+										<f:link.external class="pi1019_link_external d-inline-block" uri="{item.canonical}">{cta_label}</f:link.external>
+									-->
+								</f:comment>
+							</f:if>
+						</div>
+					</f:if>
+				</div>
+			</f:for>
+		</div>
+	</div>
+</f:section>

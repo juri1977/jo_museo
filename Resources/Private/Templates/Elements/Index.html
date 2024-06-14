@@ -1,0 +1,516 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<f:if condition="{settings.listeandmap} && !{object}">
+	<ul class="nav nav-tabs" id="listeandmapTab" role="tablist">
+		<li class="nav-item col">
+			<a class="nav-link active" id="list-tab" data-toggle="tab" href="#list_c" role="tab" aria-controls="list_c" aria-selected="true">
+				<div class="tab-icon" style="background-image:url({f:uri.image(src:'EXT:jo_content/Resources/Public/Images/joListeFilter.svg',width:'100c',height:'100c')});"></div>
+				<div class="tab-label"><jo:translate key="jo_bkr_base.listenuebersicht" /></div>
+			</a>
+		</li>
+		<li class="nav-item col">
+			<a class="nav-link" id="map-tab" data-toggle="tab" href="#map_c" role="tab" aria-controls="map_c" aria-selected="false">
+				<div class="tab-icon" style="background-image:url({f:uri.image(src:'EXT:jo_content/Resources/Public/Images/joKarte.svg',width:'100c',height:'100c')});"></div>
+				<div class="tab-label"><jo:translate key="jo_bkr_base.kartenansicht" /></div>
+			</a>
+		</li>
+		<f:if condition="{settings.broschuere}">
+			<li class="nav-item col">
+				<a class="nav-link" id="rest-tab" target="_blank" href="{settings.broschuere}">
+					<div class="tab-icon" style="background-image:url({f:uri.image(src:'EXT:jo_content/Resources/Public/Images/Broschur.svg',width:'100c',height:'100c')});"></div>
+					<div class="tab-label">Broschürenansicht</div>
+				</a>
+			</li>
+		</f:if>
+	</ul>
+	<div class="tab-content" id="myTabContent">
+</f:if>
+<f:if condition="!{settings.listeandmap} && !{object}">
+	<f:if condition="{localstatus} && {mainnavi} && {settings.showinstdist}">
+		<div class="row menu_filter_container">
+			<ul class="menu_filter col-12 col-md-12">
+				<li <f:if condition="{localstatus} == '2'">class='active'</f:if>><f:link.action action="index" additionalParams="{type:'{template.id}'}" arguments="{localstatus:'2', class:'{mainnavi.active}'}">Thüringer Institutionen</f:link.action></li>
+				<li <f:if condition="{localstatus} == '3'">class='active'</f:if>><f:link.action action="index" additionalParams="{type:'{template.id}'}" arguments="{localstatus:'3', class:'{mainnavi.active}'}">Partner Institutionen</f:link.action></li>
+				<li <f:if condition="{localstatus} == '1'">class='active'</f:if>><f:link.action action="index" additionalParams="{type:'{template.id}'}" arguments="{localstatus:'1', class:'{mainnavi.active}'}">Alle anzeigen</f:link.action></li>
+			</ul>
+		</div>
+	</f:if>
+	<f:if condition="{mainnavi}">
+		<div class="row menu_filter_container">
+			<ul class="menu_filter col-12 col-md-8">
+				<li <f:if condition="{mainnavi.active} < 1">class='active'</f:if>><f:link.action action="index" additionalParams="{type:'{template.id}'}" arguments="{localstatus:'{localstatus}'}">Alle anzeigen</f:link.action></li>
+				<f:for each="{mainnavi.items}" as="items" key="k" iteration="i">
+					<li <f:if condition="{mainnavi.active} == {items.uid}">class='active'</f:if>><f:link.action action="index" additionalParams="{type:'{template.id}'}" arguments="{localstatus:'{localstatus}', class:'{items.uid}'}">{items.title}</f:link.action></li>
+				</f:for>
+			</ul>
+			<ul class="menu_filter_symbols clearfix col-12 col-md-4">
+				<f:for each="{allowed_templates}" as="item" key="k" iteration="i">
+					<li <f:if condition="{template.id} == {k}">class='active'</f:if>><f:link.action action="index" class="menu_filter_symbols_link" additionalParams="{type:'{k}',pid:'{f:cObject(typoscriptObjectPath: \'lib.gpvar\', data: \'pid\')}'}" arguments="{localstatus:'{localstatus}', class:'{mainnavi.active}'}" title="{item.label}"><div id="{k}" class="menu_filter_symbols_icon"></div></f:link.action></li>
+				</f:for>
+			</ul>
+		</div>
+	</f:if>
+</f:if>
+<f:if condition="{template.id} == 'kacheln' || {template.id} == 'kacheln_with_text'">
+	<f:if condition="{subnavi}">
+		<ul class="menu_square row<f:if condition='{template.id} == \'kacheln_with_text\''> withText</f:if>">
+			<f:for each="{subnavi}" as="items" key="k" iteration="i">
+				<li class="col-6 col-md-3 col-lg-2">
+					<f:link.action additionalParams="{type:'{template.id}'}" arguments="{uid:'{items.uid}'}" style="background-image:url('<f:if condition=\"{items.image.0}\"><f:uri.image src=\"{items.image.0.uid}\" treatIdAsReference=\"TRUE\" width=\"400c\" height=\"400c\"/></f:if>');">
+						<div class="jo-ol<f:if condition='!{items.image}'> jo-ol-noImg</f:if>">
+							<div class="jo-ol-title-container">
+								<div class="jo-ol-title">{items.title}</div>
+								<div class="jo-ol-subtitle">{items.subtitle}</div>
+							</div>
+						</div>
+					</f:link.action>
+				</li>
+			</f:for>
+		</ul>
+	</f:if>
+</f:if>
+
+<f:if condition="{template.id} == 'editpro_kacheln'">
+	<div id="ca-container" class="jo-slider ca-container edition_kacheln">
+		<f:if condition="{subnavi}">
+			<f:variable name="j" value="1" />
+			<f:variable name="ji" value="1" />
+			<f:variable name="counter" value="3" />
+
+			<f:for each="{subnavi}" as="items" key="k" iteration="i">
+				<div class="kachel-{i.index} ca-item ca-item-{i.index} row-top kachel-outside jorow-{ji}" data-row="{ji}" data-id="{i.index}">
+					<div class="jo-ol-title">{items.title}</div>
+					<div class="ca-item-main">
+						<f:if condition="{items.image.0}">
+							<div class="ca-icon">
+								<f:image src="{items.image.0.uid}" treatIdAsReference="1" />
+							</div>
+						</f:if>
+					</div>
+					<f:if condition="{items.subtitle}">
+						<div class="jo-ol-subtitle"><f:format.crop maxCharacters="150">{items.subtitle}</f:format.crop></div>
+					</f:if>
+				</div>
+				
+				<f:variable name="num">
+					<f:cObject typoscriptObjectPath="lib.math" data="{k + 1} % 3" />
+				</f:variable>
+
+				<f:if condition="{num} == 1 && {i.isLast} == 1">
+					<div class="kachel-placeholder ca-item ca-item-{i.index + 1} row-top placeholder kachel-outside jorow-{ji}" data-row="{ji}">
+						<div class="kachel-plus"><div class="plus"></div></div>
+					</div>
+					<div class="kachel-placeholder ca-item ca-item-{i.index + 2} row-top placeholder kachel-outside jorow-{ji}" data-row="{ji}">
+						<div class="kachel-plus"><div class="plus"></div></div>
+					</div>
+				</f:if>
+				<f:if condition="{num} == 2 && {i.isLast} == 1">
+					<div class="kachel-placeholder ca-item ca-item-{i.index + 1} row-top placeholder kachel-outside jorow-{ji}" data-row="{ji}">
+						<div class="kachel-plus"><div class="plus"></div></div>
+					</div>
+				</f:if>
+
+				<f:if condition="{num} == 0 || {i.isLast}">
+					<f:for each="{subnavi}" as="items2" key="g" iteration="n">
+						<f:if condition="{j - 1} <= {g} && {counter} > 0">
+							<div class="ca-content-wrapper wrapper-top wrapper-{j - 1} jowrapper-{ji}">
+								<div class="ca-content">
+									<div class="ca-content-text">
+										<h2>{items2.title}</h2>
+										<h3>{items2.subtitle}</h3>
+										<f:format.raw>{items2.description}</f:format.raw>
+										<f:if condition="{items2.website}"><div>Zur Webseite: <f:link.external class="jo-link-extern" uri="{items2.website}" target="_blank">{items2.website}</f:link.external></div></f:if>
+										<f:if condition="{items2.tenantreference}">
+											<div>
+												<f:link.action class="jo-search-btn" additionalParams="{add:'1'}" pageUid="{settings.suche}" noCache="1" pluginName="pi1009" controller="Museo" arguments="{'classProject': '{items2.tenantreference}', 'joDel': '1'}">
+													<div class="addGradient">
+														<span class="joIcon kachel-contet-bestand"></span>
+													</div>
+													<span>Bestände anzeigen</span>
+												</f:link.action>
+											</div>
+										</f:if>
+									</div>
+									<div class="ca-content-img">
+										<f:if condition="{items2.image.1}">
+											<f:image src="{items2.image.1.uid}" treatIdAsReference="1" />
+										</f:if>
+									</div>
+									<div class="close-btn"></div>
+								</div>
+							</div>
+							<f:variable name="j" value="{j + 1}" />
+							<f:variable name="counter" value="{counter - 1}" />
+						</f:if>
+					</f:for>
+					<f:variable name="counter" value="3" />
+					<f:variable name="ji" value="{ji + 1}" />
+				</f:if>
+			</f:for>
+		</f:if>
+	</div>
+</f:if>
+
+
+<f:if condition="{template.id} == 'newstyle'">
+	<f:if condition="{subnavi}">
+		<ul class="row<f:if condition='{template.id} == \'newstyle\''> newKacheln</f:if>">
+			<f:for each="{subnavi}" as="val" key="k1" iteration="j">
+				<li class="col-6 col-md-3 col-lg-2">
+					<f:for each="{val}" as="items" key="k" iteration="i">
+						<f:link.action additionalParams="{type:'{template.id}'}" arguments="{uid:'{items.uid}'}" >
+							<f:if condition="{items.image.0}">
+								<div class="jo-ol-img">
+									<f:image src="{items.image.0.uid}" treatIdAsReference="1" width="400c" />
+								</div>
+							</f:if>
+							<div class="jo-ol">
+								<div class="jo-ol-title-container">
+									<div class="jo-ol-subtitle"><f:format.crop maxCharacters="30">{items.title}</f:format.crop></div>
+									<div class="jo-ol-title"><f:format.crop maxCharacters="70"><f:format.raw>{items.description}</f:format.raw></f:format.crop></div>
+								</div>
+							</div>
+						</f:link.action>
+					</f:for>
+				</li>
+			</f:for>
+		</ul>
+	</f:if>
+</f:if>
+<f:if condition="{nothingFound}">
+	<div class="nothingFound">
+		Es wurde nichts gefunden.
+	</div>
+</f:if>
+<f:if condition="{settings.listeandmap} && !{object}">
+	<div class="tab-pane fade show active" id="list_c" role="tabpanel" aria-labelledby="list-tab">
+</f:if>
+<f:if condition="{template.id} == 'list'">
+	<div class="menu_square_list row">
+		<f:for each="{subnavi.columns}" as="column" key="k" iteration="i">
+			<f:if condition="{list_width}">
+				<f:then>
+					<div class="joColumn col-md-{list_width}">
+				</f:then>
+				<f:else>
+					<div class="joColumn col-md-4">
+				</f:else>
+			</f:if>
+				<f:for each="{column}" key="key" as="sub" iteration="j">
+					<div class="joIndexWrapper clearfix">
+						<h3 class="joIndexHeadline"><span>{key}</span></h3>
+						<div class="joInstitutionen">
+							{sub.title}
+							<f:for each="{sub}" as="joItem" iteration="josubsubiteration">
+								<f:link.action action="index" arguments="{uid:'{joItem.uid}'}" class="joInstitutionenDetailTrigger clearfix" title="{joItem.title}">
+									<div class="joInstitutionenImg" <f:if condition="{joItem.image.0}">style="background-image:url('<f:uri.image src="{joItem.image.0.uid}" treatIdAsReference="TRUE" width="50c" height="50c"/>');"</f:if>></div>
+									<div class="joInstitutionenTitle">{joItem.title}</div>
+								</f:link.action>
+							</f:for>
+						</div>
+					</div>
+				</f:for>
+			</div>
+		</f:for>
+	</div>
+</f:if>
+<f:if condition="{settings.listeandmap} && !{object}">
+	</div>
+	<div class="tab-pane fade" id="map_c" role="tabpanel" aria-labelledby="map-tab">
+</f:if>
+<f:if condition="{template.id} == 'map' || {settings.listeandmap} && !{object}">
+	<div id="joMaps-container">
+		<div id="ol4-mapdiv"></div>
+		<div id="popup" class="ol-popup">
+			<div id="popup-loader" style="display: none"></div>
+			<a href="#" id="popup-closer" class="ol-popup-closer"></a>
+			<div id="popup-content"></div>
+		</div>
+	</div>
+	<div id="joInfo-container">
+		<div id="joInfo-loader" style="display: none"></div>
+		<div id="joInfo-content"></div>
+		<a href="#" id="joInfo-content-closer" class="ol-popup-closer"></a>
+	</div>
+</f:if>
+<f:if condition="{settings.listeandmap} && !{object}">
+	</div>
+</f:if>
+<f:if condition="{object}">
+	<f:if condition="{breadcrumb} && !{settings.listeandmap}">
+		<div class="clearfix breadcrumb_alternative inst container">
+			<ul class="clearfix breadcrumbs">
+				<li>
+					<f:link.action noCache="1">Institutionen</f:link.action>
+				</li>
+				<f:for each="{breadcrumb}" as="val" key="key" iteration="i">
+					<li>
+						<a href="{val}">{key}</a>
+					</li>
+				</f:for>
+			</ul>
+		</div>
+	</f:if>
+	<div class="joInstDetail row">
+		<div class="col-12 col-md-4 img">
+			<f:if condition="{object.image}">
+				<div class="image-embed-container">
+					<f:if condition="{object.bannerimg} && {f:count(subject: object.image)} > 1">
+						<f:then>
+							<a href="<f:uri.image src='{object.image.1.uid}' treatIdAsReference='TRUE' width='1500' height='' />" data-lightbox="lightbox" data-jocheck="true">
+								<f:image class="image-embed-item" src="{object.image.1.uid}" alt="{object.title}" treatIdAsReference="TRUE" width="800c" height="800c" />
+							</a>
+							<f:if condition="{object.image.1.originalResource.description} || {object.image.1.originalResource.title} || {object.image.1.originalResource.alternative}">
+								<div class="img-main-text">
+									<f:if condition="{object.image.1.originalResource.description}">
+										<div class="img-main-desc">{object.image.1.originalResource.description}</div>
+									</f:if>
+									<f:if condition="{object.image.1.originalResource.title}">
+										<div class="img-main-title"><span class="licenc-icon"></span>{object.image.1.originalResource.title}</div>
+									</f:if>
+									<f:if condition="{object.image.1.originalResource.alternative}">
+										<div class="img-main-alt">{object.image.1.originalResource.alternative}</div>
+									</f:if>
+								</div>
+							</f:if>
+						</f:then>
+						<f:else>
+							<a href="<f:uri.image src='{object.image.0.uid}' treatIdAsReference='TRUE' width='1500' height=''/>" data-lightbox="lightbox" data-jocheck="true">
+								<f:image class="image-embed-item" src="{object.image.0.uid}" alt="{object.title}" treatIdAsReference="TRUE" width="800c" height="800c" />
+							</a>
+							<f:if condition="{object.image.0.originalResource.description} || {object.image.0.originalResource.title} || {object.image.0.originalResource.alternative}">
+								<div class="img-main-text">
+									<f:if condition="{object.image.0.originalResource.description}">
+										<div class="img-main-desc">{object.image.0.originalResource.description}</div>
+									</f:if>
+									<f:if condition="{object.image.0.originalResource.title}">
+										<div class="img-main-title"><span class="licenc-icon"></span>{object.image.0.originalResource.title}</div>
+									</f:if>
+									<f:if condition="{object.image.0.originalResource.alternative}">
+										<div class="img-main-alt">{object.image.0.originalResource.alternative}</div>
+									</f:if>
+								</div>
+							</f:if>
+						</f:else>
+					</f:if>
+				</div>
+				<f:if condition="{f:count(subject: object.image)} > 1">
+					<div class="img-other-container row no-gutters">
+						<f:for each="{object.image}" as="joItem" iteration="i">
+							<f:if condition="{i.isFirst} && {object.bannerimg}">
+								<f:then></f:then>
+								<f:else>
+									<div class="img-other-item col-4 col-md-3">
+										<a href="<f:uri.image src='{joItem.uid}' treatIdAsReference='TRUE' width='1500' height=''/>" data-joLightboxEv="lightbox">
+											<f:image class="image-embed-item" src="{joItem.uid}" alt="{object.title}" treatIdAsReference="TRUE" width="800c" height="800c" />
+										</a>
+										<f:if condition="{joItem.originalResource.description} || {joItem.originalResource.title} || {joItem.originalResource.alternative}">
+											<div class="img-other-item-text" style="display: none;">
+												<f:if condition="{joItem.originalResource.description}">
+													<div class="img-main-desc">{joItem.originalResource.description}</div>
+												</f:if>
+												<f:if condition="{joItem.originalResource.title}">
+													<div class="img-main-title"><span class="licenc-icon"></span>{joItem.originalResource.title}</div>
+												</f:if>
+												<f:if condition="{joItem.originalResource.alternative}">
+													<div class="img-main-alt">{joItem.originalResource.alternative}</div>
+												</f:if>
+											</div>
+										</f:if>
+									</div>
+								</f:else>
+							</f:if>
+						</f:for>
+					</div>
+				</f:if>
+				<f:if condition="{settings.listeandmap}">
+					<f:if condition="{object.contact}">
+						<div class="kontakt">
+							<f:format.html>{object.contact}</f:format.html>
+						</div>
+						<div id="mapdiv"></div>
+					</f:if>
+				</f:if>
+			</f:if>
+		</div>
+		<div class="col-12 col-md-8 content">
+			<div class="txt">
+				<f:if condition="{object.title} || {object.subtitle}">
+					<div class="titleAndSub">
+						<f:if condition="{object.title}">
+							<h2>{object.title}</h2>
+						</f:if>
+						<f:if condition="{object.subtitle}">
+							<h3>{object.subtitle}</h3>
+						</f:if>
+					</div>
+				</f:if>
+				<f:if condition="{object.description}">
+					<div class="description">
+						<f:format.html>{object.description}</f:format.html>
+					</div>
+				</f:if>
+				<f:if condition="!{settings.listeandmap}">
+					<f:if condition="{object.contact}">
+						<div class="kontakt">
+							<f:format.html>{object.contact}</f:format.html>
+						</div>
+					</f:if>
+				</f:if>
+				<f:if condition="{object.tenantreference} || {object.website} || {object.gnddata} || {object.idreference} || {p_items}">
+					<div class="joLink-container">
+						<f:if condition="{object.idreference} && {settings.suche} && {searchtype} == 'detail'">
+							<div class="control_button">
+								<f:link.action class="jo-search-btn" pageUid="{settings.suche}" noCache="1" pluginName="pi1009" controller="Museo" action="detailobject" arguments="{joDetailView:'{object.idreference}',jopaginatepage:'{extbase_config.paginate}'}">
+									<span>Verknüpfte Objekte</span>
+									<div class="addGradient">
+										<f:image src="{f:uri.resource(path:'Images/btn_zurueck.svg')}" title="Bestände anzeigen" alt="Bestände anzeigen" />
+									</div>
+								</f:link.action>
+							</div>
+						</f:if>
+						<f:if condition="{searchtype} && !{object.tenantreference} && {searchtype} != 'detail' && {object.idreference} && {searchtype} != 'classProject'">
+							<div class="control_button">
+								<!-- {jo:jomakearray(arraykey:'{searchtype}', arrayvalue:'*{object.idreference}')} -->
+								<!-- {'{searchtype}': '*{object.idreference}', 'joDel': '1'} -->
+								<f:link.action class="jo-search-btn" additionalParams="{add:'1'}" pageUid="{settings.suche}" noCache="1" pluginName="pi1009" controller="Museo" arguments="{jo:jomakearray(arraykey:'{searchtype}', arrayvalue:'*{object.idreference}', joDel: '1')}">
+									<span>Bestände durchsuchen</span>
+									<div class="addGradient">
+										<f:image src="{f:uri.resource(path:'Images/btn_zurueck.svg')}" title="Bestände anzeigen" alt="Bestände anzeigen" />
+									</div>
+								</f:link.action>
+							</div>
+						</f:if>
+						<f:if condition="{searchtype} == 'classProject' && {object.idreference}">
+							<div class="control_button">
+								<!-- {jo:jomakearray(arraykey:'tenantHierarchy', arrayvalue:'{object.tenantreference}')} -->
+								<!-- {'tenantHierarchy': '{object.tenantreference}', 'joDel': '1'} -->
+								<f:link.action class="jo-search-btn" additionalParams="{add:'1'}" pageUid="{settings.suche}" noCache="1" pluginName="pi1009" controller="Museo" arguments="{'classProject': '{object.idreference}', 'joDel': '1'}">
+									<span>Bestände anzeigen</span>
+									<div class="addGradient">
+										<f:image src="{f:uri.resource(path:'Images/btn_zurueck.svg')}" title="Bestände anzeigen" alt="Bestände anzeigen" />
+									</div>
+								</f:link.action>
+							</div>
+						</f:if>
+						<f:if condition="{lang_array}">
+							<div class="lang_selector">
+								<f:link.action arguments="{'uid': '{lang_array.uid}'}" additionalParams="{L:'{lang_array.switch}'}">{lang_array.wording}</f:link.action>
+							</div>
+						</f:if>
+						<f:if condition="{object.tenantreference}">
+							<div class="control_button">
+								<!-- {jo:jomakearray(arraykey:'tenantHierarchy', arrayvalue:'{object.tenantreference}')} -->
+								<!-- {'tenantHierarchy': '{object.tenantreference}', 'joDel': '1'} -->
+								<f:link.action class="jo-search-btn" additionalParams="{add:'1'}" pageUid="{settings.suche}" noCache="1" pluginName="pi1009" controller="Museo" arguments="{'tenantHierarchy': '{object.tenantreference}', 'joDel': '1'}">
+									<span><jo:translate key="jo_bkr_base.bestaendeanzeigen" /></span>
+									<div class="addGradient">
+										<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+											<f:then>
+												<div class="joSprite" title="<jo:translate key='jo_bkr_base.bestaendeanzeigen' />"></div>
+											</f:then>
+											<f:else>
+												<f:image src="{f:uri.resource(path:'Images/btn_zurueck.svg')}" title="Bestände anzeigen" alt="Bestände anzeigen" />
+											</f:else>
+										</f:if>
+									</div>
+								</f:link.action>
+							</div>
+						</f:if>
+						<f:if condition="{object.externalstock}">
+							<div class="control_button">
+								<f:link.external class="jo-link-extern" uri="{object.externalstock}" target="_blank">
+									<span>zu externen Beständen</span>
+									<div class="addGradient">
+										<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+											<f:then>
+												<div class="joSprite" title="{object.externalstock}"></div>
+											</f:then>
+											<f:else>
+												<f:image src="{f:uri.resource(path:'Images/btn_zurueck.svg')}" title="{object.website}" alt="{object.website}" />
+											</f:else>
+										</f:if>
+									</div>
+								</f:link.external>
+							</div>
+						</f:if>
+						<f:if condition="{object.website}">
+							<div class="control_button">
+								<f:link.external class="jo-link-extern" uri="{object.website}" target="_blank">
+									<span><jo:translate key='jo_bkr_base.zurwebseite' /></span>
+									<div class="addGradient >
+										<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+											<f:then>
+												<div class="joSprite" title="<jo:translate key='jo_bkr_base.zurwebseite' />"></div>
+											</f:then>
+											<f:else>
+												<f:image src="{f:uri.resource(path:'Images/btn_zurueck.svg')}" title="{object.website}" alt="{object.website}" />
+											</f:else>
+										</f:if>
+									</div>
+								</f:link.external>
+							</div>
+						</f:if>
+						<f:if condition="{object.externlink}">
+							<div class="control_button">
+								<f:link.external class="jo-link-extern" uri="{object.externlink}" target="_blank">
+									<span><jo:translate key='jo_bkr_base.externlink' /></span>
+									<div class="addGradient">
+										<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+											<f:then>
+												<div class="joSprite" title="{object.externlink}"></div>
+											</f:then>
+											<f:else>
+												<f:image src="{f:uri.resource(path:'Images/btn_zurueck.svg')}" title="{object.externlink}" alt="{object.externlink}" />
+											</f:else>
+										</f:if>
+									</div>
+								</f:link.external>
+							</div>
+						</f:if>
+						<f:if condition="{object.gnddata}">
+							<div class="control_button">
+								<f:link.external class="jo-link-extern" uri="http://d-nb.info/gnd/{object.gnddata}" target="_blank">
+									<span>GND</span>
+									<div class="addGradient">
+										<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+											<f:then>
+												<div class="joSprite" title="{object.gnddata}"></div>
+											</f:then>
+											<f:else>
+												<f:image src="{f:uri.resource(path:'Images/btn_zurueck.svg')}" title="{object.gnddata}" alt="{object.gnddata}" />
+											</f:else>
+										</f:if>
+									</div>
+								</f:link.external>
+							</div>
+						</f:if>
+						<f:if condition="{p_items}">
+							<div class="p_items">
+								<div class="control_button">
+									<a class="p_items_btn" href=".p_items_container" role="button" data-toggle="collapse" aria-expanded="false">
+										<span><jo:translate key='jo_bkr_base.publikationen' /></span>
+										<div class="addGradient">
+											<div class="joSprite" title="<jo:translate key='jo_bkr_base.publikationen' />"></div>
+										</div>
+									</a>
+								</div>
+								<div class="p_items_container collapse">
+									<f:for each="{p_items}" as="p_item" iteration="r">
+										<div class="p_item">
+											<div class="p_item_title">{p_item.title}</div>
+											<div class="p_item_bodytext"><f:format.html>{p_item.bodytext}</f:format.html></div>
+										</div>
+									</f:for>
+								</div>
+							</div>
+						</f:if>
+					</div>
+				</f:if>
+			</div>
+		</div>
+	</div>
+</f:if>
+
+<f:if condition="{settings.listeandmap} && !{object}">
+	</div>
+</f:if>

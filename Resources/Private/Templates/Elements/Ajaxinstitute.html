@@ -1,0 +1,21 @@
+<f:link.action class="joMapInstitute-link" action="index" arguments="{uid:'{object.uid}'}">
+	<div class="joMapInstitute row">
+			<div class="<f:if condition='{object.image}'><f:then>col-8</f:then><f:else>col-12</f:else></f:if> txt">
+				<f:if condition="{object.title}">
+					<div class="col-md-12 title">
+							<h2>{object.title}</h2>
+					</div>
+				</f:if>
+				<f:if condition="{object.description}">
+					<div class="col-md-12 description">
+						<f:format.crop maxCharacters="150"><f:format.html>{object.description}</f:format.html></f:format.crop>
+					</div>
+				</f:if>
+			</div>
+			<f:if condition="{object.image}">
+				<div class="col-4 img">
+					<div class="joResponseImage" style="background-image: url(<f:uri.image src='{object.image.0.uid}' treatIdAsReference='TRUE' width='400c' height='400c' />)"></div>
+				</div>
+			</f:if>
+	</div>
+</f:link.action>

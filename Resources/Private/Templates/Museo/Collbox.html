@@ -1,0 +1,126 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<f:flashMessages />
+<div class="colbox_export">
+	<f:if condition="{collbox_content}">
+		<f:then>
+			<div class="colbox_text">
+				<div class="colbox-header">
+					<h2>{jo:translate(key:'{langPath}:collbox')}</h2>
+					<div class="collbox-link-container">
+						<f:link.action class="btn-delete" noCache="1" action="collbox" additionalParams="{v:'List'}" arguments="{delete_box:'1'}" title="{jo:translate(key:'{langPath}:collbox.delete')}">
+					  		<div class="sprite_mask" id="del">
+					  			<div class="joSprite"></div>
+							</div>
+							<span>{jo:translate(key:'{langPath}:collbox.delete')}</span>
+						</f:link.action>
+						<f:if condition="{settings.xsl.download} == 1">
+							<f:link.action noCache="1" class="btn-export" action="collbox" arguments="{export_box:'1',export_type:'xls'}" title="{jo:translate(key:'{langPath}:collbox.export.xsl')}">
+						  		<div class="sprite_mask" id="export">
+						  			<div class="joSprite"></div>
+						  		</div>
+							  	<span>{jo:translate(key:'{langPath}:collbox.export.xsl')}</span>
+							</f:link.action>
+						</f:if>
+						<f:if condition="{settings.gpx.download} == 1">
+							<f:link.action noCache="1" class="btn-export-gpx" action="collbox" arguments="{export_box:'1',export_type:'gpx'}" title="{jo:translate(key:'{langPath}:collbox.export.gpx')}">
+						  		<div class="sprite_mask" id="export-gpx">
+							  		<div class="joSprite"></div>	
+						  		</div>
+						  		<span>{jo:translate(key:'{langPath}:collbox.export.gpx')}</span>
+							</f:link.action>
+						</f:if>
+						<f:if condition="{settings.pdf.download} == 1">
+							<f:cObject typoscriptObjectPath="lib.web2pdf"/>
+						</f:if>
+					</div>
+				</div>
+				<f:if condition="{settings.collboxText}">
+					<div class="joCollboxInfoText"><f:format.html>{settings.collboxText}</f:format.html></div>
+				</f:if>
+				<f:comment>
+				<!--
+				<span class="joCollboxInfoText">
+					Hier finden Sie die Übersicht Ihrer gespeicherten Daten. Bitte beachten Sie, dass diese Zusammenstellung gelöscht wird, wenn Sie Ihren Browser schließen.
+					<br><br>
+					Sie können jedoch die vollständige Übersicht in verschiedenen Formaten exportieren: 
+					<br>
+				</span>
+				<span class="joCollboxInfoText">
+					<br>Klicken Sie hier, um Ihre Recherche-Daten <u>vollständig</u> zu löschen:<br>
+				</span>
+				<div class="collbox-link-container">
+					<f:link.action noCache="1" action="collbox" additionalParams="{v:'List'}" arguments="{delete_box:'1'}" title="Meine Recherche-Daten vollständig löschen">
+						<button type="button" class="btn btn-danger">
+					  		<div class="sprite_mask" id="del">
+					  			<div class="joSprite" title="Meine Recherche-Daten vollständig löschen"></div>
+							</div> Merkliste löschen
+					  	</button>
+					</f:link.action>
+				</div>
+				-->
+				</f:comment>
+			</div>
+			<div class="results_colbox">
+				<f:comment>
+					<!--
+					Schalter, um diverse Teile des Plugins via Ajax zu laden - kommt aus Flexform
+					-->
+				</f:comment>
+				<f:variable name="ajaxpagetype" value="0"/>
+				<f:variable name="ajaxpagetypecssclass" value=""/>
+				<f:if condition="{config.ajaxload}">
+					<f:variable name="ajaxpagetype" value="200"/>
+					<f:variable name="ajaxpagetypecssclass" value=" t200"/>
+				</f:if>
+				<f:comment>
+					<!--
+						Wenn das Template über Ajax geladen wird, werden die JavaScriptvariablen nicht in den Header sondern zu Beginn des HTML Blocks geladen
+					-->
+				</f:comment>
+				<f:if condition="{config.ajaxload}">
+					<script>
+						<f:format.html>{javascriptvar}</f:format.html>	
+					</script>
+				</f:if>
+				<f:variable name="imagecol" value="4"/>
+				<f:if condition="{config.fieldlist.listview.images.imagecol}">
+					<f:variable name="imagecol" value="{config.fieldlist.listview.images.imagecol}"/>
+				</f:if>
+				<div class="list_layout">
+					<div class="listview_wrap results">
+						<f:comment>
+							<!-- Feldnamen des Konfigurationsblockes, der benutzt werden soll (z.B. listview, mapview, detailview, childobjects) -->
+						</f:comment>
+						<f:variable name="fieldname" value="listview"/>
+						<f:comment>
+							<!-- Name der Variable, die die Objekte enthält, die benutzt werden sollen (z.B. child_elements.response.docs) -->
+						</f:comment>
+						<f:variable name="objectcontainer" value="joSolrObjects.response.docs"/>
+						<f:comment>
+							<!-- Alldatavariable schreiben -->
+						</f:comment>
+						<f:variable name="alldata" value="{_all}"/>
+						<f:if condition="{alldata.{objectcontainer}}">
+							<f:then>
+								<f:if condition="{alldata.config.init.searchconfig.showpaginatorontop}">
+									<f:render partial="Paginator" arguments="{_all}"/>
+								</f:if>
+								<f:variable name="detail_arguments" value="{jopaginatepage:'{alldata.extbase_config.paginate}',h:'1',startfrom:'empty'}"/>
+								<f:render partial="Views" section="listview_block" arguments="{_all}"/>
+								<f:render partial="Paginator" arguments="{_all}"/>
+							</f:then>
+							<f:else>
+								<f:render partial="Sections" section="nothing_found" arguments="{_all}"/>
+							</f:else>
+						</f:if>
+					</div>
+				</div>
+			</div>
+		</f:then>
+		<f:else>
+			<div class="container">
+				<h2 class="text-center">{jo:translate(key:'{langPath}:collbox.empty')}</h2>
+			</div>
+		</f:else>
+	</f:if>
+</div>

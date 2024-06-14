@@ -1,0 +1,283 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<f:flashMessages />
+<f:comment>
+	<!--
+	Schalter, um diverse Teile des Plugins via Ajax zu laden - kommt aus Flexform
+	-->
+</f:comment>
+<f:variable name="ajaxpagetype" value="0"/>
+<f:variable name="ajaxpagetypecssclass" value=""/>
+<f:if condition="{config.ajaxload}">
+	<f:variable name="ajaxpagetype" value="200"/>
+	<f:variable name="ajaxpagetypecssclass" value=" t200"/>
+</f:if>
+<f:comment>
+	<!--
+		Wenn das Template über Ajax geladen wird, werden die JavaScriptvariablen nicht in den Header sondern zu Beginn des HTML Blocks geladen
+	-->
+</f:comment>
+<f:if condition="{config.ajaxload}">
+	<script>
+		<f:format.raw>{javascriptvar}</f:format.raw>	
+	</script>
+</f:if>
+<f:switch expression="{settings.maplayout}">
+   <f:case value="1"><f:render section="layout_1" arguments="{_all}"/></f:case>
+   <f:case value="2"><f:render section="layout_2" arguments="{_all}"/></f:case>
+   <f:case value="3"><f:render section="layout_3" arguments="{_all}"/></f:case>
+   <f:defaultCase><f:render section="layout_1" arguments="{_all}"/></f:defaultCase>
+</f:switch>
+
+<f:section name="map_div">
+	<div id="ol4-mapdiv">
+		<div id="map-jo-icon" class="d-block d-sm-none"></div>
+	</div>
+	<div id="popup" class="ol-popup">
+		<div id="popup-loader" style="display: none"></div>
+		<a href="#" id="popup-closer" class="ol-popup-closer"></a>
+		<div id="popup-content"></div>
+	</div>
+	<div id="bound-closer"></div>
+</f:section>
+
+<f:section name="info_container">
+	<div id="joInfo-container">
+		<div id="joInfo-loader" style="display: none"></div>
+		<div id="joInfo-content"></div>
+	</div>
+	<f:if condition="{settings.mapTitle} || {settings.mapText} || {settings.link}">
+		<div class="map-search-container">
+			<f:render section="link_to_searchpage" arguments="{_all}"/>
+		</div>
+	</f:if>
+</f:section>
+
+<f:section name="link_to_searchpage">
+	<f:if condition="{settings.mapTitle}">
+		<h2>{settings.mapTitle}</h2>
+	</f:if>
+	<f:if condition="{settings.mapText}">
+		<f:format.html>{settings.mapText}</f:format.html>
+	</f:if>
+	<f:if condition="{settings.link}">
+		<div id="search_link">
+			<f:link.action pageUid="{settings.link}" noCache="1">
+				Zur Gesamtübersicht
+			</f:link.action>
+		</div>
+	</f:if>
+</f:section>
+
+<f:section name="layout_2">
+	<div id="joMaps-container" class="map_layout_2 row no-gutters" data-dotcolor="{settings.dotcolor}">
+		<div id="ol4-map-container" class="col-12 active" style="height:60vh;">
+			<f:render section="map_div" arguments="{_all}"/>
+		</div>
+		<f:render section="info_container" arguments="{_all}"/>
+		<f:if condition="!{settings.hideMapFacette} || !{settings.hideMapList}">
+			<div id="map-list" class="col-12">
+				<div class="joScrollWrap">
+					<f:if condition="!{settings.hideMapFacette}"> 
+						<f:render partial="Facettecontrols" arguments="{_all}"/>
+					</f:if>
+					<f:if condition="!{settings.hideMapList}">
+						<f:render section="listgrid" arguments="{_all}"/>
+					</f:if>
+				</div>
+			</div>
+		</f:if>
+	</div>
+</f:section>
+
+<f:section name="listgrid">
+	<f:comment>
+	<!--
+		Das gibt es komplett redundant nochmal als template - sollte man in jedem fall zusammenführen
+	-->
+	</f:comment>
+	<div class="joGridview results">
+		<f:if condition='{joSolrObjects.response.docs}'>
+			<f:then>	
+				<f:variable name="itemclasses" value="col-12 col-md-6 col-xl-4"/>
+				<f:if condition='{config.templates.overviewitemclasses_listgrid}'>
+					<f:variable name="itemclasses" value="col-12 col-md-4 col-xl-3"/>
+				</f:if>
+				<div class="row no-gutters grid_inner_wrap">
+					<f:for each="{joSolrObjects.response.docs}" as="items" key="number" iteration="counter">
+						<div class="grid-item overflow-hidden position-relative {itemclasses}">
+							<div class="h-100 position-absolute top left w-100 grid-wrap">
+								<div class="grid-link d-flex flex-column h-100">
+									<f:link.action pageType="{ajaxpagetype}" class="h-100 d-block{ajaxpagetypecssclass}" noCache="1" action="detailobject" arguments="{joDetailView:'{items.id}',jopaginatepage:'{extbase_config.paginate}',h:'1'}" additionalParams="{ceid:'{extbase_config.ce_uid}'}">
+										<div class="img_grid_wrap h-100 row no-gutters">
+											<f:if condition="{items.images}">
+												<f:then>
+													<f:for each="{items.images}" as="item" key="subnumber" iteration="subcounter">
+														<f:alias map="{imagedata: '{item->jo:explode(delimiter:\'$\')}'}">
+									                      <f:if condition="{subcounter.cycle} <= {config.fieldlist.gridview.images.count}"> 
+								                      			<div class="grid-img col" <f:if condition='{imagedata.0}'>style="background-image:url('{imagedata.0}')"</f:if>></div>
+									                      </f:if>
+									                    </f:alias>
+								                    </f:for>
+						           				 </f:then>
+									            <f:else>  
+			                    					<f:render partial="Sections" arguments="{_all}" section="placeholder-background"/>
+									        	</f:else>
+				                        	</f:if>
+				                        </div>
+				                    </f:link.action>
+			                        <div class="grid-text-container">
+		                                <div class="grid-text">
+		                                    <f:if condition="{config.fieldlist.gridview.headline.name} && {config.init.authdata.idfield}">
+												<div class="title_or_symbols">
+													<f:link.action pageType="{ajaxpagetype}" class="d-block{ajaxpagetypecssclass}" noCache="1" action="detailobject" arguments="{joDetailView:'{items.id}',jopaginatepage:'{extbase_config.paginate}',h:'1'}" additionalParams="{ceid:'{extbase_config.ce_uid}'}">
+														<h2>
+															<f:render partial="Sections" arguments="{fields:'{fields}', items:'{items}', config:'{config}',langPath:'{langPath}'}" section="headline"/>
+														</h2>
+													</f:link.action>
+												</div>
+											</f:if>
+		                                   	<f:if condition="{config.fieldlist.gridview.fields}">
+												<f:for each="{config.fieldlist.gridview.fields}" as="fields" key="fk" iteration="fi">
+													<f:render partial="Sections" arguments="{_all}" section="buildfieldsandsegments"/>
+												</f:for>
+											</f:if>
+		                                </div>
+		                            </div>
+		                        </div>
+							</div>
+						</div>
+					</f:for>
+				</div>
+				<f:render partial="Paginator" arguments="{_all}"/>
+			</f:then>
+			<f:else>
+				<div class="noResults_wrap">
+					<h1 class="joNothingFound">{jo:translate(key:'{langPath}:jo_bkr_base.noobjects')}</h1>
+					<f:link.action pageType="{ajaxpagetype}" noCache="1" class="c_button d-inline-block pt-3{ajaxpagetypecssclass}" arguments="{joDel:'1'}" additionalParams="{ceid:'{extbase_config.ce_uid}'}">
+						<div class="joDeleteIcon_noResults d-flex align-items-center" id="joDeleteIcon">	
+							<div
+									class="joSprite joFoundIcon no-results"
+									alt="{jo:translate(key:'{langPath}:solrindex_title_clearallfilter')}"
+									title="{jo:translate(key:'{langPath}:solrindex_title_clearallfilter')}"
+								>
+							</div>
+							<span class="pl-3">
+								<jo:translate key='{langPath}:solrindex_title_clearallfilter' />
+							</span>
+						</div>
+					</f:link.action>
+				</div>
+			</f:else>
+		</f:if>
+	</div>
+</f:section>
+
+<f:section name="layout_1">
+	<div id="joMaps-container" class="map_layout_1 row no-gutters" data-dotcolor="{settings.dotcolor}">
+		<div id="ol4-map-container" class="col-md-8 active">
+			<f:render section="map_div" arguments="{_all}"/>
+		</div>
+		<f:render section="info_container" arguments="{_all}"/>
+		<div id="map-list" class="col-md-4">
+			<f:if condition="{settings.showSubmenu}">
+				<div class="submenu clearfix">
+					<div class="container">
+						<f:cObject typoscriptObjectPath="lib.subMenu_1" />
+					</div>
+				</div>
+			</f:if>
+			<div class="joScrollWrap">
+				<f:if condition="!{settings.hideMapFacette}"> 
+					<f:render partial="Facettecontrols" arguments="{_all}"/>
+				</f:if>
+				<f:if condition="!{settings.hideMapList}">
+					<f:render partial="Listitems" arguments="{_all}"/>
+				</f:if>
+			</div>
+			<f:if condition="{extbase_config.action} == 'map'">
+				<div class="map-slide-box results map_view ">
+					<f:for each="{joSolrObjects.response.docs}" as="items" key="number" iteration="counter">
+						<div class="map-slide-item item-{items.id}" data-id="{items.id}">
+							<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<div class="clearfix">	
+								<f:if condition="{config.fieldlist.mapview.headline.name} && {config.init.authdata.idfield}">
+									<div class="title_or_symbols">
+										<h2>
+											<f:if condition="{config.fieldlist.mapview.settings.no_detail_view_link}">
+												<f:then>
+													<f:render partial="Sections" arguments="{fields:'{fields}', items:'{items}', config:'{config}',langPath:'{langPath}'}" section="headline"/>
+												</f:then>
+												<f:else>
+													<f:link.action noCache="1" class="{ajaxpagetypecssclass}" pageType="{ajaxpagetype}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" action="detailobject" title="Objektdetails öffnen" arguments="{joDetailView:'{items.{config.init.authdata.idfield}}',jopaginatepage:'{extbase_config.paginate}',h:'1'}">
+														<f:render partial="Sections" arguments="{fields:'{fields}', items:'{items}', config:'{config}',langPath:'{langPath}'}" section="headline"/>
+													</f:link.action>
+												</f:else>
+											</f:if>
+										</h2>
+									</div>
+								</f:if>
+								<div class="img">
+									<f:if condition="{config.fieldlist.mapview.settings.no_detail_view_link}">
+										<f:then>
+											<f:if condition="{items.images}">
+												<f:then>
+													<f:for each="{items.images}" as="item" key="subnumber" iteration="subcounter">
+														<f:alias map="{imagedata: '{item->jo:explode(delimiter:\'$\')}'}">
+							                      	<f:if condition="{subcounter.cycle} <= {config.fieldlist.mapview.images.count}">
+						                      			<div class="grid-img col" <f:if condition='{imagedata.0}'>style="background-image:url('{imagedata.0}')"</f:if>></div>
+							                      		<f:if condition="{config.fieldlist.mapview.settings.maplist_showimgcaption}"><div class="grid-img-caption">{imagedata.2}</div></f:if>
+							                      	</f:if>
+							                    </f:alias>
+						                    	</f:for>
+				           				 	</f:then>
+							            	<f:else>  
+		                    					<f:render partial="Sections" arguments="{_all}" section="placeholder-background"/>
+									        	</f:else>
+		                        	</f:if>
+										</f:then>
+										<f:else>
+											<f:link.action pageType="{ajaxpagetype}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" class="row no-gutters h-100 list-view flex_link{ajaxpagetypecssclass}" noCache="1" action="detailobject" arguments="{joDetailView:'{items.id}',jopaginatepage:'{extbase_config.paginate}',h:'1'}">
+												<f:if condition="{items.images}">
+													<f:then>
+														<f:for each="{items.images}" as="item" key="subnumber" iteration="subcounter">
+															<f:alias map="{imagedata: '{item->jo:explode(delimiter:\'$\')}'}">
+										                      <f:if condition="{subcounter.cycle} <= {config.fieldlist.mapview.images.count}"> 
+									                      			<div class="grid-img col" <f:if condition='{imagedata.0}'>style="background-image:url('{imagedata.0}')"</f:if>></div>
+										                      </f:if>
+										                    </f:alias>
+									                    </f:for>
+							           				 </f:then>
+										            <f:else>  
+				                    					<f:render partial="Sections" arguments="{_all}" section="placeholder-background"/>
+										        	</f:else>
+			                        	</f:if>
+											</f:link.action>
+										</f:else>
+									</f:if>
+								</div>
+								<f:if condition="{config.fieldlist.mapview.fields}">
+									<f:for each="{config.fieldlist.mapview.fields}" as="fields" key="fk" iteration="fi">
+										<f:render partial="Sections" arguments="{_all}" section="buildfieldsandsegments"/>
+									</f:for>
+								</f:if>
+							</div>
+							<f:if condition="!{config.fieldlist.mapview.settings.hideConrols}">
+								<div class="control_wrap">
+									<f:render partial="Sections" arguments="{_all}" section="controls"/>
+								</div>
+							</f:if>
+						</div>
+					</f:for>
+				</div>
+			</f:if>
+		</div>
+	</div>
+</f:section>
+
+<f:section name="layout_3">
+	<div id="joMaps-container" class="map_layout_3 row no-gutters" data-dotcolor="{settings.dotcolor}">
+		<div id="ol4-map-container" class="col-12 active">
+			<f:render section="map_div" arguments="{_all}"/>
+		</div>
+	</div>
+</f:section>

@@ -1,0 +1,1032 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<f:flashMessages />
+
+<f:comment>
+  <!--
+  Schalter, um diverse Teile des Plugins via Ajax zu laden - kommt aus Flexform
+  -->
+</f:comment>
+<f:variable name="ajaxpagetype" value="0"/>
+<f:variable name="ajaxpagetypecssclass" value=""/>
+<f:if condition="{config.ajaxload}">
+  <f:variable name="ajaxpagetype" value="200"/>
+  <f:variable name="ajaxpagetypecssclass" value=" t200"/>
+</f:if>
+
+<f:comment>
+<!--
+  <f:if condition="{mirador}">
+
+  <div id="mirador-viewer" style="width: 100%; height: 600px;"></div>
+  <div id="mirador-viewer" style="position: fixed; left: 0; right: 0; top: 0; bottom: 0; z-index: 99999999;"></div>
+</f:if>
+-->
+</f:comment>
+<div class="joDetail">
+  <f:if condition="{joSolrObjects.response.docs}">
+    <f:for each="{joSolrObjects.response.docs}" as="items" key="number" iteration="counter">
+      <f:switch expression="{config.init.searchconfig.detailview}">
+        <f:case value="vertical">
+          <f:render section="vertical_view" arguments="{_all}"/>
+        </f:case>
+        <f:case value="classic">
+          <f:render section="classic_view" arguments="{_all}"/>
+        </f:case>
+        <f:defaultCase>
+           <f:render section="default_view" arguments="{_all}"/>
+        </f:defaultCase>
+      </f:switch>
+    </f:for>
+  </f:if>
+</div>
+
+<f:comment>
+  <!-- Klassische Darstellung der Detailansicht -->
+</f:comment>
+<f:section name="classic_view">
+  <f:variable name="first_img_url"></f:variable>
+  <div class="wrapper classic_view">
+    <f:render section="bcp" arguments="{_all}"/>
+    <div class="medium_back d-flex">
+      <f:if condition="!{config.fieldlist.detailview.config.hideupperbacklink}">
+        <f:render section="backlink" arguments="{_all}"/>
+      </f:if>
+      <f:render section="additional_headline" arguments="{_all}"/>
+      <f:render section="prevnextitem" arguments="{_all}"/>
+      <f:render section="share_buttons" arguments="{_all}"/>
+      <f:render section="controls_icon" arguments="{_all}"/>
+      <f:if condition="!{config.fieldlist.detailview.config.hidecollapseallintoolbox}">
+        <f:render section="collapse_all" arguments="{_all}"/>
+      </f:if>
+    </div>
+    <div class="row no-gutters text_containers">
+      <f:if condition="{config.fieldlist.detailview.main_cols.master}">
+        <f:then>
+          <div class="row no-gutters master_wrap col-12">
+            <f:for each="{config.fieldlist.detailview.main_cols.master}" as="mrows" key="mk" iteration="mi">
+                <f:variable name="css_classes" value="col-md-6"/>
+                <f:variable name="wrappername" value="div_{mi.index} "/>
+                <f:if condition="{mrows.colconfigclass}">
+                  <f:variable name="css_classes" value="{mrows.colconfigclass}"/>
+                </f:if>
+                 <f:if condition="{mrows.name}">
+                  <f:variable name="wrappername" value="{mrows.name} "/>
+                </f:if>
+                <div class="{wrappername}{css_classes}">
+                    <f:render section="field_block" arguments="{_all}"/>
+                </div> 
+            </f:for>
+          </div>
+        </f:then>
+        <f:else>
+          <f:render partial="Image" section="image_viewer" arguments="{_all}"/>
+          <f:render section="field_block" arguments="{_all}"/>
+        </f:else>
+      </f:if>
+    </div>
+  </div>
+  <f:if condition="{related_objects.response.docs}">
+     <f:render section="relatedobjects" arguments="{_all}"/>
+  </f:if>
+  <f:render section="relations_view_1" arguments="{_all}"/>
+  <f:if condition="!{config.fieldlist.detailview.config.hidelowerbacklink}">
+    <f:render section="backlink" arguments="{_all}"/>
+  </f:if>
+</f:section>  
+
+
+<f:comment>
+  <!-- Standard Darstellung der Detailansicht -->
+</f:comment>
+<f:section name="default_view_new">
+  <div class="wrapper default_view row no-gutters">
+    <f:comment>
+      <!-- Wenn TEI-Text enthalten ist, wird eine alternative Ansicht geladen -->
+     <!--
+    <f:if condition="{items.fulltextTei}">
+      <div class="col-12 tei-detail-header">
+        <f:render section="bcp" arguments="{_all}"/>
+        <f:if condition="{config.fieldlist.detailview.headline.name} && {config.init.authdata.idfield}">
+          <div class="title_or_symbols">
+            <h2 class="detail-title">
+                <f:format.html>
+                  <f:render partial="Sections" arguments="{fields:'{fields}', items:'{items}', config:'{config}',langPath:'{langPath}'}" section="headline"/>
+                </f:format.html>
+            </h2>
+          </div>
+        </f:if>
+      </div>
+    </f:if>
+    -->
+     </f:comment>
+    <f:render partial="Image" section="image_viewer" arguments="{_all}"/>
+    <div id="sidebar" class="detailtext flex-column collapse show width d-flex col-md-4">
+      <div class="sidebar_wrap">
+        <f:if condition="!{items.fulltextTei}">
+          <f:render section="bcp" arguments="{_all}"/>
+          <f:if condition="{config.fieldlist.detailview.headline.name} && {config.init.authdata.idfield}">
+            <div class="title_or_symbols">
+              <h2 class="detail-title">
+                  <f:format.html>
+                    <f:render partial="Sections" arguments="{fields:'{fields}', items:'{items}', config:'{config}',langPath:'{langPath}'}" section="headline"/>
+                  </f:format.html>
+                  <f:render section="collapse_all" arguments="{_all}"/>
+              </h2>
+            </div>
+          </f:if>
+        </f:if>
+        <f:if condition="{config.fieldlist.detailview.fields}">
+          <f:for each="{config.fieldlist.detailview.fields}" as="fields" key="fk" iteration="fi">
+            <f:render partial="Sections" arguments="{_all}" section="buildfieldsandsegments"/>
+          </f:for>
+        </f:if>
+        <f:if condition="{child_elements.response.docs}">
+          <div class="sectionwrap_childobjects">
+            <h3 id="childobjects-h" data-toggle="collapse" aria-expanded="{f:if(condition: '{fields.show}', then: 'true', else: 'false')}" data-target="#childobjects" class="pointer">{jo:translate(key:'{langPath}:jo_bkr_base.detail.enthalteneobjekte')} ({child_elements.response.numFound}):</h3>
+            <f:variable name="classes">
+              <f:if condition="{fields.hideaggregationheader} != 'true'">
+                <f:if condition="{fields.show}">
+                  <f:then> show collapse</f:then>
+                  <f:else> collapse</f:else>
+                </f:if>
+              </f:if>
+            </f:variable> 
+            <div id="childobjects" class="childobjects-container{classes}">
+              <f:render section="childobjects_plain" arguments="{_all}"/>
+            </div>
+          </div>
+        </f:if>
+        <f:if condition="{config.init.searchconfig.objectcomment.active} == '1'">
+          <f:render partial="Sections" arguments="{_all}" section="feedback"/>
+        </f:if>
+      </div>
+      <f:comment>
+        <!--
+          @all - die merkliste ist noch nicht auf ajax umgebaut
+        -->
+      </f:comment>
+      <div class="medium_back d-flex">
+        <f:render section="additional_headline" arguments="{_all}"/>
+        <f:render section="prevnextitem" arguments="{_all}"/>
+        <f:render section="share_buttons" arguments="{_all}"/>
+        <f:render section="controls_icon" arguments="{_all}"/>
+      </div>
+      <div class="medium_back">
+          <f:render section="backlink" arguments="{_all}"/>
+      </div>
+    </div>
+  </div>
+  <f:comment>
+    <!--
+      Das haben wir nur für Kartenspeicher ausgeblendet - für gotha muss das wieder rein und generell müssen wir schauen, ob wir das so machen wollen oder ob die related items auf der rechten Seite im default view ausgespielt werden
+    <f:if condition="{showmap} && {items.images}">
+      <f:render arguments="{_all}" section="map"/>
+    </f:if>
+    <f:if condition="{child_elements.response.docs}">
+        <f:render section="childobjects" arguments="{_all}"/>
+    </f:if>
+    <f:if condition="{child_elements.response.docs} || ({items.lonlat} && {items.images})">
+      <f:render section="backlink" arguments="{_all}"/>
+    </f:if>
+    -->
+  </f:comment>
+</f:section>  
+
+<f:comment>
+  <!-- Standard Darstellung der Detailansicht - backup -->
+</f:comment>
+<f:section name="default_view">
+  <div class="wrapper default_view row no-gutters">
+    <f:comment>
+      <!-- Wenn TEI-Text enthalten ist, wird eine alternative Ansicht geladen -->
+    </f:comment>
+    <f:if condition="{items.fulltextTei}">
+      <div class="col-12 tei-detail-header">
+        <f:render section="bcp" arguments="{_all}"/>
+        <f:if condition="{config.fieldlist.detailview.headline.name} && {config.init.authdata.idfield}">
+          <div class="title_or_symbols">
+            <h2 class="detail-title">
+                <f:format.html>
+                  <f:render partial="Sections" arguments="{fields:'{fields}', items:'{items}', config:'{config}',langPath:'{langPath}'}" section="headline"/>
+                </f:format.html>
+            </h2>
+          </div>
+        </f:if>
+      </div>
+    </f:if>
+    <f:render partial="Image" section="image_viewer" arguments="{_all}"/>
+    <div id="sidebar" class="detailtext flex-column collapse show width d-flex col-md-4">
+      <div class="sidebar_wrap">
+        <f:if condition="!{items.fulltextTei}">
+          <f:render section="bcp" arguments="{_all}"/>
+          <f:if condition="{config.fieldlist.detailview.headline.name} && {config.init.authdata.idfield}">
+            <div class="title_or_symbols">
+              <h2 class="detail-title">
+                  <f:format.html>
+                    <f:render partial="Sections" arguments="{fields:'{fields}', items:'{items}', config:'{config}',langPath:'{langPath}'}" section="headline"/>
+                  </f:format.html>
+                  <f:render section="collapse_all" arguments="{_all}"/>
+              </h2>
+            </div>
+          </f:if>
+        </f:if>
+        <f:if condition="{config.fieldlist.detailview.fields}">
+          <f:for each="{config.fieldlist.detailview.fields}" as="fields" key="fk" iteration="fi">
+            <f:render partial="Sections" arguments="{_all}" section="buildfieldsandsegments"/>
+          </f:for>
+        </f:if>
+        <f:if condition="{child_elements.response.docs}">
+          <div class="sectionwrap_childobjects">
+            <h3 id="childobjects-h" data-toggle="collapse" aria-expanded="{f:if(condition: '{fields.show}', then: 'true', else: 'false')}" data-target="#childobjects" class="pointer">{jo:translate(key:'{langPath}:jo_bkr_base.detail.enthalteneobjekte')} ({child_elements.response.numFound}):</h3>
+            <f:variable name="classes">
+              <f:if condition="{fields.hideaggregationheader} != 'true'">
+                <f:if condition="{fields.show}">
+                  <f:then> show collapse</f:then>
+                  <f:else> collapse</f:else>
+                </f:if>
+              </f:if>
+            </f:variable> 
+            <div id="childobjects" class="childobjects-container{classes}">
+              <f:render section="childobjects_plain" arguments="{_all}"/>
+            </div>
+          </div>
+        </f:if>
+        <f:if condition="{config.init.searchconfig.objectcomment.active} == '1'">
+          <f:render partial="Sections" arguments="{_all}" section="feedback"/>
+        </f:if>
+      </div>
+      <f:comment>
+        <!--
+          @all - die merkliste ist noch nicht auf ajax umgebaut
+        -->
+      </f:comment>
+      <f:if condition="{config.init.searchconfig.collectorbox} == 1">
+        <div class="colbox-con">
+          <div class="colbox d-inline-block control_button">
+            <f:if condition="{jo:joinarray(arraycontains:'{collbox_content}', keytofind:'{items.id}')}">
+              <f:then>
+                <f:link.action pageType="{ajaxpagetype}" action="detailobject" additionalParams="{ceid:'{extbase_config.ce_uid}'}" noCache="1" class="listBookmarkRemove{ajaxpagetypecssclass}" arguments="{joDetailView:'{items.id}',remove_from_box:'{items.id}',jopaginatepage:'{extbase_config.paginate}'}" title="{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks.remove')}">
+                  <span class="d-flex">{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks.remove')}</span>
+                  <div class="addGradient">
+                    <div class="joSprite"></div> 
+                  </div>
+                </f:link.action>
+              </f:then>
+              <f:else>
+                <f:link.action pageType="{ajaxpagetype}" action="detailobject" additionalParams="{ceid:'{extbase_config.ce_uid}'}" noCache="1" class="listBookmark{ajaxpagetypecssclass}" arguments="{joDetailView:'{items.id}',add_to_box:'{items.id}',jopaginatepage:'{extbase_config.paginate}'}" title="{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks')}">
+                  <span class="d-flex">{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks')}</span>
+                  <div class="addGradient">
+                    <div class="joSprite"></div>
+                  </div>
+                </f:link.action>
+              </f:else>
+            </f:if>
+          </div>
+        </div>
+      </f:if>
+      <div class="medium_back">
+          <f:render section="backlink" arguments="{_all}"/>
+      </div>
+    </div>
+  </div>
+  <f:comment>
+    <!--
+      Das haben wir nur für Kartenspeicher ausgeblendet - für gotha muss das wieder rein und generell müssen wir schauen, ob wir das so machen wollen oder ob die related items auf der rechten Seite im default view ausgespielt werden
+    <f:if condition="{showmap} && {items.images}">
+      <f:render arguments="{_all}" section="map"/>
+    </f:if>
+    <f:if condition="{child_elements.response.docs}">
+        <f:render section="childobjects" arguments="{_all}"/>
+    </f:if>
+    <f:if condition="{child_elements.response.docs} || ({items.lonlat} && {items.images})">
+      <f:render section="backlink" arguments="{_all}"/>
+    </f:if>
+    -->
+  </f:comment>
+</f:section>  
+
+  <f:section name="vertical_view">
+    <div class="wrapper vertical_view">
+        <div id="content" class="detailimage">
+          <div class="detailimage_scroll position-relative d-flex flex-column h-100">
+            <div class="btn_container bottom position-absolute">
+              <button type="button" class="img_zoom_in btn btn-jo" title="{jo:translate(key:'{langPath}:detail.zoom.in')}">
+                <span class="d-block">></span>
+              </button>
+              <button type="button" class="img_zoom_out btn btn-jo" title="{jo:translate(key:'{langPath}:detail.zoom.out')}">
+                <span class="d-block">></span>
+              </button>
+              <button type="button" class="togglefullscreen btn d-inline-block btn-jo" title="{jo:translate(key:'{langPath}:detail.fullscreentoggle')}">
+                <span class="d-block">></span>
+              </button>
+            </div>
+          <f:if condition="{items.images}">
+              <f:then>
+                <div class="bigimg_wrap h-md-100">
+                  <div class="img_big h-md-100 row">
+                    <f:for each="{items.images}" as="item" key="subnumber" iteration="subcounter">
+                      <f:if condition="{subcounter.cycle} <= 1"> 
+                        <div class="img_item h-md-100 col-md d-flex flex-column count-{subcounter.cycle}">
+                            <f:render arguments="{item:'{item}',settings:'{settings}', config:'{config}'}" section="image"/>
+                        </div>
+                      </f:if>
+                    </f:for>
+                  </div>
+                </div>
+              </f:then>
+              <f:else>
+                <f:if condition="{showmap}">
+                  <f:then>
+                    <f:render arguments="{_all}" section="map"/>
+                  </f:then>
+                  <f:else>
+                    <f:render partial="Image" arguments="{_all}" section="placeholder"/>
+                  </f:else>
+                </f:if>
+              </f:else> 
+            </f:if>
+            <div class="info_overview row no-gutters position-relative">
+              <div class="col-md-4">
+                <f:if condition="{config.fieldlist.detailview.headline.name} && {config.init.authdata.idfield}">
+                  <div class="h-100 title_or_symbols">
+                    <h2 class="h-100 detail-title">
+                        <f:format.html>
+                          <f:render partial="Sections" arguments="{fields:'{fields}', items:'{items}', config:'{config}',langPath:'{langPath}'}" section="headline"/>
+                        </f:format.html>
+                    </h2>
+                  </div>
+                </f:if>
+              </div>
+              <div class="col-md-5 bg-img-wrap">
+                <f:if condition="{items.images}">
+          <f:then>
+            <f:variable name="img_number" value="{config.fieldlist.detailview.images.count}" />
+            <f:render partial="Sections" arguments="{_all}" section="image-img"/>
+               </f:then>
+                <f:else>  
+              <f:render partial="Sections" arguments="{_all}" section="placeholder-img"/>
+              </f:else>
+              </f:if>
+              </div>
+               <div class="col-md-3 d-flex back-wrap">
+                  <f:render section="backlink" arguments="{_all}"/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row no-gutters second_row position-relative" id="sidebar">
+           <f:if condition="{config.fieldlist.detailview.fields}">
+              <f:for each="{config.fieldlist.detailview.fields}" as="fields" key="fk" iteration="fi">
+                <f:render partial="Sections" arguments="{_all}" section="buildfieldsandsegments"/>
+              </f:for>
+           </f:if>
+         </div>
+        <f:comment>
+        <!--
+        <div id="sidebar" class="detailtext collapse show width d-flex">
+          <div class="sidebar_wrap">
+            <f:render section="bcp" arguments="{_all}"/>
+            <f:if condition="{config.fieldlist.detailview.fields}">
+              <f:for each="{config.fieldlist.detailview.fields}" as="fields" key="fk" iteration="fi">
+                <f:render partial="Sections" arguments="{_all}" section="buildfieldsandsegments"/>
+              </f:for>
+            </f:if>
+          </div>
+          <div class="medium_back">
+              <f:render section="backlink" arguments="{_all}"/>
+          </div>
+        </div>
+        -->
+      </f:comment>
+      </div>
+      <f:if condition="{showmap} && {items.images}">
+        <f:render arguments="{_all}" section="map"/>
+      </f:if>
+      <f:if condition="{child_elements.response.docs}">
+          <f:render section="childobjects" arguments="{_all}"/>
+      </f:if>
+      <f:if condition="{child_elements.response.docs} || ({items.lonlat} && {items.images})">
+        <f:render section="backlink" arguments="{_all}"/>
+      </f:if>
+  </f:section> 
+
+<f:comment>
+  <!--
+    Navigation zum Durchklicken der Ergebnisse (Vorgänger/Nachfolger)
+  -->
+</f:comment>
+<f:section name="prevnextitem">
+ <f:if condition="{config.init.searchconfig.showprevnext} && {prevnext} && {prevnext.current} <= {prevnext.numberresults}">
+    <ul class="prevnextitem">
+      <li class="itemprev">
+        <f:if condition="{prevnext.prev} === 0 || {prevnext.prev} > 0">
+          <f:then>
+            <f:link.action pageType="{ajaxpagetype}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" class="{ajaxpagetypecssclass}" noCache="1" action="detailobject" arguments="{startfrom:'{prevnext.prev}',jopaginatepage:'{extbase_config.paginate}',joDetailView:'{prevnext.previd}'}">
+               <<
+            </f:link.action>
+          </f:then>
+          <f:else>
+              <span><<</span>
+          </f:else>
+        </f:if>
+      </li>
+      <li class="itemcount>">{prevnext.current}/{prevnext.numberresults}</li>
+      <li class="itemnext">
+        <f:if condition="{prevnext.next} === 0 || {prevnext.next} > 0">
+          <f:then>
+            <f:link.action pageType="{ajaxpagetype}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" class="{ajaxpagetypecssclass}" noCache="1" action="detailobject" arguments="{startfrom:'{prevnext.next}',jopaginatepage:'{extbase_config.paginate}',joDetailView:'{prevnext.nextid}'}">
+               >>
+            </f:link.action>
+          </f:then>
+          <f:else>
+              <span>>></span>
+          </f:else>
+        </f:if>
+      </li>
+    </ul>
+  </f:if>
+</f:section>
+
+<f:section name="controls_icon">
+    <f:if condition="{config.init.searchconfig.collectorbox} == 1">
+      <div class="colbox control_button">
+        <f:if condition="{jo:joinarray(arraycontains:'{collbox_content}', keytofind:'{items.id}')}">
+          <f:then>
+            <f:link.action noCache="1" action="detailobject" pageType="{ajaxpagetype}" class="listBookmarkRemove{ajaxpagetypecssclass}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" arguments="{remove_from_box:'{items.id}',jopaginatepage:'{extbase_config.paginate}',joDetailView:'{items.id}', startfrom:'{prevnext.current_index}'}" title="{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks.remove')}">
+              <span class="cb_label">{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks.remove')}</span>
+            </f:link.action>
+          </f:then>
+          <f:else>
+            <f:link.action noCache="1" action="detailobject" pageType="{ajaxpagetype}" class="listBookmark{ajaxpagetypecssclass}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" arguments="{add_to_box:'{items.id}',jopaginatepage:'{extbase_config.paginate}',joDetailView:'{items.id}', startfrom:'{prevnext.current_index}'}" title="{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks')}">
+              <span class="cb_label">{jo:translate(key:'{langPath}:jo_bkr_base.bookmarks')}</span>
+            </f:link.action>
+          </f:else>
+        </f:if>
+      </div>
+    </f:if>
+</f:section>
+
+<f:comment>
+  <!-- Iteration der einzelnen Felder -->
+</f:comment>
+<f:section name="field_block">
+  <f:variable name="field_array" value="{config.fieldlist.detailview.fields}"/>
+  <f:variable name="headline_name" value="{config.fieldlist.detailview.headline.name}"/>
+  <f:if condition="{mrows.fields}">
+    <f:variable name="field_array" value="{mrows.fields}"/>
+  </f:if> 
+  <f:if condition="{headline_name} && {config.init.authdata.idfield}">
+    <div class="title_or_symbols">
+      <h2 class="detail-title">
+          <f:format.html>
+            <f:render partial="Sections" arguments="{fields:'{fields}', items:'{items}', config:'{config}',langPath:'{langPath}'}" section="headline"/>
+          </f:format.html>
+      </h2>
+    </div>
+  </f:if>
+  <f:if condition="{field_array}">
+    <f:for each="{field_array}" as="fields" key="fk" iteration="fi">
+      <div class="content_block_wrap {fields.colconfigclass} {fields.specialaggregationtype}">
+        <div class="content_block h-100">
+          <f:render partial="Sections" arguments="{_all}" section="buildfieldsandsegments"/>
+        </div>
+      </div>
+    </f:for>
+  </f:if>
+</f:section>
+
+<f:comment>
+  <!-- Zusätzliche Headline für die Toolbar der Detailansicht - aktuell nur Titel und Objekttyp möglich -->
+</f:comment>
+<f:section name="additional_headline">
+  <f:if condition="{config.fieldlist.detailview.config.showadditionalheadline}">
+    <f:spaceless> 
+      <f:if condition="{config.fieldlist.detailview.config.showobjecttype} && {items.objectType}">
+       <div class="objecttype_headline">{items.objectType}</div>
+      </f:if>
+      <f:if condition="{config.fieldlist.detailview.config.additionalheadlinesuffix} && {items.title}">
+        <div class="headline_suffix">{config.fieldlist.detailview.config.additionalheadlinesuffix}</div>
+      </f:if>
+      <f:if condition="{config.fieldlist.detailview.config.showadditionalheadlinelabel} && {items.title}">
+        <div class="headline_label">
+          <f:variable name="headline_label_name" value="Titel:"/>
+          <f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.title')}">
+            <f:variable name="headline_label_name" value="{jo:translate(key:'{langPath}:jo_bkr_base.title')}"/>
+          </f:if>
+          <f:if condition="{config.fieldlist.detailview.config.additional_label_field} && {items.{config.fieldlist.detailview.config.additional_label_field}} && {jo:translate(key:'{langPath}:jo_bkr_base.{items.{config.fieldlist.detailview.config.additional_label_field}}_title')}">
+             <f:variable name="headline_label_name" value="{jo:translate(key:'{langPath}:jo_bkr_base.{items.{config.fieldlist.detailview.config.additional_label_field}}_title')}"/>
+          </f:if>
+          {headline_label_name}
+        </div>
+      </f:if>
+      <div class="title_headline">{items.title}</div>
+    </f:spaceless>
+  </f:if>
+</f:section>
+
+<f:comment>
+  <!-- Sharing/Social Media Buttons -->
+</f:comment>
+<f:section name="share_buttons">
+  <f:if condition="!{config.fieldlist.detailview.config.hidesocialsharebuttons}">
+    <f:variable name="share_title" value="{currentobject.title}"/>
+    <f:variable name="share_url" value="{currentobject.url}"/>
+    <f:variable name="share_text" value="Schau, was ich gefunden habe."/>
+    <f:variable name="share_hashtag" value=""/>
+    <f:if condition="{config.fieldlist.detailview.config.showDownloadNextToShare} && {items.download}">
+      <div class="button_share_download">
+        <button type="button" class="download-btn-share" data-toggle="modal" data-target="#downloadModal" title="{jo:translate(key:'{langPath}:sections.export.downloads')}">{jo:translate(key:'{langPath}:sections.export.downloads')}</button>
+      </div>
+    </f:if>
+    <div class="button_share">
+      <button title="{jo:translate(key:'{langPath}:detail.button.share')}" class="button_share-toggler" data-toggle="collapse" data-target="#collapsebutton_share" aria-expanded="false" aria-controls="collapseExample">&nbsp;</button>
+      <div class="collapse" id="collapsebutton_share">
+        <ul class="button_share-list">
+          <li class="share_email">
+            <a href="mailto:?Subject={share_title}&Body={share_text} {share_url}" title="Per E-Mail teilen">
+              <span class="share-icon">&nbsp;</span>
+            </a>
+          </li>
+          <li class="share_fb">
+            <a href="http://www.facebook.com/sharer.php?u={share_url}" target="_blank" title="Auf Facebook teilen">
+              <span class="share-icon">&nbsp;</span>
+            </a>
+          </li>
+          <li class="share_pin">
+            <a href="javascript:void((function(){var e=document.createElement('script');e.setAttribute('type','text/javascript');e.setAttribute('charset','UTF-8');e.setAttribute('src','https://assets.pinterest.com/js/pinmarklet.js?r='+Math.random()*99999999);document.body.appendChild(e)})());" title="Auf Pinterest teilen">
+              <span class="share-icon">&nbsp;</span>
+            </a>
+          </li>
+          <li class="share_tw">
+            <a href="https://twitter.com/intent/tweet?url={share_url}&text={share_title}&hashtags={share_hashtag}" target="_blank" title="Auf Twitter teilen">
+              <span class="share-icon">&nbsp;</span>
+            </a>
+          </li>
+          <li class="share_mastodon">
+            <a href="https://mastodon.social/share/?url={share_url}&text={share_title}" target="_blank" title="Auf Twitter teilen">
+              <span class="share-icon">&nbsp;</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </f:if>
+</f:section>
+
+<f:comment>
+  <!-- Buttons zum Auf- und Zuklappen aller Accordeon-Tabs der Detailansicht -->
+</f:comment>
+<f:section name="collapse_all">
+  <div class="collapse_all_con"><span class="collapse_all_p" title="{jo:translate(key:'{langPath}:detail.collapse.plus')}"></span><span class="collapse_all_m" title="{jo:translate(key:'{langPath}:detail.collapse.minus')}"></span></div>
+</f:section>
+
+<f:comment>
+  <!--
+    Zurückbutton
+  -->
+</f:comment>
+<f:section name="backlink">
+  <f:link.action pageType="{ajaxpagetype}" action="{extbase_config.override_action}" class="bl d-flex{ajaxpagetypecssclass}" noCache="1" arguments="{jopaginatepage:'{extbase_config.paginate}'}" title="{jo:translate(key:'{langPath}:jo_bkr_base.backtooverview')}" additionalParams="{ceid:'{extbase_config.ce_uid}'}">
+    <div class="d-inline-block joSprite"></div>
+    <span>{jo:translate(key:'{langPath}:jo_bkr_base.backtooverview')}</span>
+  </f:link.action>
+</f:section>
+
+ <f:section name="nodata">
+  <div class="row no-gutters item_info_wrap">
+    <div class="col-12">keine Daten vorhanden</div>
+  </div>
+</f:section>
+
+  <f:section name="map">
+    <div id="map-container" class="h-100">
+        <div id="mapdiv" class="olMap h-100" ></div>
+        <div id="popup" class="ol-popup">
+          <div id="popup-loader" style="display: none"></div>
+          <div id="popup-content"></div>
+        </div>
+      </div>
+  </f:section>
+
+
+<f:section name="childobjects">
+  <f:variable name="vertical_or_horizontal" value=""/>
+  <f:if condition="{config.fieldlist.gridview.fieldalignment}">
+    <f:variable name="vertical_or_horizontal" value="{config.fieldlist.gridview.fieldalignment}"/>
+  </f:if>
+  <div class="childobjects">
+    <h2 class="subheadline">{jo:translate(key:'{langPath}:jo_bkr_base.detail.enthalteneobjekte')} ({child_elements.response.numFound}):</h2>
+    <div class="joGridview results {vertical_or_horizontal}">
+      <f:if condition='{child_elements.response.docs}'>
+        <f:variable name="itemclasses" value="col-12 col-md-6 col-xl-4"/>
+        <f:if condition='{config.templates.overviewitemclasses_listgrid}'>
+          <f:variable name="itemclasses" value="col-12 col-md-4 col-xl-3"/>
+        </f:if>
+        <div class="row grid_inner_wrap">
+          <f:for each="{child_elements.response.docs}" as="items" key="number" iteration="counter">
+            <div class="grid-item overflow-hidden position-relative {itemclasses}">
+              <div class="grid-wrap">
+                <div class="grid-link d-flex">
+                  <f:if condition="{items.images} || (!{items.images} && !{config.fieldlist.gridview.images.dontshowplaceholder})">
+                    <f:link.action additionalParams="{ceid:'{extbase_config.ce_uid}'}" pageType="{ajaxpagetype}" class="grid_img_link d-block{ajaxpagetypecssclass}" noCache="1" action="detailobject" arguments="{joDetailView:'{items.id}',jopaginatepage:'{extbase_config.paginate}',browse:'1'}">
+                      <div class="img_grid_wrap row no-gutters">
+                        <f:if condition="{items.images}">
+                          <f:then>
+                            <f:for each="{items.images}" as="item" key="subnumber" iteration="subcounter">
+                              <f:alias map="{imagedata: '{item->jo:explode(delimiter:\'$\')}'}">
+                                <f:if condition="{subcounter.cycle} <= {config.fieldlist.gridview.images.count}"> 
+                                    <div class="grid-img col" <f:if condition='{imagedata.0}'>style="background-image:url('{imagedata.0}')"</f:if>></div>
+                                </f:if>
+                              </f:alias>
+                            </f:for>
+                          </f:then>
+                          <f:else>  
+                            <f:render partial="Sections" arguments="{_all}" section="placeholder-background"/>
+                          </f:else>
+                        </f:if>
+                      </div>
+                    </f:link.action>
+                  </f:if>
+                  <div class="grid-text-container">
+                    <div class="grid-text">
+                      <f:if condition="{config.fieldlist.gridview.headline.name} && {config.init.authdata.idfield}">
+                        <div class="title_or_symbols">
+                          <f:link.action additionalParams="{ceid:'{extbase_config.ce_uid}'}" pageType="{ajaxpagetype}" class="d-block{ajaxpagetypecssclass}" noCache="1" action="detailobject" arguments="{joDetailView:'{items.id}',jopaginatepage:'{extbase_config.paginate}',browse:'1'}">
+                            <h2>
+                              <f:render partial="Sections" arguments="{fields:'{fields}', items:'{items}', config:'{config}',langPath:'{langPath}'}" section="headline"/>
+                            </h2>
+                          </f:link.action>
+                        </div>
+                      </f:if>
+                      <f:if condition="{config.fieldlist.gridview.fields}">
+                        <f:spaceless>
+                          <f:for each="{config.fieldlist.gridview.fields}" as="fields" key="fk" iteration="fi">
+                            <f:render partial="Sections" arguments="{_all}" section="buildfieldsandsegments"/>
+                            <f:if condition="{vertical_or_horizontal} == 'horizontal' && !{fi.isLast} && {items.{fields.name}}">
+                              <div class="sw delimiter">|</div>
+                            </f:if>
+                          </f:for>
+                        </f:spaceless>
+                      </f:if>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </f:for>
+        </div>
+        <f:render partial="Sections" arguments="{_all}" section="searchinstructure"/>
+      </f:if>
+    </div>
+  </div>
+</f:section>
+
+<f:section name="relatedobjects">
+  <f:variable name="vertical_or_horizontal" value=""/>
+  <f:if condition="{config.fieldlist.gridview.fieldalignment}">
+    <f:variable name="vertical_or_horizontal" value="{config.fieldlist.gridview.fieldalignment}"/>
+  </f:if>
+  <div class="childobjects childpadding" style="padding-left: 5%;padding-right:5%;">
+    <h2 class="subheadline">Ähnliche Objekte({related_objects.response.numFound}):</h2>
+    <div class="joGridview results {vertical_or_horizontal}">
+      <f:if condition='{related_objects.response.docs}'>
+        <f:variable name="itemclasses" value="col-12 col-md-6 col-xl-4"/>
+        <f:if condition='{config.templates.overviewitemclasses_listgrid}'>
+          <f:variable name="itemclasses" value="col-12 col-md-4 col-xl-3"/>
+        </f:if>
+        <div class="row grid_inner_wrap">
+          <f:comment>
+            <!--
+              Musste as="items" zu as="items2" umbennen, da wenn keine bilder beim Object vorhanden waren, es die Bilder vom Hauptobject nahm, da die variable da auch items hieß und zu dieser section übergeben wurde
+
+              Deswegen nicht als "items" lassen
+            -->
+          </f:comment>
+          <f:for each="{related_objects.response.docs}" as="items2" key="number" iteration="counter">
+            <div class="grid-item overflow-hidden position-relative {itemclasses}">
+              <div class="grid-wrap">
+                <div class="grid-link d-flex">
+                  <f:if condition="{items2.images} || (!{items2.images} && !{config.fieldlist.gridview.images.dontshowplaceholder})">
+                    <f:link.action additionalParams="{ceid:'{extbase_config.ce_uid}'}" pageType="{ajaxpagetype}" class="grid_img_link d-block{ajaxpagetypecssclass}" noCache="1" action="detailobject" arguments="{joDetailView:'{items2.id}',jopaginatepage:'{extbase_config.paginate}',browse:'1'}">
+                      <div class="img_grid_wrap row no-gutters">
+                        <f:if condition="{items2.images}">
+                          <f:then>
+                            <f:for each="{items2.images}" as="item" key="subnumber" iteration="subcounter">
+                              <f:alias map="{imagedata: '{item->jo:explode(delimiter:\'$\')}'}">
+                                <f:if condition="{subcounter.cycle} <= {config.fieldlist.gridview.images.count}"> 
+                                    <div class="grid-img col" <f:if condition='{imagedata.0}'>style="background-image:url('{imagedata.0}')"</f:if>></div>
+                                </f:if>
+                              </f:alias>
+                            </f:for>
+                          </f:then>
+                          <f:else>
+                            <f:render partial="Sections" arguments="{_all}" section="placeholder-background"/>
+                          </f:else>
+                        </f:if>
+                      </div>
+                    </f:link.action>
+                  </f:if>
+                  <div class="grid-text-container">
+                    <div class="grid-text">
+                      <f:if condition="{config.fieldlist.gridview.headline.name} && {config.init.authdata.idfield}">
+                        <div class="title_or_symbols">
+                          <f:link.action additionalParams="{ceid:'{extbase_config.ce_uid}'}" pageType="{ajaxpagetype}" class="d-block{ajaxpagetypecssclass}" noCache="1" action="detailobject" arguments="{joDetailView:'{items2.id}',jopaginatepage:'{extbase_config.paginate}',browse:'1'}">
+                            <h2>
+                              <f:render partial="Sections" arguments="{fields:'{fields}', items:'{items2}', config:'{config}',langPath:'{langPath}'}" section="headline"/>
+                            </h2>
+                          </f:link.action>
+                        </div>
+                      </f:if>
+                      <f:if condition="{config.fieldlist.gridview.fields}">
+                        <f:spaceless>
+                          <f:for each="{config.fieldlist.gridview.fields}" as="fields" key="fk" iteration="fi">
+                            <f:render partial="Sections" arguments="{_all}" section="buildfieldsandsegments"/>
+                            <f:if condition="{vertical_or_horizontal} == 'horizontal' && !{fi.isLast} && {items2.{fields.name}}">
+                              <div class="sw delimiter">|</div>
+                            </f:if>
+                          </f:for>
+                        </f:spaceless>
+                      </f:if>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </f:for>
+        </div>
+        <f:comment>
+          <!--
+            Aktuell ist es NUR auf EIN Feld gelegt - muss dynamisch werden
+          -->
+        </f:comment>
+        <f:link.action noCache="1" class="searchinstructure" additionalParams="{add:'1'}" arguments="{classificationTopic:'{joSolrObjects.response.docs.0.classificationTopic}', setsubsearch:'1'}" title="Alle verbundenen Objekte anzeigen">Alle verbundenen Objekte anzeigen</f:link.action>
+      </f:if>
+    </div>
+  </div>
+</f:section>
+
+
+<f:section name="childobjects_old">
+  <div class="childobjects">
+    <h2 class="subheadline">{jo:translate(key:'{langPath}:jo_bkr_base.detail.enthalteneobjekte')} ({child_elements.response.numFound}):</h2>
+    <div class="row no-gutters">
+      <f:for each="{child_elements.response.docs}" as="items" key="k" iteration="i">
+        <div class="square objects col-md-3 position-relative">
+          <f:link.action pageType="{ajaxpagetype}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" class="h-100 top left w-100 position-absolute row no-gutters{ajaxpagetypecssclass}" noCache="1" action="detailobject" arguments="{joDetailView:'{items.id}',jopaginatepage:'{extbase_config.paginate}',browse:'1'}">
+            <f:if condition="{items.images}">
+              <f:then>
+                <f:if condition="{items.images.0}">
+                  <f:alias map="{imagedata: '{items.images.0->jo:explode(delimiter:\'$\')}'}">
+                    <div class="img col h-100" style="background-image: url('{imagedata.0}')"></div>
+                  </f:alias>
+                </f:if>
+                <f:if condition="{items.images.1}">
+                  <f:alias map="{imagedata: '{items.images.1->jo:explode(delimiter:\'$\')}'}">
+                    <div class="img col h-100" style="background-image: url('{imagedata.0}')"></div>
+                  </f:alias>
+                </f:if>
+              </f:then>
+              <f:else>
+                <div class="img placeholder h-100" style="background-image: url('{f:if(condition: '{settings.imgplaceholder}', then: '{settings.imgplaceholder}', else: '/typo3conf/ext/jo_museo/Resources/Public/Images/platzhalter.jpg')}')"></div>
+              </f:else>
+            </f:if>
+            <div class="w-100 h-100 dark_transparent_bg d-flex text-shadow info_wrap position-absolute top left">
+              <div class="d-inline-block textcanvas">
+                <f:if condition="{config.fieldlist.childobjects.fields}">
+                  <f:then>
+                    <f:for each="{config.fieldlist.childobjects.fields}" as="fields" key="fk" iteration="fi">
+                      <f:render partial="Sections" arguments="{_all}" section="buildfieldsandsegments"/>
+                    </f:for>
+                  </f:then>
+                  <f:else>
+                    <f:comment>
+                      <!--
+                      <f:format.crop maxCharacters="200" respectWordBoundaries="TRUE" respectHtml="TRUE" >
+                        <f:format.html>{items.title}</f:format.html>
+                      </f:format.crop>
+                      -->
+                    </f:comment>
+                  </f:else>
+                </f:if>
+                <f:if condition="{imagedata.3}">
+                    
+                </f:if>
+              </div>
+            </div>
+          </f:link.action>
+        </div>
+      </f:for>
+    </div>
+    <f:render partial="Paginator" arguments="{_all}"/>
+    <f:render partial="Sections" arguments="{_all}" section="searchinstructure"/>
+  </div>
+</f:section>
+
+<f:comment>
+  <!--
+    Das kann man mit der "childobjects" Section verbinden
+  -->
+</f:comment>
+<f:section name="childobjects_plain">
+  <div class="row no-gutters">
+    <f:for each="{child_elements.response.docs}" as="items" key="k" iteration="i">
+      <div class="square objects col-md-4 position-relative">
+         <f:link.action pageType="{ajaxpagetype}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" class="h-100 top left w-100 position-absolute row no-gutters{ajaxpagetypecssclass}" noCache="1" action="detailobject" arguments="{joDetailView:'{items.id}',jopaginatepage:'{extbase_config.paginate}',browse:'1'}">
+            <f:if condition="{items.images}">
+              <f:then>
+                <f:if condition="{items.images.0}">
+                  <f:alias map="{imagedata: '{items.images.0->jo:explode(delimiter:\'$\')}'}">
+                    <div class="img col h-100" style="background-image: url('{imagedata.0}')"></div>
+                  </f:alias>
+                </f:if>
+                <f:if condition="{items.images.1}">
+                  <f:alias map="{imagedata: '{items.images.1->jo:explode(delimiter:\'$\')}'}">
+                    <div class="img col h-100" style="background-image: url('{imagedata.0}')"></div>
+                  </f:alias>
+                </f:if>
+              </f:then>
+              <f:else>
+                <f:comment>
+                  <!--
+                    <div class="img placeholder h-100" style="background-image: url('{f:if(condition: '{settings.imgplaceholder}', then: '{settings.imgplaceholder}', else: '/typo3conf/ext/jo_museo/Resources/Public/Images/platzhalter.jpg')}')"></div>
+                  -->
+                </f:comment>
+              </f:else>
+            </f:if>
+            <div class="w-100 h-100 dark_transparent_bg d-flex text-shadow info_wrap position-absolute top left">
+              <div class="d-inline-block textcanvas">
+                <f:if condition="{config.fieldlist.childobjects.fields}">
+                  <f:then>
+                    <f:for each="{config.fieldlist.childobjects.fields}" as="fields" key="fk" iteration="fi">
+                      <f:render partial="Sections" arguments="{_all}" section="buildfieldsandsegments"/>
+                    </f:for>
+                  </f:then>
+                  <f:else>
+                    <f:format.crop maxCharacters="200" respectWordBoundaries="TRUE" respectHtml="TRUE" >
+                      <f:format.html>{items.title}</f:format.html>
+                    </f:format.crop>
+                  </f:else>
+                </f:if>
+                <f:if condition="{imagedata.3}">
+                    
+                </f:if>
+              </div>
+            </div>
+           </f:link.action>
+      </div>
+    </f:for>
+  </div>
+</f:section>
+
+<f:section name="bcp">
+  <f:if condition="!{config.init.searchconfig.hidebcp} && {items.bcp}">
+    <div class="breadcrumbs-container">
+      <ul class="breadcrumbs">
+        <li>
+          <f:link.action class="{ajaxpagetypecssclass}" pageType="{ajaxpagetype}" noCache="1" title="{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.overview')}" arguments="{jopaginatepage:'{extbase_config.paginate}'}" additionalParams="{ceid:'{extbase_config.ce_uid}'}">
+            {jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.overview')}
+          </f:link.action>
+        </li>
+        <f:alias map="{bcp_active: '{joSearcharraycomplete.content.bcp.0 -> jo:explode(delimiter:\'*\')}'}">
+          <f:for each="{items.bcp}" as="subitems" key="subnumber" iteration="subcounter">
+            <f:alias map="{kindobjekt: '{subitems -> jo:explode(delimiter:\'$\')}'}">
+              <f:if condition="{kindobjekt.0} != ''">
+                 <li <f:if condition="{kindobjekt.0} == {bcp_active.0}}">class="active"</f:if>>
+                  <f:link.action pageType="{ajaxpagetype}" class="{ajaxpagetypecssclass}" noCache="1" action="detailobject" title="{kindobjekt.1} ({kindobjekt.0})" arguments="{joDetailView:'{kindobjekt.0}', browse:'1'}" additionalParams="{ceid:'{extbase_config.ce_uid}'}">
+                    <f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{kindobjekt.1}')}">
+                      <f:then>
+                        {jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{kindobjekt.1}')}
+                      </f:then>
+                      <f:else>
+                        <f:format.crop maxCharacters="40" respectHtml="TRUE">{kindobjekt.1}</f:format.crop>
+                      </f:else>
+                    </f:if>
+                  </f:link.action>
+                 </li>
+               </f:if>
+            </f:alias>
+          </f:for>
+        </f:alias>
+      </ul>
+    </div>
+  </f:if>
+</f:section>
+
+<f:section name="image">                  
+  <f:alias map="{imagedata: '{item->jo:explode(delimiter:\'$\')}'}">
+    <f:if condition="{imagedata.1}">
+      <f:then>
+        <f:link.external class="external d-block h-100" style="flex:1;" target="_blank" uri="{imagedata.1}">
+          <f:if condition="{imagedata.0}">
+            <f:render section="image-data" arguments="{imagedata:'{imagedata}'}"/>
+          </f:if>
+        </f:link.external>
+      </f:then>
+      <f:else>
+        <f:if condition="{imagedata.0}">
+          <a href="{imagedata.0}" class="d-block h-100" style="flex:1;">
+            <f:render section="image-data" arguments="{imagedata:'{imagedata}'}"/>
+          </a>
+        </f:if>
+      </f:else>
+    </f:if>
+    <f:if condition="{imagedata.2} || {imagedata.3} || {imagedata.4} || {imagedata.5}">
+      <div class="img_caption">
+        <span data-toggle="collapse-next">caption einblenden</span>
+        <div class="img-main-text collapse">
+          <f:render arguments="{catdata:imagedata, langPath:langPath}" section="image-detail-full"/>
+        </div>
+      </div>
+    </f:if>
+   </f:alias>
+</f:section>
+
+<f:section name="image-data">
+  <f:alias map="{imagemetadata: '{imagedata.0->jo:explode(delimiter:\'/\')}'}">
+    <f:if condition="{imagemetadata.0} == 'uploads'">
+      <f:then>
+        <f:image class="joResponseImage joImageNumber_{subcounter.index}" src="{imagedata.0}" treatIdAsReference="0" width="400" />
+      </f:then>
+      <f:else>
+        <img src="{imagedata.0}" class="joResponseImage joImageNumber_{subcounter.index}" alt="{imagedata.2}" title="{imagedata.2}">
+      </f:else>
+    </f:if>
+  </f:alias>
+</f:section>
+
+
+<f:section name="image-detail">
+  <f:if condition="{catdata.2}">
+    {catdata.2}<br>
+  </f:if>
+  <f:if condition="{catdata.4}">
+    <div class="img-detail-licenc"><span class="licenc-icon" title="{catdata.4}"></span>{catdata.4}</div>
+  </f:if>
+  <f:if condition="{catdata.5}">
+    {jo:translate(key:'{langPath}:jo_bkr_base.img.copyright')} {catdata.5}
+  </f:if>
+</f:section>
+
+<f:section name="image-detail-full">
+ 
+  <f:if condition="{catdata.2}">
+    {catdata.2}<br>
+  </f:if>
+  <f:if condition="{catdata.3}">
+    Abbildung: {catdata.3}, 
+  </f:if>
+  <f:if condition="{catdata.5}">
+    Rechteinhaber: {catdata.5}
+  </f:if>
+  <br>
+  <f:if condition="{catdata.4}">
+    <div class="img-detail-licenc"><span class="licenc-icon" title="{catdata.4}"></span>{catdata.4}</div>
+  </f:if>
+</f:section>
+
+<f:section name="relations_view_1">
+    <f:if condition="{related_facettes}">
+      <div class="d-none relations_view_1">
+        <div class="rv1-ul-textblock">
+          <h2>Ähnliche Objekte</h2>
+          <p>Entdecken Sie ähnliche Objekte. Über die Datenfelder können Sie die Objekte auswählen, die Sie interessieren. Sie können Ihre Suchfilter beibehalten oder deaktivieren.</p>
+          <br/>
+          <div class="tof-wrapper">
+            <div class="true_or_false">
+              <label class="switch">
+                <input class="check" name="checkboxswitch" type="checkbox">
+                <span class="slider square"></span>
+                <span class="trueText"></span>
+                <span class="falseText"></span>
+              </label>
+            </div>
+            <p>Suchfilter berücksichtigen</p>
+            </div>
+        </div>
+        <ul class="rv1-ul">
+          <f:for each="{related_facettes}" as="facettes" key="facettes_key">
+            <f:if condition="{facettes}">
+              <li>
+                <h5>
+                  <f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{facettes_key}')}">
+                    <f:then><span>{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{facettes_key}')}</span></f:then>
+                    <f:else><span>{facettes_key}</span></f:else>
+                  </f:if>
+                </h5>
+                <ul class="rv1-ul2">
+                  <f:for each="{facettes}" as="facettes_count" key="facettes_value">
+                    <li>
+                      <div class="facette_label">
+                        <f:link.action noCache="1" pageType="{ajaxpagetype}" class="detailEntityLink{ajaxpagetypecssclass}{label_style}" additionalParams="{ceid:'{extbase_config.ce_uid}',rs:'1',del:'1'}" arguments="{jo:jomakearray(arraykey:'{facettes_key}', arrayvalue:'{facettes_value}')}" title="Alle Objekte identifizieren, die ebenfalls mit dem Begriff '{facettes_value}' klassifiziert sind. Achtung - alle zuvor von Ihnen gewählten Suchfilter werden zurückgesetzt!">{facettes_value}</f:link.action>
+                      </div>
+                      <sup class="facette_count">{facettes_count}</sup>
+                    </li>
+                  </f:for>
+                </ul>
+              </li>
+            </f:if>
+          </f:for>
+        </ul>
+      </div>
+    </f:if>
+</f:section>

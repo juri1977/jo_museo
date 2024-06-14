@@ -1,0 +1,100 @@
+// Basiskonfiguration JO-Museo, die NICHT via Flexform von Redakteuren verändert werden sollen
+plugin.tx_jomuseo.settings{
+    init{
+        searchconfig{
+            # Erlaubte Templatenamen, die auf Listenebene geladen werden können, und die verschiedene Ansichten der Treffermengen bieten
+            allowed_templates{
+                listview{
+                    0 = List
+                    1 = Listgrid 
+                    2 = Listgallery 
+                    3 = Listfolders
+                }
+            }
+        }
+    }
+}   
+
+// Ajaxcall ausschließlich für den Aufruf des Museoplugins. Es werden alle anderen Elemente auf der Seite ignoriert und NUR die aktuelle Content-UID benutzt
+// Lädt den Link, auf den man klickt via AJAX und unterdrückt den originären klick
+// wird benötigt, um:
+// - das ganze Plugin via AJAX zu laden, 
+// - Entityfacts zu laden 
+// - die JavaScript neu zu initialisieren
+
+ajaxCallMuseo = PAGE
+ajaxCallMuseo {
+    typeNum = 200
+    config {
+        disableAllHeaderCode = 1
+        xhtml_cleaning = 0
+        admPanel = 0
+        debug = 0
+        no_cache = 1
+    }
+    10 = CONTENT
+    10{
+        table = tt_content
+        select {
+            uidInList.stdWrap = COA
+            uidInList.stdWrap{
+                data = GP:ceid
+                intval = 1
+            }
+            // where = (colPos = 0 AND list_type = "jomuseo_pi1009")
+        }
+    }
+}
+
+lib.api = USER
+lib.api {
+    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+    extensionName = JoMuseo
+    pluginName = api
+    vendorName = JO
+    controller = Api
+    action = api
+    switchableControllerActions {
+        Api {
+            1 = api
+        }
+    }
+    view < plugin.tx_jomuseo.view
+    persistence < plugin.tx_jomuseo.persistence
+    settings < plugin.tx_jomuseo.settings
+}
+
+apiv1 = PAGE
+apiv1 {
+    typeNum = 1457
+    config {
+        disableAllHeaderCode = 1
+        # additionalHeaders.10.header = Content-type:application/json
+        additionalHeaders.10.header = Content-type:text/xml; charset=utf-8
+        xhtml_cleaning = 0
+        admPanel = 0
+        debug = 0
+        no_cache = 1
+    }
+    10 < lib.api
+}
+
+[request.getQueryParams()['jodebug'] == 'true']
+    apiv1.config.additionalHeaders.10.header >
+[end]
+
+# Merkliste dem Menü hinzufügen
+lib.merkliste = USER_INT
+lib.merkliste {
+    userFunc = JO\JoMuseo\Userfunc\Checkcollbox->main
+}
+page.10.variables.merkliste < lib.merkliste
+
+# Im Detail wird der Titel der Webseite überschrieben
+[request.getQueryParams()['tx_jomuseo_pi1009']['joDetailView']]
+    config.pageTitleProviders {
+        record {
+             provider = JO\JoMuseo\PageTitle\RecordTitleProvider
+        }
+    }
+[global]

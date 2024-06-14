@@ -1,0 +1,8 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<f:comment>
+	<!--
+	Schalter, um diverse Teile des Plugins via Ajax zu laden - kommt aus Flexform
+	-->
+</f:comment>
+<f:variable name="alldata" value="{_all}"/>
+<f:render partial="Views" section="childobjects" arguments="{_all}"/>

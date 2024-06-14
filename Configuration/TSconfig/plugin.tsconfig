@@ -1,0 +1,55 @@
+mod.wizards.newContentElement.wizardItems.jomuseo {
+    header = JO Museo
+    elements {
+        jomuseo_pi1009 {
+            iconIdentifier = jo_museo-extension
+            title = JO - Museumsplugin
+            tt_content_defValues {
+                CType = list
+                list_type = jomuseo_pi1009
+            }
+        }
+
+        jomuseo_pi1010 {
+            iconIdentifier = jo_museo-extension
+            title = JO - Objekte
+            tt_content_defValues {
+                CType = list
+                list_type = jomuseo_pi1010
+            }
+        }
+
+        jomuseo_pi1091 {
+            iconIdentifier = jo_museo-extension
+            title = JO - Newsfrontend
+            tt_content_defValues {
+                CType = list
+                list_type = jomuseo_pi1091
+            }
+        }
+
+        jomuseo_pi2011 {
+            iconIdentifier = jo_museo-extension
+            title = JO - Exhibition - Digitale Ausstellungen
+            tt_content_defValues {
+                CType = list
+                list_type = jomuseo_pi2011
+            }
+        }
+
+        jomuseo_soloshow {
+            iconIdentifier = jo_museo-extension
+            title = JO - Soloshow - Abbildung einzelner Objekte
+            tt_content_defValues {
+                CType = list
+                list_type = jomuseo_soloshow
+            }
+        }
+    }
+
+    show := addToList(jomuseo_pi1009)
+    show := addToList(jomuseo_pi1010)
+    show := addToList(jomuseo_pi1091)
+    show := addToList(jomuseo_pi2011)
+    show := addToList(jomuseo_soloshow)
+}

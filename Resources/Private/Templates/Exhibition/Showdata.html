@@ -1,0 +1,184 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<f:spaceless>
+<div class="item-container {item.objecttype}">
+	<f:if condition="{item}">
+		<f:then>
+			<div>
+				<f:comment>
+				<!--
+				<div class="row">
+					<div class="col-4">Titel</div>
+					<div class="col-8">{item.title}</div>
+				</div>
+
+				<f:if condition="{item.objecttype}">
+					<div class="row">
+						<div class="col-4">Typ</div>
+						<div class="col-8">{item.objecttype}</div>
+					</div>
+				</f:if>
+
+				<f:if condition="{item.datierungstart}">
+					<div class="row">
+						<div class="col-4">Datierung (Start)</div>
+						<div class="col-8">{item.datierungstart}</div>
+					</div>
+				</f:if>
+
+				<f:if condition="{item.linktosite}">
+					<div class="row">
+						<div class="col-4">Link</div>
+						<div class="col-8"><a href="{item.linktosite}" target="_blank">{item.linktosite}</a></div>
+					</div>
+				</f:if>
+
+				<f:if condition="{item.linkvideo}">
+					<div class="row">
+						<div class="col-4">Video Link</div>
+						<div class="col-8"><a href="{item.linkvideo}" target="_blank">{item.linkvideo}</a></div>
+					</div>
+				</f:if>
+
+				<f:if condition="{item.geoplace}">
+					<div class="row">
+						<div class="col-4">Ort</div>
+						<div class="col-8"><a href="{item.geoplace}" target="_blank">{item.geoplace}</a></div>
+					</div>
+				</f:if>
+
+				<f:if condition="{item.bodytext}">
+					<f:then>
+						<div class="row">
+							<div class="col-4">Beschreibung</div>
+							<div class="col-8"><f:format.html>{item.bodytext}</f:format.html></div>
+						</div>
+					</f:then>
+					<f:else>
+						<f:if condition="{item.shorttext}">
+							<div class="row">
+								<div class="col-4">Beschreibung</div>
+								<div class="col-8"><f:format.html>{item.shorttext}</f:format.html></div>
+							</div>
+						</f:if>
+					</f:else>
+				</f:if>
+				-->
+				</f:comment>
+
+				<f:if condition="{item.objecttype} == 'Person'">
+					<f:then>
+						<h4 class="mb-3">{item.title}<f:if condition="{item.geo_ort_name}">, {item.geo_ort_name}</f:if><f:if condition="{item.datierungstart}">, {item.datierungstart}</f:if></h4>
+						<div class="ol-desc">
+							<div>
+								<f:if condition="{item.bodytext}">
+									<f:then><f:format.html>{item.bodytext}</f:format.html></f:then>
+									<f:else><f:format.html>{item.shorttext}</f:format.html></f:else>
+								</f:if>
+							</div>
+							<f:if condition="{item.stipendiat}">
+								<br />
+								<div>{item.stipendiat}<f:if condition="{item.datierungstart} || {item.datierungend}">, </f:if>{item.datierungstart}<f:if condition="{item.datierungend} && {item.datierungstart} != {item.datierungend}"> - {item.datierungend}</f:if></div>
+							</f:if>
+							<f:if condition="{item.video} && {item.video -> f:count()} > 0">
+								<div class="flex-adjust d-flex flex-column align-items-stretch mt-4 hidden-arrows">
+									<f:render section="video" arguments="{_all}"/>
+								</div>
+							</f:if>
+							<f:if condition="{item.audio} && {item.audio -> f:count()} == 1">
+								<div class="map-audio">
+									<f:for each="{item.audio}" as="aud" iteration="j">
+										<f:render section="audio" arguments="{_all}"/>
+									</f:for>
+								</div>
+							</f:if>
+						</div>
+					</f:then>
+					<f:else>
+						<h4 class="mb-3">{item.title}</h4>
+						<f:if condition="{item.additionalproperties}">
+							<f:if condition="{item.additionalproperties.genericfield_1} && {item.additionalproperties.genericfield_1.vDEF}">
+								<div class="mb-3 gen-1">
+									{item.additionalproperties.genericfield_1.vDEF}
+								</div>
+							</f:if>
+
+							<f:if condition="{item.additionalproperties.genericfield_2} && {item.additionalproperties.genericfield_2.vDEF}">
+								<div class="mb-3 gen-2">
+									<strong><jo:translate key="showdata.signatur" /></strong> {item.additionalproperties.genericfield_2.vDEF}
+								</div>
+							</f:if>
+
+							<f:if condition="{item.additionalproperties.genericfield_3} && {item.additionalproperties.genericfield_3.vDEF}">
+								<div class="mb-3 gen-3">
+									<strong><jo:translate key="showdata.aufbewahrungsort" /></strong> {item.additionalproperties.genericfield_3.vDEF}
+								</div>
+							</f:if>
+						</f:if>
+						<f:if condition="{item.exhibit}">
+							<h5 class="position-relative text-right mb-3 strich">
+								<f:if condition="{item.exhibitcta}">
+									<f:then>
+										{item.exhibitcta}
+									</f:then>
+									<f:else>
+										zu den Digitalisaten
+									</f:else>
+								</f:if>
+							</h5>
+							<div class="text-right">
+								<f:for each="{item.exhibit}" as="i" key="k" >
+								   <f:link.action class="d-block bk-link" pageType="2328" action="showobject" additionalParams="{nc:'{i.uid}', soloview: 1}" >{i.title}<span class="book-icon"></span></f:link.action> 
+								</f:for>
+							</div>
+						</f:if>
+					</f:else>
+				</f:if>
+			</div>
+		</f:then>
+		<f:else>
+			<div>Leider nichts gefunden-</div>
+		</f:else>
+	</f:if>
+</div>
+
+<f:section name="video">
+	<f:if condition="{item.video} && {item.video -> f:count} > 0">
+		<div class="video-popup">
+			<div class="embed-responsive back-embed-responsive-16by9">
+				<f:media file="{item.video.0}" class="embed-responsive-item vp-vid" width="" height=""/>
+			</div>
+		</div>
+	</f:if>
+</f:section>
+
+
+<f:section name="audio">
+	<f:if condition="{aud} && {aud -> f:count} > 0">
+		<div class="pd col-md desc-con-audio">
+			<div class="audio-container h-100 align-items-center d-flex flex-column overflow-hidden position-relative">
+				<f:if condition="{aud.originalResource.properties.title}">
+					<h3 class="audio-title">{aud.originalResource.properties.title}</h3>
+				</f:if>
+				<div class="audio-item w-100">
+					<div class="audio-btn-group d-flex justify-content-center">
+		    			<div class="audio-btn-back joSprite" aria-label="Player zurückspulen"></div>
+			    		<div class="audio-btn-start joSprite" aria-label="Player starten"></div>
+			    		<div class="audio-btn-forw joSprite" aria-label="Player vorspulen"></div>
+			    	</div>
+			    	<div class="progress-wraper">
+				    	<div class="progress">
+					  		<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+						<div class="progress-text text-center">00:00 / 00:00</div>
+					</div>
+					<f:variable name="mime_type"><f:switch expression="{obj.audio.0.originalResource.properties.extension}">
+					   	<f:case value="mp3">audio/mpeg</f:case>
+					   	<f:defaultCase>{aud.originalResource.properties.mime_type}</f:defaultCase>
+					</f:switch></f:variable>
+					<video class="audio-player" controls="" controlslist="nodownload"><source src="{aud.originalResource.publicUrl}" type="{mime_type}"></video>
+				</div>
+			</div>
+		</div>
+	</f:if>
+</f:section>
+</f:spaceless>

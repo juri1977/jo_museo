@@ -1,0 +1,283 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<f:switch expression="{settings.masktype}">
+   <f:case value="1">
+   		<f:comment>
+		<!--
+			hab ein paar klassen rausgenommen -> müssens schauen, ob das irgendwo knallt
+			<div class="entrymask search_wrap alt_view d-flex align-items-center withoutbackground">
+		-->
+		</f:comment>
+		<div class="entrymask position-relative withbackground">
+			<f:render section="Searchfield_with_slideshow" arguments="{_all}"/>
+		</div>
+   </f:case>
+   	<f:case value="2">
+		<div class="entrymask d-flex flex-column align-items-center withoutbackground">
+			<f:render section="Searchfield" arguments="{_all}"/>
+		</div>
+	</f:case>
+   <f:defaultCase>
+   		<div class="entrymask position-relative withbackground">
+			<f:render section="Searchfield_with_slideshow" arguments="{_all}"/>
+		</div>
+   </f:defaultCase>
+</f:switch>
+
+
+<f:section name="Searchfield_with_slideshow">
+	<f:if condition="{maskImages}">
+		<div id="entrymask-carousel" class="emss01 carousel slide" data-ride="carousel" data-pause="false" data-interval="{f:if(condition: '{settings.maskInterval}', then: '{settings.maskInterval}', else: '20000')}">
+			<f:if condition="{settings.maskindicators}">
+				<ul class="carousel-indicators">
+					<f:for each="{maskImages}" as="img_obj" iteration="it">
+						<li data-target="#entrymask-carousel" data-slide-to="{it.index}" <f:if condition="{it.isFirst}">class="active"</f:if>></li>
+					</f:for>
+				</ul>
+			</f:if>
+			<div class="carousel-inner">
+				<f:for each="{maskImages}" as="img_obj" iteration="it">
+					<div class="carousel-item{f:if(condition: '{it.isFirst}', then: ' active', else: '')}">
+						<div class="c-bg-img h-100 w-100" style="background-image:url('{f:uri.image(image:"{img_obj}", width:"2000m", height:"1500m")}')"></div>
+						<div class="lt01 d-flex flex-row">
+							<f:if condition="{img_obj.description}">
+								<f:if condition="{settings.linkdesc} && {img_obj.link}">
+									<f:then><div class="img_description withLink"><f:link.typolink parameter="{img_obj.link}"><f:format.html>{img_obj.description}</f:format.html></div></f:link.typolink></f:then>
+									<f:else><div class="img_description"><f:format.html>{img_obj.description}</f:format.html></div></f:else>
+								</f:if>
+							</f:if>
+							<f:if condition="!{settings.linkdesc}">
+								<f:if condition="{img_obj.link}">
+									<f:then>
+										<f:link.typolink parameter="{img_obj.link}">Zum Objekt</f:link.typolink>
+									</f:then>
+									<f:else>
+										<f:if condition="{settings.masklink} && {img_obj.title}">
+											<f:link.action pageUid="{settings.masklink}" noCache="1" action="detailobject" arguments="{joDetailView:'{img_obj.title}'}">Zum Objekt</f:link.action>
+										</f:if>
+									</f:else>
+								</f:if>
+							</f:if>
+						</div>
+					</div>
+				</f:for>
+			</div>
+			<a class="carousel-control-prev" href="#entrymask-carousel" role="button" data-slide="prev">
+			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			    <span class="sr-only">Previous</span>
+		  	</a>
+		  	<a class="carousel-control-next" href="#entrymask-carousel" role="button" data-slide="next">
+			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+			    <span class="sr-only">Next</span>
+		  	</a>
+		</div>
+	  	<f:if condition="{settings.maskprogressbar}">
+	  		<div class="progress">
+		  		<div class="progress-bar" style="width: 25%" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+			</div>
+	  	</f:if>
+	</f:if>
+	<f:variable name="suchfeldtext" value="Suchen"/>
+	<f:render section="Searchfield" arguments="{_all}"/>
+	<f:if condition="{masklogo} || {settings.maskmenu}">
+		<div class="entrymask-menu">
+			<f:if condition="{masklogo.0.link}">
+				<f:then>
+					<f:link.typolink parameter="{masklogo.0.link}" title="{masklogo.0.title}">
+						<f:media file="{masklogo.0}" alt="{masklogo.0.alternative}" title="{masklogo.0.title}" />
+					</f:link.typolink>
+				</f:then>
+				<f:else>
+					<f:media file="{masklogo.0}" alt="{masklogo.0.alternative}" title="{masklogo.0.title}" />
+				</f:else>
+			</f:if>
+			<f:if condition="{settings.maskmenu} && {config.maskmenu}">
+				<div id="entrymaskmenu" class="collapse">
+			  		<ul>
+				    	<f:for each="{config.maskmenu}" as="title" key="id" iteration="it">
+				    		<li class="nav-item{f:if(condition: '{it.isFirst}', then: ' active', else: '')}">
+					        	<f:link.page pageUid="{id}">{title}</f:link.page>
+					      	</li>
+				    	</f:for>
+				    </ul>
+				</div>
+				<button class="maskmenu" type="button" data-toggle="collapse" data-target="#entrymaskmenu" aria-expanded="false" aria-controls="entrymaskmenu">
+				    <span class="joSprite"></span>
+			  	</button>
+			</f:if>
+		</div>
+	</f:if>
+</f:section>
+
+<f:section name="Masktext">
+	<f:if condition="{settings.maskTitle}">
+		<div class="col-12 masktitle"><h2>{settings.maskTitle}</h2></div>
+	</f:if>
+	<f:if condition="{settings.maskText}">
+		<div class="col-12 masktext"><f:format.html>{settings.maskText}</f:format.html></div>
+	</f:if>
+</f:section>
+
+<f:section name="Searchfield">
+	<div class="row no-gutters searchfield">		
+		<f:render section="Masktext" arguments="{_all}"/>
+		<div class="searchform-con col-12 row no-guttors">
+			<f:if condition="{config.init.searchconfig.expertsearch}">
+				<div class="search_type_wrap flex-column d-flex-bak">
+					<div class="fuzzy_search{f:if(condition: '{expertensearch}', then: '', else: ' active')}" data-toggle="jostab" data-target="#joSearch" >Einfache Suche</div>
+					<div class="expert_search{f:if(condition: '{expertensearch}', then: ' active', else: '')}" data-toggle="jostab" data-target="#joExpertSearch" >Erweiterte Suche</div>
+				</div>
+			</f:if>
+			<div class="searchform col">
+				<f:variable name="placeholder"><f:if condition='{settings.placeholder}'><f:then>{settings.placeholder}</f:then><f:else>{jo:translate(key:'{langPath}:jo_bkr_base.bestanddurchsuchen')}</f:else></f:if></f:variable>
+
+				<f:variable name="style1"><f:if condition="{expertensearch}"><f:then>display: none</f:then><f:else>display: block</f:else></f:if></f:variable>
+
+				<f:form id="joSearch" pageUid="{settings.masklink}" arguments="{joDel:'1'}" class="{f:if(condition: '{expertensearch}', then: '', else: 'active')}" name="suche" noCache="1" method="POST">
+					<f:if condition="{settings.showindexsearchfield}">
+						<div class="search-select-wrap">
+							<f:variable name="katalog">{jo:translate(key:'{langPath}:search.select.katalog')}</f:variable>
+							<f:variable name="website">{jo:translate(key:'{langPath}:search.select.website')}</f:variable>
+                     <f:form.select class="search-select form-control cursor-pointer" name="a1" options="{1: katalog, 2: website}" value="{searchparam}"/>
+                 	</div>
+                 	<div class="bx-shd-wrap">
+					</f:if>
+					<f:form.textfield class="search_box d-inline-block" name="fulltext" value="" placeholder="{placeholder}"/>
+					<f:if condition="{settings.helpTitle} || {settings.helpText}">
+						<f:comment>
+							<!--
+							@alex - hier ist der Hilfetext
+							-->
+						</f:comment>
+						<a class="c_button facette_info_btn" data-toggle="collapse" href="#facette_info" title="Informationen zur Suche">
+							<div class="joSprite" title="Informationen zu den Suchfacetten"></div>
+						</a>
+						<div class="collapse" id="facette_info">
+							<div class="collapse-wrap">
+								<h3>{settings.helpTitle}</h3>
+								<f:format.html>{settings.helpText}</f:format.html>
+							</div>
+						</div>
+					</f:if>
+					<f:form.submit class="d-inline-block search_button" name="search_submit" value="{suchfeldtext}" />
+					<f:if condition="{settings.showindexsearchfield}">
+						</div>
+					</f:if>
+				</f:form>
+
+				<f:if condition="{settings.expertsearch}">
+					<f:variable name="style2"><f:if condition="{expertensearch}"><f:then>display: block</f:then><f:else>display: none</f:else></f:if></f:variable>
+					<f:form id="joExpertSearch" pageUid="{settings.masklink}" class="expertmask" name="suche" noCache="1" method="POST" additionalAttributes="{style: style2}">
+						<div class="row no-gutters">
+							<div class="col-md-12">
+								<f:form.hidden name="expertensearch" value="1" />
+								<f:form.textfield class="search_box d-inline-block" name="fulltext" value="" placeholder="Suche im Volltext"/>
+								<f:form.textfield class="search_box d-inline-block" name="locationTokenizedExpert" value="" placeholder="Ort/Münzstand/Münzstätte"/>
+								<f:form.textfield class="search_box d-inline-block" name="entityTokenizedExpert" value="" placeholder="Personen"/>
+								<f:comment>
+								<div class="w-100">
+									
+									<label class="fuzzySwitch joAnd">
+								  		<input class="joAndOrCheck" name="tx_jomuseo_pi1009[locationTokenizedExpert]" type="checkbox" value="1">
+								  		<span class="slider square"></span>
+								  		<span class="joAndText">unscharf</span>
+								  		<span class="joOrText">scharf</span>
+									</label>
+								</div>
+								<div class="w-100">
+									
+									<label class="fuzzySwitch joAnd">
+								  		<input class="joAndOrCheck" name="tx_jomuseo_pi1009[entityTokenizedExpert]" type="checkbox" value="1">
+								  		<span class="slider square"></span>
+								  		<span class="joAndText">unscharf</span>
+								  		<span class="joOrText">scharf</span>
+									</label>
+								</div>
+									<f:form.textfield class="search_box d-inline-block" name="nominalExpert" value="" placeholder="Nominal"/>
+									<f:form.textfield class="search_box d-inline-block" name="locationTokenizedExpert" value="" placeholder="Ort (tokenized)"/>
+									<f:form.textfield class="search_box d-inline-block" name="entityTokenizedExperta" value="" placeholder="Person (tokenized)"/>
+								</f:comment>
+								
+								
+								<f:form.select name="material" options="{material}" style="width:100%;padding: 10px;margin-bottom: 20px;"/>
+								<f:form.textfield class="search_box d-inline-block" name="classificationtags" value="" placeholder="Sachbegriff"/>
+								
+							</div>
+							<div class="col-md-6 left-side">
+								<f:form.textfield class="search_box d-inline-block" name="starttime" value="" placeholder="Zeitraum von (z.B. -100)"/>
+							</div>
+							<div class="col-md-6 right-side">
+								<f:form.textfield class="search_box d-inline-block" name="endtime" value="" placeholder="Zeitraum bis  (z.B. 1000)"/>
+							</div>
+							<div class="col-12 submit-container">
+								<div class="submit-content">
+									<label for="expertSubmit" class="submit-label">Suchen</label>
+									<f:form.submit id="expertSubmit" class="d-inline-block search_button" name="search_submit" value="" />
+								</div>
+							</div>
+						</div>
+					</f:form>
+				</f:if>
+			</div>
+		</div>
+	</div>
+	<f:if condition="!{settings.hideResults}">
+		<div class="joGridview results">
+			<f:if condition='{joSolrObjects.response.docs}'>
+				<f:then>
+					<div class="row no-gutters grid_inner_wrap">
+						<f:for each="{joSolrObjects.response.docs}" as="items" key="number" iteration="counter">
+							<div class="col-6 col-md-4 grid-item overflow-hidden position-relative">
+								<div class="h-100 position-absolute top left w-100 grid-wrap">
+									<f:link.action pageUid="{settings.masklink}" class="grid-link d-flex flex-column h-100" noCache="1" action="detailobject" arguments="{joDetailView:'{items.id}',jopaginatepage:'{extbase_config.paginate}',h:'1'}">
+										<div class="img_grid_wrap row no-gutters">
+											<f:if condition="{items.images}">
+												<f:then>
+													<f:for each="{items.images}" as="item" key="subnumber" iteration="subcounter">
+														<f:alias map="{imagedata: '{item->jo:explode(delimiter:\'$\')}'}">
+									                      <f:if condition="{subcounter.cycle} <= {config.fieldlist.gridview.images.count}"> 
+								                      			<div class="grid-img col" <f:if condition='{imagedata.0}'>style="background-image:url('{imagedata.0}')"</f:if>></div>
+									                      </f:if>
+									                    </f:alias>
+								                    </f:for>
+						           				 </f:then>
+									            <f:else>  
+			                    					<f:render partial="Sections" arguments="{_all}" section="placeholder-background"/>
+									        	</f:else>
+				                        	</f:if>
+				                        </div>
+				                        <div class="grid-text-container">
+			                                <div class="grid-text">
+			                                    <f:if condition="{config.fieldlist.gridview.headline.name} && {config.init.authdata.idfield}">
+													<div class="title_or_symbols">
+														<h2>
+															<f:render partial="Sections" arguments="{fields:'{fields}', items:'{items}', config:'{config}',langPath:'{langPath}'}" section="headline"/>
+														</h2>
+													</div>
+												</f:if>
+			                                   	<f:if condition="{config.fieldlist.gridview.fields}">
+													<f:for each="{config.fieldlist.gridview.fields}" as="fields" key="fk" iteration="fi">
+														<f:render partial="Sections" arguments="{_all}" section="buildfieldsandsegments"/>
+													</f:for>
+												</f:if>
+			                                </div>
+			                            </div>
+									</f:link.action>
+								</div>
+							</div>
+						</f:for>
+					</div>
+					<div class="search-more-form-con">
+						<f:form pageUid="{settings.masklink}" class="search-more-form" name="suche" noCache="1" method="POST">
+							<f:form.submit class="d-inline-block search_button" name="search_submit" value="Weitere Ergebnisse Anzeigen" />
+						</f:form>
+					</div>
+				</f:then>
+				<f:else>
+					<f:if condition="{config.limit} > 0">
+						<h2 class="joNothingFound">{jo:translate(key:'{langPath}:jo_bkr_base.noobjects')}</h2>
+					</f:if>
+				</f:else>
+			</f:if>
+		</div>
+	</f:if>
+</f:section>

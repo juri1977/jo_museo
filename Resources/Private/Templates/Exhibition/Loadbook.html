@@ -1,0 +1,58 @@
+<f:spaceless>
+<f:if condition="{files}">
+	<f:then>
+		<div class="book bb-custom-wrapper">
+			<div class="bb-bookblock bb-vertical">
+				<f:for each="{files}" as="img" iteration="i">
+					<f:if condition="{i.isFirst}">
+						<f:then>
+							<div class="bb-item">
+								<div class="bb-custom-side first"></div>
+								<div class="bb-custom-side loaded{f:if(condition: '{i.isLast}', then: ' last', else: '')}" data-href="{f:uri.image(image: img)}">
+									<a href="#"><f:image class="bookimg" image="{img}" /></a>
+								</div>
+							</div>
+						</f:then>
+						<f:else>
+							<f:if condition="{i.cycle} % 2 == 0">
+								<div class="bb-item">
+							</f:if>
+
+							<div class="bb-custom-side{f:if(condition: '{i.cycle} < 6', then: ' loaded', else: '')}{f:if(condition: '{i.isLast}', then: ' last', else: '')}" data-href="{f:uri.image(image: img)}">
+								<f:if condition="{i.cycle} < 6">
+									<f:then>
+										<a href="#"><f:image class="bookimg" image="{img}" /></a>
+									</f:then>
+									<f:else>
+										<a href="#"></a>
+									</f:else>
+								</f:if>
+							</div>
+							
+							<f:if condition="{i.cycle} % 2 == 1">
+								</div>
+							</f:if>
+
+							<f:if condition="{i.cycle} % 2 == 0 && {i.isLast}">
+								<div class="bb-custom-side"></div>
+								</div>
+							</f:if>
+						</f:else>
+					</f:if>
+
+				</f:for>
+			</div>
+			<nav>
+				<a href="#" class="bb-custom-icon bb-custom-icon-first bb-nav-first">First page</a>
+				<a href="#" class="bb-custom-icon bb-custom-icon-arrow-left bb-nav-prev">Previous</a>
+				<a href="#" class="bb-custom-icon bb-custom-icon-arrow-right bb-nav-next">Next</a>
+				<a href="#" class="bb-custom-icon bb-custom-icon-last bb-nav-last">Last page</a>
+			</nav>
+		</div>
+		<div class="book-closer"></div>
+	</f:then>
+	<f:else>
+		<div class="book-error">No Images Loaded.</div>
+	</f:else>
+</f:if>
+</f:spaceless>

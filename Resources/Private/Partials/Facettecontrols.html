@@ -1,0 +1,1398 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<f:flashMessages />
+<f:comment>
+	<!--
+	Definition globaler Variablen zur Steuerung der Facettenausgabe
+	{facette_subtype} -> steuert die Darstellung der Facettenbuttons (Darstellung als Dropdown, Button etc.)
+	-->
+</f:comment>
+<f:variable name="facette_subtype" value=" facette_default"/>
+<f:if condition="{config.init.searchconfig.facettecontrol_view}">
+	<f:variable name="facette_subtype" value=" facette_dropdown"/>
+</f:if>
+
+<f:switch expression="{config.init.searchconfig.alternativefacettecontrol}">
+	<f:case value="1">
+		<f:render section="alternativeview" arguments="{_all}"/>
+	</f:case>
+	<f:case value="2">
+		<f:render section="alternativeview_2" arguments="{_all}"/>
+	</f:case>
+	<f:case value="3">
+		<f:render section="alternativeview_3" arguments="{_all}"/>
+	</f:case>
+	<f:defaultCase>
+		<f:render section="standardview" arguments="{_all}"/>
+	</f:defaultCase>
+</f:switch>
+
+
+<f:section name="alternativeview">
+	<div class="alternativeview_1{facette_subtype}">
+		<f:render section="searchmask" arguments="{_all}"/>
+		<f:variable name="filter_wrap_class" value=''/>
+		<f:variable name="toggle_button_class" value=''/>
+		<f:variable name="toggle_button_aria_expanded" value='true'/>
+		<f:if condition="{config.aggregatefilters}">
+			<div class="toggle_search_filter_outerwrap">
+				<f:variable name="filter_wrap_class" value=' collapse'/>
+				<f:variable name="toggle_button_class" value=' collapsed'/>
+				<f:variable name="toggle_button_aria_expanded" value='false'/>
+				<f:if condition="{searchfilterset}">
+					<f:variable name="filter_wrap_class" value=' collapse show'/>
+					<f:variable name="toggle_button_class" value=''/>
+					<f:variable name="toggle_button_aria_expanded" value='true'/>
+				</f:if>
+				<div class="show_filter_wrap">
+					<a class="show_filter position-relative d-inline-block{toggle_button_class}" data-toggle="collapse" href="#filterblock" aria-expanded="{toggle_button_aria_expanded}" aria-controls="filterblock">
+						<span>Filter</span>
+						<f:if condition="{joSearcharraycomplete.content}">
+							<span> (aktiv)</span>
+							<div class="joKreis"></div>
+						</f:if>	
+						<span class="minus"> -</span>
+						<span class="plus"> +</span>
+					</a>
+				</div>
+			</div>
+		</f:if>
+		<f:comment>
+			<!--
+				Wenn die Expertensuche verfügbar ist, werden die facetten nicht gezündet - muss geprüft werden - kann sein, dass das nicht so geht, weil die filter nicht mehr gelöscht werden können
+			-->
+		</f:comment> 
+		<f:if condition="!{config.init.searchconfig.expertsearch}">
+			<div class="filter_wrap{filter_wrap_class}" id="filterblock">
+				<div class="d-flex align-items-end flex-wrap">
+					<div class="fi01 joTimeLineAndFilter alt_view">
+						<div class="controls_wrap">
+							<div class="joControls-container">
+								<f:render section="joLoadFacettesListAlternative" arguments="{_all}"/>
+							</div>
+						</div>
+					</div>
+					<div class="fo01">
+						<f:render section="founditemblock" arguments="{_all}"/>
+					</div>
+					<f:if condition="{userselected_facettes.timeline}">
+						<div class="tl01">
+							<f:render partial="Timeline" arguments="{_all}"/>
+						</div>
+					</f:if>
+					<f:if condition="{config.init.searchconfig.extractfacettesfromfacettesblock}">
+						<f:render section="single_full_index" arguments="{_all}"/>
+					</f:if>
+
+					<f:if condition="{extbase_config.differentviews}">
+						<div class="v01">
+							<f:render section="differentviews" arguments="{_all}"/>
+						</div>
+					</f:if>
+					<f:if condition="{config.init.searchconfig.sorting.alloptions} || {config.showimageswitch}">
+						<div class="sort_switch_wrap d-flex align-items-center flex-wrap">
+							<f:if condition="{config.init.searchconfig.sorting.alloptions}">
+								<f:render section="sorting" arguments="{_all}"/>
+							</f:if>
+							<f:if condition="{config.showimageswitch}">
+								<f:render section="showobjectswithimagesonly" arguments="{_all}"/>
+							</f:if>
+						</div>
+					</f:if>
+					<div class="fa01 w-100">
+						<f:if condition="{facettes_prepared.alpha_index} || {facettes_prepared.full_index} || {facettes_prepared.hierarchical_index} || {config.helpTitle} || {config.helpText}">
+							<div class="facettes">
+								<div class="tab-content">
+									<f:render section="alpha_index" arguments="{_all}"/>
+									<f:render section="full_index" arguments="{_all}"/>
+									<f:render section="hierarchical_index" arguments="{_all}"/>
+									<f:render section="searchparams" arguments="{_all}"/>
+									<f:render section="help" arguments="{_all}"/>
+								</div>
+							</div>
+						</f:if>
+					</div>
+				</div>
+			</div>
+		</f:if>
+	</div>
+</f:section>
+
+<f:section name="alternativeview_2">
+	<div class="alternativeview_1{facette_subtype}">
+		<div class="row no-gutters sort_and_view_wrap">
+			<div class="found_block col-md-6">
+				<div class="found_wrap">
+					<f:render section="founditemblock" arguments="{_all}"/>
+				</div>
+			</div>
+			<f:if condition="{extbase_config.differentviews}">
+				<div class="view_block col-md-2">
+					<f:render section="differentviews" arguments="{_all}"/>
+				</div>
+			</f:if>
+			<f:if condition="{config.init.searchconfig.sorting.alloptions}">
+				<div class="sort_block col-md-4">
+					<div class="sort_switch_wrap d-flex align-items-center flex-wrap">
+						<f:render section="sorting" arguments="{_all}"/>
+					</div>
+				</div>
+			</f:if>
+		</div>
+		<div class="row no-gutters search_mask_outer_wrap">
+			<div class="col">
+				<f:render section="searchmask" arguments="{_all}"/>
+			</div>
+			<f:if condition="{userselected_facettes.timeline} || {config.showimageswitch}">
+				<div class="col-md-4">
+					<f:if condition="{userselected_facettes.timeline}">
+						<f:comment>
+							<!--
+								Timeline ist noch nicht konfiguriert für diesen Anwendungsfall
+							-->
+						</f:comment>
+						<div class="tl01">
+							<f:render partial="Timeline" arguments="{_all}"/>
+						</div>
+					</f:if>
+					<f:if condition="{config.showimageswitch}">
+						<div class="sort_switch_wrap d-flex align-items-center flex-wrap">
+							<f:render section="showobjectswithimagesonly" arguments="{_all}"/>
+						</div>
+					</f:if>
+				</div>
+			</f:if>
+		</div>
+		<f:variable name="filter_wrap_class" value=''/>
+		<f:variable name="toggle_button_class" value=''/>
+		<f:variable name="toggle_button_aria_expanded" value='true'/>
+		<f:if condition="{config.aggregatefilters}">
+			<div class="toggle_search_filter_outerwrap">
+				<f:variable name="filter_wrap_class" value=' collapse'/>
+				<f:variable name="toggle_button_class" value=' collapsed'/>
+				<f:variable name="toggle_button_aria_expanded" value='false'/>
+				<f:if condition="{searchfilterset}">
+					<f:variable name="filter_wrap_class" value=' collapse show'/>
+					<f:variable name="toggle_button_class" value=''/>
+					<f:variable name="toggle_button_aria_expanded" value='true'/>
+				</f:if>
+				<div class="show_filter_wrap">
+					<a class="show_filter position-relative d-inline-block{toggle_button_class}" data-toggle="collapse" href="#filterblock" aria-expanded="{toggle_button_aria_expanded}" aria-controls="filterblock">
+						<span>Filter</span>
+						<f:if condition="{joSearcharraycomplete.content}">
+							<span> (aktiv)</span>
+							<div class="joKreis"></div>
+						</f:if>	
+						<span class="minus"> -</span>
+						<span class="plus"> +</span>
+					</a>
+				</div>
+			</div>
+		</f:if> 
+		<div class="filter_wrap{filter_wrap_class}" id="filterblock">
+			<div class="d-flex align-items-end flex-wrap">
+				<div class="fi01 joTimeLineAndFilter alt_view">
+					<div class="controls_wrap">
+						<div class="joControls-container">
+							<f:render section="joLoadFacettesListAlternative" arguments="{_all}"/>
+						</div>
+					</div>
+				</div>
+				<div class="fa01 w-100">
+					<f:if condition="{facettes_prepared.alpha_index} || {facettes_prepared.full_index} || {facettes_prepared.hierarchical_index} || {config.helpTitle} || {config.helpText}">
+						<div class="facettes">
+							<div class="tab-content">
+								<f:render section="alpha_index" arguments="{_all}"/>
+								<f:render section="full_index" arguments="{_all}"/>
+								<f:render section="hierarchical_index" arguments="{_all}"/>
+								<f:render section="searchparams" arguments="{_all}"/>
+								<f:render section="help" arguments="{_all}"/>
+							</div>
+						</div>
+					</f:if>
+				</div>
+			</div>
+		</div>
+	</div>
+</f:section>
+
+<f:section name="alternativeview_3">
+	<div class="alternativeview_3{facette_subtype}">
+		<f:render section="searchparams" arguments="{_all}"/>
+		<f:if condition="{joSearcharraycomplete}">
+			<div class="facette-delete-button">
+				<f:render section="delete_icon" arguments="{_all}"/>
+			</div>
+		</f:if>
+		<f:render section="searchmask" arguments="{_all}"/>
+		<f:variable name="filter_wrap_class" value=''/>
+		<f:variable name="toggle_button_class" value=''/>
+		<f:variable name="toggle_button_aria_expanded" value='true'/>
+		<f:if condition="{config.aggregatefilters}">
+			<div class="toggle_search_filter_outerwrap">
+				<f:variable name="filter_wrap_class" value=' collapse'/>
+				<f:variable name="toggle_button_class" value=' collapsed'/>
+				<f:variable name="toggle_button_aria_expanded" value='false'/>
+				<f:if condition="{searchfilterset}">
+					<f:variable name="filter_wrap_class" value=' collapse show'/>
+					<f:variable name="toggle_button_class" value=''/>
+					<f:variable name="toggle_button_aria_expanded" value='true'/>
+				</f:if>
+				<div class="show_filter_wrap">
+					<a class="show_filter position-relative d-inline-block{toggle_button_class}" data-toggle="collapse" href="#filterblock" aria-expanded="{toggle_button_aria_expanded}" aria-controls="filterblock">
+						<span>Filter</span>
+						<f:if condition="{joSearcharraycomplete.content}">
+							<span> (aktiv)</span>
+							<div class="joKreis"></div>
+						</f:if>	
+						<span class="minus"> -</span>
+						<span class="plus"> +</span>
+					</a>
+				</div>
+			</div>
+		</f:if>
+		<f:comment>
+			<!--
+				Wenn die Expertensuche verfügbar ist, werden die facetten nicht gezündet - muss geprüft werden - kann sein, dass das nicht so geht, weil die filter nicht mehr gelöscht werden können
+			-->
+		</f:comment> 
+		<f:if condition="!{config.init.searchconfig.expertsearch}">
+			<div class="filter_wrap{filter_wrap_class}" id="filterblock">
+				<div class="d-flex align-items-end flex-wrap">
+					<div class="fi01 joTimeLineAndFilter alt_view">
+						<div class="controls_wrap">
+							<div class="joControls-container">
+								<f:render section="joLoadFacettesListAlternative" arguments="{_all}"/>
+							</div>
+						</div>
+					</div>
+					<div class="fo01">
+						<f:render section="founditemblock" arguments="{_all}"/>
+					</div>
+					<f:if condition="{userselected_facettes.timeline}">
+						<div class="tl01">
+							<f:render partial="Timeline" arguments="{_all}"/>
+						</div>
+					</f:if>
+					<f:if condition="{config.init.searchconfig.extractfacettesfromfacettesblock}">
+						<f:render section="single_full_index" arguments="{_all}"/>
+					</f:if>
+					<f:if condition="{extbase_config.differentviews}">
+						<div class="v01">
+							<f:render section="differentviews" arguments="{_all}"/>
+						</div>
+					</f:if>
+					<f:if condition="{config.init.searchconfig.sorting.alloptions} || {config.showimageswitch}">
+						<div class="sort_switch_wrap d-flex align-items-center flex-wrap">
+							<f:if condition="{config.init.searchconfig.sorting.alloptions}">
+								<f:render section="sorting" arguments="{_all}"/>
+							</f:if>
+							<f:if condition="{config.showimageswitch}">
+								<f:render section="showobjectswithimagesonly" arguments="{_all}"/>
+							</f:if>
+						</div>
+					</f:if>
+					<div class="fa01 w-100">
+						<f:if condition="{facettes_prepared.alpha_index} || {facettes_prepared.full_index} || {facettes_prepared.hierarchical_index} || {config.helpTitle} || {config.helpText}">
+							<div class="facettes">
+								<div class="tab-content">
+									<f:render section="alpha_index" arguments="{_all}"/>
+									<f:render section="full_index" arguments="{_all}"/>
+									<f:render section="hierarchical_index" arguments="{_all}"/>
+									<f:render section="help" arguments="{_all}"/>
+								</div>
+							</div>
+						</f:if>
+					</div>
+				</div>
+			</div>
+		</f:if>
+	</div>
+</f:section>
+
+<f:section name="standardview">
+	<div class="sort_and_view_wrap">
+		<div class="found_block">
+			<div class="found_wrap">
+				<f:render section="founditemblock" arguments="{_all}"/>
+			</div>
+		</div>
+	</div>
+	<f:if condition="{extbase_config.differentviews}">
+		<div class="view_block">
+			<f:render section="differentviews" arguments="{_all}"/>
+		</div>
+	</f:if>
+	<f:if condition="{config.init.searchconfig.sorting.alloptions}">
+		<div class="sort_block">
+			<div class="sort_switch_wrap d-flex align-items-center flex-wrap">
+				<f:render section="sorting" arguments="{_all}"/>
+			</div>
+		</div>
+	</f:if>
+	<div class="toggle_search_filter_outerwrap">
+		<f:render section="searchmask" arguments="{_all}"/>
+		<f:variable name="filter_wrap_class" value=''/>
+		<f:variable name="toggle_button_class" value=''/>
+		<f:variable name="toggle_button_aria_expanded" value='true'/>
+		<f:if condition="{config.aggregatefilters}">
+			<f:variable name="filter_wrap_class" value=' collapse'/>
+			<f:variable name="toggle_button_class" value=' collapsed'/>
+			<f:variable name="toggle_button_aria_expanded" value='false'/>
+			<f:if condition="{searchfilterset}">
+				<f:variable name="filter_wrap_class" value=' collapse show'/>
+				<f:variable name="toggle_button_class" value=''/>
+				<f:variable name="toggle_button_aria_expanded" value='true'/>
+			</f:if>
+			<div class="show_filter_wrap">
+				<a class="show_filter position-relative d-inline-block{toggle_button_class}" data-toggle="collapse" href="#filterblock" aria-expanded="{toggle_button_aria_expanded}" aria-controls="filterblock">
+					<span>Filter</span>
+					<f:if condition="{joSearcharraycomplete.content}">
+						<span> (aktiv)</span>
+						<div class="joKreis"></div>
+					</f:if>	
+					<span class="minus"> -</span>
+					<span class="plus"> +</span>
+				</a>
+			</div>
+		</f:if>
+	</div>
+	<div class="joTimeLineAndFilter alt_view{filter_wrap_class}{facette_subtype}"  id="filterblock">
+		<div class="controls_wrap">
+			<div class="row mx-auto joControls-container flex-column-reverse flex-md-row">
+				<ul class="joControls nav nav-tabs col-md">
+					<f:render section="joLoadFacettesList" arguments="{_all}"/>
+				</ul>
+				<f:if condition="{config.showimageswitch}">
+					<div class="col-md-4 img_switch_wrap">
+						<f:render section="showobjectswithimagesonly" arguments="{_all}"/>
+					</div>
+				</f:if>
+			</div>
+		</div>
+		<f:if condition="{facettes_prepared.alpha_index} || {facettes_prepared.full_index} || {facettes_prepared.hierarchical_index} || {config.helpTitle} || {config.helpText}">
+			<div class="facettes">
+				<div class="tab-content">
+					<f:variable name="showTimeline" value="1" />
+					<f:render section="alpha_index" arguments="{_all}"/>
+					<f:render section="full_index" arguments="{_all}"/>
+					<f:comment>
+						<!--
+							@all -> die Timeline wird in dieser Ansicht nicht mit ausgegeben - muss noch ergänzt werden -  auch in der neuen Ansicht wird die Timeline nicht korrekt ausgegeben - der Schalter wurde da nur mit CSS ausgeblendet
+						-->
+					</f:comment>
+					<f:render section="hierarchical_index" arguments="{_all}"/>
+					<f:render section="searchparams" arguments="{_all}"/>
+					<f:render section="help" arguments="{_all}"/>
+				</div>
+			</div>
+		</f:if>
+	</div>
+</f:section>
+
+<f:comment>
+	<!--
+		Block für die gefundene Objekte - das label kann in der Flexform überschrieben werden
+	-->
+</f:comment>
+<f:section name="founditemblock">
+	<f:variable name="found_objects_text" value="{jo:translate(key:'{langPath}:founditems')}" />
+	<f:if condition="{config.objectsfound}">
+		<f:variable name="found_objects_text" value="{config.objectsfound}" />
+	</f:if>
+	{found_objects_text} <f:format.number decimals="0" thousandsSeparator=".">{joSolrObjects.response.numFound}</f:format.number>
+</f:section>
+
+<f:comment>
+	<!--
+		Schalter für die Filterung aller Objekte, die Abbildungen oder andere DAM Objekte in sich tragen
+	-->
+</f:comment>
+<f:section name="showobjectswithimagesonly">
+	<f:variable name="arguments" value="{imageonly:'1'}" />
+	<f:variable name="switchconfig" value="{true:'', false:'', checkbox:''}" />
+	<f:if condition="{joSearcharraycomplete.content.imageonly}">
+		<f:variable name="arguments" value="{removeimageonly:'1'}" />
+		<f:variable name="switchconfig" value="{true:'', false:'', checkbox:'checked'}" />
+	</f:if>
+	<div class="imageSwitch d-flex">
+		<div class="image_only_label">{jo:translate(key:'{langPath}:object.with.images')} </div><f:render section="switchbutton" arguments="{_all}"/>
+	</div>
+</f:section>
+
+<f:section name="switchbutton">
+	<div class="true_or_false">
+		<label class="switch">
+			<f:link.action noCache="1" pageType="{ajaxpagetype}" class="d-none linkaction{ajaxpagetypecssclass}" arguments="{arguments}"  additionalParams="{ceid:'{extbase_config.ce_uid}'}"></f:link.action>
+			<input class="check" name="checkboxswitch" {switchconfig.checkbox} type="checkbox"/>
+			<span class="slider square"></span>
+			<span class="trueText">{switchconfig.true}</span>
+			<span class="falseText">{switchconfig.false}</span>
+		</label>
+	</div>
+</f:section>
+
+<f:comment>
+	<!--
+		Expertensuche - prototypisch für NK und SM
+	@all -> das ist noch nicht konfiguriert im Frontend
+	-->
+</f:comment>
+<f:section name="searchfields">
+	<f:render partial="Expertsearch" arguments="{_all}" />
+</f:section>
+
+<f:section name="searchmask">
+	<f:if condition="!{config.init.searchconfig.hidesearchfields}">
+		<f:variable name="has_bg_img" value=""/>
+		<f:variable name="bg_img" value=""/>
+		<f:if condition="{maskImages.0}">
+			<f:variable name="has_bg_img" value=" has_bg_img"/>
+			<f:variable name="bg_img" value='background-image:url(\'{f:uri.image(image:"{maskImages.0}", width:"2000m", height:"1500m")}\')'/>
+		</f:if>
+		<div class="row no-gutters search_masks{has_bg_img}" style="{bg_img}">
+			<f:if condition="{config.maskTitle}">
+				<div class="col-12 pre_mask_title">{config.maskTitle}</div>
+			</f:if>
+			<f:if condition="{config.maskText}">
+				<div class="col-12 pre_mask_text">{config.maskText}</div>
+			</f:if>
+			<f:render section="searchfields" arguments="{_all}"/>
+		</div>
+	</f:if>
+</f:section>
+
+<f:section name="differentviews">
+	<f:if condition='{extbase_config.differentviews->f:count()} > 1'>
+		<ul class="nav joListandtable">
+			<f:for each="{extbase_config.differentviews}" as="vitem" key="vkey">
+				<f:if condition="{vitem} == 'List'">
+					<li {f:if(condition:'{extbase_config.listview}=="List"',then:'class="active"',else:'')}>
+						<f:link.action noCache="1" pageType="{ajaxpagetype}" class="list_icon{ajaxpagetypecssclass}" title="{jo:translate(key:'{langPath}:view.list')}" additionalParams="{v:'List', ceid:'{extbase_config.ce_uid}'}">{jo:translate(key:'{langPath}:view.list')}</f:link.action>			
+					</li>
+				</f:if>
+				<f:if condition="{vitem} == 'Listgrid'">
+					<li {f:if(condition:'{extbase_config.listview}=="Listgrid"',then:'class="active"',else:'')}>
+						<f:link.action noCache="1" pageType="{ajaxpagetype}" class="grid_icon{ajaxpagetypecssclass}" title="{jo:translate(key:'{langPath}:view.grid')}" additionalParams="{v:'Listgrid', ceid:'{extbase_config.ce_uid}'}">{jo:translate(key:'{langPath}:view.grid')}</f:link.action>
+					</li>
+				</f:if>
+				<f:if condition="{vitem} == 'Listgallery'">
+					<li {f:if(condition:'{extbase_config.listview}=="Listgallery"',then:'class="active"',else:'')}>
+						<f:link.action noCache="1" pageType="{ajaxpagetype}" class="gallery_icon{ajaxpagetypecssclass}" title="{jo:translate(key:'{langPath}:view.gallery')}" additionalParams="{v:'Listgallery', ceid:'{extbase_config.ce_uid}'}">{jo:translate(key:'{langPath}:view.gallery')}</f:link.action>
+					</li>
+				</f:if>
+				<f:if condition="{vitem} == 'Listfolders'">
+					<li {f:if(condition:'{extbase_config.listview}=="Listfolders"',then:'class="active"',else:'')}>
+						<f:link.action noCache="1" pageType="{ajaxpagetype}" class="gallery_icon{ajaxpagetypecssclass}" title="{jo:translate(key:'{langPath}:view.folder')}" additionalParams="{v:'Listfolders', ceid:'{extbase_config.ce_uid}'}">{jo:translate(key:'{langPath}:view.folder')}</f:link.action>
+					</li>
+				</f:if>
+			</f:for>
+		</ul>
+	</f:if>
+</f:section>
+
+<f:comment>
+	<!--
+		Markup für die Headlines/Labels der Facetten
+	-->
+</f:comment>
+<f:section name="headline_selected_facette">
+	<h3>
+		<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{key}')}">
+			<f:then>
+				{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{key}')}
+			</f:then>
+			<f:else>
+				{key}
+			</f:else>
+		</f:if>
+		<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.facette_description.{key}')}">
+			<span class="description">{jo:translate(key:'{langPath}:jo_bkr_base.facette_description.{key}')}</span>
+		</f:if>
+	</h3>
+</f:section>
+
+<f:comment>
+	<!--
+		Markup für die Sortierbuttons
+	-->
+</f:comment>
+<f:section name="sorting">
+	<f:switch expression="{config.init.searchconfig.sorting.view}">
+		<f:case value="dropdown">
+			<f:render section="sort_dropdown" arguments="{_all}"/>
+		</f:case>
+		<f:defaultCase>
+			<f:render section="sort_button" arguments="{_all}"/>
+		</f:defaultCase>
+	</f:switch>
+</f:section>
+<f:comment>
+	<!--
+		Sortierung als Dropdown
+	-->
+</f:comment>
+<f:section name="sort_dropdown">
+	<f:variable name="current_sort_name" value=''/>
+	<f:variable name="current_sort_direction" value=''/>
+	<f:variable name="sort_css_class" value=''/>
+	<f:if condition="{sorting.active}">
+		<f:for each="{sorting.active}" as="activesort" key="activesortkey">
+			<f:variable name="current_sort_direction" value='{activesort.0}'/>
+			<f:variable name="current_sort_name" value='{activesortkey}'/>
+			<f:variable name="sort_css_class" value='{activesort.0}_{activesortkey}'/>
+			<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.sort.{current_sort_name}')}">
+				<f:variable name="current_sort_name" value="{jo:translate(key:'{langPath}:jo_bkr_base.sort.{current_sort_name}')}"/>
+			</f:if>
+			<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{current_sort_direction}')}">
+				<f:variable name="current_sort_direction" value="{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{current_sort_direction}')}"/>
+			</f:if>
+		</f:for>
+	</f:if>
+	<div class="item_sorting_con sort_view_dropdown position-relative {sort_css_class}">
+		<a class="dropdown-toggle" href="#" role="button" id="sort_view_button_id" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		 	<div class="sort_icon"></div><span class="sl">{jo:translate(key:'{langPath}:jo_bkr_base.sorting')}</span><span class="sort-name"> {current_sort_name}</span><span class="sort-direction"> {current_sort_direction}</span>
+		 </a>
+		<ul class="dropdown-menu" aria-labelledby="sort_view_button_id">
+			<f:for each="{config.init.searchconfig.sorting.alloptions}" as="sort" key="sortkey">
+				<f:variable name="sortactive" value=''/>
+				<f:if condition="{sorting.active.{sortkey}}">
+					<f:variable name="sortactive" value='active'/>
+				</f:if>
+				<f:variable name="sortlabel" value='{sortkey}'/>
+				<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.sort.{sortkey}')}"><f:variable name="sortlabel" value="{jo:translate(key:'{langPath}:jo_bkr_base.sort.{sortkey}')}"/></f:if>
+				<li class="sort direction_{sort.0} {sortactive}">
+					<f:link.action pageType="{ajaxpagetype}" noCache="1" additionalParams="{ceid:'{extbase_config.ce_uid}'}" arguments="{sortvar:'{sortkey}',direction:'{sort.1}'}" title="Sortierung ändern - {sortlabel}" class="{ajaxpagetypecssclass}">{sortlabel}</f:link.action>
+				</li>
+			</f:for>
+		</ul>
+	</div>
+</f:section>
+<f:comment>
+	<!--
+		Sortierung als Buttons
+	-->
+</f:comment>
+<f:section name="sort_button">
+	<div class="item_sorting_con sort_view_button">
+		<div class="sort_icon"></div><div class="item_sorting_label">{jo:translate(key:'{langPath}:jo_bkr_base.sort.by')}</div>
+		<ul class="item_sorting">
+			<f:variable name="current_sort_name" value=''/>
+			<f:variable name="current_sort_direction" value=''/>
+			<f:for each="{config.init.searchconfig.sorting.alloptions}" as="sort" key="sortkey">
+				<f:variable name="sortactive" value=''/>
+				<f:if condition="{sorting.active.{sortkey}}">
+					<f:variable name="current_sort_name" value='{sortkey}'/>
+					<f:variable name="sortactive" value='active'/>
+					<f:variable name="current_sort_direction" value='{sort.0}'/>
+					<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.sort.{sortkey}')}">
+						<f:variable name="current_sort_name" value="{jo:translate(key:'{langPath}:jo_bkr_base.sort.{sortkey}')}"/>
+					</f:if>
+					<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{sort.0}')}">
+						<f:variable name="current_sort_direction" value="{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{sort.0}')}"/>
+					</f:if>
+				</f:if>
+				<f:variable name="sortlabel" value='{sortkey}'/>
+				<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.sort.{sortkey}')}"><f:variable name="sortlabel" value="{jo:translate(key:'{langPath}:jo_bkr_base.sort.{sortkey}')}"/></f:if>
+				<li class="sort direction_{sort.0} {sortactive}">
+					<f:link.action pageType="{ajaxpagetype}" noCache="1" additionalParams="{ceid:'{extbase_config.ce_uid}'}" arguments="{sortvar:'{sortkey}',direction:'{sort.1}'}" title="Sortierung ändern - {sortlabel}" class="{ajaxpagetypecssclass}">
+						{sortlabel}
+					</f:link.action>
+				</li>
+			</f:for>
+		</ul>
+	</div>
+</f:section>
+
+<f:comment>
+	<!--
+		Markup für die Extrahierten Facetten 
+	-->
+</f:comment>
+<f:section name="single_full_index">
+	<f:if condition="{facettes_prepared.single_full_index}">
+		<f:for each="{facettes_prepared.single_full_index}" as="joIndex" key="key" iteration="joindexiteration">
+			<f:comment>
+				<!--
+					@alex -> das isses
+					Wenn die altenative Facettenansicht gewählt wurde, wird die Timeline nicht als Tab gerendert
+				-->
+			</f:comment>
+			<div class="sfi sfi_{key}">
+				<f:if condition="{key} != 'timeline'">
+					<f:render section="headline_selected_facette" arguments="{_all}"/>
+					<f:if condition="{joIndex.content}">
+						<div class="sfi_wrapper">
+							<f:for each="{joIndex.content}" as="joSubSubIndex" iteration="josubiteration">
+								<f:alias map="{searcharray: '{jo:jodynamicarray(arrayname:\'{joSearcharraycomplete.content}\', arraykey:\'{key}\')}'}">
+									<f:for each="{joSubSubIndex}" as="joSubSubSubIndex">
+										<div class="button_wrap">
+											<f:if condition="{jo:joinarray(arraycontains:'{searcharray}', keytofind:'{joSubSubSubIndex.orig}')}">
+												<f:then>
+													<f:link.action pageType="{ajaxpagetype}" noCache="1" class="selected" arguments="{jo:jomakearray(arraykey:'remove{key}', arrayvalue:'{joSubSubSubIndex.orig}')}" additionalParams="{ceid:'{extbase_config.ce_uid}'}">
+														<f:if condition="{key} == 'classificationtime'">
+															<f:then>
+																<f:alias map="{name_array: '{joSubSubSubIndex.0->jo:explode(delimiter:\'#\')}'}">
+																	{name_array.1} ({joSubSubSubIndex.number})
+																</f:alias>
+															</f:then>
+															<f:else>
+																<f:variable name="faclabel" value='{joSubSubSubIndex.0}'/>
+																<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.faclabel.{joSubSubSubIndex.0}')}"><f:variable name="faclabel" value="{jo:translate(key:'{langPath}:jo_bkr_base.faclabel.{joSubSubSubIndex.0}')}"/></f:if>
+																{faclabel} ({joSubSubSubIndex.number})
+															</f:else>
+														</f:if>
+													</f:link.action>
+												</f:then>
+												<f:else>
+													<f:link.action noCache="1" pageType="{ajaxpagetype}" class="" additionalParams="{add:'1', ceid:'{extbase_config.ce_uid}'}" arguments="{jo:jomakearray(arraykey:'{key}', arrayvalue:'{joSubSubSubIndex.orig}')}">
+														<f:if condition="{key} == 'classificationtime'">
+															<f:then>
+																<f:alias map="{name_array: '{joSubSubSubIndex.0->jo:explode(delimiter:\'#\')}'}">
+																	{name_array.1} ({joSubSubSubIndex.number})
+																</f:alias>
+															</f:then>
+															<f:else>
+																<f:variable name="faclabel" value='{joSubSubSubIndex.0}'/>
+																<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.faclabel.{joSubSubSubIndex.0}')}"><f:variable name="faclabel" value="{jo:translate(key:'{langPath}:jo_bkr_base.faclabel.{joSubSubSubIndex.0}')}"/></f:if>
+																{faclabel} ({joSubSubSubIndex.number})
+															</f:else>
+														</f:if>
+													</f:link.action>
+												</f:else>
+											</f:if>
+										</div>
+									</f:for>
+								</f:alias>
+							</f:for>
+						</div>
+					</f:if>
+				</f:if>
+			</div>
+		</f:for>
+	</f:if>
+</f:section>
+
+<f:comment>
+	<!--
+		Markup für die normalen Facetten
+	-->
+</f:comment>
+<f:section name="full_index">
+	<f:if condition="{facettes_prepared.full_index}">
+		<f:for each="{facettes_prepared.full_index}" as="joIndex" key="key" iteration="joindexiteration">
+			<f:comment>
+				<!--
+					Wenn die altenative Facettenansicht gewählt wurde, wird die Timeline nicht als Tab gerendert
+				-->
+			</f:comment>
+			<f:if condition="{key} != 'timeline' || {showTimeline} == 1 && {key} == 'timeline'">
+				<f:variable name="hideshowfacettestab" value=""/>
+				<f:if condition="{openfirstfacetteonload} == {key} || {current_selected} == {key} || {facettes_prepared.alphafield_mapping_reverse.{current_selected}} == {key}">
+					<f:variable name="hideshowfacettestab" value=" show active"/>
+				</f:if>
+				<div class="tab-pane{hideshowfacettestab}" id="{key}">
+					<f:render section="headline_selected_facette" arguments="{_all}"/>
+					<f:if condition="{showTimeline} == 1 && {key} == 'timeline'">
+						<div class="tl01">
+							<f:render partial="Timeline" arguments="{_all}"/>
+						</div>
+					</f:if>
+					<f:if condition="{joIndex.content}">
+						<div class="index_wrapper">
+							<div class="row">
+								<f:for each="{joIndex.content}" as="joSubSubIndex" iteration="josubiteration">
+									<f:alias map="{searcharray: '{jo:jodynamicarray(arrayname:\'{joSearcharraycomplete.content}\', arraykey:\'{key}\')}'}">			
+										<div class="index_col col-md-4 col_count_{joIndex.config.col}">
+											<f:for each="{joSubSubIndex}" as="joSubSubSubIndex">
+												<div class="button_wrap">
+													<f:if condition="{jo:joinarray(arraycontains:'{searcharray}', keytofind:'{joSubSubSubIndex.orig}')}">
+														<f:then>
+															<div class="joCheck-container">
+																<f:link.action pageType="{ajaxpagetype}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" noCache="1" class="joCheck joCheckColor_active{ajaxpagetypecssclass}" arguments="{jo:jomakearray(arraykey:'remove{key}', arrayvalue:'{joSubSubSubIndex.orig}')}">
+																	&nbsp;
+																</f:link.action>
+															</div>
+															<f:link.action pageType="{ajaxpagetype}" noCache="1" class="add joCheckColor_active{ajaxpagetypecssclass}" arguments="{jo:jomakearray(arraykey:'remove{key}', arrayvalue:'{joSubSubSubIndex.orig}')}" additionalParams="{ceid:'{extbase_config.ce_uid}'}">
+																<f:if condition="{key} == 'classificationtime'">
+																	<f:then>
+																		<f:alias map="{name_array: '{joSubSubSubIndex.0->jo:explode(delimiter:\'#\')}'}">
+																			{name_array.1} ({joSubSubSubIndex.number})
+																		</f:alias>
+																	</f:then>
+																	<f:else>
+																		<f:variable name="faclabel" value='{joSubSubSubIndex.0}'/>
+																		<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.faclabel.{joSubSubSubIndex.0}')}"><f:variable name="faclabel" value="{jo:translate(key:'{langPath}:jo_bkr_base.faclabel.{joSubSubSubIndex.0}')}"/></f:if>
+																		{faclabel} ({joSubSubSubIndex.number})
+																	</f:else>
+																</f:if>
+															</f:link.action>
+														</f:then>
+														<f:else>
+															<div class="joCheck-container">
+																<f:link.action noCache="1" pageType="{ajaxpagetype}" class="joCheck joCheckColor_inactive{ajaxpagetypecssclass}" additionalParams="{add:'1', ceid:'{extbase_config.ce_uid}'}" arguments="{jo:jomakearray(arraykey:'{key}', arrayvalue:'{joSubSubSubIndex.orig}')}">
+																	&nbsp;
+																</f:link.action>
+															</div>
+															<f:link.action noCache="1" pageType="{ajaxpagetype}" class="add joCheckColor_inactive{ajaxpagetypecssclass}" additionalParams="{add:'1', ceid:'{extbase_config.ce_uid}'}" arguments="{jo:jomakearray(arraykey:'{key}', arrayvalue:'{joSubSubSubIndex.orig}')}">
+																<f:if condition="{key} == 'classificationtime'">
+																	<f:then>
+																		<f:alias map="{name_array: '{joSubSubSubIndex.0->jo:explode(delimiter:\'#\')}'}">
+																			{name_array.1} ({joSubSubSubIndex.number})
+																		</f:alias>
+																	</f:then>
+																	<f:else>
+																		<f:variable name="faclabel" value='{joSubSubSubIndex.0}'/>
+																		<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.faclabel.{joSubSubSubIndex.0}')}"><f:variable name="faclabel" value="{jo:translate(key:'{langPath}:jo_bkr_base.faclabel.{joSubSubSubIndex.0}')}"/></f:if>
+																		{faclabel} ({joSubSubSubIndex.number})
+																	</f:else>
+																</f:if>
+															</f:link.action>
+														</f:else>
+													</f:if>
+												</div>
+											</f:for>
+										</div>
+									</f:alias>
+								</f:for>
+							</div>
+						</div>
+					</f:if>
+				</div>
+			</f:if>
+		</f:for>
+	</f:if>
+</f:section>
+
+<f:comment>
+	<!--
+		Markup für die alphabetischen Facetten
+	-->
+</f:comment>
+<f:section name="alpha_index">
+	<f:if condition="{facettes_prepared.alpha_index}">
+		<f:for each="{facettes_prepared.alpha_index}" as="joIndex" key="key" iteration="joindexiteration">
+			<f:variable name="hideshowfacettestab" value=""/>
+			<f:if condition="{openfirstfacetteonload} == {key} || {current_selected} == {key} || {facettes_prepared.alphafield_mapping_reverse.{current_selected}} == {key}">
+				<f:variable name="hideshowfacettestab" value=" show active"/>
+			</f:if>
+			<div class="tab-pane{hideshowfacettestab}" id="{key}">
+				<f:render section="headline_selected_facette" arguments="{_all}"/>
+				<f:if condition="{key} == 'entityFirstletter' && {settings.showAutocomplete}">
+					<div class="joAutocomplete-container">
+						<span class="joAutoPer-icon d-none"></span>
+						<span class="lbl">{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.personindex')}</span>
+						<input type="hidden" class="entitySearchItemsUrl" value="{f:uri.action(action: 'suggest', pageType: '2345')}" />
+						<input type="hidden" class="entitySearchUrl" value="{f:uri.action(noCache: '1', arguments: '{type: \'entitywildcard\', entityTokenizedwc: \'TEXT\'}')}" />
+						<input type="text" class="joAutocomplete" placeholder="{jo:translate(key:'{langPath}:jo_bkr_base.placeholder.personindex')}" data-id="{extbase_config.currentPageId}" data-handler="suggest" />
+					</div>
+				</f:if>
+				<f:if condition="{key} == 'locationFirstletter' && {settings.showAutocomplete}">
+					<div class="joAutocomplete-container">
+						<span class="joAutoPer-icon d-none"></span>
+						<span class="lbl">{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.locaitonindex')}</span>
+						<input type="hidden" class="entitySearchItemsUrl" value="{f:uri.action(action: 'suggest', pageType: '2345')}" />
+						<input type="hidden" class="entitySearchUrl" value="{f:uri.action(noCache: '1', arguments: '{type: \'entitywildcard\', entityTokenizedwc: \'TEXT\'}')}" />
+						<input type="text" class="joAutocomplete" placeholder="{jo:translate(key:'{langPath}:jo_bkr_base.placeholder.locaitonindex')}" data-id="{extbase_config.currentPageId}" data-handler="suggestLoc" />
+					</div>
+				</f:if>
+				<f:if condition="{key} == 'classificationtagsFirstletter' && {settings.showAutocomplete}">
+					<div class="joAutocomplete-container">
+						<span class="joAutoPer-icon d-none"></span>
+						<span class="lbl">{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.topicindex')}</span>
+						<input type="hidden" class="entitySearchItemsUrl" value="{f:uri.action(action: 'suggest', pageType: '2345')}" />
+						<input type="hidden" class="entitySearchUrl" value="{f:uri.action(noCache: '1', arguments: '{type: \'entitywildcard\', entityTokenizedwc: \'TEXT\'}')}" />
+						<input type="text" class="joAutocomplete" placeholder="{jo:translate(key:'{langPath}:jo_bkr_base.placeholder.topicindex')}" data-id="{extbase_config.currentPageId}" data-handler="suggestClassi" />
+					</div>
+				</f:if>
+				<div class="clearfix">
+					<span class="joAlphIndex-icon"></span>
+					<span class="lbl">{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.alphabeticindex')}</span>
+					<ul class="joAlphabetIndex clearfix joIndex_{key}">
+						<f:for each="{joIndex.content}" as="joSubIndex" key="Subkey" iteration="joSubindexiteration">
+							<li>
+								<f:if condition="{jo:joinarray(arraycontains:'{joIndex.active}', keytofind:'{Subkey}')}">
+									<div class="joKreis"></div>
+								</f:if>
+								<f:if condition="{joSubIndex}">
+									<f:then>
+										<f:link.action pageType="200" noCache="1" additionalParams="{ret:'fac',ceid:'{extbase_config.ce_uid}',oa:'{extbase_config.action}'}" action="ajax" arguments="{jo:jomakearray(arraykey:'{key}', arrayvalue:'{Subkey}')}">{Subkey}</f:link.action>
+									</f:then>
+									<f:else>
+										<span>{Subkey}</span>
+									</f:else>
+								</f:if>
+							</li>
+						</f:for>
+					</ul>
+					<div class="joFacettesContainer"></div>
+				</div>
+			</div>
+		</f:for> 
+	</f:if>
+</f:section>
+
+<f:comment>
+	<!--
+		Markup für die Hilfe Block
+	-->
+</f:comment>
+<f:section name="help">
+	<f:if condition="{config.helpTitle} || {config.helpText}">
+		<div class="tab-pane fade" id="facette_info">
+			<h3>{config.helpTitle}</h3>
+			<f:format.raw>{config.helpText}</f:format.raw>
+		</div>
+	</f:if>
+</f:section>
+
+<f:comment>
+	<!--
+		Markup für die hierarchischen Facetten
+	-->
+</f:comment>
+<f:section name="hierarchical_index">
+	<f:if condition="{facettes_prepared.hierarchical_index}">
+		<f:for each="{facettes_prepared.hierarchical_index}" as="joIndex" key="key" iteration="joindexiteration">
+			<f:variable name="hideshowfacettestab" value=""/>
+			<f:if condition="{openfirstfacetteonload} == {key} || {current_selected} == {key} || {facettes_prepared.alphafield_mapping_reverse.{current_selected}} == {key}">
+				<f:variable name="hideshowfacettestab" value=" show active"/>
+			</f:if>
+			<div class="tab-pane hierachical{hideshowfacettestab}" id="{key}">
+				<f:render section="headline_selected_facette" arguments="{_all}"/>
+				<div class="joSliderShow-prev"></div>
+				<div class="joSliderShow-container">
+					<div class="joSliderShowPane clearfix">
+						<f:for each="{joIndex.content}" as="content_cols" key="k" iteration="i">
+							<div class="clearfix joSliderShowItems items<f:if condition='{i.isFirst}'><f:then></f:then><f:else> joSubHierarchy</f:else></f:if><f:if condition='{i.isLast}'> isLast</f:if>" data-level="{i.cycle}" <f:if condition="{k} == '0'"><f:then></f:then><f:else>id="{k}"</f:else></f:if>>
+								<div class="joSliderShow-Title">
+									<f:if condition="{i.isFirst}">
+										<f:then>
+											{jo:translate(key:'{langPath}:jo_bkr_base.facet.uebersicht')}
+										</f:then>
+										<f:else>
+											<f:format.crop maxCharacters="60">
+												<jo:jodynamicarray arrayname="{joIndex.rootline}" arraykey="{i.index}" />
+											</f:format.crop>
+										</f:else>
+									</f:if>
+								</div>
+								<ul>
+									<f:for each="{content_cols}" as="joSubIndex" key="Subkey" iteration="joSubindexiteration">
+										<f:alias map="{name_array: '{joSubIndex.v->jo:explode(delimiter:\'$\')}'}">
+											<li class="<f:if condition='{joSubIndex.a}'>active</f:if><f:if condition='{joSubIndex.o}'> joCheckOpen</f:if>">
+												<div class="button_wrap">
+													<div class="joCheck-container">
+														<f:if condition="{joSubIndex.a} == '1'">
+															<f:then>
+																<f:link.action noCache="1" pageType="{ajaxpagetype}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" class="joCheck joCheckColor_{joSubIndex.a}{ajaxpagetypecssclass}" arguments="{jo:jomakearray(arraykey:'remove{key}', arrayvalue:'{Subkey}')}">
+																	&nbsp;
+																</f:link.action>
+															</f:then>
+															<f:else>
+																<f:link.action noCache="1" pageType="{ajaxpagetype}" class="joCheck joCheckColor_{joSubIndex.a}{ajaxpagetypecssclass}" additionalParams="{add:'1', ceid:'{extbase_config.ce_uid}'}" arguments="{jo:jomakearray(arraykey:'{key}', arrayvalue:'{Subkey}')}">
+																	&nbsp;
+																</f:link.action>
+															</f:else>
+														</f:if>
+													</div>
+													<f:if condition="{joSubIndex.a} == '1'">
+														<f:then>
+															<f:link.action noCache="1" pageType="{ajaxpagetype}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" class="add joCheckColor_{joSubIndex.a}{ajaxpagetypecssclass}" arguments="{jo:jomakearray(arraykey:'remove{key}', arrayvalue:'{Subkey}')}">
+																{name_array.0} ({joSubIndex.c})
+															</f:link.action>
+														</f:then>
+														<f:else>
+															<f:link.action noCache="1" pageType="{ajaxpagetype}" class="add joCheckColor_{joSubIndex.a}{ajaxpagetypecssclass}" additionalParams="{add:'1',ceid:'{extbase_config.ce_uid}'}" arguments="{jo:jomakearray(arraykey:'{key}', arrayvalue:'{Subkey}')}">
+																{name_array.0} ({joSubIndex.c})
+															</f:link.action>
+														</f:else>
+													</f:if>
+													<div class="joOpener-container">
+														<f:if condition="{joSubIndex.ch}">
+															<div class="joOpener joCheckColor_{joSubIndex.a}<f:if condition='{joSubIndex.o}'> active</f:if>" data-href="<f:uri.action action="ajax" controller="Museo" additionalParams="{ret:'h',ceid:'{extbase_config.ce_uid}',oa:'{extbase_config.action}'}" noCache="1" pageType="200" arguments="{jo:jomakearray(arraykey:'{key}', arrayvalue:'{Subkey}')}"/>" data-id="{joSubIndex.id}"></div>
+														</f:if>
+													</div>
+												</div>
+											</li>
+										</f:alias>
+									</f:for>
+								</ul>
+							</div>
+						</f:for>
+					</div>
+				</div>
+				<div class="joSliderShow-next"></div>
+			</div>
+		</f:for> 
+	</f:if>
+</f:section>
+
+<f:comment>
+	<!--
+		Markup für die Darstellung der ausgewählten Suchparameter
+	-->
+</f:comment>
+<f:section name="searchparams">
+	<f:variable name="tabclass" value='tab-pane '/>
+	<f:if condition="{config.neverhidesearchfilter}">
+		<f:variable name="tabclass" value='tab-pane-inactive '/>
+	</f:if>
+	<f:if condition='{joSearcharraycomplete}'>
+		<div class="{tabclass}active" id="searchparams">
+			<div class="akt_filter">		
+				<h3>{jo:translate(key:'{langPath}:solrindex_searchfor')}</h3>
+				<div class="joSearchControl">
+					<f:for each="{joSearcharraycomplete.content}" as="items" key="k" iteration="i">	
+						<div class="joFacettedSearch">
+							<div class="img_wrap">
+								<div class="joSprite {k}" title="{jo:translate(key:'{langPath}:search_{k}')}"></div>
+							</div>
+							<span>
+								<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{k}')}">
+									<f:then>
+										{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{k}')}
+									</f:then>
+									<f:else>
+										{k}
+									</f:else>
+								</f:if>
+							</span>
+							<f:switch expression="{k}">
+								<f:case value="timeline"><f:render section="timeline" arguments="{_all}"/></f:case>
+								<f:case value="Boundingbox"><f:render section="Boundingbox" arguments="{_all}"/></f:case>
+								<f:case value="searchradius"><f:render section="Searchradius" arguments="{_all}"/></f:case>
+								<f:case value="childrenReference"><f:render section="childrenReference" arguments="{_all}"/></f:case>
+								<f:case value="bcpId"><f:render section="childrenReference" arguments="{_all}"/></f:case>
+								<f:defaultCase><f:render section="standardfields" arguments="{_all}"/></f:defaultCase>
+							</f:switch>
+							<f:render section="AndOrToggle" arguments="{_all}"/>
+						</div>
+					</f:for>
+				</div>
+			</div>
+		</div>
+	</f:if>
+</f:section>
+
+<f:section name="AndOrToggle">
+	<f:if condition='{joSearcharraycomplete.content.{k}->f:count()} > 1'>
+		<f:if condition="{k} != 'timeline' && {k} != 'Boundingbox' && {k} != 'searchradius'">
+			<div class="and_or_toggle">
+				<f:variable name="and_active" value=''/>
+				<f:variable name="or_active" value=''/>
+				<f:variable name="and_checked" value=''/>
+				<f:variable name="or_checked" value=''/>
+				<f:if condition="{joSearcharraycomplete.logical_concat.{k}} == 'AND'">
+					<f:variable name="and_active" value=' active'/>
+					<f:variable name="and_checked" value='checked="checked"'/>
+				</f:if>
+				<f:if condition="{joSearcharraycomplete.logical_concat.{k}} == 'OR'">
+					<f:variable name="or_active" value=' active'/>
+					<f:variable name="or_checked" value='checked="checked"'/>
+				</f:if>
+				<f:link.action pageType="{ajaxpagetype}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" noCache="1" class="and_link{ajaxpagetypecssclass}{and_active}" arguments="{jo:jomakearray(arraykey:'lgandor{k}', arrayvalue:'1')}">
+					<label class="joAndOrSwitch joAnd">
+						<input class="joAndOrCheck" type="checkbox"/>
+						<span class="slider square"></span>
+						<span class="joAndText ff">{jo:translate(key:'{langPath}:AND')}</span>
+						<span class="joOrText hh">{jo:translate(key:'{langPath}:OR')}</span>
+					</label>
+				</f:link.action>
+				<f:link.action pageType="{ajaxpagetype}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" noCache="1" class="or_link{ajaxpagetypecssclass}{or_active}" arguments="{jo:jomakearray(arraykey:'lgandor{k}', arrayvalue:'2')}">
+					<label class="joAndOrSwitch joAnd">
+						<input class="joAndOrCheck" type="checkbox" {and_checked}/>
+						<span class="slider square"></span>
+						<span class="joAndText zz">{jo:translate(key:'{langPath}:AND')}</span>
+						<span class="joOrText ii">{jo:translate(key:'{langPath}:OR')}</span>
+					</label>
+				</f:link.action>
+			</div>
+		</f:if>
+	</f:if>
+</f:section>
+
+<f:section name="Searchradius">
+	 <div class="joFacetteItem">
+		<f:link.action pageType="{ajaxpagetype}" class="{ajaxpagetypecssclass}" noCache="1" arguments="{removesearchradius:'1'}" additionalParams="{ceid:'{extbase_config.ce_uid}'}">
+			Im Umkreis von {items.distance}km um {items.lon}, {items.lat} (lon,lat)
+			<div class="img-container">
+				<div class="joSprite" title="Filter löschen"></div>
+			</div>
+		</f:link.action>
+	</div> 
+</f:section>
+
+<f:section name="Boundingbox">
+	 <div class="joFacetteItem">
+		<f:link.action pageType="{ajaxpagetype}" class="{ajaxpagetypecssclass}" noCache="1" arguments="{removeBoundingbox:'1'}" additionalParams="{ceid:'{extbase_config.ce_uid}'}">
+			<f:alias map="{data_array: '{joIndex->jo:explode(delimiter:\'$\')}'}">			
+				NW: {items.x1} - {items.y2}<br>
+				SO: {items.x2} - {items.y1}<br>
+			</f:alias>
+			<div class="img-container">
+				<div class="joSprite" title="Filter löschen"></div>
+			</div>
+		</f:link.action>
+	</div> 
+</f:section>
+
+<f:section name="childrenReference">
+	<f:for each="{items}" as="joIndex" key="key" iteration="si">
+		<div class="joFacetteItem">
+			<f:link.action noCache="1" arguments="{jo:jomakearray(arraykey:'remove{k}', arrayvalue:'{joIndex}')}">
+				<f:if condition='{k} != "sortvar"'>
+					<f:then>
+						<f:alias map="{data_array: '{joIndex->jo:explode(delimiter:\'$\')}'}">			
+							<f:if condition="{k} == 'classificationtime'">
+								<f:then>
+									<f:alias map="{name_array: '{data_array.0->jo:explode(delimiter:\'#\')}'}">
+										{name_array.1}
+									</f:alias>
+								</f:then>
+								<f:else>
+									<f:alias map="{name_array2: '{data_array.0->jo:explode(delimiter:\'/\', last: \'1\')}'}">
+										{name_array2}
+									</f:alias>
+								</f:else>
+							</f:if>
+						</f:alias>
+					</f:then>
+					<f:else>
+						<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{joIndex.0}')}">
+							<f:then>
+								{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{joIndex.0}')}
+							</f:then>
+							<f:else>
+								{joIndex.0}
+							</f:else>
+						</f:if>
+						<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{joIndex.1}')}">
+							<f:then>
+								{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{joIndex.1}')}
+							</f:then>
+							<f:else>
+								{joIndex.1}
+							</f:else>
+						</f:if>
+					</f:else>
+				</f:if>
+				<div class="img-container">
+					<div class="joSprite" title="{jo:translate(key:'{langPath}:jo_bkr_base.filter.remove')}"></div>
+				</div>
+			</f:link.action>
+		</div> 
+		<f:if condition='{items->f:count()} > 1'>
+			<f:if condition='{si.isLast} != 1'>
+				<jo:translate key="{langPath}:{jo:jodynamicarray(arrayname:'{joSearcharraycomplete.logical_concat}', arraykey:'{k}')}" />
+			</f:if>
+		</f:if>
+	</f:for>
+	<div class="joFacetteItem" style="background-color:#9a1515;">
+		<f:link.action noCache="1" arguments="{backtooriginalsearch:'1'}">
+			Zurück zu Ihrer ursprünglichen Suche
+		</f:link.action>
+	</div>
+</f:section>
+
+<f:comment>
+	<!--
+		Filterübersicht der Standardfelder
+	-->
+</f:comment>
+<f:section name="standardfields">
+	<f:for each="{items}" as="joIndex" key="key" iteration="si">
+		<div class="joFacetteItem">
+			<f:link.action pageType="{ajaxpagetype}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" class="{ajaxpagetypecssclass}" noCache="1" arguments="{jo:jomakearray(arraykey:'remove{k}', arrayvalue:'{joIndex}')}">
+				<f:if condition='{k} != "sortvar"'>
+					<f:then>
+						<f:alias map="{data_array: '{joIndex->jo:explode(delimiter:\'$\')}'}">		
+							<f:if condition="{k} == 'classificationtime'">
+								<f:then>
+									<f:alias map="{name_array: '{data_array.0->jo:explode(delimiter:\'#\')}'}">
+										<f:variable name="faclabel" value='{name_array.1}'/>
+									</f:alias>
+								</f:then>
+								<f:else>
+									<f:if condition="{config.init.searchconfig.expandhierarchicalfacettes}">
+										<f:then>
+											<f:variable name="faclabel" value='{data_array.0}'/>
+										</f:then>
+										<f:else>
+											<f:alias map="{name_array2: '{data_array.0->jo:explode(delimiter:\'/\', last: \'1\')}'}">
+												<f:variable name="faclabel" value='{name_array2}'/>
+											</f:alias>
+										</f:else>
+									</f:if>
+									<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.faclabel.{faclabel}')}">
+										<f:variable name="faclabel" value="{jo:translate(key:'{langPath}:jo_bkr_base.faclabel.{faclabel}')}"/>
+									</f:if>
+								</f:else>
+							</f:if>
+							{faclabel}
+						</f:alias>
+					</f:then>
+					<f:else>
+						<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{joIndex.0}')}">
+							<f:then>
+								{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{joIndex.0}')}
+							</f:then>
+							<f:else>
+								{joIndex.0}
+							</f:else>
+						</f:if>
+						<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{joIndex.1}')}">
+							<f:then>
+								{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.{joIndex.1}')}
+							</f:then>
+							<f:else>
+								{joIndex.1}
+							</f:else>
+						</f:if>
+					</f:else>
+				</f:if>
+				<div class="img-container">	
+					<div class="joSprite" title="{jo:translate(key:'{langPath}:jo_bkr_base.filter.remove')}"></div>
+				</div>
+			</f:link.action>
+		</div> 
+		<f:if condition='{items->f:count()} > 1'>
+			<f:if condition='{si.isLast} != 1'>
+				<jo:translate key="{langPath}:{jo:jodynamicarray(arrayname:'{joSearcharraycomplete.logical_concat}', arraykey:'{k}')}" />
+			</f:if>
+		</f:if>
+	</f:for>
+</f:section>
+
+<f:section name="joLoadFacettesList">
+	<f:if condition="{facettes_prepared.structure}">
+		<f:then>
+			<f:for each="{facettes_prepared.structure}" as="facettestructure" key="structurekey">
+				<f:if condition="{jo:translate(key:'{langPath}:{structurekey}')}">
+					<f:then>
+						<li class="divider" data-label="{jo:translate(key:'{langPath}:{structurekey}')}">{f:translate(key:'{langPath}:{structurekey}')}</li>
+					</f:then>
+					<f:else>
+						<li class="divider" data-label="{structurekey}">{structurekey}</li>
+					</f:else>
+				</f:if>
+				<f:for each="{facettestructure}" as="facettes" key="key" iteration="i">
+					<li>
+						<a class="c_button{f:if(condition:'{facettes.number}',then:' withNumber',else:'')}" data-toggle="tab" href="#{facettes.name}">
+							<f:if condition="{jo:jodynamicarray(arrayname:'{facettes_prepared.selected_facettes}', arraykey:'{facettes.name}')}">
+								<div class="joKreis"></div>
+							</f:if>
+							<f:if condition="{facettes.number}">
+								<span class="number">{facettes.number}</span>
+							</f:if>
+							<div class="joSprite" title="{f:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.label_{facettes.name}')}"></div>
+						</a>
+					</li>		
+				</f:for>
+			</f:for>
+		</f:then>
+		<f:else>
+			<f:for each="{facettes_prepared.existing_index}" as="facettes" key="key" iteration="i">
+				<li>
+					<a class="c_button{f:if(condition:'{facettes.number}',then:' withNumber',else:'')}" data-toggle="tab" href="#{facettes.name}">
+						<f:if condition="{jo:jodynamicarray(arrayname:'{facettes_prepared.selected_facettes}', arraykey:'{facettes.name}')}">
+							<div class="joKreis"></div>
+						</f:if>
+						<f:if condition="{facettes.number}">
+							<span class="number">{facettes.number}</span>
+						</f:if>
+						<div class="joSprite" title="{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.label_{facettes.name}')}"></div>
+					</a>
+				</li>		
+			</f:for>
+		</f:else>
+	</f:if>
+	<f:if condition="{joSearcharraycomplete}">
+		<f:if condition="!{config.neverhidesearchfilter}">
+			<li class="showfilter">
+				<f:render section="searchfilter_button" arguments="{_all}"/>
+			</li>
+		</f:if>	
+		<li>
+			<f:render section="delete_icon" arguments="{_all}"/>
+		</li>
+	</f:if>
+	<f:render section="helptext_button" arguments="{_all}"/>
+</f:section>
+
+<f:comment>
+	<!-- Alternative Darstellung der Facettenübersicht -> das kann mit joLoadFacettesList zusammengelegt werden. aktuell stehen nicht allen Views alle Facettendarstellungsoptionen zur Verfügung!!! 
+	-->
+</f:comment>
+<f:section name="joLoadFacettesListAlternative">
+	<f:switch expression="{config.init.searchconfig.facettecontrol_view}">
+		<f:case value="dropdown">
+			<f:render section="facetteview_symbol_with_text_dropdown" arguments="{_all}"/>
+		</f:case>
+		<f:defaultCase>
+			<f:render section="facetteview_symbol_with_text" arguments="{_all}"/>
+		</f:defaultCase>
+	</f:switch>
+</f:section>
+
+<f:comment>
+	<!-- 
+		Das Facettenmenü wird mit Text und Symbolen dargestellt (z.B. Kartenspeicher)
+	-->
+</f:comment>
+<f:section name="facetteview_symbol_with_text">
+	<ul class="joControls nav nav-tabs col-md as_textandsymbols">
+		<f:if condition="{facettes_prepared.existing_index}">
+			<f:for each="{facettes_prepared.existing_index}" as="facettes" key="key" iteration="i">
+				<f:variable name="title_label" value="{facettes.name}"/>
+				<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.label_{facettes.name}')}">
+					<f:variable name="title_label" value="{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.label_{facettes.name}')}"/>
+				</f:if>
+				<f:comment>
+					<!--
+						Die Timeline wird nicht in die Tabs gepackt, wenn die Alternative Facettenansicht (2) ausgewählt ist
+						kann ggf. noch erweitert werden
+					-->
+				</f:comment>
+				<f:if condition="{facettes.name} != 'timeline'">
+					<li>
+						<f:variable name="withNumber" value=""/>
+						<f:if condition="{facettes.number}">
+							<f:variable name="withNumber" value=" withNumber"/>
+						</f:if>
+						<f:variable name="hideshowfacettestab" value=""/>
+						<f:if condition="{openfirstfacetteonload} == {facettes.name} || {current_selected} == {facettes.name} || {facettes_prepared.alphafield_mapping_reverse.{current_selected}} == {facettes.name}">
+							<f:variable name="hideshowfacettestab" value=" show active"/>
+						</f:if>
+						<a class="cb01 c_button{withNumber}{hideshowfacettestab}" title="{title_label}" data-toggle="tab" href="#{facettes.name}">
+							<f:if condition="{jo:jodynamicarray(arrayname:'{facettes_prepared.selected_facettes}', arraykey:'{facettes.name}')}">
+								<div class="joKreis"></div>
+							</f:if>
+							<f:if condition="{facettes.number}">
+								<span class="number">{facettes.number}</span>
+							</f:if>
+							<div class="joSprite"></div>
+							<div class="t01">
+								{title_label}
+							</div>
+						</a>
+					</li>	 
+				</f:if>
+			</f:for>	
+		</f:if>
+		<f:if condition="{joSearcharraycomplete}">
+			<f:if condition="!{config.neverhidesearchfilter}">
+				<li class="showfilter">
+					<f:render section="searchfilter_button" arguments="{_all}"/>
+				</li>
+			</f:if>	
+			<li class="deletefilter">
+				<f:render section="delete_icon" arguments="{_all}"/>
+			</li>
+		</f:if>
+		<f:render section="helptext_button" arguments="{_all}"/>
+	</ul>
+</f:section>
+
+<f:comment>
+	<!-- 
+		Das Facettenmenü wird mit Text und Symbolen als Dropdown dargestellt (z.B. Jüdisches Leben Niedersachsen) - @todo
+	-->
+</f:comment>
+<f:section name="facetteview_symbol_with_text_dropdown">
+	<a class="dropdown-toggle" href="#" role="button" id="filter_view_button_id" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	 	Filter:
+	</a>
+	<ul class="joControls nav nav-tabs col-md as_textandsymbols_dropdown dropdown-menu" aria-labelledby="filter_view_button_id">
+		<f:if condition="{facettes_prepared.existing_index}">
+			<f:for each="{facettes_prepared.existing_index}" as="facettes" key="key" iteration="i">
+				<f:variable name="title_label" value="{facettes.name}"/>
+				<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.label_{facettes.name}')}">
+					<f:variable name="title_label" value="{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.label_{facettes.name}')}"/>
+				</f:if>
+				<li>
+					<a class="cb01 c_button{f:if(condition:'{facettes.number}',then:' withNumber',else:'')}" title="{title_label}" data-toggle="tab" href="#{facettes.name}">
+						<f:if condition="{jo:jodynamicarray(arrayname:'{facettes_prepared.selected_facettes}', arraykey:'{facettes.name}')}">
+							<div class="joKreis"></div>
+						</f:if>
+						<f:if condition="{facettes.number}">
+							<span class="number">{facettes.number}</span>
+						</f:if>
+						<div class="joSprite"></div>
+						<div class="t01">
+							{title_label}
+						</div>
+					</a>
+				</li>		
+			</f:for>	
+		</f:if>
+		<f:if condition="{joSearcharraycomplete}">
+			<f:if condition="!{config.neverhidesearchfilter}">
+				<li class="showfilter">
+					<f:render section="searchfilter_button" arguments="{_all}"/>
+				</li>
+			</f:if>	
+			<li class="deletefilter">
+				<f:render section="delete_icon" arguments="{_all}"/>
+			</li>
+		</f:if>
+		<f:render section="helptext_button" arguments="{_all}"/>
+	</ul>
+</f:section>
+
+
+<f:comment>
+	<!--
+		Button zum Anzeigen der Hilfetexte
+	-->
+</f:comment>
+<f:section name="helptext_button">
+	<f:if condition="{config.helpTitle} || {config.helpText}">
+		<li>
+			<a class="c_button" data-toggle="tab" href="#facette_info" title="Informationen zur Suche">
+				<div class="joSprite" title="Informationen zu den Suchfacetten" ></div>
+			</a>
+		</li>
+	</f:if>
+</f:section>
+
+<f:comment>
+	<!--
+		Button zum Anzeigen ALLER Suchfilter
+	-->
+</f:comment>
+<f:section name="searchfilter_button">
+	<a class="c_button active d-inline-block show{f:if(condition:'{facettes.number}',then:' withNumber',else:'')}" data-toggle="tab" href="#searchparams">
+		<f:if condition="{facettes.number}">
+			<span class="number">{facettes.number}</span>
+		</f:if>
+		<div class="joSprite" title="{jo:translate(key:'{langPath}:search_param')}"></div>
+		<div class="showfilter_text">{jo:translate(key:'{langPath}:search_param')}</div>
+	</a>
+</f:section>
+
+<f:comment>
+	<!--
+		Button zum Löschen ALLER Suchfilter
+	-->
+</f:comment>
+<f:section name="delete_icon">
+	<f:link.action pageType="{ajaxpagetype}" noCache="1" class="c_button d-inline-block{ajaxpagetypecssclass}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" arguments="{joDel:'1'}">
+		<div id="joDeleteIcon">
+			<div class="joSprite joFoundIcon" title="{jo:translate(key:'{langPath}:solrindex_title_clearallfilter')}"></div>
+			<div class="delete_text">{jo:translate(key:'{langPath}:solrindex_title_clearallfilter_text')}</div>
+		</div>
+	</f:link.action>
+</f:section>
+
+<f:section name="timeline">
+	 <div class="joFacetteItem">
+		<f:link.action pageType="{ajaxpagetype}" class="{ajaxpagetypecssclass}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" noCache="1" arguments="{jodeletetimefilter:'1'}">
+			<f:alias map="{data_array: '{joIndex->jo:explode(delimiter:\'$\')}'}">			
+				{items.start} - {items.end}
+			</f:alias>
+			<div class="img-container">
+				<div class="joSprite" title="Filter löschen" ></div>
+			</div>
+		</f:link.action>
+	</div> 
+</f:section>

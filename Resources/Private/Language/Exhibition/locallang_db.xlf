@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2017-11-04T10:48:54Z" product-name="jo_exhibition">
+		<header/>
+		<body>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition">
+				<source>Ausstellung</source>
+				<target>Ausstellung</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_section">
+				<source>Sektionen</source>
+				<target>Sektionen</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibit">
+				<source>Exponat</source>
+				<target>Exponat</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.title">
+				<source>Titel der Austellung</source>
+				<target>Titel der Austellung</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.subtitle">
+				<source>Ein oder mehrere Untertitel der Ausstellung</source>
+				<target>Ein oder mehrere Untertitel der Ausstellung</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.period">
+				<source>Zeitraum in dem die Ausstellung an einem physischen Ort zu besichtigen ist</source>
+				<target>Zeitraum in dem die Ausstellung an einem physischen Ort zu besichtigen ist</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.place">
+				<source>Adressinformationen - Herausgeber und/oder Daten zum physischen Ort der Ausstellung</source>
+				<target>Adressinformationen - Herausgeber und/oder Daten zum physischen Ort der Ausstellung</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.openinghours">
+				<source>Öffnungszeiten</source>
+				<target>Öffnungszeiten</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.opening">
+				<source>Ausstellungseröffnung</source>
+				<target>Ausstellungseröffnung</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.summary">
+				<source>Kurzbeschreibung der Ausstellung</source>
+				<target>Kurzbeschreibung der Ausstellung</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.aboutproject">
+				<source>Informationen über die Ausstellung</source>
+				<target>Informationen über die Ausstellung</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.zitiervorschlag">
+				<source>Zitiervorschlag</source>
+				<target>Zitiervorschlag</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.maincolor">
+				<source>maincolor</source>
+				<target>maincolor</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.fontcolor">
+				<source>fontcolor</source>
+				<target>fontcolor</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.section">
+				<source>Sektionen Titel</source>
+				<target>Sektionen Titel</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.intro">
+				<source>Videodaten über die Ausstellung</source>
+				<target>Videodaten über die Ausstellung</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.intro.add">
+				<source>Video hinzufügen</source>
+				<target>Video hinzufügen</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.audio">
+				<source>Audioinformationen über die Ausstellung</source>
+				<target>Audioinformationen über die Ausstellung</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.audio.add">
+				<source>Datei hinzufügen</source>
+				<target>Datei hinzufügen</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.flyer">
+				<source>Flyer</source>
+				<target>Flyer</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.flyer.add">
+				<source>Flyer hinzufügen</source>
+				<target>Flyer hinzufügen</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.tosectionimg">
+				<source>Hintergrundbild für den Einstieg in die Sektions- bzw. Kapitelansicht</source>
+				<target>Hintergrundbild für den Einstieg in die Sektions- bzw. Kapitelansicht</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.tosectionimg.add">
+				<source>Abbildung hinzufügen</source>
+				<target>Abbildung hinzufügen</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.tosectiondesc">
+				<source>Kurze verbale Überleitung in die Sektions- bzw. Kapitelansicht(oberhalb des Einstiegsbuttons)</source>
+				<target>Kurze verbale Überleitung in die Sektions- bzw. Kapitelansicht(oberhalb des Einstiegsbuttons)</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.tosectionbtntext">
+				<source>Aufforderungstext für den Einstiegsbutton in die Sektions- bzw. Kapitelansicht</source>
+				<target>Aufforderungstext für den Einstiegsbutton in die Sektions- bzw. Kapitelansicht</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.derivate">
+				<source>Key Visual, das diese Ausstellung repräsentiert</source>
+				<target>Key Visual, das diese Ausstellung repräsentiert</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.derivate.add">
+				<source>Abbildung hinzufügen</source>
+				<target>Abbildung hinzufügen</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.placecolor">
+				<source>Hintergrundfarbe des Kontakt- Ortblockes</source>
+				<target>Hintergrundfarbe des Kontakt- Ortblockes</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.aboutprojectcolor">
+				<source>Hintergrundfarbe des Infoblockes</source>
+				<target>Hintergrundfarbe des Infoblockes</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.zitiervorschlagcolor">
+				<source>Zitiervorschlag Farbe</source>
+				<target>Zitiervorschlag Farbe</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_section.title">
+				<source>Sektionen Titel</source>
+				<target>Sektionen Titel</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_section.subtitle">
+				<source>Sektionen Untertitel</source>
+				<target>Sektionen Untertitel</target>
+			</trans-unit>			
+			<trans-unit id="tx_joexhibition_domain_model_section.description">
+				<source>Sektionen Beschreibung</source>
+				<target>Sektionen Beschreibung</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_section.exhibit">
+				<source>Exponat Titel</source>
+				<target>Exponat Titel</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibit.title">
+				<source>Exponat Titel</source>
+				<target>Exponat Titel</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibit.subtitle">
+				<source>Untertitel</source>
+				<target>Untertitel</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibit.shorttext">
+				<source>Kurztitel</source>
+				<target>Kurztitel</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibit.bodytext">
+				<source>Bodytext</source>
+				<target>Bodytext</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibit.publikation">
+				<source>Publikation</source>
+				<target>Publikation</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibit.kontextinformation">
+				<source>Kontextinformationen</source>
+				<target>Kontextinformationen</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibit.links">
+				<source>Links</source>
+				<target>Links</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.jsonfile">
+				<source>JSON Datei</source>
+				<target>JSON Datei</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.jsonfile.add">
+				<source>JSON Datei hinzufügen</source>
+				<target>JSON Datei hinzufügen</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.infotextetitle">
+				<source>Überschrift des Literaturblockes</source>
+				<target>Überschrift des Literaturblockes</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.infotexte">
+				<source>Literatur zur Ausstellung</source>
+				<target>Literatur zur Ausstellung</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.infotextecolor">
+				<source>Hintergrundfarbe des Literaturblockes</source>
+				<target>Hintergrundfarbe des Literaturblockes</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_data.description">
+				<source>Beschreibung/Text</source>
+				<target>Beschreibung/Text</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.maincolor">
+				<source>Akzentfarbe der Ausstellung(Hintergründe etc.)</source>
+				<target>Akzentfarbe der Ausstellung(Hintergründe etc.)</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.maincolorborder">
+				<source>Farbe der Umrandungen</source>
+				<target>Farbe der Umrandungen</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.maincolorfont">
+				<source>Akzentfarbe der Headlines</source>
+				<target>Akzentfarbe der Headlines</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.maincolorlinkfont">
+				<source>Linksfarbe</source>
+				<target>Linksfarbe</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.fontcolor">
+				<source>fontcolor</source>
+				<target>fontcolor</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.bggradient1">
+				<source>Hintergrundfarbe 1</source>
+				<target>Hintergrundfarbe 1</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.bggradient2">
+				<source>Hintergrundfarbe 2 (leer lassen, wenn Hintergrund einfarbig sein soll)</source>
+				<target>Hintergrundfarbe 2 (leer lassen, wenn Hintergrund einfarbig sein soll)</target>
+			</trans-unit>
+			<trans-unit id="tx_joexhibition_domain_model_exhibition.fontcolordetail1">
+				<source>Schriftfarbe Detailansicht 1</source>
+				<target>Schriftfarbe Detailansicht 1</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

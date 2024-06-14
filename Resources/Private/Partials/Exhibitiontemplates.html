@@ -1,0 +1,73 @@
+<f:section name="audio">
+	<f:if condition="{aud} && {aud -> f:count} > 0">
+		<f:variable name="poster_image"/>
+		<f:if condition="{aud.related}">
+			<f:variable name="poster_image">background-image:url("{f:uri.image(image:'{aud.related.0}')}");</f:variable>
+		</f:if>
+		<div class="pd col-md desc-con-audio">
+			<div class="audio-container h-100 align-items-center d-flex flex-column overflow-hidden position-relative" style="{poster_image}">
+				<f:if condition="{aud.originalResource.properties.description} && !{audio_overlay}">
+					<div class="audio-intro">
+						<f:format.html>{aud.originalResource.properties.description}</f:format.html>
+					</div>
+				</f:if>
+				<f:comment>
+					<!--
+					Wenn kein Titel dem Audiofile zugeordnet ist, wird der Titel des Objektes benutzt
+					-->
+				</f:comment>
+				<f:variable name="audio_title"/>
+				<f:if condition="{aud.originalResource.properties.title}">
+					<f:then>
+						<f:variable name="audio_title" value="{aud.originalResource.properties.title}"/>
+					</f:then>
+					<f:else>
+						<f:if condition="{obj.title}">
+							<f:then>
+								<f:variable name="audio_title" value="{obj.title}"/>
+							</f:then>
+							<f:else>
+								<f:variable name="audio_title" value="Audio abspielen"/>
+							</f:else>
+						</f:if>
+					</f:else>
+				</f:if>
+				<f:if condition="{audio_title}">
+					<h3 class="audio-title">{audio_title}</h3>
+				</f:if>
+				<div class="audio-item w-100">
+					<div class="audio-btn-group d-flex justify-content-center">
+		    			<div class="audio-btn-back joSprite" aria-label="Player zurückspulen"></div>
+			    		<div class="audio-btn-start joSprite" aria-label="Player starten"></div>
+			    		<div class="audio-btn-forw joSprite" aria-label="Player vorspulen"></div>
+			    	</div>
+			    	<div class="progress-wraper">
+				    	<div class="progress">
+					  		<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+						</div>
+						<div class="progress-text text-center">00:00 / 00:00</div>
+					</div>
+					<f:variable name="mime_type"><f:switch expression="{obj.audio.0.originalResource.properties.extension}">
+					   	<f:case value="mp3">audio/mpeg</f:case>
+					   	<f:defaultCase>{aud.originalResource.properties.mime_type}</f:defaultCase>
+					</f:switch></f:variable>
+					<video class="audio-player" controls="" controlslist="nodownload"><source src="{aud.originalResource.publicUrl}" type="{mime_type}"></video>
+				</div>
+				<f:if condition="{aud.originalResource.properties.description} && {audio_overlay}">
+					<button class="audio-intro-btn i-icon">i</button>
+				</f:if>
+			</div>
+			<f:if condition="{aud.originalResource.properties.description} && {audio_overlay}">
+				<div class="view2-overlay">
+					<div class="view2-overlay-text">
+						<div class="view2-overlay-close">&nbsp;</div>
+						<f:if condition="{aud.originalResource.properties.title}">
+							<h3>{aud.originalResource.properties.title}</h3>
+						</f:if>
+						<f:format.html>{aud.originalResource.properties.description}</f:format.html>
+					</div>
+				</div>
+			</f:if>
+		</div>
+	</f:if>
+</f:section>

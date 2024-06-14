@@ -1,0 +1,41 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<div class="results clearfix">
+	<f:if condition="{joSolrObjects.response.docs}">
+		<f:for each="{joSolrObjects.response.docs}" as="items" key="number" iteration="counter">
+			<div class="clearfix list_notable row<f:if condition='{jo:joinarray(arraycontains:\'{hidden_items}\', keytofind:\'{items.id}\')}'> inactive</f:if>">
+				<div class="col-md-9">
+					<f:render partial="Metadata" arguments="{_all}" section="data"/>
+					<f:render partial="Metadata" arguments="{_all}" section="links"/>
+				</div>
+				<f:if condition="{items.images}">
+					<div class="col-md-3 img">
+						<f:for each="{items.images}" as="subitems" key="subnumber" iteration="subcounter">
+							<f:if condition="{subcounter.isFirst}">
+								<f:alias map="{imagedata: '{subitems->jo:explode(delimiter:\'$\')}'}">
+									<f:if condition="{imagedata.1}">
+										<f:then>
+											<f:link.external uri="{imagedata.1}" >
+												<img src="{imagedata.0}" class="joResponseImage" alt="{imagedata.2}" title="{imagedata.2}">
+											</f:link.external>
+										</f:then>
+										<f:else>
+											<img src="{imagedata.0}" class="joResponseImage" alt="{imagedata.2}" title="{imagedata.2}">
+										</f:else>
+									</f:if>
+								</f:alias>
+							</f:if>
+						</f:for>	
+					</div>
+				</f:if>
+			</div>
+			<f:if condition="{items.bemerkung}">
+				<div class="joCategoryWrapper clearfix">
+					<h3 class="joCategoryLong">{jo:translate(key:'{langPath}:jo_bkr_base.description')}</h3>
+					<div class="joCategoryContentLong">
+						<f:format.html><f:format.nl2br>{items.bemerkung}</f:format.nl2br></f:format.html>
+					</div>
+				</div>
+			</f:if>
+		</f:for>
+	</f:if>
+</div>

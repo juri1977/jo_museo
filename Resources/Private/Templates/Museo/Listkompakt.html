@@ -1,0 +1,28 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<div class="results clearfix container">
+	<f:if condition="{joSolrObjects.response.docs}">
+		<f:then>
+			<div class="jo-komp">
+				<f:for each="{joSolrObjects.response.docs}" as="items" key="number" iteration="counter">
+					<f:if condition="{items.images}">
+						<f:for each="{items.images}" as="subitems" key="subnumber" iteration="subcounter">
+							<f:if condition="{subcounter.isFirst}">
+								<f:alias map="{imagedata: '{subitems->jo:explode(delimiter:\'$\')}'}">
+									<div class="jo-ip jo-komp-con jo-s-{items.classificationrelevance}">
+										<f:link.action class="jo-img-link" noCache="1" action="detailobject" arguments="{joDetailView:'{items.id}',jopaginatepage:'{extbase_config.paginate}',h:'1'}">
+											<image class="jo-img" src="{imagedata.0}"/>
+										</f:link.action>
+									</div>
+								</f:alias>
+							</f:if>
+						</f:for>
+					</f:if>
+				</f:for>
+			</div>
+			<f:render partial="Paginator" arguments="{_all}"/>
+		</f:then>
+		<f:else>
+			<h1 class="joNothingFound test">{jo:translate(key:'{langPath}:jo_bkr_base.noobjects')}</h1>
+		</f:else>
+	</f:if>
+</div>

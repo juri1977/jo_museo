@@ -1,0 +1,20 @@
+<div class="joOuterDiv" data-scrolltarget="test">
+	<div class="joFixed">
+		<f:render partial="headerTeil1" arguments="{_all}" />
+	</div>
+	<f:format.html parseFuncTSPath="">{fullscreen}</f:format.html>
+	<div class="content_wrap">
+		<f:if condition="{header}">
+			<div class="header">
+				<f:format.html parseFuncTSPath="">{header}</f:format.html>
+			</div>
+		</f:if>
+		<f:if condition="{mainContent}">
+			<div class="joStartSegment" id="joTopAnchor">
+				<div class="main_content clearfix">
+					<f:format.html parseFuncTSPath="">{mainContent}</f:format.html>
+				</div>
+			</div>
+		</f:if>
+	</div>
+</div>

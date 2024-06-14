@@ -1,0 +1,847 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<f:section name="data">
+	<f:if condition="{items.entityQualified} && !{extbase_config.unused_fields.entityQualified}">
+		<f:for each="{items.entityQualified -> jo:splitroles(delimiter:'$',position:'2')}" as="splititems" key="splitkey" iteration="it">
+			<f:if condition="{splitkey} == 'mentioned'">
+				<div class="clearfix row">
+					<div class="joCategory col-md-12"><span class="joIcon person_icon"></span>{jo:translate(key:'{langPath}:jo_bkr_base.tei.person')}<span class="num"><f:count>{splititems}</f:count></span></div>
+					<div class="joCategoryContent col-md-12">
+						<f:for each="{splititems -> jo:sortarray(ascdesc:'asc')}" as="subsubitems" key="subsubkey" iteration="si">
+							<f:alias map="{kindobjekt: '{subsubitems -> jo:highlight( highlightarray:\'{joSolrObjects.response.docs.highlighting}\', id:\'{items.id}\', fieldname:\'entity\') -> jo:explode(delimiter:\'$\')}'}">
+								<div class="teiItem person" data-id="{kindobjekt.3}">&bull; <f:format.html>{kindobjekt.0}</f:format.html></div>
+							</f:alias>
+						</f:for>			
+					</div>
+				</div>
+			</f:if>
+		</f:for>
+	</f:if>
+	<f:if condition="{items.locationQualified} && !{extbase_config.unused_fields.locationQualified}">
+		<f:for each="{items.locationQualified -> jo:splitroles(delimiter:'$',position:'3')}" as="splititems" key="splitkey" iteration="it">
+			<f:if condition="{splitkey} == 'mentioned'">
+				<div class="clearfix row">
+					<div class="joCategory col-md-12"><span class="joIcon ort_icon"></span>{jo:translate(key:'{langPath}:jo_bkr_base.tei.orte')}<span class="num"><f:count>{splititems}</f:count></span>
+					</div>
+					<div class="joCategoryContent col-md-12">
+						<f:for each="{splititems}" as="subsubitems" key="subsubkey" iteration="si">
+							<f:alias map="{kindobjekt: '{subsubitems -> jo:explode(delimiter:\'$\')}'}">
+								<div class="teiItem keyword" data-id="{kindobjekt.4}">&bull; <f:format.html>{kindobjekt.1}</f:format.html></div>
+							</f:alias>
+						</f:for>
+					</div>
+				</div>
+			</f:if>
+		</f:for>
+	</f:if>
+	<f:if condition="{items.objectsPlants} && !{extbase_config.unused_fields.objectsPlants}">
+		<div class="clearfix row">
+			<div class="joCategory col-md-12"><span class="joIcon plant_icon"></span>{jo:translate(key:'{langPath}:jo_bkr_base.tei.plant')}<span class="num"><f:count>{items.objectsPlants}</f:count></span></div>
+			<div class="joCategoryContent col-md-12">
+				<f:for each="{items.objectsPlants -> jo:sortarray(ascdesc:'asc')}" as="joSubIndex" iteration="si">
+					<f:alias map="{kindobjekt: '{joSubIndex -> jo:explode(delimiter:\'$\')}'}">
+						<div class="teiItem plant" data-id="{kindobjekt.3}">&bull; <f:format.html>{kindobjekt.0}</f:format.html></div>
+					</f:alias>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.classificationtags} && !{extbase_config.unused_fields.classificationtags}">
+		<div class="clearfix row">
+			<div class="joCategory col-md-12"><span class="joIcon keyword_icon"></span>{jo:translate(key:'{langPath}:jo_bkr_base.tei.keywords')}<span class="num"><f:count>{items.classificationtags}</f:count></span></div>
+			<div class="joCategoryContent col-md-12">
+				<f:for each="{items.classificationtags -> jo:sortarray(ascdesc:'asc')}" as="joSubIndex" iteration="si">
+					<f:alias map="{kindobjekt: '{joSubIndex -> jo:explode(delimiter:\'$\')}'}">
+						<div class="teiItem plant" data-id="{kindobjekt.1}">&bull; <f:format.html>{kindobjekt.0}</f:format.html></div>
+					</f:alias>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{settings.notes}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-12">{jo:translate(key:'{langPath}:jo_bkr_base.tei.editor')}</span></div>
+			<div class="joCategoryContent col-md-12">
+				<f:format.html>{settings.notes}</f:format.html>
+			</div>
+		</div>
+	</f:if>
+</f:section>
+
+<f:section name="data2">
+	<h3>{jo:translate(key:'{langPath}:jo_bkr_base.tei.meta')}</h3>
+	<f:if condition="{items.inventarnummer} && !{extbase_config.unused_fields.inventarnummer}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.obj.id')}</div>
+			<div class="joCategoryContent col-md-8">{items.inventarnummer}</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.locationGemeinde} && !{extbase_config.unused_fields.locationGemeinde}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">Amtliche Gemeinde:</div>
+			<div class="joCategoryContent col-md-8">{items.locationGemeinde} </div>
+		</div>
+	</f:if>
+	<f:if condition="{items.location} && !{extbase_config.unused_fields.location} && !{items.locationQualified}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.location')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.location}" as="subitems" key="sk" iteration="si">
+					<f:alias map="{splitted: '{subitems -> jo:explode(delimiter:\'$\')}'}">
+						<div>
+							<span>{splitted.0}</span>
+							<f:if condition="{splitted.1}">
+								<a class="joEntityfacts plus" href="/index.php?id=171&eID=museo&gnd={splitted.1}" target="blank">
+									<div class="kreis">
+										<div class="horizontal"></div>
+										<div class="vertical"></div>
+									</div>
+								</a>
+								<div class="joEntityFactsContainer" style="display:none;"></div>
+							</f:if>
+							<f:if condition="{splitted.2}">
+								<f:link.external class="geonames" uri="{splitted.2}" target="_blank">
+									Geonames
+								</f:link.external>			
+							</f:if>
+							<f:if condition="{splitted.3}">
+								<f:link.external class="osm" uri="{splitted.3}" target="_blank">
+									Openstreetmap
+								</f:link.external>			
+							</f:if>
+						</div>
+					</f:alias>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.territory} && !{extbase_config.unused_fields.territory}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.district')}</div>
+			<div class="joCategoryContent col-md-8">{items.territory}</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.component} && !{extbase_config.unused_fields.component}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.component')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.component}" as="joSubIndex">
+					<div>{joSubIndex}</div>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.lonlat} && !{extbase_config.unused_fields.lonlat}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.coords')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.lonlat}" as="joSubIndex">
+					<div><f:format.html>{joSubIndex}</f:format.html> (ö.L/n.B, WGS84, Dezimalgrad)</div>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.title} && !{extbase_config.unused_fields.title}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">Titel:</div>
+			<div class="joCategoryContent col-md-8">
+				<f:format.html>{items.title}</f:format.html>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.titleAlt} && !{extbase_config.unused_fields.titleAlt}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">Alternative Titel:</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.titleAlt}" as="joSubIndex">
+					<div><f:format.html>{joSubIndex}</f:format.html></div>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.category} && !{extbase_config.unused_fields.category}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.classification.archiolog')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.category}" as="subitems" key="sk" iteration="si">
+					<f:alias map="{dataitem: '{subitems->jo:explode(delimiter:\'$\')}'}">
+						{dataitem.0}<f:if condition="{si.isLast}!=1">, </f:if>
+					</f:alias>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.objectTypeHierarchy} && !{extbase_config.unused_fields.objectTypeHierarchy}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">Objekttyp:</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.objectTypeHierarchy}" as="subitems" key="sk" iteration="si">
+					<div>{subitems}</div>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.classificationobjecttype} && !{extbase_config.unused_fields.classificationobjecttype}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.objectType')}</div>
+			<div class="joCategoryContent col-md-8">{items.classificationobjecttype}</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.classificationtime} && !{extbase_config.unused_fields.classificationtime}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.times')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.classificationtime}" as="joSubIndex">
+					<div>
+						<f:alias map="{name_array: '{joSubIndex->jo:explode(delimiter:\'#\')}'}">
+							<f:if condition="{name_array -> f:count()} == 1">
+								<f:then>
+									{joSubIndex}
+								</f:then>
+								<f:else>
+									{name_array.1}
+								</f:else>
+							</f:if>
+						</f:alias>
+					</div>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.locationQualified} && !{extbase_config.unused_fields.locationQualified}">
+		<h4>Orte:</h4>
+		<f:for each="{items.locationQualified -> jo:splitroles(delimiter:'$',position:'3')}" as="splititems" key="splitkey" >
+			<div class="joCategoryWrapper clearfix row">
+				<div class="joCategory col-md-4">
+					<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.{jo:stringformat(string:\'location{splitkey}\')}')}">
+						<f:then>
+							{jo:translate(key:'{langPath}:jo_bkr_base.{jo:stringformat(string:\'location{splitkey}\')}')}
+						</f:then>
+						<f:else>
+							location{splitkey}
+						</f:else>
+					</f:if>
+				</div>
+				<div class="joCategoryContent col-md-8">
+					<f:for each="{splititems}" as="subsubitems" key="subsubkey" iteration="subsubinterator">
+						<f:alias map="{kindobjekt: '{subsubitems -> jo:explode(delimiter:\'$\')}'}">
+							<div><f:format.html>{kindobjekt.1 -> jo:replace(search:';', replace:'<br>')}</f:format.html></div>
+						</f:alias>
+					</f:for>
+				</div>
+			</div>
+		</f:for>
+	</f:if>
+	<f:if condition="{items.dateEvents} && !{extbase_config.unused_fields.dateEvents}">
+		<h4>Reiseroute:</h4>
+		<f:for each="{items.dateEvents -> jo:splitroles(delimiter:'$',position:'1')}" as="splititems" key="splitkey" >
+			<div class="joCategoryWrapper clearfix row">
+				<div class="joCategory col-md-4">
+					<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.{jo:stringformat(string:\'dateEvents{splitkey}\')}')}">
+						<f:then>
+							{jo:translate(key:'{langPath}:jo_bkr_base.{jo:stringformat(string:\'dateEvents{splitkey}\')}')}
+						</f:then>
+						<f:else>
+							{splitkey}:
+						</f:else>
+					</f:if>
+				</div>
+				<div class="joCategoryContent col-md-8">
+					<f:for each="{splititems}" as="subsubitems" key="subsubkey" iteration="subsubinterator">
+						<div>
+							<f:alias map="{kindobjekt: '{subsubitems -> jo:explode(delimiter:\'$\')}'}">
+								<f:format.html>{kindobjekt.1}<f:if condition="{kindobjekt.2}"> [{kindobjekt.2}]</f:if></f:format.html>
+							</f:alias>
+						</div>
+					</f:for>
+				</div>
+			</div>
+		</f:for>
+	</f:if>
+	<h4>weitere Metadaten:</h4>
+	<f:if condition="{items.showtime} && !{extbase_config.unused_fields.showtime}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.showtime')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.showtime}" as="joSubIndex">
+					<div><f:format.html>{joSubIndex}</f:format.html></div>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.classification} && !{extbase_config.unused_fields.classification}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.classification')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.classification}" as="joSubIndex">
+					<div><f:format.html>{joSubIndex}</f:format.html></div>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.classProject} && !{extbase_config.unused_fields.classProject} && !{isajax}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4 classification">Projektklassifikation:</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.classProject}" as="subsubitems" key="subsubkey" iteration="subsubinterator">
+					<f:format.html>{subsubitems}</f:format.html><br>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.adminunit1} && !{extbase_config.unused_fields.adminunit}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.belongingcollection')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:alias map="{kindobjekt: '{items.adminunit->jo:explode(delimiter:\'$\')}'}">
+					<div>{kindobjekt.0}</div>
+					<div>{kindobjekt.1}</div>
+				</f:alias>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.pages} && !{extbase_config.unused_fields.pages}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.pages')}</div>
+			<div class="joCategoryContent col-md-8">{items.pages} </div>
+		</div>
+	</f:if>
+	<f:if condition="{items.tenantHierarchy} && !{extbase_config.unused_fields.tenantHierarchy}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.breadcrumbs.tenant')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.tenantHierarchy}" as="subitems" key="sk" iteration="si">
+					<f:alias map="{splitted: '{subitems -> jo:explode(delimiter:\'$\')}'}">
+						<div>
+							<span>{splitted.0}</span>
+							<!--<f:link.action noCache="1" class="detailEntityLink" additionalParams="{ah:'{ah}'}" arguments="{tenant:'{splitted.0}{f:if(condition:\'{splitted.2}\',then:\'${splitted.2}\',else:\'\')}', joDel:'1'}" title="{jo:translate(key:'{langPath}:jo_bkr_base.remove.title')}">{splitted.0}</f:link.action> -->
+							<f:if condition="{splitted.1}">
+								<a class="joEntityfacts plus" href="/index.php?id=171&eID=museo&gnd={splitted.1}" target="blank">
+									<div class="kreis">
+										<div class="horizontal"></div>
+										<div class="vertical"></div>
+									</div>
+								</a>
+								<div class="joEntityFactsContainer" style="display:none;"></div>
+							</f:if>
+						</div>
+					</f:alias>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.entity} && !{extbase_config.unused_fields.entity}">
+		<f:for each="{items.entity -> jo:splitroles(delimiter:'$',position:'2')}" as="splititems" key="splitkey" >
+			<div class="joCategoryWrapper clearfix row">
+				<div class="joCategory col-md-4">
+					<f:if condition="{jo:translate(key:'{langPath}:jo_bkr_base.{jo:stringformat(string:\'{splitkey}\')}')}">
+						<f:then>
+							{jo:translate(key:'{langPath}:jo_bkr_base.{jo:stringformat(string:\'{splitkey}\')}')}
+						</f:then>
+						<f:else>
+							<f:if condition="{splitkey} == ''">
+								<f:then>
+									{jo:translate(key:'{langPath}:jo_bkr_base.people')}
+								</f:then>
+								<f:else>
+									{splitkey}
+								</f:else>
+							</f:if>
+						</f:else>
+					</f:if>
+				</div>
+				<div class="joCategoryContent col-md-8">
+					<f:for each="{splititems}" as="subsubitems" key="subsubkey" iteration="subsubinterator">
+						<f:alias map="{kindobjekt: '{subsubitems -> jo:highlight( highlightarray:\'{joSolrObjects.response.docs.highlighting}\', id:\'{items.id}\', fieldname:\'entity\') -> jo:explode(delimiter:\'$\')}'}">
+							<div>
+								<f:if condition="{isMerkliste} == 1">
+									<f:then>
+										<a href="#" class="detailEntityLink joDiasbled" onclick="event.preventDefault();">
+											{kindobjekt.0}
+											<div class="img_wrap">
+												<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+													<f:then>
+														<div id="entitynorole" class="joSprite"></div>
+													</f:then>
+													<f:else>
+														<img id="entitynorole" src="/typo3conf/ext/jo_museo/Resources/Public/Images/sprite.svg" width="1073" height="301" alt="">
+													</f:else>
+												</f:if>
+											</div>
+										</a>
+									</f:then>
+									<f:else>
+										<f:link.action noCache="1" class="detailEntityLink" arguments="{entitynorole:'{kindobjekt.0}{f:if(condition:\'{kindobjekt.2}\',then:\'${kindobjekt.2}\',else:\'\')}', joDel:'1'}" title="{jo:translate(key:'{langPath}:jo_bkr_base.remove.title')}">
+											{kindobjekt.0}
+											<div class="img_wrap">
+												<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+													<f:then>
+														<div id="entitynorole" class="joSprite"></div>
+													</f:then>
+													<f:else>
+														<img id="entitynorole" src="/typo3conf/ext/jo_museo/Resources/Public/Images/sprite.svg" width="1073" height="301" alt="">
+													</f:else>
+												</f:if>
+											</div>
+										</f:link.action>
+										<f:if condition="{kindobjekt.2}">
+											<f:link.action class="joEntityfacts" noCache="1" action="entityfacts" controller="Elements"  style="display:none" class="ef" target="_blank" arguments="{gnd:'{kindobjekt.2}'}" title="Entity Facts">
+												Entity Facts zur Person
+											</f:link.action>
+											<f:link.external style="display:none;" uri="http://hub.culturegraph.org/entityfacts/{kindobjekt.2}" target="_blank">Entity Facts</f:link.external>
+											<a class="joEntityfacts plus" href="/index.php?id=171&eID=museo&gnd={kindobjekt.2}" target="blank">
+												<div class="kreis">
+													<div class="horizontal"></div>
+													<div class="vertical"></div>
+												</div>
+											</a>
+											<div class="joEntityFactsContainer" style="display:none;"></div>
+										</f:if>
+									</f:else>
+								</f:if>
+							</div>
+						</f:alias>
+					</f:for>
+				</div>
+			</div>
+		</f:for>
+	</f:if>
+	<f:if condition="{items.objectdimension} && !{extbase_config.unused_fields.objectdimension}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.masse')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:format.nl2br>{items.objectdimension}</f:format.nl2br>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.materialoftheelements} && !{extbase_config.unused_fields.materialoftheelements}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.material')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.materialoftheelements -> jo:splitroles(delimiter:'$',position:'2')}" as="splititems" key="splitkey" >
+					<f:for each="{splititems}" as="subsubitems" key="subsubkey" iteration="subsubinterator">
+						<f:format.html>{subsubitems -> jo:replace(search:'$', replace:': ')}</f:format.html><br>
+					</f:for>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.formel} && !{extbase_config.unused_fields.formel}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.formel')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.formel}" as="subsubitems" key="subsubkey" iteration="subsubinterator">
+					<f:format.html>{subsubitems -> jo:formula()}</f:format.html><br>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.technik} && !{extbase_config.unused_fields.technik}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.technik')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.technik}" as="subsubitems" key="subsubkey" iteration="subsubinterator">
+					<f:format.html>{subsubitems}</f:format.html><br>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.publisher} && !{extbase_config.unused_fields.publisher}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.placepublisher')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.publisher}" as="joSubIndex">
+					<div><f:format.html>{joSubIndex}</f:format.html></div>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.printing_de} && !{extbase_config.unused_fields.printing_de}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.printing_de')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.printing_de}" as="joSubIndex">
+					<div><f:format.html>{joSubIndex}</f:format.html></div>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.printing_original_item} && !{extbase_config.unused_fields.printing_original_item}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.printing_original_item')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.printing_original_item}" as="joSubIndex">
+					<div><f:format.html>{joSubIndex}</f:format.html></div>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.format} && !{extbase_config.unused_fields.format}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.format')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.format}" as="joSubIndex">
+					<div><f:format.html>{joSubIndex}</f:format.html></div>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<!-- <f:if condition="{items.altFormat} && !{extbase_config.unused_fields.altFormat}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.altFormat')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.altFormat}" as="joSubIndex">
+					<div><f:format.html>{joSubIndex}</f:format.html></div>
+				</f:for>
+			</div>
+		</div>
+	</f:if> -->
+	<f:if condition="{items.located} && !{extbase_config.unused_fields.located}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.located')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.located}" as="joSubIndex">
+					<div><f:format.html>{joSubIndex}</f:format.html></div>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.datentyp} && !{extbase_config.unused_fields.datentyp}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.datentyp')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.datentyp}" as="joSubIndex">
+					<div><f:format.html>{joSubIndex}</f:format.html></div>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.shelfmark} && !{extbase_config.unused_fields.shelfmark}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.shelfmark')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.shelfmark}" as="joSubIndex">
+					<div><f:format.html>{joSubIndex}</f:format.html></div>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.keywords} && !{extbase_config.unused_fields.keywords}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.keywords')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.keywords}" as="joSubIndex">
+					<div><f:format.html>{joSubIndex}</f:format.html></div>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.footnote} && !{extbase_config.unused_fields.footnote}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.footnote')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.footnote}" as="joSubIndex">
+					<div><f:format.html>{joSubIndex}</f:format.html></div>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.fingerprint} && !{extbase_config.unused_fields.fingerprint}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.fingerprint')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.fingerprint}" as="joSubIndex">
+					<div><f:format.html>{joSubIndex}</f:format.html></div>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.fingerprintOrigin} && !{extbase_config.unused_fields.fingerprintOrigin}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.fingerprintOrigin')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.fingerprintOrigin}" as="joSubIndex">
+					<div><f:format.html>{joSubIndex}</f:format.html></div>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.authorInformation} && !{extbase_config.unused_fields.authorInformation}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.authorInformation')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.authorInformation}" as="joSubIndex">
+					<div><f:format.html>{joSubIndex}</f:format.html></div>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.bibReference} && !{extbase_config.unused_fields.bibReference}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.bibReference')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.bibReference}" as="joSubIndex">
+					<div><f:format.html>{joSubIndex}</f:format.html></div>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.language} && !{extbase_config.unused_fields.language}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.language')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.language}" as="joSubIndex">
+					<div><f:format.html>{joSubIndex}</f:format.html></div>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.genre} && !{extbase_config.unused_fields.genre}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.genre')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.genre}" as="joSubIndex">
+					<div><f:format.html>{joSubIndex}</f:format.html></div>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.descFront} && !{extbase_config.unused_fields.descFront}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.descfront')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:format.nl2br>{items.descFront}</f:format.nl2br>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.descBack} && !{extbase_config.unused_fields.descBack}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.descback')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:format.nl2br>{items.descBack}</f:format.nl2br>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.contextorig} && !{extbase_config.unused_fields.contextorig}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.primarydata')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:link.external class="joDetailBlue" target="_blank" uri="{items.contextorig}">{jo:translate(key:'{langPath}:jo_bkr_base.displayInOriginal')}<span class="joIcon topRight"></span></f:link.external>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.parent} && !{extbase_config.unused_fields.parent}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.parentobject')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.parent}" as="subsubitems" key="subsubkey" iteration="subsubinterator">
+					<f:alias map="{name_array: '{subsubitems->jo:explode(delimiter:\'$\')}'}">
+						<f:link.action class="joDetailBlue" noCache="1" action="detailobject" title="{name_array.1} ({name_array.0})" arguments="{joDetailView:'{name_array.0}', browse:'1'}">			
+							<f:format.html>{name_array.1}</f:format.html><br>
+							<span class="joIcon top"></span>
+						</f:link.action>
+					</f:alias>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.tei} && !{extbase_config.unused_fields.tei}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.tei')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.tei}" as="subsubitems">
+					<div>
+						<a class="joEntityfacts joDetailBlue showTei" href="/index.php?id=171&action=tei&eID=museo&teiurl={subsubitems -> f:format.urlencode()}" target="blank">
+							{jo:translate(key:'{langPath}:jo_bkr_base.tei.show_detail')}
+						</a>
+						<f:if condition="!{jo:stringcontains(str:'{subsubitems}', neddle:'MCRFileNodeServlet')}'}">
+							<f:link.external class="tei-link" target="_blank" uri="{subsubitems}">
+								<f:image src="{f:uri.resource(path:'Images/logo-tei.png')}" alt="{jo:translate(key:'{langPath}:jo_bkr_base.tei.show.xml')}" title="{jo:translate(key:'{langPath}:jo_bkr_base.tei.show.xml')}" width="24" height="24"/>
+							</f:link.external>
+						</f:if>
+						<div class="joEntityFactsContainer tei" style="display:none;"></div>
+					</div>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	
+	<f:if condition="{items.childrenReference} && !{extbase_config.unused_fields.childrenReference}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">{jo:translate(key:'{langPath}:jo_bkr_base.childrenReference')}</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.childrenReference}" as="subsubitems" key="subsubkey" iteration="subsubinterator">
+					<f:alias map="{name_array: '{subsubitems->jo:explode(delimiter:\'$\')}'}">
+						<f:link.action class="joDetailBlue reference" noCache="1" action="detailobject" title="{name_array.1} ({name_array.0})" arguments="{joDetailView:'{name_array.0}', browse:'1'}">
+							<f:format.html>{name_array.1}</f:format.html><br>
+							<span class="joIcon top"></span>
+						</f:link.action>
+					</f:alias>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.bundledCareer} && !{extbase_config.unused_fields.bundledCareer}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">Karriere:</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.bundledCareer}" as="subsubitems" key="subsubkey" iteration="subsubinterator">
+					<f:alias map="{arr: '{subsubitems->jo:explode(delimiter:\'$\')}'}">
+						<div>
+							<f:if condition="{arr.0} != ''">{arr.0}</f:if>
+							<f:if condition="{arr.1} != ''"> - {arr.1}</f:if>, 
+							<f:if condition="{arr.2} != ''">{arr.2}</f:if>
+							<f:if condition="{arr.3} != ''">at {arr.3}</f:if><f:if condition="{arr.4} != ''">, {arr.4}</f:if>
+							<f:if condition="{arr.5} != ''">({arr.5})</f:if>
+						</div>
+					</f:alias>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.bundledDegrees} && !{extbase_config.unused_fields.bundledDegrees}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">Abschluss:</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.bundledDegrees}" as="subsubitems" key="subsubkey" iteration="subsubinterator">
+					<f:alias map="{arr: '{subsubitems->jo:explode(delimiter:\'$\')}'}">
+						<div>
+							<f:if condition="{arr.0} != ''">{arr.0}, </f:if>
+							<f:if condition="{arr.1} != ''">{arr.1}</f:if>
+							<f:if condition="{arr.3} != ''">({arr.3})</f:if>
+							<f:if condition="{arr.2} != ''"><f:if condition="{arr.1} != ''"> at </f:if>{arr.2}</f:if>
+							<f:if condition="{arr.4} != ''">{arr.4}</f:if>
+						</div>
+					</f:alias>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.bundledLecture} && !{extbase_config.unused_fields.bundledLecture}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">Vorlesung:</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.bundledLecture}" as="subsubitems" key="subsubkey" iteration="subsubinterator">
+					<f:alias map="{arr: '{subsubitems->jo:explode(delimiter:\'$\')}'}">
+						<div class="joCategoryWrapper clearfix row border-bottom">
+							<f:if condition="{arr.0} != ''">
+								<div class="joCategory col-md-4"><b>Start:</b></div><div class="joCategoryContent col-md-8">{arr.0}</div>
+							</f:if>
+							<f:if condition="{arr.1} != ''">
+								<div class="joCategory col-md-4"><b>Type:</b></div><div class="joCategoryContent col-md-8">{arr.1}</div>
+							</f:if>
+							<f:if condition="{arr.2} != ''">
+								<div class="joCategory col-md-4"><b>Vorlesung:</b></div><div class="joCategoryContent col-md-8">{arr.2}</div>
+							</f:if>
+							<f:if condition="{arr.3} != ''">
+								<div class="joCategory col-md-4"><b>Vorlesungseinrichtung:</b></div><div class="joCategoryContent col-md-8">{arr.3}</div>
+							</f:if>
+							<f:if condition="{arr.4} != ''">
+								<div class="joCategory col-md-4"><b>Bemerkung:</b></div><div class="joCategoryContent col-md-8">{arr.4}</div>
+							</f:if>
+						</div>
+					</f:alias>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.bundledStudies} && !{extbase_config.unused_fields.bundledStudies}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">Studien:</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.bundledStudies}" as="subsubitems" key="subsubkey" iteration="subsubinterator">
+					<f:alias map="{arr: '{subsubitems->jo:explode(delimiter:\'$\')}'}">
+						<div>
+							<f:if condition="{arr.0} != ''">{arr.0}</f:if>
+							<f:if condition="{arr.1} != ''"> - {arr.1}</f:if>, 
+							<f:if condition="{arr.2} != ''">{arr.2}</f:if>
+							<f:if condition="{arr.3} != ''"><f:if condition="{arr.2} != ''"> in </f:if>{arr.3}</f:if>
+							<f:if condition="{arr.4} != ''">[{arr.4}]</f:if>
+						</div>
+					</f:alias>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.bundledTravels} && !{extbase_config.unused_fields.bundledTravels}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">Reisen:</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.bundledTravels}" as="subsubitems" key="subsubkey" iteration="subsubinterator">
+					<f:alias map="{arr: '{subsubitems->jo:explode(delimiter:\'$\')}'}">
+						<div class="joCategoryWrapper clearfix row">
+							<div class="joCategory col-md-12">
+								<f:if condition="{arr.0} != ''">{arr.0}</f:if>
+								<f:if condition="{arr.1} != ''"> - {arr.1}</f:if>, 
+							</div>
+							<f:if condition="{arr.2} != ''">
+								<div class="joCategory col-md-4"><b>Reiseland:</b></div><div class="joCategoryContent col-md-8">
+									<f:alias map="{arr_sub: '{arr.2->jo:explode(delimiter:\'|\')}'}">
+										<f:for each="{arr_sub}" as="arr_sub_item" key="arr_k" iteration="arr_i">
+											<f:alias map="{arr2: '{arr_sub_item->jo:explode(delimiter:\'#\')}'}">
+												<div>
+													<f:if condition="{arr2.0} != ''">
+														{arr2.0}
+													</f:if>
+													<f:if condition="{arr2.1} != ''">
+														({arr2.1}
+														<f:if condition="{arr2.2} != '' && {arr2.3} != ''">
+															<f:then>({arr2.2} bis {arr2.3})</f:then>
+															<f:else>
+																<f:if condition="{arr2.2} != ''">
+																	({arr2.2})
+																</f:if>
+																<f:if condition="{arr2.3} != ''">
+																	({arr2.3})
+																</f:if>
+															</f:else>
+														</f:if>)
+													</f:if>
+													<f:if condition="{arr2.4} != ''">
+														({arr2.4}
+														<f:if condition="{arr2.5} != '' && {arr2.6} != ''">
+															<f:then>({arr2.5} bis {arr2.6})</f:then>
+															<f:else>
+																<f:if condition="{arr2.5} != ''">
+																	({arr2.5})
+																</f:if>
+																<f:if condition="{arr2.6} != ''">
+																	({arr2.6})
+																</f:if>
+															</f:else>
+														</f:if>)
+													</f:if>
+												</div>
+											</f:alias>
+										</f:for>
+									</f:alias>
+								</div>
+							</f:if>
+							<f:if condition="{arr.3} != ''">
+								<div class="joCategory col-md-4"><b>Bemerkung:</b></div><div class="joCategoryContent col-md-8">{arr.3}</div>
+							</f:if>
+						</div>
+					</f:alias>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+	<f:if condition="{items.bundledTmf} && !{extbase_config.unused_fields.bundledTmf}">
+		<div class="joCategoryWrapper clearfix row">
+			<div class="joCategory col-md-4">Titel, Mitgliedschaften und Stiftung:</div>
+			<div class="joCategoryContent col-md-8">
+				<f:for each="{items.bundledTmf}" as="subsubitems" key="subsubkey" iteration="subsubinterator">
+					<f:alias map="{arr: '{subsubitems->jo:explode(delimiter:\'$\')}'}">
+						<div>
+							<f:if condition="{arr.0} != ''">{arr.0}</f:if>
+							<f:if condition="{arr.1} != ''"> - {arr.1}</f:if>, 
+							<f:if condition="{arr.2} != ''">{arr.2}</f:if>
+							<f:if condition="{arr.3} != ''"> at {arr.3}</f:if>
+							<f:if condition="{arr.4} != ''"> in {arr.4}</f:if>
+							<f:if condition="{arr.5} != ''"> ({arr.5})</f:if>
+						</div>
+					</f:alias>
+				</f:for>
+			</div>
+		</div>
+	</f:if>
+</f:section>

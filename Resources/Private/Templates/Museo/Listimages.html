@@ -1,0 +1,71 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<div class="clearfix">
+	<f:render partial="Facettecontrols" arguments="{_all}"/>
+</div>
+<div class="results clearfix container">
+	<h3>{jo:translate(key:'{langPath}:founditems')}</h3>
+	<f:if condition="{joSolrObjects.response.docs}">
+		<f:then>
+			<div class="jo-gw">
+				<f:for each="{joSolrObjects.response.docs}" as="items" key="number" iteration="counter">
+					<f:if condition="{items.images}">
+						<f:then>
+							<f:for each="{items.images}" as="subitems" key="subnumber" iteration="subcounter">
+								<f:if condition="{subcounter.isFirst}">
+									<f:alias map="{imagedata: '{subitems->jo:explode(delimiter:\'$\')}'}">	
+										<div class="jo-ip jo-grid jo-s-{items.classificationrelevance}">
+											<f:link.action noCache="1" action="detailobject" arguments="{joDetailView:'{items.id}',jopaginatepage:'{extbase_config.paginate}',h:'1'}" style="background-image:url('{imagedata.0}');">
+												<div class="jo-det-tea">
+													<div class="txt">
+														<h2><f:format.html>{items.title}</f:format.html></h2>
+														<f:if condition="{items.classification}">
+															<div>
+																<b>{jo:translate(key:'{langPath}:jo_bkr_base.sachgruppe')}:</b>
+																<f:for each="{items.classification}" as="subitems" key="sk" iteration="si">
+																	{subitems}<f:if condition="{si.isLast}!=1">, </f:if>	
+																</f:for>
+															</div>
+														</f:if>
+														<f:if condition="{items.bemerkung} && false">
+															<div><f:format.html>{items.bemerkung}</f:format.html></div>
+														</f:if>
+													</div>
+												</div>
+											</f:link.action>
+										</div>
+									</f:alias>
+								</f:if>
+							</f:for>
+						</f:then>
+						<f:else>
+							<div class="jo-ip jo-grid jo-s-{items.classificationrelevance}">
+								<f:link.action noCache="1" action="detailobject" arguments="{joDetailView:'{items.id}',jopaginatepage:'{extbase_config.paginate}',h:'1'}" style="background-image:url('/typo3conf/ext/jo_museo/Resources/Public/Images/platzhalter.jpg');">
+									<div class="jo-det-tea">
+										<div class="txt">
+											<h2><f:format.html>{items.title}</f:format.html></h2>
+											<f:if condition="{items.classification}">
+												<div>
+													<b>{jo:translate(key:'{langPath}:jo_bkr_base.sachgruppe')}:</b>
+													<f:for each="{items.classification}" as="subitems" key="sk" iteration="si">
+														{subitems}<f:if condition="{si.isLast}!=1">, </f:if>	
+													</f:for>
+												</div>
+											</f:if>
+											<f:if condition="{items.bemerkung} && false">
+												<div><f:format.html>{items.bemerkung}</f:format.html></div>
+											</f:if>
+										</div>
+									</div>
+								</f:link.action>
+							</div>
+						</f:else>
+					</f:if>
+				</f:for>
+			</div>
+			<f:render partial="Paginator" arguments="{_all}"/>
+		</f:then>
+		<f:else>
+			<h1 class="joNothingFound">{jo:translate(key:'{langPath}:jo_bkr_base.noobjects')}</h1>
+		</f:else>
+	</f:if>
+</div>

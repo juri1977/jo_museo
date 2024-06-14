@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3DataStructure>
+	<meta>		
+		<langDisable>1</langDisable>
+	</meta>	
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>Digitale Ausstellungen - Objekt</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<genericfield_1>
+					    <TCEforms>
+							<label>Erstes Feld</label>
+							<config>
+								<type>input</type>
+							</config>
+					    </TCEforms>
+					</genericfield_1>
+					<genericfield_2>
+					    <TCEforms>
+							<label>Zweites Feld</label>
+							<config>
+								<type>input</type>
+							</config>
+					    </TCEforms>
+					</genericfield_2>
+					<genericfield_3>
+					    <TCEforms>
+							<label>Drittes Feld</label>
+							<config>
+								<type>input</type>
+							</config>
+					    </TCEforms>
+					</genericfield_3>
+				</el>
+			</ROOT>
+		</sDEF>
+	</sheets>
+</T3DataStructure>

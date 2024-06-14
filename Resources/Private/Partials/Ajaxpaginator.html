@@ -1,0 +1,18 @@
+<f:if condition="{paginationdata.range} && {paginationdata.range->f:count()}>1">
+	<div class="joPaginateWrap">
+		<ul class="pagination justify-content-center flex-wrap">
+			<li class="paginator-next">
+				<f:if condition="{paginationdata.rechts} != {paginationdata.aktiv}">
+					<f:then>
+						<f:link.action noCache="1" pageType="{ajaxpagetype}" class="page-link{ajaxpagetypecssclass}" action="{paginationdata.action}" arguments="{jopaginatepage:'{paginationdata.rechts}',joDetailView:'{baseid}'}" additionalParams="{ceid:'{extbase_config.ce_uid}'}">
+							mehr laden
+						</f:link.action>
+					</f:then>
+					<f:else>
+						<span>Keine weiteren Daten verfügbar</span>
+					</f:else>
+				</f:if>
+			</li>
+		</ul>
+	</div>
+</f:if>

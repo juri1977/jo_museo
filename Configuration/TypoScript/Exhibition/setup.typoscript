@@ -1,0 +1,133 @@
+// Seitenkonfiguration für das Ausstellungsmodul
+page {
+    includeCSS {
+        ol = typo3conf/ext/jo_museo/Resources/Public/Css/ol_v6_9.min.css
+        ol_ext = typo3conf/ext/jo_museo/Resources/Public/Css/ol-ext.min.css
+        slick = typo3conf/ext/jo_museo/Resources/Public/Css/Exhibition/slick.css
+        book = typo3conf/ext/jo_museo/Resources/Public/Css/Exhibition/bookblock.css
+        exhibition = typo3conf/ext/jo_museo/Resources/Public/Css/Exhibition/exhibition_base.css
+    }
+    includeJS {
+        ol = typo3conf/ext/jo_museo/Resources/Public/JavaScript/ol_v6_9.min.js
+        ol_ext = typo3conf/ext/jo_museo/Resources/Public/JavaScript/ol-ext.min.js
+        swipe = typo3conf/ext/jo_museo/Resources/Public/JavaScript/Exhibition/jquery.touchSwipe.min.js
+        modernizr = typo3conf/ext/jo_museo/Resources/Public/JavaScript/Exhibition/modernizr.custom.js
+        slick = typo3conf/ext/jo_museo/Resources/Public/JavaScript/Exhibition/slick.min.js
+        book = typo3conf/ext/jo_museo/Resources/Public/JavaScript/Exhibition/bookblock.min.js
+        map = typo3conf/ext/jo_museo/Resources/Public/JavaScript/Exhibition/map.js
+        exhibition = typo3conf/ext/jo_museo/Resources/Public/JavaScript/Exhibition/ausstellung.js
+    }
+}
+
+// Konfiguration der Prozesse des Austellungsmoduls 
+// Ist noch nicht umfassend im System angeschlossen
+plugin.tx_jomuseo {
+    settings {
+        exhibition {
+            init {
+                authdata {
+                    token = false
+                    server = {$solr.core}
+                    servertype = solr
+                    idfield = id
+                    login = 
+                    password = 
+                }
+                baserequest {
+                    paginatepage = 1 
+                    offset = 0
+                    limit = 50
+                    paginatepagecount = 10
+                }
+            }
+            objectypes {
+                exhibition {
+                    initialsort = sorting
+                }
+                section {
+                    initialsort = sorting    
+                }
+                exhibit {
+                    initialsort = sorting    
+                }
+            }
+            parameter {
+                section {
+                    template {
+                        # Weite des Hintergrundbildes
+                        imagewidth = 1500
+                        # Anzahl der Anzuzeigenden Bilder
+                        imagecount = 1
+                        # Anzahl der Zeichen, nach denen die Beschreibung gecropt wird, wenn kein Teasertext hinterlegt ist
+                        cropdesription = 200
+                        # Zeichen, die nach dem crop-text angehängt werden
+                        append = ...
+                    }
+                    overview {
+                        imagewidth = 300
+                    }
+                }
+            }
+        }
+    }
+}
+
+/**
+ *  Ajax Call für den Aufruf der Ausstellungsübersicht
+ */
+ajaxCallExhibition = PAGE
+ajaxCallExhibition {
+    typeNum = 1234
+    config {
+        disableAllHeaderCode = 1
+        xhtml_cleaning = 0
+        admPanel = 0
+        debug = 0
+        no_cache = 1
+    }
+    10 < lib.mainContent
+}
+// Ajaxcall für das Kartenoverlay der Ausstellungen
+// Kann sicher mit einem anderen Call zusammengelegt werden
+ajaxCallMap = PAGE
+ajaxCallMap {
+    typeNum = 2328
+    config {
+        disableAllHeaderCode = 1
+        xhtml_cleaning = 0
+        admPanel = 0
+        debug = 0
+        no_cache = 1
+    }
+    10 < lib.mainContent
+}
+
+/**
+ *  Ajax Call für den Aufruf der Detailansicht, bei der der Ausstellungskontext ausgeblendet werden soll
+ */
+ajaxCallExhibit = PAGE
+ajaxCallExhibit {
+    typeNum = 124
+    config {
+        disableAllHeaderCode = 1
+        xhtml_cleaning = 0
+        admPanel = 0
+        debug = 0
+        no_cache = 1
+    }
+    10 < lib.mainContent
+}
+
+ajaxCallExhibitWithHeader = PAGE
+ajaxCallExhibitWithHeader {
+    typeNum = 125
+    config {
+        xhtml_cleaning = 0
+        admPanel = 0
+        debug = 0
+        no_cache = 1
+    }
+    includeCSS < page.includeCSS
+    includeJS < page.includeJS
+    10 < lib.mainContent
+}

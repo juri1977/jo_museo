@@ -1,0 +1,17 @@
+div.joDetail div.detailimage.viewer-layout {
+      -webkit-box-flex: 0;
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin: auto;
+    position: relative;
+    height: 600px;
+}
+
+button[data-id='ShareButton'] {
+	display: none;
+}
+
+button[data-id='CloseViewerButton'] {
+	display: none;
+}

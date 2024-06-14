@@ -1,0 +1,87 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<f:spaceless>
+<div class="exhibition  joExhibition_content">
+	<f:for each="{sektion.Objekte}" as="sektionen">
+		<f:alias map="{subimg:'{sektionen.images.0->jo:explode(delimiter:\'$\')}'}">
+			<div class="joObject_item clearfix container">
+				<f:if condition="{subimg.0 -> jo:getimgformat()} == 'l'">
+					<f:then>
+						<div class="item_img">
+							<f:render section="image_item" arguments="{_all}"/>
+						</div>
+						<div class="item_txt container" style="padding-bottom:20px;border-top:#ffffff 1px solid;">
+							<f:render section="text_item" arguments="{_all}"/>
+							<f:if condition="{sektionen.bemerkung} || {sektionen.entity} || {sektionen.literatur} || {sektionen.classificationtags}">
+								<div class="more_div"><div class="more showMore"><span class="plus">+</span> Mehr ...</div></div>
+							</f:if>
+						</div>
+					</f:then>
+					<f:else>
+						<div class="item_img col-sm-5">
+							<f:render section="image_item" arguments="{_all}"/>
+						</div>
+						<div class="item_txt col-sm-6">
+							<f:render section="text_item" arguments="{_all}"/>
+							<f:if condition="{sektionen.bemerkung} || {sektionen.entity} || {sektionen.literatur} || {sektionen.classificationtags}">
+								<div class="more_div"><div class="more showMore"><span class="plus">+</span> Mehr ...</div></div>
+							</f:if>
+						</div>
+					</f:else>
+				</f:if>
+			</div>
+		</f:alias>
+	</f:for>
+</div>
+<f:section name="image_item">	
+	<a href="{f:uri.image(src: '{subimg.3}', treatIdAsReference: '1', width:'1000c', minWidth: '1000', maxWidth: '1000')}" data-lightbox="gallery" data-zoom-image="{f:uri.image(src: '{subimg.3}', treatIdAsReference: '1', width: '1500c', minWidth: '1500')}">
+		<f:image class="zoomImg" src="{subimg.3}" treatIdAsReference='TRUE' width="1500c" height="" alt="{subimg.2}"/>
+	</a>
+</f:section>
+<f:section name="text_item">
+	<h2>{sektionen.title}</h2>
+	<f:if condition="{sektionen.summary}">
+		<div class="bodytext">
+			<f:format.html>{sektionen.summary}</f:format.html>
+		</div>
+	</f:if>
+	<f:if condition="{subimg.2}">
+		<h3>Bildlegende: </h3>
+		<div>{subimg.2}</div>
+	</f:if>
+	<div class="collapse">
+		<f:if condition="{sektionen.bemerkung}">
+			<div class="teaser">
+				<f:format.html>{sektionen.bemerkung}</f:format.html>
+			</div>
+		</f:if>
+		<f:if condition="{sektionen.classificationtags}">
+			<h3>Schlagworte: </h3>
+			<div>
+				<f:for each="{sektionen.classificationtags}" as="items" iteration="i">
+					{items}<f:if condition="{i.isLast}!='1'">,</f:if>
+				</f:for>
+			</div>
+		</f:if>
+		<f:if condition="{sektionen.entity}">
+			<h3>Relevante Personen: </h3>
+			<div>
+				<f:for each="{sektionen.entity}" as="items" iteration="i">
+					<f:alias map="{submedia: '{items->jo:explode(delimiter:\'$\')}'}">
+						<div>{submedia.0} <f:if condition="{submedia.1}"><f:link.external uri="{submedia.1}" target="_blank">GND</f:link.external></f:if></div>
+					</f:alias>
+				</f:for>
+			</div>
+		</f:if>
+		<f:if condition="{sektionen.literatur}">
+			<h3>Weiterführende Informationen: </h3>
+			<div>
+				<f:for each="{sektionen.literatur}" as="items" iteration="i">
+					<f:alias map="{submedia: '{items->jo:explode(delimiter:\'$\')}'}">
+						<div><f:link.external uri="{submedia.0}" target="_blank">{submedia.1}</f:link.external></div>
+					</f:alias>
+				</f:for>
+			</div>
+		</f:if>
+	</div>
+</f:section>
+</f:spaceless>

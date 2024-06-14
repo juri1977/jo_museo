@@ -1,0 +1,238 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<div class="row">
+	<f:if condition="{fact_stream}">
+		<f:then>
+			<f:render section="culturegraph" arguments="{_all}"/>
+		</f:then>
+		<f:else if="{gnd_stream}">
+			<f:render section="gnd" arguments="{_all}"/>
+		</f:else>
+		<f:else>
+			<div class="col-12 joContent-container nothingFound">
+				<div class="row">
+					<div class="col-12 joLabel">{jo:translate(key:'{langPath}:fact_stream.dataSource')}</div>
+					<div class="col-12">{jo:translate(key:'{langPath}:fact_stream.dataSource.text')}</div>
+				</div>
+			</div>
+     	</f:else>
+	</f:if>
+</div>
+
+<f:section name="culturegraph">
+	<f:variable name="identifier" value=''/>
+	<f:alias map="{gnd_id: '{fact_stream.id->jo:explode(delimiter:\'/\', last: \'1\')}'}">
+		<f:variable name="identifier" value='{gnd_id}'/>
+	</f:alias>
+	<f:if condition="{fact_stream.depiction}">
+		<div class="col-12">
+			<img class="joThumb" src="{fact_stream.depiction.thumbnail.id}" alt="{fact_stream.preferredName}"/>
+			<f:if condition="{fact_stream.depiction.url}">
+				<div class="img-main-text">
+					Quelle: <f:link.external uri="{fact_stream.depiction.url}" target="_blank">Wikimedia Commons</f:link.external>
+				</div>
+			</f:if>
+		</div>
+	</f:if>
+	<div class="col-12 joContent-container">
+		<div class="row">
+			<div class="col-12 joLabel">{jo:translate(key:'{langPath}:fact_stream.dataSource')}</div>
+			<div class="col-12">{jo:translate(key:'{langPath}:fact_stream.dataSource.text')}</div>
+		</div>
+		<f:if condition="{fact_stream.type}">
+			<div class="row">
+				<div class="col-12 joLabel">{jo:translate(key:'{langPath}:fact_stream.type')}</div>
+				<div class="col-12">
+					<f:if condition="{jo:translate(key:'{langPath}:fact_stream.{fact_stream.type}')}">
+						<f:then>
+							{jo:translate(key:'{langPath}:fact_stream.{fact_stream.type}')}
+						</f:then>
+						<f:else>
+							{fact_stream.type}
+						</f:else>
+					</f:if>
+				</div>
+			</div>
+		</f:if>
+		<f:if condition="{fact_stream.dateOfBirth}">
+			<div class="row">
+				<div class="col-12 joLabel">{jo:translate(key:'{langPath}:fact_stream.dateOfBirth')}</div>
+				<div class="col-12">{fact_stream.dateOfBirth}</div>
+			</div>
+		</f:if>
+		<f:if condition="{fact_stream.dateOfDeath}">
+			<div class="row">
+				<div class="col-12 joLabel">{jo:translate(key:'{langPath}:fact_stream.dateOfDeath')}</div>
+				<div class="col-12">{fact_stream.dateOfDeath}</div>
+			</div>
+		</f:if>
+		<f:if condition="{fact_stream.professionOrOccupation}">
+			<div class="row">
+				<div class="col-12 joLabel">{jo:translate(key:'{langPath}:fact_stream.professionOrOccupation')}</div>
+				<div class="col-12">
+					<f:for each="{fact_stream.professionOrOccupation}" as="occupation">
+						<div class="professionOrOccupation">
+							{occupation.preferredName} <f:if condition="{occupation.id}"><f:link.external class="joBlueExtern" uri="{occupation.id}" target="_blank"></f:link.external></f:if>
+						</div>
+					</f:for>
+				</div>
+			</div>
+		</f:if>
+		<f:if condition="{fact_stream.variantName}">
+			<div class="row">
+				<div class="col-12 joLabel">{jo:translate(key:'{langPath}:fact_stream.variantName')}</div>
+				<div class="col-12" id="accordionVariantName_{identifier}">
+					<f:for each="{fact_stream.variantName}" as="altName" iteration="it">
+						<f:if condition="{it.cycle} < 6">
+							<div class="variantName">{altName}</div>
+						</f:if>
+						<f:if condition="{fact_stream.variantName -> f:count()} >= 6">
+							<f:if condition="{it.cycle} == 6">
+								<div class="accordion-item">
+									<div class="accordion-header collapsed" id="showmorevariantnames_{identifier}" data-toggle="collapse" data-target="#collapseMoreNamesBlock_{identifier}" aria-expanded="false" aria-controls="collapseMoreNamesBlock">{jo:translate(key:'{langPath}:fact_stream.moreInformation')}</div>
+									<div id="collapseMoreNamesBlock_{identifier}" class="accordion-collapse collapse" aria-labelledby="showmorevariantnames_{identifier}" data-parent="#accordionVariantName_{identifier}">
+							</f:if>
+							<f:if condition="{it.cycle} >= 6">
+								<div class="variantName">{altName}</div>
+							</f:if>
+							<f:if condition="{it.isLast}">
+								</div>
+								</div>
+							</f:if>
+						</f:if>
+					</f:for>
+				</div>
+			</div>
+		</f:if>
+		<f:if condition="{fact_stream.dateOfEstablishment}">
+			<div class="row">
+				<div class="col-12 joLabel">{jo:translate(key:'{langPath}:fact_stream.dateOfEstablishment')}</div>
+				<div class="col-12">
+					<f:for each="{fact_stream.dateOfEstablishment}" as="date">
+						<div class="dateOfEstablishment">{date}</div>
+					</f:for>
+				</div>
+			</div>
+		</f:if>
+		<f:if condition="{fact_stream.placeOfBusiness}">
+			<div class="row">
+				<div class="col-12 joLabel">{jo:translate(key:'{langPath}:fact_stream.placeOfBusiness')}</div>
+				<div class="col-12">
+					<f:for each="{fact_stream.placeOfBusiness}" as="places">
+						<div class="placeOfBusiness">
+							{places.preferredName} <f:if condition="{places.id}"><f:link.external class="joBlueExtern" uri="{places.id}" target="_blank"></f:link.external></f:if>
+						</div>
+					</f:for>
+				</div>
+			</div>
+		</f:if>
+		<f:if condition="{fact_stream.associatedPlace}">
+			<div class="row">
+				<div class="col-12 joLabel">{jo:translate(key:'{langPath}:fact_stream.associatedPlace')}</div>
+				<div class="col-12">
+					<f:for each="{fact_stream.associatedPlace}" as="places">
+						<div class="associatedPlace">
+							{places.preferredName} <f:if condition="{places.id}"><f:link.external class="joBlueExtern" uri="{places.id}" target="_blank"></f:link.external></f:if>
+						</div>
+					</f:for>
+				</div>
+			</div>
+		</f:if>
+		<f:if condition="{fact_stream.isA}">
+			<div class="row">
+				<div class="col-12 joLabel">{jo:translate(key:'{langPath}:fact_stream.isA')}</div>
+				<div class="col-12">
+					<f:for each="{fact_stream.isA}" as="i">
+						<div class="isA">
+							{i.preferredName} <f:if condition="{i.id}"><f:link.external class="joBlueExtern" uri="{i.id}" target="_blank"></f:link.external></f:if>
+						</div>
+					</f:for>
+				</div>
+			</div>
+		</f:if>
+		<f:if condition="{fact_stream.biographicalOrHistoricalInformation}">
+			<div class="row">
+				<div class="col-12 joLabel">{jo:translate(key:'{langPath}:fact_stream.biographicalOrHistoricalInformation')}</div>
+				<div class="col-12">{fact_stream.biographicalOrHistoricalInformation}</div>
+			</div>
+		</f:if>
+		<f:if condition="{fact_stream.predecessor}">
+			<div class="row">
+				<div class="col-12 joLabel">{jo:translate(key:'{langPath}:fact_stream.predecessor')}</div>
+				<div class="col-12">
+					<f:for each="{fact_stream.predecessor}" as="pre">
+						<div class="predecessor">
+							{pre.preferredName} <f:if condition="{pre.id}"><f:link.external class="joBlueExtern" uri="{pre.id}" target="_blank"></f:link.external></f:if>
+						</div>
+					</f:for>
+				</div>
+			</div>
+		</f:if>
+		<f:if condition="{fact_stream.relatedOrganisation}">
+			<div class="row">
+				<div class="col-12 joLabel">{jo:translate(key:'{langPath}:fact_stream.relatedOrganisation')}</div>
+				<div class="col-12">
+					<f:for each="{fact_stream.relatedOrganisation}" as="related">
+						<div class="relatedOrganisation">
+							{related.preferredName} <f:if condition="{related.id}"><f:link.external class="joBlueExtern" uri="{related.id}" target="_blank"></f:link.external></f:if>
+						</div>
+					</f:for>
+				</div>
+			</div>
+		</f:if>
+		<f:if condition="{fact_stream.affiliation}">
+			<div class="row">
+				<div class="col-12 joLabel">{jo:translate(key:'{langPath}:fact_stream.affiliation')}</div>
+				<div class="col-12">
+					<f:for each="{fact_stream.affiliation}" as="affiliation">
+						<div class="affiliation">
+							{affiliation.preferredName} <f:if condition="{affiliation.id}"><f:link.external class="joBlueExtern" uri="{affiliation.id}" target="_blank"></f:link.external></f:if>
+						</div>
+					</f:for>
+				</div>
+			</div>
+		</f:if>
+		<f:if condition="{fact_stream.homepage}">
+			<div class="row">
+				<div class="col-12 joLabel">{jo:translate(key:'{langPath}:fact_stream.homepage')}</div>
+				<div class="col-12">
+					<f:for each="{fact_stream.homepage}" as="page">
+						<div class="homepage">
+							<f:link.external uri="{page}" target="_blank">{page}</f:link.external>
+						</div>
+					</f:for>
+				</div>
+			</div>
+		</f:if>
+		<f:if condition="{fact_stream.sameAs}">
+			<div class="sameAs-container">
+				<div class="joLabel">{jo:translate(key:'{langPath}:fact_stream.sameAs')}</div>
+				<div>
+					<f:for each="{fact_stream.sameAs}" as="val">
+						<div class="sameAs">
+							<f:if condition="{val.collection.icon}">
+								<span class="joIcon-container">
+									<img class="joIcon" src="{val.collection.icon}" />
+								</span>
+							</f:if>
+							<span class="name">{val.collection.name}</span>
+							<f:if condition="{val.id}">
+								<f:link.external class="joExternLink" uri="{val.id}" target="_blank" title="{val.collection.name}"></f:link.external>
+							</f:if>
+						</div>
+					</f:for>
+				</div>
+			</div>
+		</f:if>
+	</div>
+</f:section>
+
+<f:section name="gnd">
+	<div class="col-12 joContent-container gnd-case">
+		<f:for each="{gnd_stream}" as="gnd_item" key="gnd_key">
+			<div class="row">
+				<div class="col-12 joLabel">{jo:translate(key:'{langPath}:gnd_stream.{gnd_key}')}</div>
+				<div class="col-12"><f:format.raw>{gnd_item}</f:format.raw></div>
+			</div>
+		</f:for>
+	</div>
+</f:section>

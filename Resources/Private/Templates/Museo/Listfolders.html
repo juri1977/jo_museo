@@ -1,0 +1,237 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<f:comment>
+	<!--
+	Schalter, um diverse Teile des Plugins via Ajax zu laden - kommt aus Flexform
+	-->
+</f:comment>
+<f:variable name="ajaxpagetype" value="0"/>
+<f:variable name="ajaxpagetypecssclass" value=""/>
+<f:if condition="{config.ajaxload}">
+	<f:variable name="ajaxpagetype" value="200"/>
+	<f:variable name="ajaxpagetypecssclass" value=" t200"/>
+</f:if>
+<f:comment>
+	<!--
+		Wenn das Template über Ajax geladen wird, werden die JavaScriptvariablen nicht in den Header sondern zu Beginn des HTML Blocks geladen
+	-->
+</f:comment>
+<f:if condition="{config.ajaxload}">
+	<script>
+		<f:format.html>{javascriptvar}</f:format.html>	
+	</script>
+</f:if>
+<f:variable name="imagecol" value="4"/>
+<f:if condition="{config.fieldlist.listview.images.imagecol}">
+	<f:variable name="imagecol" value="{config.fieldlist.listview.images.imagecol}"/>
+</f:if>
+<div>
+	<f:render partial="Facettecontrols" arguments="{_all}"/>
+</div>
+<div class="results">
+	<f:if condition="{facettes_prepared.hierarchical_index.tenantHierarchy.content}">
+		<f:then>
+			<f:if condition="{config.init.searchconfig.showpaginatorontop}">
+				<f:render partial="Paginator" arguments="{_all}"/>
+			</f:if>
+			<f:render section="default" arguments="{_all}"/>
+			<f:render partial="Paginator" arguments="{_all}"/>
+		</f:then>
+		<f:else>
+			<f:render partial="Sections" section="nothing_found" arguments="{_all}"/>
+		</f:else>
+	</f:if>
+</div>
+
+<f:section name="prev_text_button">
+	<div class="prev_back_icon"></div>
+	<span>zurück - eine Ebene nach oben</span>
+</f:section>
+
+<f:section name="browse_tile_content">
+	<div class="folder_icon"></div>
+	<span>{items.v}</span>
+	<span>({items.c})</span>
+</f:section>
+
+<f:section name="default">
+	<div class="list_container_wrap folder_wrap">
+		<f:if condition="{browse_facettes.rootlinefull}">
+			<div class="folder_bcp_wrap">
+				<f:for each="{browse_facettes.rootlinefull}" as="items" key="key" iteration="counter">
+					<f:if condition="{counter.isFirst}">
+						<f:link.action noCache="1" pageType="{ajaxpagetype}" class="{ajaxpagetypecssclass}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" title="Ordner öffnen" arguments="{browsestructure:'tenantHierarchy',jopaginatepage:'{extbase_config.paginate}'removetenantHierarchy:'{items}'}">
+							<span>Übersicht</span>
+						</f:link.action>
+					</f:if>
+					<div class="d-inline-block">></div>
+					<div class="d-inline-block" style="padding:0 3px;">
+						<f:if condition="{counter.isLast}">
+							<f:then>
+								<span>{browse_facettes.rootline.{counter.cycle}}</span>
+							</f:then>
+							<f:else>
+								<f:link.action noCache="1" pageType="{ajaxpagetype}" class="{ajaxpagetypecssclass}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" title="Ordner öffnen" arguments="{browsestructure:'tenantHierarchy',jopaginatepage:'{extbase_config.paginate}',tenantHierarchy:'{items}'}">
+									<span>{browse_facettes.rootline.{counter.cycle}}</span>
+								</f:link.action>
+							</f:else>
+						</f:if>
+					</div>	
+				</f:for>
+			</div>
+		</f:if>
+		<div class="row list_folders">
+			<f:if condition="{paginationdata.aktiv} < 2">
+				<f:for each="{browse_facettes.content}" as="levels" key="levelkey" iteration="levelcounter">
+					<f:if condition="{levelcounter.isLast}">
+						<f:for each="{levels}" as="items" key="key" iteration="counter">
+							<f:if condition="{items.a} || (!{items.a} && {browse_facettes.level} == '1')">
+								<f:if condition="{items.a} == 1 && !{items.ch}">
+									<f:then>
+										<f:comment>
+										<!--
+										<div class="deadend">
+											<f:render section="browse_tile_content" arguments="{_all}"/>
+										</div>
+										-->
+										</f:comment>
+									</f:then>
+									<f:else>
+										<div class="folder col-md-2">
+											<f:link.action noCache="1" pageType="{ajaxpagetype}" class="{ajaxpagetypecssclass}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" title="Ordner öffnen" arguments="{browsestructure:'tenantHierarchy',jopaginatepage:'{extbase_config.paginate}',tenantHierarchy:'{key}'}">
+												<f:render section="browse_tile_content" arguments="{_all}"/>
+											</f:link.action>
+										</div>	
+									</f:else>
+								</f:if>
+							</f:if>
+						</f:for>
+					</f:if>
+				</f:for>
+			</f:if>
+			<f:if condition='{joSolrObjects.response.docs}'>
+				<f:for each="{joSolrObjects.response.docs}" as="items" key="number" iteration="counter">
+					<div class="col-md-2 folder_object overflow-hidden position-relative">
+						<div class="folder-wrap">
+							<f:link.action additionalParams="{ceid:'{extbase_config.ce_uid}'}" pageType="{ajaxpagetype}" class="d-block{ajaxpagetypecssclass}" noCache="1" action="detailobject" arguments="{joDetailView:'{items.id}',jopaginatepage:'{extbase_config.paginate}',h:'1'}">
+								<div class="d-flex flex-column position-relative">
+									<div class="img_grid_wrap row no-gutters">
+										<f:if condition="{items.images}">
+											<f:then>
+												<f:for each="{items.images}" as="item" key="subnumber" iteration="subcounter">
+													<f:alias map="{imagedata: '{item->jo:explode(delimiter:\'$\')}'}">
+								                      <f:if condition="{subcounter.cycle} <= {config.fieldlist.folderview.images.count}"> 
+							                      			<div class="folder-img" <f:if condition='{imagedata.0}'>style="background-image:url('{imagedata.0}')"</f:if>></div>
+								                      </f:if>
+								                    </f:alias>
+							                    </f:for>
+					           				 </f:then>
+								            <f:else>  
+		                    					<f:render partial="Sections" arguments="{_all}" section="placeholder-img"/>
+								        	</f:else>
+			                        	</f:if>
+			                        </div>
+			                        <div class="grid-text-container">
+		                                <div class="grid-text">
+		                                    <f:if condition="{config.fieldlist.folderview.headline.name} && {config.init.authdata.idfield}">
+												<div class="title_or_symbols">
+													<h3>
+														<f:render partial="Sections" arguments="{fields:'{fields}', items:'{items}', config:'{config}',langPath:'{langPath}'}" section="headline"/>
+													</h3>
+												</div>
+											</f:if>
+											<f:if condition="{config.fieldlist.folderview.fields}">
+												<f:for each="{config.fieldlist.folderview.fields}" as="fields" key="fk" iteration="fi">
+													<f:render partial="Sections" arguments="{_all}" section="buildfieldsandsegments"/>
+												</f:for>
+											</f:if>
+		                                </div>
+		                            </div>
+		                        </div>
+	                       	</f:link.action>
+						</div>
+					</div>
+				</f:for>
+			</f:if>
+		</div>
+		<div class="level_up">
+			<f:if condition="{browse_facettes.rootlineprevious}">
+				<f:if condition="{browse_facettes.rootlineprevious} == 'root'">
+					<f:then>
+						<f:link.action noCache="1" pageType="{ajaxpagetype}" class="{ajaxpagetypecssclass}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" title="Ordner öffnen" arguments="{browsestructure:'tenantHierarchy',jopaginatepage:'{extbase_config.paginate}'removetenantHierarchy:'{browse_facettes.rootline_item}'}">
+							<f:render section="prev_text_button" arguments="{_all}"/>
+						</f:link.action>
+					</f:then>
+					<f:else>
+						<f:link.action noCache="1" pageType="{ajaxpagetype}" class="{ajaxpagetypecssclass}" additionalParams="{ceid:'{extbase_config.ce_uid}'}" title="Ordner öffnen" arguments="{browsestructure:'tenantHierarchy',jopaginatepage:'{extbase_config.paginate}',tenantHierarchy:'{browse_facettes.rootlineprevious}'}">
+							<f:render section="prev_text_button" arguments="{_all}"/>
+						</f:link.action>
+					</f:else>
+				</f:if>
+			</f:if>
+		</div>
+	</div>
+	<f:comment>
+	<!--
+	<div class="gallery_view results">
+		<div class="found_in_structure">
+			<h2>{jo:translate(key:'{langPath}:jo_bkr_base.detail.enthalteneobjekte')} (wording)</h2>
+		</div>
+		<f:if condition='{joSolrObjects.response.docs}'>
+			<f:then>	
+				<div class="grid_inner_wrap">
+					<f:for each="{joSolrObjects.response.docs}" as="items" key="number" iteration="counter">
+						<div class="grid-item overflow-hidden position-relative">
+							<div class="grid-wrap">
+								<div class="d-flex flex-column position-relative">
+									<div class="img_grid_wrap row no-gutters">
+										<f:if condition="{items.images}">
+											<f:then>
+												<f:for each="{items.images}" as="item" key="subnumber" iteration="subcounter">
+													<f:alias map="{imagedata: '{item->jo:explode(delimiter:\'$\')}'}">
+								                      <f:if condition="{subcounter.cycle} <= {config.fieldlist.galleryview.images.count}"> 
+							                      			<img src="{imagedata.0}" class="col"/>
+								                      </f:if>
+								                    </f:alias>
+							                    </f:for>
+					           				 </f:then>
+								            <f:else>  
+		                    					<f:render partial="Sections" arguments="{_all}" section="placeholder-img"/>
+								        	</f:else>
+			                        	</f:if>
+			                        </div>
+			                        <div class="grid-text-container">
+		                                <div class="grid-text">
+		                                    <f:if condition="{config.fieldlist.galleryview.headline.name} && {config.init.authdata.idfield}">
+												<div class="title_or_symbols">
+													<f:link.action additionalParams="{ceid:'{extbase_config.ce_uid}'}" pageType="{ajaxpagetype}" class="d-block{ajaxpagetypecssclass}" noCache="1" action="detailobject" arguments="{joDetailView:'{items.id}',jopaginatepage:'{extbase_config.paginate}',h:'1'}">
+														<h2>
+															<f:render partial="Sections" arguments="{fields:'{fields}', items:'{items}', config:'{config}',langPath:'{langPath}'}" section="headline"/>
+														</h2>
+													</f:link.action>
+												</div>
+											</f:if>
+											<f:if condition="{config.fieldlist.galleryview.fields}">
+												<f:for each="{config.fieldlist.galleryview.fields}" as="fields" key="fk" iteration="fi">
+													<f:render partial="Sections" arguments="{_all}" section="buildfieldsandsegments"/>
+												</f:for>
+											</f:if>
+		                                </div>
+		                                <div class="control_wrap">
+											<f:render partial="Sections" arguments="{_all}" section="controls"/>
+										</div>
+		                            </div>
+		                        </div>
+							</div>
+						</div>
+					</f:for>
+				</div>
+				<f:render partial="Paginator" arguments="{_all}"/>
+			</f:then>
+			<f:else>
+				<f:render partial="Sections" section="nothing_found" arguments="{_all}"/>
+			</f:else>
+		</f:if>
+	</div>
+	-->
+	</f:comment>
+</f:section>

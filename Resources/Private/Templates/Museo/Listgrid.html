@@ -1,0 +1,60 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<f:comment>
+	<!--
+	Schalter, um diverse Teile des Plugins via Ajax zu laden - kommt aus Flexform
+	-->
+</f:comment>
+<f:variable name="ajaxpagetype" value="0"/>
+<f:variable name="ajaxpagetypecssclass" value=""/>
+<f:if condition="{config.ajaxload}">
+	<f:variable name="ajaxpagetype" value="200"/>
+	<f:variable name="ajaxpagetypecssclass" value=" t200"/>
+</f:if>
+<f:comment>
+	<!--
+		Wenn das Template über Ajax geladen wird, werden die JavaScriptvariablen nicht in den Header sondern zu Beginn des HTML Blocks geladen
+	-->
+</f:comment>
+<f:if condition="{config.ajaxload}">
+	<script>
+		<f:format.html>{javascriptvar}</f:format.html>	
+	</script>
+</f:if>
+<div class="clearfix grid_layout">
+	<f:render partial="Facettecontrols" arguments="{_all}"/>
+</div>
+<f:variable name="vertical_or_horizontal" value=""/>
+<f:if condition="{config.fieldlist.gridview.fieldalignment}">
+	<f:variable name="vertical_or_horizontal" value="{config.fieldlist.gridview.fieldalignment}"/>
+</f:if>
+<div class="joGridview results {vertical_or_horizontal}">
+	<f:comment>
+		<!-- Feldnamen des Konfigurationsblockes, der benutzt werden soll (z.B. listview, mapview, detailview, childobjects) -->
+	</f:comment>
+	<f:variable name="fieldname" value="gridview"/>
+	<f:comment>
+		<!-- Name der Variable, die die Objekte enthält, die benutzt werden sollen (z.B. child_elements.response.docs) -->
+	</f:comment>
+	<f:variable name="objectcontainer" value="joSolrObjects.response.docs"/>
+	<f:comment>
+		<!-- Alldatavariable schreiben -->
+	</f:comment>
+	<f:variable name="alldata" value="{_all}"/>
+	<f:if condition='{alldata.{objectcontainer}}'>
+		<f:then>
+			<f:if condition="{config.init.searchconfig.showpaginatorontop}">
+				<f:render partial="Paginator" arguments="{_all}"/>
+			</f:if>	
+			<f:variable name="itemclasses" value="col-12 col-md-6 col-xl-4"/>
+			<f:if condition='{config.templates.overviewitemclasses_listgrid}'>
+				<f:variable name="itemclasses" value="col-12 col-md-4 col-xl-3"/>
+			</f:if>
+			<f:variable name="detail_arguments" value="{jopaginatepage:'{alldata.extbase_config.paginate}',h:'1',startfrom:'empty'}"/>
+			<f:render partial="Views" section="gridview_block" arguments="{_all}"/>
+			<f:render partial="Paginator" arguments="{_all}"/>
+		</f:then>
+		<f:else>
+			<f:render partial="Sections" section="nothing_found" arguments="{_all}"/>
+		</f:else>
+	</f:if>
+</div>

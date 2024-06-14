@@ -1,1 +1,2 @@
-# jo_museo
+# museo
+JUSTORANGE - Plugins für Bildungseinrichtungen

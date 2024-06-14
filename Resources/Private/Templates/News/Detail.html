@@ -1,0 +1,21 @@
+<f:if condition="{objects.falMedia.0}">
+	<div class="newsdetail_big_pic">
+		{f:image(src:'{objects.falMedia.0.uid}', treatIdAsReference:1, width:'1500c', height:'400c')}
+	</div>
+</f:if>
+<div class="container">
+	<h2>{objects.title}</h2>
+	<div class="newsdetail_text">
+		<f:format.html>{objects.bodytext}</f:format.html>
+	</div>
+	
+</div>
+<f:if condition="{objects.falMedia}">
+	<div class="newsdetail_small_pic clearfix">
+		<f:for each="{objects.falMedia}" as="joSubIndex">
+			<div class="col-md-3">
+				{f:image(src:'{joSubIndex.uid}', treatIdAsReference:1, width:'500c', height:'500c')}
+			</div>
+		</f:for>
+	</div>
+</f:if>

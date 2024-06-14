@@ -1,0 +1,29 @@
+{
+	"name": "jo/jo_museo",
+	"license": "proprietary",
+	"type": "typo3-cms-extension",
+	"version": "11.5.12",
+	"keywords": [
+		"typo3",
+		"template provider",
+		"site package"
+	],
+	"extra": {
+		"typo3/cms": {
+			"extension-key": "jo_museo"
+		}
+	},
+	"require": {
+		"typo3/cms-core": "^11.5",
+		"typo3/cms-rte-ckeditor": "^11.5"
+	},
+	"autoload": {
+        "psr-4": {
+            "JO\\JoMuseo\\": "Classes",
+            "MyCLabs\\Enum\\": "Classes/Helper/php-enum-1.8.3",
+            "ZipStream\\": "Classes/Helper/ZipStream-PHP-2.2.0",
+            "Psr\\SimpleCache\\": "Classes/Helper/simple-cache",
+            "PhpOffice\\PhpSpreadsheet\\": "Classes/Helper/PhpSpreadsheet"
+        }
+    }
+}

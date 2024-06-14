@@ -1,0 +1,3868 @@
+body {
+    -ms-touch-action: pan-y;
+    touch-action: pan-y;
+}
+.exhibition h1,
+.exhibition h2,
+.exhibition h3,
+.exhibition h4,
+.exhibition h5,
+.exhibition h6 {
+    font-family: 'Playfair Display', serif !important;
+}
+.exhibition .h1,
+.exhibition h1 {
+    font-size: 28px;
+}
+.exhibition .h2,
+.exhibition h2 {
+    position: relative;
+    font-size: 20px;
+}
+.exhibition hr {
+    margin-top: 18px;
+    margin-bottom: 18px;
+}
+.exhibition h2 {
+    font-size: 28px;
+    font-weight: 300;
+    padding-bottom: 0;
+    margin-bottom: 30px;
+}
+.section_entry_image {
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-position: center;
+}
+.content-text a {
+
+    /* text-decoration:underline; */
+}
+.section_img_title {
+    font-weight: 400;
+    padding: 5px 0;
+}
+.exhibition .min-height-100 {
+    min-height: 100%;
+}
+.exhibition .flex-adjust {
+    flex: 1;
+}
+.exhibition.showexhibition.overlay .teasertext::before,
+.exhibition.showall .teasertext.overlay::before {
+    content: '';
+    display: block;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;    /* background-color: rgba(0,0,0,0.6); */
+    position: absolute;
+    z-index: 50;
+    background-image: radial-gradient(circle 100vh at 50% 50%, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.1));
+}
+.exhibition.showexhibition h3 {
+    font-size: 46px;
+    font-family: 'Playfair Display', serif;
+    padding: 20px 0;
+    text-align: center;
+    /*
+    border-bottom: #000000 1px solid;
+   
+    margin-bottom: 60px;
+     */
+}
+.exhibition.showexhibition h3.audio-title{
+   font-size: 36px; 
+}
+.exhibition.showexhibition .text_layer h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding: 0;
+    border-bottom: #000000 0px solid;
+    text-align: left;
+}
+.exhibition.showexhibition h4 {
+    padding: 40px 0;
+    font-size: 35px;
+}
+.exhibition.showexhibition .item,
+.exhibition.showall .item {
+    position: relative;
+    border-bottom: #ffffff 1px solid;
+    overflow: hidden;
+    height: 100vh;
+}
+.exhibition.showexhibition .text_layer {
+
+    /*
+        position: absolute;
+    bottom: 80px;
+    left: 80px;
+        */
+    color: #ffffff;
+    z-index: 80;
+    padding: 0 15px 15px;
+}
+.exhibition.showall .text_layer {
+    z-index: 60;
+    padding: 0;
+    position: absolute;
+    bottom: 80px;
+    color: #ffffff;
+}
+.exhibition.showall .text_layer h3 {
+    margin-bottom: 0;
+}
+.exhibition.showall .item.left .text_layer {
+    max-width: calc(100% - 20px);
+    text-align: left;
+}
+.exhibition.showall .item.view_6col .text_layer {
+    max-width: calc(100% - 5vw);
+    left: 5vw;
+}
+.exhibition.showall .item.view_default .text_layer {
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+.exhibition.showexhibition .item.teasertext .text_layer {
+    margin-top: 150px;
+    flex: 1;
+}
+.exhibition.showall .item.right .text_layer {
+    right: 80px;
+    text-align: right;
+}
+.exhibition.showexhibition img.img,
+.exhibition.showall img.img {
+    width: 100%;
+    height: auto;
+}
+.exhibition.showexhibition .text_layer h3,
+.exhibition.showall .text_layer h3 {
+    font-size: 46px;
+    line-height: 120%;
+    font-family: 'Playfair Display', serif;
+}
+.exhibition.showexhibition .text_layer h4 {
+    text-align: left;
+}
+.exhibition.showexhibition .text_layer h4,
+.exhibition.showall .text_layer h4 {
+    font-size: 26px;
+    padding: 20px 0;
+    font-family: 'Roboto Condensed', sans-serif !important;
+}
+.exhibition.showexhibition .more_link {
+    color: #ffffff;
+    border: 2px solid currentColor;
+    padding: 12px 24px;
+    background: none;
+    display: inline-block;
+    margin: 20px 0 0;
+    text-transform: uppercase;
+    line-height: 100%;
+    text-decoration: none;
+}
+
+/* .exhibition.showexhibition .more_link {
+margin:0 auto;
+} */
+.joExhibition_content img {
+    width: 100%;
+    height: auto;
+}
+.joExhibition_content .section {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    background: rgb(65, 65, 65);
+    background: linear-gradient(180deg, rgba(65, 65, 65, 1) 0%, rgba(29, 29, 29, 1) 100%);
+}
+.map-scroll {
+    width: 100%;
+}
+.joExhibition_content .section_container .section:first-child {
+    margin-top: 0;
+}
+.text_layer_more {
+    z-index: 80;
+    margin-top: auto;
+    margin-bottom: 20px;
+}
+.load_section {
+    display: block;
+    padding: 15px;
+    border: 2px solid white;
+    margin: 0 auto 30px;
+    color: white;
+    font-weight: 600;
+    transition: background-color .5s ease, border-color .5s ease, color .5s ease;
+}
+.content_wrap a.load_section {
+    color: white;
+}
+
+/*
+.content_wrap a.load_section:hover {
+    border-color: #dd7059;
+    color: #dd7059;
+}
+*/
+.section .img-description {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 30%;
+    color: white;
+    padding: 10px;
+    font-size: 12px;
+    z-index: 100;
+    text-align: left;
+}
+.joExhibition_content .sectionInfo-container {
+    font-size: 16px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    color: white;
+    z-index: 10;
+}
+.joExhibition_content .sectionInfo-container .sectionInfo-c {
+
+    /* background-color: rgba(0,0,0,.2); */
+    height: 100%;
+}
+.sectionInfo-c-btn-container {
+    position: relative;
+}
+.sectionInfo-c-btn-container::after,
+.sectionInfo-c-btn-container::before {
+    content: "";
+    width: calc(50% - 50px);
+    height: 3px;
+    right: 0;
+    top: 50%;
+    position: absolute;
+    background-color: rgba(221, 112, 89, 1);
+}
+.sectionInfo-c-btn-container::before {
+    left: 0;
+    right: unset;
+}
+.joExhibition_content .sectionInfo-container .sectionInfo-c-content {
+    padding: 15px;
+    text-align: center;    /* background-color: rgba(0,0,0,0.6); */
+    height: 100%;
+}
+.joExhibition_content .sectionInfo-container .sectionText {
+    padding: 20px 0;
+}
+.joExhibition_content .sectionInfo-c-btn {
+    z-index: 30;
+    width: 70px;
+    height: 70px;
+    margin: 0 auto;
+    padding: 5px;
+    border-radius: 100%;
+    background-color: rgba(221, 112, 89, .5);
+    cursor: pointer;    /* transform: translateX(200px) rotate(135deg) scale(1); */
+    transform: scale(1);
+    transition: transform cubic-bezier(0.5, 1.8, 0.8, 0.5) 2s, right 1s ease-in-out, width 2s ease-in-out, height 2s ease-in-out;
+}
+
+/* .joExhibition_content .sectionInfo-c-btn.active {
+right: 0;
+z-index: 50;
+transform: translateX(0px) rotate(0deg) scale(1);
+} */
+.joExhibition_content .sectionInfo-c-btn.active {
+    animation: bigger 2s ease;
+}
+@keyframes bigger {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+.joExhibition_content .sectionInfo-c-btn.active:hover {
+    transform: scale(1.2);
+}
+.joExhibition_content .sectionInfo-c-btn-icon {
+    background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/sprite_portal_white.svg);
+    color: transparent;
+    text-align: center;
+    cursor: pointer;
+    display: block;
+    background-color: transparent;
+    background-size: 1400px;
+    background-repeat: no-repeat;
+    background-position: -1266px -7px;
+    width: 60px;
+    height: 60px;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    position: absolute;
+    left: 50%;
+}
+.intro_media_con {
+    background-color: #d6d6d6;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+/* .joExhibition_content .sectionInfo-c-btn.collapsed {
+    transform: translate(50%, -50%) rotate(180deg);
+}*/
+.sectionInfo-line {
+    width: 100%;
+    height: 2px;
+    background-color: rgba(221, 112, 89, 1);
+    position: absolute;
+    top: calc(50% - 1px);
+    left: 0;
+    display: none;
+}
+.sectionTitle-container {
+    padding: 5% 0 5% 0;    /* text-transform: uppercase; */
+}
+.sectionTitle-container h3 {
+    font-size: 24px;
+    font-size: 2.5vw;
+    color: #dd7059;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+}
+.exhibition.showall .text_layer h3,
+.exhibition.showall .text_layer h4,
+.exhibition.showall .text_layer .item-period,
+.exhibition.showexhibition .text_layer h3,
+.exhibition.showexhibition .text_layer h4,
+.exhibition .with_image .sektion-title,
+.sectionText,
+.sectionTitle-container h3,
+.sectionSubTitle {
+    text-shadow: 0px 0px 12px rgba(0, 0, 0, 0.8), 0px 0px 8px rgba(0, 0, 0, 0.3), 0px 0px 4px rgba(0, 0, 0, 0.1);
+}
+.sectionSubTitle {
+    font-size: 1.8vw;
+}
+.exhibition .with_image .sektion-title {
+    text-align: center;
+}
+.joExhibition_content .more-arrow,
+.joObject .more-arrow {
+    width: 60px;
+    height: 60px;
+    background-color: green;
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%) rotate(90deg);
+    background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/sprite_portal_white.svg);
+    color: transparent;
+    text-align: center;
+    cursor: pointer;
+    display: block;
+    background-color: transparent;
+    background-size: 2000px;
+    background-repeat: no-repeat;
+    background-position: -921px -423px;
+    opacity: 0;
+    visibility: hidden;
+}
+.joExhibition_content .section.active .more-arrow,
+.joObject.active .more-arrow {
+    animation: breathopacity 4s ease;
+}
+@keyframes breathopacity {
+    0% {
+        opacity: 0;
+        visibility: visible;
+    }
+    25% {
+        opacity: 1;
+        visibility: visible;
+    }
+    50% {
+        opacity: 0;
+        visibility: visible;
+    }
+    75% {
+        opacity: 1;
+        visibility: visible;
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+.joText-btn-icon {
+    width: 40px;
+    height: 40px;
+    background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/sprite_portal_black.svg);
+    color: transparent;
+    text-align: center;
+    cursor: pointer;
+    display: block;
+    background-color: transparent;
+    background-size: 900px;
+    background-repeat: no-repeat;
+    background-position: -767px -49px;
+    position: absolute;
+    right: 31px;
+    bottom: -40px;
+    cursor: pointer;
+    display: none;
+}
+.joText-btn-icon.hide {
+    background-position: -1043px -69px;
+    background-size: 1150px;
+}
+.joText-btn-icon.active {
+    display: block;
+}
+.joObject_container {
+
+    /*padding:60px 70px;*/
+    background-color: #4b4b4b;
+}
+div.joObject_container .text_wrap {
+    padding: 0 15px;
+    opacity: 1;
+}
+.object-fit-contain {
+    object-fit: contain;
+}
+.sec .info_wrap {
+    color: #ffffff;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+.sec .more {
+    padding: 1vw 0 0;
+    padding-top: 1vw;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+}
+.sec .more a {
+    font-size: 1.1vw;
+    padding: 0.7vw 0.9vw;
+    border: rgba(255, 255, 255, 0.8) 1px solid;
+    color: #ffffff;
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+}
+.sec-5 .image,
+.sec-2 .image {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.sec-2 .moreimages .imagewrap {
+    margin: 30px 0;
+    filter: drop-shadow(0px 0px 1px rgba(0, 0, 0, .75)) drop-shadow(0px 0px 10px rgba(0, 0, 0, .75));
+    background-color: #c7aa37;
+}
+.sec-5 .sectionSubTitle,
+.sec-2 .sectionSubTitle {
+    font-size: 26px;
+    font-size: 1.7vw;
+}
+.sec-5 .textcontent {
+    padding: 0 70px;
+}
+.sec-2 .sectionTitle-container {
+    padding: 5% 0 6% 0;
+    padding: 1.5vw 0 2vw 0;
+}
+.sec-2 .sectionText {
+    font-size: 1.1vw;
+}
+.sec-4 .image_bg {
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.sec-4 .image_bg:nth-child(3),.sec-4 .image_bg:first-child {
+    border-right: 1px solid black;
+}
+.sec-4 .image_bg:nth-child(2),.sec-4 .image_bg:first-child {
+    border-bottom: 1px solid black;
+}
+
+/* Objektcanvas */
+.joObject {
+    position: relative;
+    padding: 0;
+    /*
+    transition: all 1s ease-in-out;
+    background-color: #252525;
+    background-image: radial-gradient(circle 100vh at 30% 100%, #252525, #252525);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    */
+}
+.joObject.even {
+    /*
+    background-image: radial-gradient(circle 100vh at 70% 100%, #252525, #252525);
+    */
+}
+.joObject.clicked {
+    background-color: #232323;
+    background-image: none;
+}
+.joObject .text-title h3 {
+    position: relative;
+}
+.joObject .text-content p {
+    margin: 0 10vw;
+    text-align: center;
+}
+.joObject .subtype10 .text-title h3:after {
+    background: white;
+}
+.joObject_container .joObject.desc-con .content-wrapper,
+.joObject_container .joObject.desc-con-audio .content-wrapper {
+    color: black;
+}
+.joObject > .content-wrapper {
+    /*
+    min-height: 100vh;
+    */
+    min-height: 50vh;
+    padding: 60px 70px;
+}
+.joObject.single > .content-wrapper {
+    min-height: 100vh;
+}
+.joObject > .content-wrapper.subtype3 {
+    padding: 0;
+    min-height: 100vh;
+}
+.joObject > .row {
+    transition: all 1s ease-in-out;
+}
+.joObject .img-wrapper {
+    flex: 1;
+}
+.joObject .section_img {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+    /*
+    position: absolute;
+    */
+    opacity: 1;
+    cursor: pointer;
+    transition: opacity 550ms ease-out, transform 550ms ease-out;
+}
+.joObject .view_2_alt .section_img {
+    object-position: top;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.joObject .view_2_alt .section_img img {
+    object-position: center;
+    max-height: 80%;
+    max-width: 77% !important;
+    height: auto !important;
+    -o-object-fit: contain;
+    object-fit: contain;
+    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.5);
+}
+.joObject.clicked .section_img img {
+    height: 90%;
+    width: 90%;
+    box-shadow: unset;
+}
+.joObject .section_img.joFade {
+    opacity: 0;
+}
+.joObject img:not(.section_img) {
+
+    /*
+    height: 100%;
+    width: 100%;
+    */
+
+    /*
+    -o-object-fit: contain;
+    object-fit: contain;
+    */
+    position: relative;
+}
+.joObject .video_wrap {
+    border: 1px solid rgba(255, 255, 255, 1);
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    padding: 1.5vw;
+}
+.joObject .small_img {
+    height: 100%;    /* width: 100%; */
+    width: auto;
+    opacity: .5;
+}
+.joObject .small_img {
+    margin-right: 10px;
+}
+.joObject .small_img:last-child {
+    margin-right: 0;
+}
+.joObject .small_img.active {
+    opacity: 1;
+}
+.joObject.clicked .all_images {
+
+    /* display: flex; */
+    height: 10vh;
+    opacity: 1;
+    transition-delay: .3s;
+}
+.joObject_container .joObject.even img {
+
+    /* object-position: 100% 50%; */
+
+    /* transition: object-position .5s ease; */
+}
+.joObject_container .joObject.even.clicked img {
+    object-position: 50% 50%;
+}
+div.joObject div.text_wrap {
+
+    /*
+    align-self: flex-end;
+    */
+    align-self: flex-end;
+    padding-bottom: 100px;
+}
+div.joObject .view_2_alt div.text_wrap {
+
+    /*
+    align-self: start;
+    align-self: flex-start;
+    */
+    align-self: center;
+}
+.exhibition .img-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.exhibition .all_images {
+    position: relative;    /* position: absolute; */
+
+    /* display: none; */
+    display: flex;
+    height: 0vh;
+    opacity: 0;
+    transition: height .5s ease, opacity .5s ease;
+    justify-content: center;
+}
+.exhibition .all_images .small_img {
+}
+
+/*
+.joObject_container .joObject img::after {
+position:absolute;
+content: "";
+left:50%;
+margin:400px 0 0 -290px;
+bottom:10px;
+width:580px;
+height:16px;
+background:#fff;
+border-radius:290px / 8px;
+-moz-border-radius:290px / 8px;
+-webkit-border-radius:290px / 8px;
+box-shadow:0 10px 20px #000;
+-moz-box-shadow:0 10px 20px #000;
+-webkit-box-shadow:0 10px 20px #000;
+}
+*/
+.exhibition .video-slick > .slick-list {
+
+    /*
+    position: absolute;
+    left: 0;
+    */
+    width: 100%;
+}
+.exhibition .video-slick .embed-responsive {
+
+    /*
+    height: 100%;
+    */
+}
+.exhibition .video-slick,
+.exhibition .video-slick .embed-responsive,
+.exhibition .video-slick video {
+
+    /*
+    min-height: 300px;
+    */
+}
+.exhibition .video-slick {
+
+}
+.exhibition .video-slick .embed-responsive {
+    background-color: grey;
+}
+
+/* Standalone - Frame um die Objekte und Sektionen */
+.singleitem:after {
+    content: '';
+    height: 5px;
+    position: absolute;
+    background-color: #ffffff;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    -webkit-box-shadow: 0px 5px 15px 0px rgb(0 0 0 / 40%);
+    -moz-box-shadow: 0px 5px 15px 0px rgb(0 0 0 / 40%);
+    box-shadow: 0px 5px 15px 0px rgb(0 0 0 / 40%);
+}
+.single-logo {
+    width: 3.5vw;
+    margin-top: 5px;
+    padding: 0.4vw 0;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+.single-logo img {
+    width: 2vw;
+    display: block;
+    height: auto;
+    margin: 0.4vw auto;
+}
+.single-logo .main_title {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    display: inline-block;
+    text-shadow: 2px 2px 2px rgba(8, 3, 2, 0.3);
+    color: #ffffff;
+    text-transform: uppercase;
+    font-size: 1vw;
+}
+
+/* Zurück Button */
+.exhibition .back {
+    position: absolute;
+    left: 3vw;
+    top: 80px;
+    z-index: 10;
+    cursor: pointer;
+}
+.single-logo .back {
+    top: unset;
+    left: 0;
+    bottom: -5px;
+    transform: translateY(100%);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+.exhibition .back .joSprite {
+    padding: 1.75vw;
+    background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/sprite_portal_white.svg);
+    background-size: 75vw;
+    background-position: -41.3vw -3.95vw;
+    transform: rotateY(180deg);
+    transition: opacity .5s ease;
+    opacity: 0.8;
+}
+.exhibition .back .joSprite:hover {
+    opacity: 1;
+}
+
+/*
+.video-slick video[poster]{ 
+object-fit:cover; 
+}
+*/
+
+/*
+body .joTop .navbar .navbar-toggler{
+border:rgba(1,1,1,0.6) 5px solid;
+border-radius:50px;
+padding:5px;
+}
+*/
+.exhibition .ls {
+    margin-top: 50px;
+    margin: 50px auto 0;
+    width: 60%;
+    padding-bottom: 1%;
+    background: radial-gradient(circle, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+    -webkit-filter: blur(20px);
+    -moz-filter: blur(20px);
+    -o-filter: blur(20px);
+    -ms-filter: blur(20px);
+    filter: blur(9px);
+}
+.joObject.odd .img-container {
+    padding-right: 15px;
+}
+.joObject.even .img-container {
+    padding-left: 15px;
+    text-align: right;    /* background-color: #d6d6d6; */
+
+    /* padding: 15px; */
+}
+.content_wrap .exhibition a {
+    color: white;
+    font-weight: 600;
+}
+.exhibition .zitiervorschlag a {
+    color: white;
+    font-weight: 600;
+}
+.content_wrap .exhibition .showexhibition a {
+    color: black;
+}
+
+/*
+.joObject.clicked {
+ position: fixed;
+ width: 100vw;
+ height: 100vh;
+ top: 0;
+ left: 0;
+ flex: 0 0 100vw;
+ max-width: 100vw;
+ background-color: white;
+ z-index: 5;
+ overflow: auto;
+ overflow-x: hidden;
+ padding-top: 60px!important;
+ background-image: radial-gradient(circle 100vh at 70% 100%, #d3d3d3, #737373);
+}
+.joObject .text_wrap {
+    transition: all 1s ease-in-out;
+}
+.joObject.clicked.odd .text_wrap,
+.joObject.loading.odd .text_wrap {
+ opacity: 0;
+ position: absolute;
+ transform: translateX(100%);
+ right: 0;
+ height: 100%;
+ transition: all 1s ease-in-out;
+}
+.joObject.clicked.even .text_wrap,
+.joObject.loading.even .text_wrap {
+ opacity: 0;
+ position: absolute;
+ left: 70px;
+ transform: translateX(-100%);
+ height: 100%;
+ transition: all 1s ease-in-out;
+}
+.joObject.clicked .img-container {
+    max-width: unset;
+ flex: unset;
+ width: unset;
+ padding: 0;
+}
+.joObject.clicked.odd .img-container {
+ 
+ margin-left: 50%;
+    transform: translateX(-50%);
+}
+.joObject.clicked.even .img-container {
+ margin-right: 50%;
+ transform: translateX(50%);
+}
+.joObject.clicked .section_img_info-c.active {
+ opacity: 1;
+ visibility: visible;
+}
+.joObject.clicked .section_img_btn {
+    opacity: 1;
+    visibility: visible;
+}
+.joObject_container .joObject.clicked .content-wrapper {
+ transform: translateY(8.6vh)!important;
+}
+*/
+.joObject .text_wrap {
+    margin-right: 0%;
+    opacity: 1;
+    visibility: visible;
+    transition: margin-right .5s ease, margin-left .5s ease, opacity .5s ease, visibility .5s ease;
+}
+.joObject.clicked .text_wrap {
+    opacity: 0;
+    visibility: hidden;
+    margin-right: -60%;
+}
+.joObject.even.clicked .text_wrap {
+    margin-right: 0%;
+    margin-left: -60%;
+}
+.section_img_info-c span[data-toggle="collapse-next"] {
+    background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/sprite_portal_black.svg);
+    background-position: -38px -108px;
+    background-size: 700px;
+    font-size: 0;
+    width: 30px;
+    height: 30px;
+    display: block;
+    cursor: pointer;
+    margin: 0 auto;
+}
+.section_img_info-c {
+    width: 100%;
+}
+.joObject.even .section_img_info-c > span {
+
+    /*  margin: 0 auto; */
+}
+.section_img_info-cc {
+    background-color: rgba(0, 0, 0, .1);
+    margin-top: 5px;
+    word-break: break-word;
+    color: black;
+    font-size: 17px;
+}
+.section_img_info-cc .section_img_desc {
+    padding: 10px;
+}
+
+/*
+.section_img_info-c {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .5s ease-in-out, visibility .5s ease-in-out;
+
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  background-color: white;
+  color: black;
+  padding: 15px;
+}
+*/
+.joObject .subtype3 .img-container {
+    transition: all 1s ease-in-out;
+    -webkit-transform: translateX(0);
+    background-color: rgba(0, 0, 0, 0.2);
+    
+    box-shadow: inset -20px 0px 20px -30px rgb(0 0 0);
+    transform: translateX(0);
+}
+.joObject .subtype3 .flex-row-reverse .img-container {
+    box-shadow: inset 20px 0px 20px -30px rgb(0 0 0);
+}
+.joObject.even .img-container {
+    margin-left: 0;
+}
+.joObject.odd .img-container {
+    margin-right: 0;
+}
+.section_img_btn {
+    position: absolute;
+    right: 0;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 30;
+    width: 70px;
+    height: 70px;
+    margin: 0 auto;
+    padding: 5px;
+    border-radius: 100%;
+    background-color: rgba(221, 112, 89, .5);
+    cursor: pointer;    /* transform: translateX(200px) rotate(135deg) scale(1); */
+    transform: scale(1) translateX(150%);
+    transition: transform cubic-bezier(0.5, 1.8, 0.8, 0.5) 2s, right 1s ease-in-out, width 2s ease-in-out, height 2s ease-in-out, opacity 1s ease-in-out;
+}
+.section_img_btn_icon {
+    background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/sprite_portal_white.svg);
+    color: transparent;
+    text-align: center;
+    cursor: pointer;
+    display: block;
+    background-color: transparent;
+    background-size: 1400px;
+    background-repeat: no-repeat;
+    background-position: -1266px -7px;
+    width: 60px;
+    height: 60px;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    position: absolute;
+    left: 50%;
+}
+.exhibition .sektion-title {
+    color: #dd7059;
+    font-size: 3.5vw;
+    border-bottom: 3px solid #dd7059;
+    padding: 1.5vw 0 2vw;
+    word-break: break-word;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+}
+.section-subtitle h3 {
+    color: #ffffff;
+    font-size: 2vw;
+    padding: 0 0 2vw;
+    margin: 0;
+}
+.joObject h2,
+.joObject h3 {
+    word-break: break-word;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+}
+.view2-overlay-text h3 {
+    font-size: 1.6vw;    /*
+        text-decoration: underline;
+        */
+    margin-bottom: 25px;
+}
+.view2-overlay-text p {
+    font-size: 1vw;
+    line-height: 135%;
+    margin: 0;
+    padding: 0;
+}
+.shadowimg {
+    content: '';
+    width: 90%;
+    height: 8%;
+    border-radius: 50%;
+    box-shadow: 0px 10px 5px black;
+}
+.controlAjaxOut {
+    display: none;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    background-color: green;
+    transform: translateX(100%);
+    transition: transform 1s ease-in-out;
+    top: 0;
+    left: 0;
+    overflow: auto;
+}
+.controlAjaxOut.active {
+    display: block;
+    transform: translateX(0%);
+}
+.exhibition.showindex {
+    background-color: rgb(97 97 97 / 80%);
+    padding: 100px 10px;
+    color: white;
+}
+.exhibition.showindex h1,
+.exhibition.showindex h2 {
+    color: #ffffff;
+}
+.exhibition.showindex h3,
+.exhibition.showindex h4 {
+    display: block;
+    color: #ffffff;
+}
+.exhibition.showindex h3 {
+    color: #dd7059;
+    font-size: 23px;
+    padding: 15px;
+    overflow: hidden;
+}
+.exhibition.showindex h1 {
+    font-size: 46px;
+    line-height: 120%;
+    font-family: 'Playfair Display', serif;
+    color: #dd7059;
+}
+.exhibition.showindex ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.exhibition.showindex ul li.section_li {
+    margin-right: 0;
+    padding: 0 10px;
+    opacity: 1;
+}
+.exhibition.showindex ul li.section_li.active {
+    opacity: 1;
+}
+.exhibition.showindex .up,
+.exhibition.showindex .section-wrap,
+.exhibition.showindex ul li .section_objects {
+    border: #000000 1px solid;
+}
+.exhibition.showindex .section-wrap {
+    height: 150px;
+    margin-top: 20px;
+    overflow: hidden;
+}
+.exhibition.showindex ul li .section_objects {
+    border-top: none;
+}
+.exhibition.showindex .img_object {
+    width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+}
+.exhibition.showindex .img_object:last-child {
+    margin-bottom: 0;
+}
+.exhibition.showindex .up {
+    padding: 10px 0;
+    margin-top: 20px;
+}
+.exhibition.showindex .overview-item {
+    padding: 12px 8px;
+    min-height: 100px;
+    color: white;
+}
+.exhibition.showindex .overview-img {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 3px;
+    flex: 0 0 30%;
+}
+.exhibition.showindex .overview-nr,
+.exhibition.showindex .overview-title {
+    padding: 0 7px;
+    font-size: 15px;
+}
+.exhibition.showindex .overview-title {
+    flex: 1;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: relative;
+}
+.exhibition.showindex .img_dark_wrapper {
+    align-items: center;
+    justify-content: center;
+}
+.exhibition.showindex .img_dark_wrapper,
+.exhibition.showindex a:nth-child(odd) {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+.exhibition.showindex .img_bg {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.exhibition.showindex .text_shadow {
+    text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.9), 0px 0px 4px rgba(0, 0, 0, 0.5)
+}
+.joSitemap .Overview-icon-container {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: -15px;
+    cursor: pointer;
+    right: 65px;
+    transform: translateY(-100%);
+}
+body.noscroll {
+    overflow: hidden;
+}
+.exhibition .joSitemap-btn {
+    position: fixed;
+    left: 5px;
+    top: 200px;
+    cursor: pointer;
+    z-index: 150;
+}
+.exhibition .joSitemap {
+    border-top: 3px solid #dd7059;
+    position: fixed;
+    right: 0;    /*
+      top: 80px;
+      */
+    bottom: 0;
+    z-index: 199;
+    color: white;    /*
+      height: calc(100% - 80px);
+      */
+    width: 100%;
+    height: 20vh;
+    min-height: 180px;
+    background-color: rgba(0, 0, 0, .75);
+    transform: translateY(100%);
+    transition: transform .5s ease-in-out;
+}
+.exhibition .joSitemap.active {
+    transform: translateX(0%);
+}
+.exhibition .joSitemap-container {
+    list-style-type: none;
+}
+.exhibition .joSitemap-item {
+    cursor: pointer;
+    padding: 15px;
+}
+.exhibition .sitemap-slick-item {
+    position: relative;
+    cursor: pointer;
+    outline: none;   /* padding: 15px 7.5px; */
+}
+.exhibition .sitemap-slick-item img {
+    width: 100%;
+    height: 100%;    /* height: 20vh; */
+    object-fit: cover;
+}
+.exhibition .sitemap-slick-item .img_bg {
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.exhibition .sitemap-slick-title {
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, .5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5px;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+}
+.exhibition .carousel-sitemap-slick {
+    padding-left: 60px;
+    padding-right: 60px;
+}
+.exhibition .carousel-sitemap-slick .slick-arrow {
+    position: absolute;
+    height: 100%;
+    width: 50px;
+    font-size: 0;
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+.exhibition .carousel-sitemap-slick .slick-arrow:after {
+    content: '';
+    position: absolute;
+    top: calc(50% - 50px);
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100px;
+    background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/sprite_portal_white.svg);
+    background-repeat: no-repeat;
+    background-size: 1500px;
+    background-position: -993px -65px;
+}
+.exhibition .carousel-sitemap-slick .slick-arrow.slick-prev:after {
+    transform: rotate(180deg);
+}
+.exhibition .carousel-sitemap-slick .slick-prev {
+    display: none;
+    left: 0;
+}
+.exhibition .carousel-sitemap-slick .slick-next {
+    right: 0;
+}
+.exhibition .carousel-sitemap-slick .sitemap-slick-active .sitemap-slick-title {
+    background-color: rgba(0, 0, 0, .2);
+}
+.exhibition .carousel-sitemap-slick .sitemap-slick-item:hover .sitemap-slick-title {
+    background-color: rgba(0, 0, 0, .2);
+}
+.exhibition .slick-list,
+.exhibition .slick-track {
+    height: 100%;
+}
+.exhibition .slick-disabled {
+    display: none !important;
+}
+.sectionLink {
+    padding: 15px;
+    display: block;
+    width: 160px;
+    margin: 20px auto;
+    border: 1px solid white;
+    color: white !important;
+}
+.section.active .carousel .carousel-item.active .section_img {
+    animation: breath 50s ease infinite;
+}
+.section .carousel .carousel-item.active .section_img {
+    animation: breath 50s ease infinite;
+}
+.exhibition .item .item-img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    animation: breath 50s ease infinite;
+}
+
+/* Sitemap Objekte */
+.exhibition .text-overflow {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.exhibition .chapter {
+    background-color: rgba(0, 0, 0, 0.4);
+    border-bottom: rgba(255, 255, 255, 0.5) 1px solid;
+}
+.exhibition .chapter .arrowdown .joSprite,
+.exhibition .chapter .backlink .joSprite {
+    padding: 12px 20px;
+    background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/sprite_portal_white.svg);
+    background-size: 800px;
+    background-position: -445px -49px;
+}
+.exhibition .chapter .arrowdown .joSprite {
+    background-position: -556px -49px;
+    transform: rotate(90deg);
+}
+.exhibition .chapter .c-wrap.prev .backlink .joSprite {
+    transform: rotateY(180deg);
+}
+.exhibition .chapter .c-wrap {
+    min-width: 0;
+    padding: 8px 20px;
+    opacity: 0.5;
+    transition: opacity .5s ease;
+    flex-grow: 1;
+    flex-basis: 0;
+    overflow: hidden;
+}
+.exhibition .object-number {
+    color: #ffffff;
+    background-color: #dd7059;
+    padding: 3px 10px;
+}
+.exhibition .chapter .c-wrap.prev {
+    padding-left: 70px;
+}
+.exhibition .chapter .c-wrap.next {
+    padding-right: 70px;
+}
+.exhibition .chapter .c-wrap:hover,
+.exhibition .chapter .c-wrap.current {
+    opacity: 1;
+}
+.exhibition .chapter .c-wrap.current {
+    flex: 1;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+.exhibition .chapter h2 {
+    margin: 0;
+    font-size: 18px;
+    padding: 0 0 7px;
+    color: #ffffff;
+}
+.object-view {
+    flex: 1;
+}
+.joSitemap-container {
+
+    /* padding: 0 70px; */
+}
+.joSitemap-container .slick-slider .sitemap-slick-item {
+    padding: 12px 8px;
+}
+.joSitemap-container .slick-track .sitemap-slick-item:nth-child(odd) {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+.object-view.joSitemap-container .sitemap-nr {
+    align-self: center;
+}
+.object-view.joSitemap-container .sitemap-img {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 3px;
+    flex: 0 0 30%;
+}
+.object-view.joSitemap-container .sitemap-title {
+    flex: 1;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    position: relative;
+}
+.object-view.joSitemap-container .sitemap-nr,
+.object-view.joSitemap-container .sitemap-title {
+    padding: 0 7px;
+    font-size: 15px;
+}
+.exhibition .bg_image {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 20%;
+}
+@keyframes breath {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.07);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+.exhibition .item h3 {
+    color: #c7aa37;
+}
+.exhibition .item-img-desc {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: white;
+    z-index: 60;
+    font-size: 14px;
+}
+.exhibition .carousel {
+    width: 100%;
+    height: 100%;
+}
+.exhibition .carousel-indicators li {
+    position: relative;
+}
+.exhibition .carousel-indicators li:after {
+    content: "";
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: transparent;
+    animation: progress linear infinite;
+    animation-fill-mode: forwards;
+    animation-duration: 0;
+    width: 0;
+}
+.exhibition .carousel-indicators.active li.active:after {
+    width: 0;
+    background-color: green;
+    animation-duration: 5s;
+}
+@keyframes progress {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+.exhibition .joTooltip {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+    cursor: pointer;
+    background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/sprite_portal_white.svg);
+    background-size: 900px;
+    background-repeat: no-repeat;
+    background-position: -53px -143px;
+    display: none;
+}
+.section.isFirst .sectionInfo-c {
+    transition: opacity 2s ease-in-out;
+    opacity: 0;
+}
+.section.isFirst.isFirstActive .sectionInfo-c {
+    opacity: 1;
+}
+
+/* transition: 1.7s, all, cubic-bezier(0.22, 0.44, 0, 1); */
+.joExhibition_content .section .carousel img {
+    height: 100vh;
+    width: auto;
+}
+.joExhibition_content .section .carousel div.section_img {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    width: 100vw;
+}
+.joExhibition_content div.section_img_wrap::after,
+.joExhibition_content .section .carousel div.section_img::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background-image: radial-gradient(circle 100vh at 50% 50%, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.1));    /*background-color: rgba(0,0,0,0.3);*/
+}
+
+/*
+.joObject_container .joObject {
+ background-size: cover;
+}
+*/
+
+/* .joExhibition_content .section:first-child {
+ transform: translateY(-15vh);
+}
+.joExhibition_content .section:first-child {
+ transform: translateY(-15vh);
+}
+.joExhibition_content .section:first-child .content-wrapper {
+ transform: translateY(15vh);
+} */
+.exhibition .img-bg {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.joExhibition_content .section .content-wrapper .sectionInfo-c-content {
+    transition: 1.7s all cubic-bezier(0.22, 0.44, 0, 1);
+}
+
+/*
+ Videoslick title anpassen - overlays haben unterschiedlich große überschriften und abstände
+*/
+
+/* Audioplayer allgemein */
+.exhibition .audio_multiple {
+    margin-top: 0.5vw;
+}
+.exhibition .desc-con-audio .audio-intro {
+    border-bottom: 2px solid black;
+    padding: 1vw 3vw;
+    margin: 0 auto;
+    font-weight: 500;
+}
+.exhibition .desc-con-audio .audio-title {
+    font-size: 1.8vw;
+    margin: 0;
+}
+.joObject .desc-con-audio .audio-container {
+    box-shadow: 0px 0px 15px 0px rgb(0 0 0 / 50%);
+}
+.exhibition .map-audio {
+    padding-top: 15px;
+}
+.exhibition .map-audio .desc-con-audio .audio-container {
+    box-shadow: none;
+}
+.exhibition .audio-btn-group {
+    margin-bottom: 0.9vw;
+}
+.exhibition .audio-btn-group .joSprite {
+    width: 45px;
+    height: 45px;
+    width: 3vw;
+    height: 3vw;
+    cursor: pointer;
+    background-color: transparent;
+    background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/sprite_portal_black.svg);
+    background-size: 1200px;
+    background-size: 80vw;
+    background-repeat: no-repeat;
+}
+.exhibition .audio-btn-back {
+    cursor: pointer;
+    margin-right: 20px;
+    margin-right: 1vw;
+    background-position: -849px -366px;
+    background-position: -76.5vw -24.5vw;
+}
+.exhibition .audio-btn-forw {
+    cursor: pointer;
+    margin-left: 20px;
+    margin-left: 1vw;
+    background-position: -789px -366px;
+    background-position: -72.5vw -24.5vw;
+}
+.exhibition .audio-btn-start {
+    cursor: pointer;
+    background-position: -722px -187px;
+    background-position: -48.2vw -12.5vw;
+}
+.exhibition .audio-item.playing .audio-btn-start {
+    background-position: -786px -187px;
+    background-position: -52.4vw -12.5vw;
+}
+.exhibition .audio-player {
+    display: none;
+}
+.exhibition .progress-wraper {
+    max-width: 100%;
+    margin: 0 auto;
+    width: 12vw;
+}
+.exhibition .audio-item .progress {
+    height: 5px;
+    background-color: #000;
+}
+.exhibition .progress .progress-bar {
+    background-color: #dd7059;
+}
+.exhibition .progress-text {
+    font-size: 1vw;
+    margin-top: 0.4vw;
+}
+.exhibition .audio-item .audio-btn-forw,
+.exhibition .audio-item .audio-btn-back,
+.exhibition .audio-item .progress-wraper {
+    opacity: 0;
+    visibility: hidden;
+    transition: .5s opacity ease, .5s visibility ease;
+}
+.exhibition .audio-item.playing .audio-btn-forw,
+.exhibition .audio-item.playing .audio-btn-back,
+.exhibition .audio-item.playing .progress-wraper {
+    opacity: 1;
+    visibility: visible;
+}
+.exhibition .intr > .pd {
+    padding: 0 !important;
+    color: black;
+}
+.exhibition .hidden-arrows .slick-arrow {
+    display: none !important;
+}
+.exhibition .view2-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgb(0 0 0 / 50%);
+    z-index: 50;
+}
+.exhibition .view2-overlay-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 1.4vw;
+    border-radius: 5px;
+}
+.exhibition .view2-overlay-close {
+    position: absolute;
+    right: 0.3vw;
+    top: 0.3vw;
+    width: 1vw;
+    height: 1vw;
+    background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/sprite_portal_black.svg);
+    background-position: -17.21vw -0.25vw;
+    background-size: 28.4vw;
+    cursor: pointer;
+    opacity: .75;
+}
+.exhibition .i-icon {
+    background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/sprite_portal_white.svg);
+    background-position: -38px -108px;
+    background-size: 700px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background-color: transparent;
+    transition: background-image .5s ease;
+}
+
+/* Audioplayer im Sektionsblock - showobject.htmnl */
+.section_audio_literature .desc-con-audio .audio-container {
+    box-shadow: unset;
+}
+.section_audio_literature.desc-con-audio,
+.section_entry_description.desc-con {
+    background-color: white;
+    background-image: none;
+}
+.section_audio_literature .section_audio_wrapper {
+    background-color: #ebd9b7;
+    background-image: radial-gradient(circle 100vh at 30% 100%, #ffffff, #ebd9b7);
+    padding: 2.5vw 0;
+    box-shadow: 0px 0px 1vw 0px rgba(0, 0, 0, 0.5);
+}
+.desc-con-audio .audio-title,
+.section_audio_literature .section_audio_wrapper,
+.desc-con-audio .audio-intro,
+.view_2_alt .desc-con-audio .audio-title {
+    margin-bottom: 1vw;
+}
+.view_2_alt .desc-con-audio .audio-title,
+.desc-con-audio .audio-intro {
+    font-size: 1.2vw;
+}
+
+/* Audioplayer im Objektblock - showobject.htmnl */
+.view_2_alt .desc-con-audio .audio-title {
+    color: white;
+    text-align: center;
+    transition: color .5s ease;
+    flex: 1;
+}
+.view_2_alt .audio-container:after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .3);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    transition: background-color .5s ease;
+}
+.view_2_alt .audio-container > * {
+    position: relative;
+    z-index: 10;
+}
+.view_2_alt .audio_multiple .desc-con-audio {
+    padding-right: 2vw !important;
+    min-width: 33.333%;
+}
+.view_2_alt .audio_multiple .desc-con-audio:last-child {
+    padding-right: 0 !important;
+}
+.view_2_alt .audio-container {
+    padding: 1vw;
+    border-radius: 4px;
+    background: rgb(255, 255, 255);
+    background: linear-gradient(190deg, rgb(217 210 210) 0%, rgba(147, 147, 147, 1) 100%);
+    background-size: cover;
+    background-size: auto 120%;
+    background-position: center;
+    transition: background-size .5s ease;
+}
+.view_2_alt .audio-btn-group .joSprite {
+    background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/sprite_portal_white.svg);
+    transition: background-image .5s ease;
+}
+.view_2_alt .progress-text {
+    color: white;
+    transition: color .5s ease;
+}
+.view_2_alt .audio-container.plr {
+    background-size: auto 100%;
+}
+.view_2_alt .audio-container.plr:after {
+    background-color: rgba(0, 0, 0, .1);
+}
+.view_2_alt .audio-intro {
+    padding: 0 0 1vw 0;
+}
+.view_2_alt .text_wrap .t {
+    padding-right: 60px;
+    padding-right: 5vw;
+}
+
+/* Sektion Literatur */
+.section_audio_literature .literature {
+    padding-left: 15vw;
+    padding-right: 15vw;
+}
+.section_audio_literature .literature p {
+    display: block;
+}
+.section_audio_literature .literature a {
+    color: #000000;
+    font-size: 1.2vw;
+    font-weight: normal;
+    margin-top: 0.5vw;
+    display: inline-block;
+}
+.section_audio_literature .literature a:after {
+    content: '';
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
+    background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/sprite_portal_black.svg);
+    background-size: 600px;
+    background-repeat: no-repeat;
+    background-position: -331px -33px;
+    transform: rotate(-45deg);
+}
+.section_audio_literature .literature h3 {
+    padding-bottom: 0;
+    font-size: 1.8vw;
+}
+.section_audio_literature .literature h4 {
+    position: relative;
+    display: inline-block;
+    width: auto;
+    margin: 0 auto;
+}
+.section_audio_literature .literature h3,
+.section_audio_literature .literature h4 {
+    margin-bottom: 1vw;
+}
+.section_audio_literature .literature h4:after {
+    content: "";
+    background: black;
+    position: absolute;
+    height: 1px;
+    width: 30%;
+    left: 0;
+    bottom: 0.8vw;
+}
+.view_2_alt .video-slick {
+    padding-right: 25px;
+    padding-right: 2vw;
+}
+
+/* Map*/
+.exhibition .mapdiv {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+}
+.exhibition .ol-popup {
+    position: absolute;
+    background-color: white;
+    -webkit-filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+    filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #cccccc;
+    bottom: 12px;
+    left: -50px;
+    min-width: 280px;
+    z-index: 99999;
+}
+.exhibition .ol-popup:after,
+.exhibition .ol-popup:before {
+    top: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+.exhibition .ol-popup:after {
+    border-top-color: white;
+    border-width: 10px;
+    left: 48px;
+    margin-left: -10px;
+}
+.exhibition .ol-popup:before {
+    border-top-color: #cccccc;
+    border-width: 11px;
+    left: 48px;
+    margin-left: -11px;
+}
+.exhibition .ol-popup-closer {
+    color: black;
+    text-decoration: none;
+    position: absolute;
+    top: 2px;
+    right: 8px;
+}
+.exhibition .ol-popup h3 {
+    margin: 0;
+    font-size: 20px;
+}
+.exhibition .ol-popup {
+    padding: 10px;
+}
+.exhibition .joLayerContainer {
+    top: 140px;
+    right: 12px;
+    display: none;
+}
+.exhibition .joLayerContainer button {
+    cursor: pointer;
+}
+.exhibition .joLayerContent {
+    display: none;
+}
+.exhibition .joLayerContent.active {
+    display: block;
+}
+.exhibition .joLayerContent ul {
+    list-style: none;
+    margin-top: 5px;
+    margin-bottom: 0;
+    padding-left: 0;
+    background-color: rgba(255, 255, 255, 1);
+}
+.exhibition .joLayerContent li {
+    padding: 5px 10px;
+}
+.exhibition .joLayerContent input {
+    margin-right: 5px;
+}
+.exhibition .joLayerContent label {
+    font-size: 16px;
+    margin-bottom: 0;
+}
+.exhibition .joSitemap-image {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    display: inline-block;
+    width: 40px;
+    height: 27px;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+body .exhibition .carousel-control-next,
+body .exhibition .carousel-control-prev {
+    position: relative;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 100%;
+    color: #fff;
+    text-align: center;
+    opacity: .5;
+    transition: opacity .15s ease;
+}
+.exhibition .joOpener {
+    width: 24px;
+    height: 50px;
+    margin: 20px auto 0;
+}
+.exhibition .joOpener .joOpener_arrow {
+    display: block;
+    width: 5px;
+    height: 5px;
+    transform: rotate(45deg);
+    border-right: 2px solid white;
+    border-bottom: 2px solid white;
+    margin: 0 0 3px 4px;
+    width: 16px;
+    height: 16px;
+    animation: mouse-scroll 1s infinite;
+}
+.exhibition .joOpener .joOpener_arrow:first-child {
+    margin-top: 1px;
+    -webkit-animation-delay: .1s;
+    -moz-animation-delay: .1s;
+    -webkit-animation-direction: alternate;
+    animation-direction: alternate;
+    animation-delay: alternate;
+}
+.exhibition .joOpener .joOpener_arrow:nth-child(2) {
+    -webkit-animation-delay: .2s;
+    -moz-animation-delay: .2s;
+    -webkit-animation-direction: alternate;
+    animation-delay: .2s;
+    animation-direction: alternate;
+    margin-top: -6px;
+}
+.exhibition .joOpener .joOpener_arrow:last-child {
+    -webkit-animation-delay: .3s;
+    -moz-animation-delay: .3s;
+    -webkit-animation-direction: alternate;
+    animation-delay: .3s;
+    animation-direction: alternate;
+    margin-top: -6px;
+}
+@keyframes mouse-scroll {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: .5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.intro_media {
+}
+
+/*
+.intro_media {
+position: relative;
+padding: 25%;
+}
+.intro_media video {
+position: absolute;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+outline: none;
+}
+.intro_media_con {
+background-color: black;
+background-color: white;
+}
+*/
+.aboutproject,
+.zitiervorschlag,
+.location,
+#joAccordion {
+
+    /*
+    padding-top: 30px;
+    padding-bottom: 30px;
+    */
+    padding-top: 10%;
+    padding-bottom: 10%;
+}
+.aboutproject h2,
+.zitiervorschlag h2,
+.location h2,
+#joAccordion h2 {
+    text-transform: uppercase;
+}
+#joAccordion .btn {
+    box-shadow: none;
+}
+#joAccordion .card {
+    background-color: transparent;
+    border: none;
+}
+#joAccordion .collapse,
+#joAccordion .collapsing {
+    background-color: white;
+}
+#joAccordion .card-header {
+    padding: 0;
+    background-color: transparent;
+}
+#joAccordion .card-header button {
+    position: relative;
+    width: 100%;
+    text-align: left;
+    padding: 25px 25px 25px 0;
+    border: none;
+    background-color: transparent;
+    font-size: 20px;
+}
+#joAccordion .card-header button:after {
+    content: '';
+    display: block;
+    position: absolute;
+    right: 0;
+    top: calc(50% - 15px);
+    width: 30px;
+    height: 30px;
+    background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/sprite_portal_black.svg);
+    background-color: transparent;
+    background-size: 800px;
+    background-repeat: no-repeat;
+    background-position: -525px -46px;
+    transform: rotate(-90deg);
+    transition: transform .5s ease;
+}
+#joAccordion .card-header button.collapsed:after {
+    transform: rotate(90deg);
+}
+#joAccordion .card-body {
+    padding: 25px;
+}
+#joAccordion .jocontainer {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/*
+.exhibition.showexhibition .item {
+margin-bottom: 30px;
+}
+*/
+.section-link-con {
+    position: relative;
+    padding: 5% 0;
+    background-color: #252525;
+}
+.section-link-con > * {
+    z-index: 1;
+}
+.section-link-con .tosectionimg {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+.section-link-con .tosectionimg:after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .5);
+}
+.tosectionimg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.tosectiondesc {
+    font-size: 40px;
+    font-weight: 600;
+    margin: 15px auto;
+    color: #dd7059;
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+}
+.content-wrapper:not(.lrn-effect-2) div.obj_txt {
+    position: absolute;    /* right: 0; */
+    left: 100%;
+    top: 0;    /* transform: translateX(150%); 
+    transition: transform .5s ease; */
+    transition: left .5s ease, right .5s ease;
+    background-color: white;
+    height: 100%;
+    padding: 15px;
+    color: black;
+}
+.joObject.even .content-wrapper div.obj_txt {
+    left: unset;
+    right: 100%;
+}
+.content-wrapper.show_text:not(.lrn-effect-2) .obj_txt {
+    left: 10vw;
+    overflow: auto;    /* transform: translateX(0%); */
+}
+.joObject.even .content-wrapper.show_text:not(.lrn-effect-2) .obj_txt {
+    left: unset;
+    right: 10vw;
+}
+.content-wrapper:not(.lrn-effect-2) .obj_txt-dialog {
+    height: 100%;
+    opacity: 0;
+    transition: opacity .2s ease;
+}
+.content-wrapper.lrn-effect-2 .obj_txt {
+    display: none;    /*
+    height: 0;
+    opacity: 0;
+    transition: opacity .2s ease, height .2s ease;
+    background-color: white;
+    */
+}
+.content-wrapper.lrn-effect-2.show_text .obj_txt {
+
+    /*
+    height: 100%;
+    opacity: 1;
+    transition: opacity .2s ease, height .2s ease;
+    */
+}
+.content-wrapper.lrn-effect-2 .obj_txt-dialog {
+    background-color: white;
+    padding: 15px;
+}
+.exhibition .obj_txt-content {
+    height: 100%;
+}
+.content-wrapper.show_text:not(.lrn-effect-2) .obj_txt-dialog {
+    opacity: 1;
+    transition: opacity .8s ease;
+}
+.content-wrapper > .row {
+    transition: filter .5s ease;
+}
+
+/*
+.joObject .content-wrapper > .row {
+     overflow: hidden; 
+width: 100%;
+}
+*/
+.content-wrapper.show_text:not(.lrn-effect-2) > .row {
+    filter: blur(20px);
+}
+.exhibition .obj_txt .close {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    outline: none;
+    z-index: 10;
+}
+.exhibition .obj_txt .close > span {
+    outline: none;
+}
+.content-wrapper > .closer {
+    position: absolute;
+    height: 100%;
+    width: 10vw;
+    left: 0;
+    top: 0;
+    visibility: hidden;
+    opacity: 0;
+    cursor: pointer;
+}
+.content-wrapper.show_text:not(.lrn-effect-2) > .closer {
+    visibility: visible;
+    opacity: 1;
+}
+#obj-next .content-wrapper {
+    align-items: center;
+    justify-content: center;
+}
+.joObject.even .content-wrapper > .closer {
+    left: unset;
+    right: 0;
+}
+.exhibition .obj-buttons .btn-jo {
+    color: #fff;
+    background-color: black;
+    border: none;
+    margin-bottom: 1px;
+    outline: 0;
+    box-shadow: none !important;
+    border-radius: 2px;
+}
+.togglefullscreen_ex > span,
+.toggletext > span,
+.img_zoom_in > span,
+.img_zoom_out > span,
+.closescreen > span {
+    background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/sprite_portal_white.svg);
+    width: 40px;
+    height: 40px;
+    color: transparent;
+    text-align: center;
+    cursor: pointer;
+    background-color: transparent;
+    background-size: 900px;
+    background-repeat: no-repeat;
+}
+.exhibition .toggletext > span {
+    background-position: -589px -49px;
+}
+.exhibition .togglefullscreen_ex > span {
+    background-position: -361px -272px;
+}
+.exhibition .togglefullscreen_ex.in_fullscreen > span {
+    background-position: -453px -271px;
+}
+.exhibition .img_zoom_in > span {
+    background-position: -720px -1px;
+    background-size: 800px;
+}
+.exhibition .img_zoom_out > span {
+    background-position: -679px -80px;
+    background-size: 800px;
+}
+.exhibition .closescreen > span {
+    background-position: -542.5px -3px;
+}
+.exhibition .obj-buttons {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: opacity .5s ease, visibility .5s ease;
+}
+.joObject.clicked .obj-buttons {
+    visibility: visible;
+    opacity: 1;
+}
+.joObject.obj_fullscreen .content-wrapper {
+    transform: translateY(0vh) !important;
+}
+.obj-buttons .togglefullscreen_ex,
+.obj-buttons .img_zoom_in,
+.obj-buttons .img_zoom_out,
+.obj-buttons .closescreen {
+    right: 0;
+    padding: 0;
+    font-size: 0px;
+}
+
+/* zitate */
+.exhibition .zitat {
+    flex: 1;
+    padding: 50px 0;
+    color: #000000;
+}
+.exhibition .zitat .text-title {
+    padding: 0 0 20px;
+}
+.exhibition .zitat .obj_teaser_txt {
+    padding: 1vw 15vw;
+}
+.exhibition .zitat_20,
+.exhibition .zitat_23 {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.exhibition .zitat_23 {
+    flex-direction: column-reverse;
+}
+.exhibition .zitat_20 h2,
+.exhibition .zitat_23 h2 {
+    font-size: 26px;
+}
+.exhibition .zitat_20 h3,
+.exhibition .zitat_23 h3 {
+    font-size: 20px;
+}
+.exhibition .zitat .object_img,
+.exhibition .nextsection .object_img {
+    width: auto;
+    height: auto;
+    padding: 30px;
+}
+.exhibition .zitat_21,
+.exhibition .zitat_22,
+.exhibition .nextsection {
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+.exhibition .zitat_21 .image,
+.exhibition .zitat_21 .text-wrap,
+.exhibition .zitat_22 .image,
+.exhibition .zitat_22 .text-wrap,
+.exhibition .nextsection .image {
+    position: relative;
+    width: 100%;
+    -ms-flex-preferred-size: 0;
+    flex-basis: 0;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    max-width: 100%;
+}
+.exhibition .zitat_21 .image,
+.exhibition .zitat_22 .image,
+.exhibition .nextsection .image {
+    text-align: center;
+}
+.exhibition .zitat_22 {
+    -ms-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+}
+.exhibition .zitat_22 {
+}
+.exhibition .nextsection .image {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+}
+.nextsection .image::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .4);
+}
+.exhibition .nextsection {
+    text-align: center;
+    color: white;
+}
+.exhibition .nextsection .nextintro {
+    font-size: 26px;
+    font-weight: 500;
+    padding: 30px;
+}
+.exhibition .nextsection .text-wrap {
+    display: inline-block;
+    min-width: 50%;
+    border-top: 3px solid #dd7059;
+    padding-top: 30px;
+}
+.exhibition .nextsection .text-wrap > a {
+    display: inline-block;
+    margin-top: 60px;
+    position: relative;
+}
+.exhibition .nextsection .text-wrap .sectionInfo-c-btn-icon {
+    width: 60px;
+    height: 60px;
+    background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/sprite_portal_white.svg);
+    background-repeat: no-repeat;
+    background-size: 1600px;
+    background-position: -1130px -92px;
+}
+.exhibition .nextsection .text-title h2 {
+    font-size: 24px;
+    font-size: 1.6vw;
+    margin: 1vw 0 2vw;
+}
+.exhibition .zitat_21 .object_img {
+
+    /*
+    width: 100%;
+    height: 100%;
+    */
+}
+.obj-control {
+    display: flex;
+    position: absolute;
+    bottom: 6%;
+    right: 6%;
+}
+.obj-control > div {
+    margin-right: 5px;
+    color: black;
+    cursor: pointer;
+}
+.joSitemap .sitemap-icon-container {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: -15px;
+    cursor: pointer;
+    right: 15px;
+    transform: translateY(-100%);
+}
+.exhibition .sitemap-icon {
+    background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/sprite_portal_white.svg);
+    background-repeat: no-repeat;
+    background-size: 1000px;
+    background-position: -404px -155px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .5);
+}
+.joSitemap.active .sitemap-icon {
+    background-position: -605px -5px;
+}
+.obj_txt-content .left-side {
+    overflow: auto;
+    border-right: 1px solid rgba(0, 0, 0, .1);
+}
+.right-side h4:not(:first-child) {
+    margin-top: 20px;
+}
+.joCollapse-link {
+    display: inline-block;    /* width: 100%; */
+    text-align: left;
+    position: relative;
+    margin-top: 20px;
+    font-size: 20px;
+    color: black;
+}
+.joCollapse-link:after {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: -35px;
+    top: calc(50% - 15px);
+    background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/sprite_portal_black.svg);
+    background-repeat: no-repeat;
+    background-size: 600px;
+    background-position: -360px -1px;
+    transform: rotate(180deg);
+    transition: transform .5s ease;
+}
+.content_wrap a.joCollapse-link {
+    color: black;
+}
+.joCollapse-link.collapsed:after {
+    transform: rotate(45deg);
+}
+.joCollapse-content {
+    padding: 15px 0;
+    font-size: 16px;
+}
+.obj_txt-header .modal-title {
+    margin-top: 0;
+    font-size: 20px;
+}
+.exhibition .gnd-list .link_external {
+    position: relative;
+}
+.exhibition .gnd-list .link_external:after {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    width: 30px;
+    height: 30px;
+    background-image: url(../Images/dnb_icon.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    margin-left: 10px;
+}
+.exhibition .right-side .link_external,
+.exhibition .left-side a {
+    color: #dd7059;
+}
+.exhibition .overview-icon-container {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: -15px;
+    cursor: pointer;
+    right: 65px;
+    transform: translateY(-100%);
+}
+.exhibition .overview-link {
+    display: block;
+    background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/sprite_portal_white.svg);
+    background-repeat: no-repeat;
+    background-size: 1000px;
+    background-position: -6px -355px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .5);
+}
+#overview-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 500;
+    overflow: auto;
+    /*
+    background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/sprite_portal_white.svg);
+    background-repeat: no-repeat;
+    background-size: 1000px;
+    background-position: -905px -155px;
+    */
+}
+.exhibition .overview-closer {
+    position: absolute;
+    right: 15px;
+    top: 70px;
+    width: 40px;
+    height: 40px;
+    background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/sprite_portal_white.svg);
+    background-repeat: no-repeat;
+    background-size: 1000px;
+    background-position: -605px -6px;
+    cursor: pointer;
+}
+.load_section::before,
+.load_section::after {
+    content: '';
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    z-index: 3;
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    box-sizing: border-box;
+    transform: scale(0);
+    transition: 0.7s;
+}
+.load_section::before {
+    border-bottom: 2px solid #dd7059;
+    border-left: 2px solid #dd7059;
+    transform-origin: 0 100%;    /* transform-origin: 100% 0%; */
+}
+.load_section::after {
+    border-top: 2px solid #dd7059;
+    border-right: 2px solid #dd7059;
+    transform-origin: 100% 0%;    /* transform-origin: 0% 100%; */
+}
+.load_section:hover::after,
+.load_section:hover::before {
+    transform: scale(1);
+}
+.exhibition.showexhibition .more_link {
+    display: none;
+}
+.content_wrap .content-text a {
+    color: black;
+}
+.literature > * {
+    width: 100%;
+}
+.map-overlay,
+.map-overlay2 .map-overlay2-con {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .7);
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    cursor: pointer;
+}
+.singleitem .map-overlay2 .map-overlay2-con {
+    margin-top: 5px;
+}
+.map-overlay2 .map-overlay2-con .item-container {
+    cursor: initial;
+    max-width: 90vw;
+}
+.exhibition .map-closer {
+    display: none;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    right: 15px;
+    top: 95px;
+    background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/sprite_portal_white.svg);
+    background-repeat: no-repeat;
+    background-size: 1000px;
+    background-position: -605px -5px;
+    background-color: rgba(0, 0, 0, .3);
+    z-index: 15;
+    cursor: pointer;
+}
+.exhibition .ol-zoom {
+    top: 95px;
+}
+.exhibition .ol-attribution {
+    right: unset;
+    left: .5em;
+}
+.exhibition .ol-attribution a {
+    color: #007bff;
+}
+
+/* Betrifft nur die einführende Sektion in der Objektansicht */
+.section_entry_image > .content-wrapper,
+.section_entry_description > .content-wrapper {
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+.section_entry_description  > .content-wrapper {
+    padding: 2vw 20vw;
+    background-color: white;
+}
+.section_entry_description  > .content-wrapper > .content-text {
+    border-top: 3px solid #dd7059;
+    border-bottom: 3px solid #dd7059;
+    padding: 2vw 0;
+}
+.exhibition .obj_teaser_txt,
+.exhibition .description,
+.exhibition .literature {
+    font-size: 1vw;
+}
+.exhibition .right-side {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.exhibition .left-side .obj_txt-body {
+    font-size: 16px;
+}
+.exhibition .right-side h4 {
+    font-size: 20px;
+}
+.exhibition .right-side span,
+.exhibition .right-side a {
+    font-size: 16px;
+}
+.joObject .text-title h3 {
+    margin-bottom: 15px;
+    padding-bottom: 0;
+    font-size: 1.6vw;
+}
+.exhibition .video-slick-title h3 {
+    font-size: 1.2vw;
+}
+.exhibition .video-slick-title .view2-overlay-text {
+    color: black;
+}
+
+/* Karte */
+html .exhibition .subtype10 {
+    padding: 0;
+    justify-content: flex-start;
+    height: 100vh;
+}
+html .exhibition .subtype10 .map-overlay {
+    padding: 2vw;
+    color: #ffffff;
+}
+html .exhibition .singleitem.subtype10 .map-overlay,
+html .exhibition .singleitem .subtype10 .map-overlay {
+    top: 5px;
+    padding-right: 20vw;
+}
+html .exhibition .subtype10 .advice {
+    padding: 1vw 0;
+    font-size: 1vw;
+}
+.exhibition .img-load-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 10000;
+}
+.exhibition .img-load-overlay .loader {
+    border: 5px solid #f3f3f3;
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
+    border-top: 5px solid rgba(0, 0, 0, .2);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+}
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+.content-wrapper.subtype50 {
+    background-color: white;
+}
+.content-wrapper.subtype50 .desc-con-audio {
+    width: 100%;
+    color: black;
+    text-align: center;
+}
+.content-wrapper.subtype50 .audio-container {
+    margin: 0 -40px;
+}
+.exhibition .map-overlay > div,
+.exhibition .map-overlay > div > div {
+    color: white;
+}
+.exhibition .map-overlay2 {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 13;
+}
+.exhibition .map-overlay2 .map-overlay2-con {
+    margin: 0 auto;
+    align-items: center;
+}
+.exhibition .map-overlay2-con > div {
+    color: black;
+    padding: 30px 20px;
+    background-color: white;
+    color: black;
+    border-radius: 5px;
+}
+.exhibition .map-overlay2-con .item-container h4 {
+
+    /*
+    text-decoration: underline;
+    */
+}
+
+/* Subtype 61, 62, 63 - Blätterbuch */
+.subtype61,
+.subtype62,
+.subtype63 {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+.subtype61 .text-wrap,
+.subtype62 .text-wrap,
+.subtype63 .text-wrap {
+    align-items: center;
+    justify-content: center;
+}
+.subtype61 h2,
+.subtype62 h2,
+.subtype63 h2 {
+    font-size: 2.1vw;
+    margin: 0 0 1vw;
+}
+.subtype61 h3,
+.subtype62 h3,
+.subtype63 h3 {
+    font-size: 1.3vw;
+    margin: 0.5vw 0 1vw;
+}
+.subtype61 .image {
+    height: 50vh;
+    width: 100%;
+}
+.subtype62 .image,
+.subtype63 .image {
+    flex: 1;
+}
+.subtype61 .text_block,
+.subtype62 .text_block,
+.subtype63 .text_block {
+    padding: 0 5vw;
+}
+.subtype62 .text_block,
+.subtype63 .text_block {
+    width: 55%;
+    text-align: left;
+}
+.subtype63 .text_block {
+    text-align: right;
+}
+.subtype61 .image .bg_image_div,
+.subtype62 .image .bg_image_div,
+.subtype63 .image .bg_image_div {
+    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.5);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 50%;
+    margin: 0 auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+.subtype61 .obj_teaser_txt,
+.subtype62 .obj_teaser_txt,
+.subtype63 .obj_teaser_txt {
+    font-size: 1vw;
+    line-height: 135%;
+    padding: 1.5vw 0;
+}
+.subtype61 .book-link,
+.subtype62 .book-link,
+.subtype63 .book-link {
+    display: inline-block;
+    padding: 1vw 1.5vw;
+    border: 1px solid #000000;
+}
+.subtype62 .book-link,
+.subtype63 .book-link {
+    padding: 0;
+}
+.subtype61 .text_block .book-link,
+.subtype62 .text_block .book-link,
+.subtype63 .text_block .book-link {
+    padding: 0.5vw 0.8vw;
+    border: 1px solid #ffffff;
+    font-size: 1.1vw;
+}
+.subtype61 .book-con,
+.subtype62 .book-con,
+.subtype63 .book-con {
+    display: flex;    /*
+    min-height: 100vh;
+    */
+    padding: 60px 80px;
+    padding: 3vw 4vw;
+    align-items: center;
+    justify-content: center;
+}
+.subtype61 .image .book-link,
+.subtype62 .image .book-link,
+.subtype63 .image .book-link {
+    border: none;
+}
+.book-con.ovl {
+    background-color: rgba(0, 0, 0, .3);
+    flex: 1;
+}
+.book-link-con,
+.content_wrap .book-link-con .text-title a,
+.content_wrap .map-overlay2-con a {
+    color: black;
+}
+.exhibition .item-container a {
+    word-break: break-all;
+}
+.exhibition .map-container {
+    flex: 1;
+}
+.exhibition .slick-nav-item {
+    padding: 15px;    /*
+    box-shadow: 0px 0px 15px 0px rgb(0 0 0 / 50%);
+     border: 1px solid black;
+    border-radius: 4px; 
+    */
+}
+.exhibition .video-nav-slick {
+
+    /*
+    height: 100%;
+    margin: 0;
+    */
+}
+.exhibition .video-nav-slick .slick-slide {
+    padding: 10px 0;
+    padding: 0.9vw 0;
+    border: none;
+}
+.exhibition .video-nav-slick .slick-slide:first-child {
+    margin-top: -60px;
+}
+.exhibition .video-slick-con {
+
+    /*
+    position: relative;
+    */
+}
+.exhibition .video-slick-con .slick-prev,
+.exhibition .video-slick-con .slick-next {
+    font-size: 0;
+    line-height: 0;
+    position: absolute;
+    top: 50%;
+    display: block;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    -webkit-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    cursor: pointer;
+    color: transparent;
+    border: none;
+    outline: none;
+    background: transparent;
+}
+.exhibition .video-slick-con .slick-prev:hover,
+.exhibition .video-slick-con .slick-prev:focus,
+.exhibition .video-slick-con .slick-next:hover,
+.exhibition .video-slick-con .slick-next:focus {
+    color: transparent;
+    outline: none;
+    background: transparent;
+}
+.exhibition .video-slick-con .slick-prev:hover:before,
+.exhibition .video-slick-con .slick-prev:focus:before,
+.exhibition .video-slick-con .slick-next:hover:before,
+.exhibition .video-slick-con .slick-next:focus:before {
+    opacity: 1;
+}
+.exhibition .video-slick-con .slick-prev.slick-disabled:before,
+.exhibition .video-slick-con .slick-next.slick-disabled:before {
+    opacity: .25;
+}
+.exhibition .video-slick-con .slick-prev:before,
+.exhibition .video-slick-con .slick-next:before {
+    font-family: 'slick';
+    font-size: 20px;
+    line-height: 1;
+    opacity: .75;
+    color: white;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.exhibition .video-slick-con .slick-prev:before {
+    content: '←';
+}
+.exhibition .video-slick-con .slick-next:before {
+    content: '→';
+}
+.exhibition .video-slick-con .slick-vertical .slick-prev {
+    left: 50%;
+    top: -25px;
+}
+.exhibition .video-slick-con .slick-vertical .slick-next {
+    top: calc(100% + 25px);
+    left: 50%;
+}
+.exhibition .video-slick-con .slick-vertical .slick-next:before,
+.exhibition .video-slick-con .slick-vertical .slick-prev:before {
+    background-color: red;
+}
+.exhibition .video-slick-con .slick-next:before,
+.exhibition .video-slick-con .slick-prev:before {
+    background-color: green;
+}
+.exhibition .video-slick-con .slick-vertical .slick-nav-item {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;    /*
+    box-shadow: 0px 0px 15px 0px rgb(0 0 0 / 50%);
+    */
+}
+.exhibition .video-slick-con .slick-vertical:after,
+.exhibition .video-slick-con .slick-vertical:before {
+    content: '';
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 20px;
+    background-color: transparent;
+    box-shadow: inset 0px 25px 15px -15px rgb(0 0 0 / 60%);
+}
+.exhibition .video-slick-con .slick-vertical:after {
+    box-shadow: inset 0px -10px 10px 0px rgb(0 0 0 / 60%);
+}
+.exhibition .video-slick-con .slick-vertical:before {
+    top: 0;
+    z-index: 1;
+}
+.exhibition .video-slick-con .slick-vertical:after {
+    bottom: 0;
+}
+.exhibition .video-slick-con .slick-vertical {
+    position: relative;
+}
+.exhibition .embed-responsive::before {
+    display: block;
+    content: '';
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 20px;
+    background-color: transparent;
+    box-shadow: inset 0px 25px 15px -30px rgb(0 0 0);
+    z-index: 1;
+}
+.exhibition .slick-slide.slick-current.slick-active > div {
+    margin-left: 0px;    /*
+    border: 1px solid black;
+        border-radius: 4px;
+    */
+}
+.view_2_alt {
+    flex: 1;    /*
+    border-top: 5px solid white;
+    */
+}
+.exhibition .slick-img-item {
+    background-size: contain;
+    cursor: pointer;
+    height: 12vw;
+}
+div.joObject .view_2_alt div.text_wrap {
+    padding-bottom: 0;
+}
+.joObject .view_24 img:not(.section_img) {
+    object-fit: cover;
+}
+.exhibition .c-img-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: rgb(0 0 0 / 50%);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+.exhibition .obj_teaser_txt .full {
+    display: none;
+}
+.exhibition .video-btn {
+    position: relative;
+    font-size: 0;
+    vertical-align: middle;
+    margin-left: 0.2vw;
+    top: -0.2vw;
+}
+.exhibition .img-btn {
+
+    /*
+    position: absolute;
+    left: -35px;
+    bottom: 0;
+    */
+    margin-top: 10px;
+}
+button:focus {
+    outline: none;
+}
+.view_2_alt .section_img {
+    height: unset;
+}
+.joExhibition_content .sectionInfo-c-btn,
+.sectionInfo-c-btn-container::after,
+.sectionInfo-c-btn-container::before,
+.maincolor {
+    background-color: #252525;
+}
+.right-side .link_external,
+.left-side a,
+.right-side .more-links a,
+.content_wrap a.load_section:hover,
+.tosectiondesc,
+.exhibition .item h3,
+.exhibition .sektion-title,
+.exhibition.showindex h3,
+.maincolorfont {
+    color: #dd7059;
+}
+.exhibition.showall .item .text_layer h3 {
+    color: white;
+}
+.right-side .link_external,
+.left-side a,
+.right-side .more-links a {
+    color: #dd7059;
+}
+.right-side .link_external,
+.left-side a,
+.right-side .more-links a,
+.book-link {
+    color: #dd7059;
+}
+.book-link,
+.single .book-link {
+    font-weight: 400;
+    color: white;
+}
+.content_wrap a.book-link {
+    font-weight: 400;
+}
+.load_section::after,
+.load_section::before,
+.nextsection .text-wrap,
+.summaryContent,
+.joObject.desc-con > .content-wrapper > div,
+.exhibition .sektion-title,
+.joSitemap,
+.maincolorborder {
+    border-color: #dd7059;
+}
+.book-link {
+    border-color: white;
+}
+.fontcolor {
+    color: #dd7059;
+}
+.joObject .text_wrap,
+.joObject .text-wrap {
+    color: white;
+}
+.obj_teaser_txt p {
+    font-size: 0.95vw;
+    line-height: 130%;
+    margin-bottom: 1vw;
+}
+
+/*   
+.joObject > .content-wrapper .pd {
+    padding: 40px 60px;
+}
+*/
+
+/* experiment cr */
+.joObject > .content-wrapper .pd {
+    padding: 0;
+}
+.joObject > .content-wrapper .pd .img-container,
+.joObject > .content-wrapper .pd .text_wrap {
+    padding: 40px 60px;
+    padding: 4vw 5vw;
+    padding: 3vw 4vw;
+}
+
+/*
+.view_2_alt .audio-container.plr .audio-title,
+.view_2_alt .audio-container.plr .progress-text {
+color: black;
+}
+.view_2_alt .audio-container.plr .i-icon,
+.view_2_alt .audio-container.plr .audio-btn-group .joSprite {
+background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/sprite_portal_black.svg);
+}
+*/
+.exhibition .video-poster-overlay {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-size: cover;
+    cursor: pointer;
+}
+.exhibition .video-poster-overlay:before,
+.exhibition .video-nav-slick.slick-vertical .slick-img-item:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .1);
+}
+.exhibition .video-poster-overlay:after,
+.exhibition .video-nav-slick.slick-vertical .slick-img-item:after {
+    content: '';
+    position: absolute;
+    width: 3vw;
+    height: 3vw;
+    background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/sprite_portal_white.svg);
+    background-size: 1200px;
+    background-size: 95vw;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-position: -57.5vw -15.2vw;
+}
+.book {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.bb-bookblock {
+    width: 100%;
+    height: 100%;
+}
+.bb-bookblock img {
+    width: auto;
+    height: 100%;
+    max-height: 100%;
+    max-width: 100%;
+}
+.bb-bookblock nav {
+    text-align: center;
+}
+.bb-custom-side a {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+.bb-item .bb-custom-side:first-child a,
+.bb-page .bb-inner .bb-custom-side:first-child a {
+    justify-content: flex-end;
+}
+.bb-item .bb-custom-side:last-child a {
+    justify-content: flex-start;
+}
+.bb-item .bb-custom-side:first-child img,
+.bb-page .bb-inner .bb-custom-side:first-child img {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.bb-item .bb-custom-side:last-child img,
+.bb-page .bb-inner .bb-custom-side:last-child img {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.bb-page .bb-inner {
+    display: flex;
+}
+.book-out {
+    display: none;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    height: calc(100vh - 6vw);
+}
+.book-out.active {
+    display: block;
+}
+.book-out.active .frame-type-list {
+    visibility: visible;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+.bb-item,
+.bb-overlay,
+.bb-content,
+.bb-flipoverlay,
+.bb-custom-side {
+    background: transparent;
+}
+.book-closer {
+    position: absolute;
+    width: 3vw;
+    height: 3vw;
+    right: 0;
+    top: 0;
+    background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/sprite_portal_white.svg);
+    background-size: 60vw;
+    background-position: -36vw 0vw;
+    cursor: pointer;
+    transform: translateX(100%);
+}
+.map-overlay2-con .book-closer {
+    width: 40px;
+    height: 40px;
+    background-size: 1000px;
+    background-position: -605px -5px;
+    top: 46px;
+    right: -6px;
+}
+.book-icon {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+    background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/sprite_portal_black.svg);
+    background-color: transparent;
+    background-size: 800px;
+    background-repeat: no-repeat;
+    background-position: -6px -86px;
+}
+.book-con .back {
+    top: 30px;
+}
+.map-overlay2-con.bkl .book-con .back {
+    top: 80px;
+}
+.soloview .single-logo,
+.soloview .content-wrapper > .main_title {
+    display: none;
+}
+.exhibition .map-overlay2-con {
+}
+.exhibition .map-overlay2-con.bkl > div {
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    padding: 0;
+}
+.exhibition .map-overlay2-con > .frame-default.frame-type-list {
+    overflow: auto;
+    cursor: initial;
+}
+.exhibition .map-overlay2-con .book-con {
+    min-width: 85vw;
+}
+.bk-link {
+    display: inline-block;
+}
+.exhibition .strich:after {
+    content: '';
+    border-bottom: 1px solid black;
+    position: absolute;
+    bottom: -5px;
+    right: 0;
+    width: 35%;
+}
+.content_wrap .map-overlay2-con.bkl a.book-link {
+    color: white;
+}
+.ol-control.ol-zoom {
+    right: 15px;
+    left: unset;
+    top: 140px;
+    margin: 0;
+    padding: 0;
+}
+.exhibition div.ol-zoom .ol-zoom-in,
+.exhibition div.ol-zoom .ol-zoom-out {
+    width: 40px;
+    height: 40px;
+    border-radius: 0;
+    margin: 0;
+    font-size: 40px;
+}
+.exhibition div.ol-control,
+.exhibition div.ol-control:hover {
+    background-color: transparent;
+}
+.exhibition div.ol-control button {
+    width: 40px;
+    height: 40px;
+    border-radius: 0;
+}
+.exhibition div.ol-control button,
+.exhibition div.ol-control button:hover,
+.exhibition div.ol-control button:focus {
+    /*
+    background-color: rgba(0, 0, 0, .3);
+    */
+    background-color: rgba(0, 0, 0, 1);
+}
+.sectionTitle-container h3 {
+    max-width: 70%;
+    margin: 0 auto;
+}
+.exhibition .single a {
+    font-weight: 600;
+    color: black;
+    text-decoration: none;
+}
+.exhibition .single a:hover {
+    text-decoration: none;
+}
+.exhibition .video-popup {
+    width: 100%;
+    height: 300px;
+}
+.exhibition .video-popup .embed-responsive {
+    width: 100%;
+    height: 100%;
+}
+.exhibition .mapdiv .ol-attribution {
+    right: unset;
+    left: 15px;
+    bottom: 15px;
+}
+.exhibition.showall .view_default,
+.exhibition.showall .view_6col {
+    height: 50vh;
+}
+.exhibition.showall .more_link {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.exhibition.showall .h2 {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.exhibition .header {
+    position: relative;
+}
+.exhibition .header .header_img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.exhibition .header:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,.3);
+}
+.exhibition .joNewsBack a {
+    color: black;
+}
+.exhibition header h2 {
+    font-size: 40px;
+    font-family: 'Playfair Display', serif;
+    padding: 60px 0;
+    text-align: center;
+
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto;
+}
+.frame-space-after-medium {
+    margin-bottom: 50px;
+}
+.aboutproject h2:before,
+.zitiervorschlag h2:before,
+.location h2:before,
+#joAccordion h2:before {
+    content: "";
+    background: black;
+    position: absolute;
+    height: 2px;
+    width: 80px;
+    bottom: -5px;
+}
+.exhibition .summary {
+    position: relative;
+    padding-bottom: 110px;
+    padding-top: 110px;
+}
+.exhibition .summaryArrow {
+    display: block;
+    position: absolute;
+    left: calc(50% - 25px);
+    bottom: 50px;
+    width: 50px;
+    height: 50px;
+    background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/sprite_portal_black.svg);
+    background-color: transparent;
+    background-size: 1000px;
+    background-repeat: no-repeat;
+    background-position: -650px -50px;
+    transform: rotate(90deg);
+    cursor: pointer;
+}
+.exhibition .summaryContent {
+    font-size: 20px;
+    border-top: 3px solid #dd7059;
+    border-bottom: 3px solid #dd7059;
+    padding: 30px 0;
+    text-align: center;
+}
+.load_section {
+    position: relative;
+    transition: color .5s, border .5s;
+}
+.exhibition .content_wrap a.load_section:hover {
+    border: 2px solid rgba(0,160,80,0);
+    color: #dd7059;
+}
+.exhibition .content_wrap {
+    padding-bottom: 659px;
+}
+.exhibition .joOpener {
+    cursor: pointer;
+}
+.exhibition.showexhibition .item.teasertext {
+    border-bottom: 0;
+}
+.subtype20 {
+    padding: 60px 70px;
+}
+@media (min-width:99768px) {
+    .joSection_container {
+        height: 100vh;
+    }
+    .joSection_container .section_container .section .sectionInfo-c-content {
+        opacity: 0;
+    }
+    .joSection_container .section_container .section.active .sectionInfo-c-content {
+        opacity: 1;
+    }
+    .desc-con-audio .audio-intro {
+
+        /*
+        font-size: 24px;
+        */
+    }
+    .joExhibition_content .section,
+    .joObject_container .joObject {
+        transition: all 1.2s;
+        position: fixed;
+        height: 130vh;
+        transform: translateY(30vh);
+        backface-visibility: hidden;
+        transition: 1.2s all cubic-bezier(0.22, 0.44, 0, 1);
+        overflow: hidden;
+    }
+    .joExhibition_content .section .content-wrapper,
+    .joObject_container .joObject .content-wrapper {
+        height: 100vh;
+        color: #fff;
+        font-family: Montserrat;
+        transform: translateY(40vh);
+        will-change: transform;
+        backface-visibility: hidden;
+        transition: 1.7s all cubic-bezier(0.22, 0.44, 0, 1);
+    }
+    .joExhibition_content .section.up-scroll,
+    .joObject_container .joObject.up-scroll {
+        transform: translate3d(0, -15vh, 0);
+    }
+    .joExhibition_content .section.up-scroll .content-wrapper,
+    .joObject_container .joObject.up-scroll .content-wrapper {
+        transform: translateY(15vh);
+    }
+    .joExhibition_content .section.up-scroll + .section,
+    .joObject_container .joObject.up-scroll + .joObject {
+        transform: translate3d(0, 30vh, 0);
+    }
+    .joExhibition_content .section.up-scroll + .section .content-wrapper,
+    .joObject_container .joObject.up-scroll + .joObject .content-wrapper {
+        transform: translateY(30vh);
+    }
+    .joExhibition_content .section.up-scroll .content-wrapper .sectionInfo-c-content,
+    .joObject_container .joObject.up-scroll .content-wrapper .sectionInfo-c-content {
+        transform: translateY(0);
+    }
+    .joExhibition_content .section.up-scroll + .section .content-wrapper .sectionInfo-c-content,
+    .joObject_container .joObject.up-scroll + .joObject .content-wrapper .sectionInfo-c-content {
+        transform: translateY(30vh);
+    }
+    .joExhibition_content .section.down-scroll,
+    .joObject_container .joObject.down-scroll {
+        transform: translate3d(0, -130vh, 0);
+    }
+    .joExhibition_content .section.down-scroll .content-wrapper,
+    .joObject_container .joObject.down-scroll .content-wrapper {
+        transform: translateY(30vh);
+    }
+    .joExhibition_content .section.down-scroll + .section:not(.down-scroll),
+    .joObject_container .joObject.down-scroll + .joObject:not(.down-scroll) {
+        transform: translate3d(0, -15vh, 0);
+    }
+    .joExhibition_content .section.down-scroll + .section:not(.down-scroll) .content-wrapper,
+    .joObject_container .joObject.down-scroll + .joObject:not(.down-scroll) .content-wrapper {
+        transform: translateY(15vh);
+    }
+    .joExhibition_content .section.down-scroll .content-wrapper .sectionInfo-c-content,
+    .joObject_container .joObject.down-scroll .content-wrapper .sectionInfo-c-content {
+        transform: translateY(15vh);
+    }
+    .joExhibition_content .section.down-scroll + .section:not(.down-scroll) .content-wrapper .sectionInfo-c-content,
+    .joObject_container .joObject.down-scroll + .joObject:not(.down-scroll) .content-wrapper .sectionInfo-c-content {
+        transform: translateY(0);
+    }
+}
+@media(min-width: 768px) {
+    .exhibition .summaryContent {
+        font-size: 28px;
+    }
+    .exhibition .desc-con-audio .audio-container {
+        margin-bottom: 0px;
+    }
+    .exhibition .obj_txt-content .left-side {
+        height: 100%;
+    }
+    .exhibition .right-side h4 {
+        font-size: 1.5rem;
+    }
+    .obj_txt-header .modal-title {
+        font-size: 1.75rem;
+    }
+    .exhibition .left-side .obj_txt-body,
+    .exhibition .right-side span,
+    .exhibition .right-side a {
+        font-size: 20px;
+    }
+    .joCollapse-link {
+        font-size: 26px;
+    }
+    .joCollapse-content {
+        font-size: 20px;
+    }
+    .exhibition .obj_txt .close {
+        right: 80px;
+        top: 90px;
+    }
+    .content-wrapper:not(.lrn-effect-2) div.obj_txt,
+    .content-wrapper div.obj_txt {
+        padding: 120px 70px 30px;
+    }
+    .exhibition .right-side {
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
+    .joObject .desc-con-audio .audio-title {
+        font-size: 38px;
+        margin-bottom: 25px;
+    }
+    .view_2_alt .desc-con-audio .audio-title {
+        font-size: 22px;
+    }
+    .joObject_container .joObject.with_image .content-wrapper {
+        position: relative;
+        height: 100vh;
+        background-image: radial-gradient(circle 100vh at 50% 50%, rgba(0,0,0,0.6), rgba(0,0,0,0.1));
+    }
+    .joObject .section_img {
+        width: auto;
+        height: auto;
+        max-width: 90%;
+        max-height: 90%;
+    }
+    .exhibition .nextsection .image {
+        z-index: 0;
+    }
+    .exhibition .overview-closer {
+        top: 115px;
+    }
+    .sectionTitle-container {
+        padding: 12% 0 6% 0;
+    }
+    .sectionTitle-container h3 {
+        font-size: 50px;
+    }
+    .sectionSubTitle {
+        font-size: 30px;
+    }
+    .joExhibition_content .sectionInfo-container .sectionInfo-c-content {
+        padding: 15px 20vw;
+    }
+    .joExhibition_content .sectionInfo-container {
+        font-size: 20px;
+    }
+    .exhibition .ls {
+        margin: 50px 0 0;
+    }
+    .exhibition.showexhibition .text_layer h3,
+    .exhibition.showall .text_layer h3 {
+        font-size: 70px;
+    }
+    .exhibition.showexhibition .text_layer h4,
+    .exhibition.showall .text_layer h4 {
+        font-size: 1.5rem;
+    }
+    .exhibition .sektion-title {
+        font-size: 68px;
+    }
+    .desc-con-audio .content-wrapper {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .exhibition .obj_teaser_txt,
+    .exhibition .description,
+    .exhibition .literature {
+        font-size: 18px;
+    }
+    .zitat_20 h2,
+    .zitat_23 h2 {
+        font-size: 40px;
+    }
+    .zitat_20 h3,
+    .zitat_23 h3 {
+        font-size: 25px;
+    }
+    .joObject .text-title h3,
+    .desc-con-audio .literature h3 {
+        margin-bottom: 15px;
+        padding-bottom: 0;
+        font-size: 2vw;
+    }
+    .desc-con-audio .literature h3 {
+        padding-bottom: 5px;
+    }
+    .joExhibition_content .sectionInfo-container .sectionText {
+        padding: 40px 0;
+    }
+    .exhibition.showindex {
+        padding: 80px;
+    }
+    html .content-wrapper.subtype10 {
+        height: auto
+    }
+    html .content-wrapper.subtype10 .map-overlay {
+        padding: 100px;
+    }
+}
+@media (min-width:992px) {
+    .exhibition .map-overlay2 .map-overlay2-con .item-container {
+        max-width: 40vw;
+    }
+    .exhibition .map-overlay2 .map-overlay2-con .item-container.Objekt {
+        max-width: 70vw;
+    }
+    .content-wrapper.subtype50 .audio-container {
+        margin: 0 -70px;
+    }
+    .exhibition .obj_teaser_txt,
+    .exhibition .description,
+    .exhibition .literature {
+
+        /*
+        font-size: 20px;
+        */
+    }
+    .joObject .text-title h3,
+    .exhibition .desc-con-audio .literature h3 {
+
+        /*
+        margin-bottom: 25px;
+        padding-bottom: 0;
+        font-size: 2.5vw;
+        margin-bottom: 1.4vw;
+        margin-top: 1.8vw;
+        margin-top: 0;
+        */
+    }
+    .exhibition .video-slick-title h3 {
+        font-size: 1.2vw;
+        margin-top: 1vw;
+        margin-bottom: 0.6vw;
+    }
+    .exhibition .desc-con-audio .literature h3 {
+
+        /*
+        padding-bottom: 0.3vw;
+        */
+    }
+    .exhibition .desc-con-audio .audio-container {
+
+        /* margin-bottom: 80px; 
+        margin-bottom: 0px;
+        padding: 60px 0;
+        */
+    }
+    .view_2_alt .exhibition .desc-con-audio .audio-container {
+
+        /*
+        padding: 15px;
+        padding: 1vw;
+        */
+    }
+
+    /*
+    .joTop .second_control .navbar-collapse.collapse {
+        display: none!important;
+    }
+    */
+    .joTop .second_control .navbar-collapse {
+        display: block;
+    }
+
+    /*
+    .joTop .second_control .navbar-collapse.collapse.show {
+        display: block!important;
+    }
+    */
+    .exhibition.showall .item.left .text_layer {
+        max-width: 100%;
+    }
+    .exhibition .overview-closer {
+        top: 20px;
+    }
+    .exhibition #joAccordion .jocontainer {
+        padding-right: 20%;
+        padding-left: 20%;
+    }
+    .exhibition .desc-con-audio .literature {
+
+        /*
+        padding-left: 240px;
+        padding-right: 240px;
+        */
+    }
+}
+@media (min-width:1200px) {
+    .exhibition .sectionTitle-container {
+        padding: 12% 0 6% 0;
+    }
+    .exhibition .sectionSubTitle {
+
+        /*
+        font-size: 35px;
+        */
+    }
+    .exhibition .sectionTitle-container h3 {
+
+        /*
+        font-size: 60px;
+        */
+    }
+    .joExhibition_content .sectionInfo-container .sectionText {
+        padding: 50px 0;
+    }
+    .exhibition.showindex {
+
+        /*
+        padding: 100px;
+        */
+    }
+    .joExhibition_content .sectionInfo-container {
+
+        /*
+        font-size:23px;
+        */
+    }
+}

@@ -1,0 +1,51 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<div class="joKachelview joClearfix joSpaceLeftRight container" data-option="1">
+	<f:if condition='{joSolrObjects.response.docs}'>
+		<f:then>
+			<ul class="tile_view_controls">
+				<li id="joOption_1" class="joActive" title="Kachelansicht mit Bildern"></li>
+				<li id="joOption_2" title="Kachelansicht mit Schlagworten"></li>
+			</ul>
+			<ul class="hover-effekt tile_view clearfix row">
+				<f:for each="{joSolrObjects.response.docs}" as="items" key="number" iteration="counter">
+					<f:if condition="{items.images}">
+						<f:then>
+							<f:alias map="{catdata: '{items.images.0->jo:explode(delimiter:\'$\')}'}">
+								<f:alias map="{col: '{settings.kachelCol->jo:explode(delimiter:\'$\')}'}">
+									<li class="col-md-{col.0} col-{col.1}<f:if condition='!{catdata.0}'> no-img</f:if> bg-pos-center" <f:if condition='{catdata.0}'>style="background-image:url('{catdata.0}')"</f:if>>
+										<f:link.action noCache="1" action="detailobject" arguments="{joDetailView:'{items.id}',jopaginatepage:'{extbase_config.paginate}',h:'1'}">
+											<div class="joNummer">#<f:if condition="{items.sorting}">{items.sorting}</f:if></div>
+											<div class="hover-effekt-text">
+												<span>
+													<f:render partial="Metadata" arguments="{catdata:catdata, langPath:langPath}" section="image-detail"/>
+												</span>
+											</div>
+											<f:if condition="{catdata.3}">
+												<span class="img-proof">{jo:translate(key:'{langPath}:jo_bkr_base.img.proof')} {catdata.3}</span>
+											</f:if>
+										</f:link.action>
+									</li>
+								</f:alias>
+							</f:alias>
+						</f:then>
+						<f:else>
+							<f:alias map="{col: '{settings.kachelCol->jo:explode(delimiter:\'$\')}'}">
+								<li class="col-md-{col.0} col-{col.1}" style="background-image:url('/typo3conf/ext/jo_museo/Resources/Public/Images/platzhalter.jpg')">
+									<f:link.action noCache="1" action="detailobject" arguments="{joDetailView:'{items.id}',jopaginatepage:'{extbase_config.paginate}',h:'1'}">
+										<div class="joNummer">#<f:if condition="{items.sorting}">{items.sorting}</f:if></div>
+										<div class="hover-effekt-text">
+											<span><f:format.html>{items.title}</f:format.html></span>
+										</div>
+									</f:link.action>
+								</li>
+							</f:alias>
+						</f:else>
+					</f:if>
+				</f:for>
+			</ul>
+		</f:then>
+		<f:else>
+			<h1 class="joNothingFound">{jo:translate(key:'{langPath}:jo_bkr_base.noobjects')}</h1>
+		</f:else>
+	</f:if>
+</div>

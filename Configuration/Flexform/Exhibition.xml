@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3DataStructure>
+	<meta>		
+		<langDisable>1</langDisable>
+	</meta>	
+	<sheets>
+		<exhibition>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>Digitale Ausstellungen - Ausstellungen</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+                    <slideeffect>
+					    <TCEforms>
+					        <label>Effekt für den Übergang zwischen den Objekten und Sektionen</label>
+					        <config>
+					            <type>select</type>
+					            <renderType>selectSingle</renderType>
+					            <items>
+					                <numIndex index="0">
+					                    <numIndex index="0">Standardscroll</numIndex>
+					                    <numIndex index="1">1</numIndex>
+					                </numIndex>
+					                <numIndex index="1">
+					                    <numIndex index="0">Scrollen mit Einrastfuntkion - Achtung diese Geste funktioniert nur eingeschränkt auf Terminalsystem mit Touchdisplays</numIndex>
+					                    <numIndex index="1">2</numIndex>
+					                </numIndex>
+					            </items>
+					        </config>
+					    </TCEforms>
+					</slideeffect>
+					<maincolor>
+					    <TCEforms>
+							<label>Akzentfarbe der Ausstellung</label>
+							<config>
+								<type>input</type>
+								<renderType>colorpicker</renderType>
+							</config>
+					    </TCEforms>
+					</maincolor>
+					<maincolorborder>
+					    <TCEforms>
+							<label>Akzentrahmenfarbe der Ausstellung</label>
+							<config>
+								<type>input</type>
+								<renderType>colorpicker</renderType>
+							</config>
+					    </TCEforms>
+					</maincolorborder>
+					<maincolorfont>
+					    <TCEforms>
+							<label>Schriftfarbe der Ausstellung</label>
+							<config>
+								<type>input</type>
+								<renderType>colorpicker</renderType>
+							</config>
+					    </TCEforms>
+					</maincolorfont>
+					<maincolorlinkfont>
+					    <TCEforms>
+							<label>Farbe der Links</label>
+							<config>
+								<type>input</type>
+								<renderType>colorpicker</renderType>
+							</config>
+					    </TCEforms>
+					</maincolorlinkfont>
+					<fontcolor>
+					    <TCEforms>
+							<label>Schriftfarbe</label>
+							<config>
+								<type>input</type>
+								<renderType>colorpicker</renderType>
+							</config>
+					    </TCEforms>
+					</fontcolor>
+				</el>
+			</ROOT>
+		</exhibition>
+		<sections>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>Digitale Ausstellungen - Sektionen</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<secfontcolor>
+					    <TCEforms>
+							<label>Schriftfarbe der Überschrift auf Ebene der Sektionsübersicht</label>
+							<config>
+								<type>input</type>
+								<renderType>colorpicker</renderType>
+							</config>
+					    </TCEforms>
+					</secfontcolor>
+					<secfontcolortext>
+					    <TCEforms>
+							<label>Schriftfarbe von Datum, Unterüberschrift und Teaser auf Ebene der Sektionsübersicht</label>
+							<config>
+								<type>input</type>
+								<renderType>colorpicker</renderType>
+							</config>
+					    </TCEforms>
+					</secfontcolortext>
+					<secbggradient_1>
+					    <TCEforms>
+							<label>Hintergrundfarbe der Sektionen (Verlauffarbe 1)</label>
+							<config>
+								<type>input</type>
+								<renderType>colorpicker</renderType>
+							</config>
+					    </TCEforms>
+					</secbggradient_1>
+					<secbggradient_2>
+					    <TCEforms>
+							<label>Hintergrundfarbe der Sektionen (Verlauffarbe 2)</label>
+							<config>
+								<type>input</type>
+								<renderType>colorpicker</renderType>
+							</config>
+					    </TCEforms>
+					</secbggradient_2>
+				</el>
+			</ROOT>
+		</sections>
+		<objects>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>Digitale Ausstellungen - Objekte</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<objfontcolor>
+					    <TCEforms>
+							<label>Schriftfarbe der Überschrift auf Ebene der Objekte</label>
+							<config>
+								<type>input</type>
+								<renderType>colorpicker</renderType>
+							</config>
+					    </TCEforms>
+					</objfontcolor>
+					<bggradient_1>
+					    <TCEforms>
+							<label>Hintergrundfarbe der Objekte (Verlauffarbe 1)</label>
+							<config>
+								<type>input</type>
+								<renderType>colorpicker</renderType>
+							</config>
+					    </TCEforms>
+					</bggradient_1>
+					<bggradient_2>
+					    <TCEforms>
+							<label>Hintergrundfarbe der Objekte (Verlauffarbe 2)</label>
+							<config>
+								<type>input</type>
+								<renderType>colorpicker</renderType>
+							</config>
+					    </TCEforms>
+					</bggradient_2>
+					<fontcolor_detail_1>
+					    <TCEforms>
+							<label>Schriftfarbe der erweiterten Detailansicht</label>
+							<config>
+								<type>input</type>
+								<renderType>colorpicker</renderType>
+							</config>
+					    </TCEforms>
+					</fontcolor_detail_1>
+				</el>
+			</ROOT>
+		</objects>
+	</sheets>
+</T3DataStructure>

@@ -1,0 +1,169 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<f:spaceless>
+<f:if condition="{items}">
+	<f:variable name="overlay" value=" showexhibition"/>
+	<f:variable name="title" value=""/>
+	<f:if condition="{items.derivate}">
+		<f:variable name="overlay" value=" showexhibition overlay"/>
+	</f:if>
+	<f:if condition="{items.title}">
+		<f:variable name="title" value=" teasertext"/>
+	</f:if>
+	<div class="exhibition{overlay}">
+		<div class="maincolor item d-flex flex-column align-items-center{title}">
+			<f:if condition="{items.derivate}">
+				<f:for each="{items.derivate}" as="img" iteration="j">
+					<f:if condition="{j.isFirst}">
+						<div class="item-img" style="background-image: url(<f:uri.image image='{img}' width='{settings.cropWidth}c' height='{settings.cropHeight}c' maxHeight='{settings.cropHeight}' maxWidth='{settings.cropWidth}' minWidth='{settings.cropWidth}' minHeight='{settings.cropHeight}' />)"></div>
+						<div class="item-img-desc">
+							{img.originalResource.description}
+						</div>
+					</f:if>
+				</f:for>
+			</f:if>
+			<div class="back d-inline-block">
+				<div class="joSprite"></div>
+			</div>
+			<div class="text_layer d-flex flex-column justify-content-center align-items-center">
+				<h3>
+					<f:if condition="{items.title}"> 
+						<f:then>{items.title}</f:then>
+						<f:else>Bitte geben Sie der Ausstellung einen Namen...</f:else>
+					</f:if>
+				</h3>
+				<f:if condition="{items.subtitle}">
+					<f:for each="{items.subtitle}" as="subitem">
+						<h4>{subitem.title}</h4>
+					</f:for>
+				</f:if>
+				<f:if condition="{items.period}">
+					<div class="item-period">{items.period}</div>
+				</f:if>
+			</div>
+
+			<div class="text_layer_more">
+				<f:link.action class="more_link" action="showexhibition" arguments="{ex:'{items.uid}'}">
+					mehr erfahren (nach unten)
+				</f:link.action>
+				<div class="joOpener">
+					<div>
+						<span class="joOpener_arrow"></span>
+						<span class="joOpener_arrow"></span>
+						<span class="joOpener_arrow"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container jocontainer">
+			<f:if condition="{items.summary}">
+				<div class="summary min-vh-100 d-flex flex-column justify-content-center jofade">
+					<div class="summaryContent">
+						<f:format.html>{items.summary}</f:format.html>
+						<f:if condition="{items.audio} && {items.audio -> f:count} > 0">
+							<f:variable name="audio_overlay" value="1" />
+							<f:for each="{items.audio}" as="aud" iteration="j">
+								<f:render partial="Exhibitiontemplates" section="audio" arguments="{_all}"/>
+							</f:for>
+						</f:if>
+					</div>
+					<div class="summaryArrow"></div>
+				</div>
+			</f:if>
+		</div>
+		<f:if condition="{items.flyer}">
+			<div class="container jocontainer"><h3 class="gallery">Impressionen</h3></div>
+			<div class="row no-gutters">
+				<f:for each="{items.flyer}" as="img">
+					<div class="col-sm-4">
+						<a href="{f:uri.image(image: img)}" data-lightbox="lightbox" >
+							<f:image class="img" image="{img}" width="500c" height="500c" />
+						</a>
+					</div>
+				</f:for>
+			</div>
+		</f:if>
+		<f:if condition="{items.intro}">
+			<div class="container jocontainer intro_media_con">
+				<f:for each="{items.intro}" as="file">
+					<div class="intro_media embed-responsive embed-responsive-16by9">
+						<f:variable name="poster" value="''" />
+						<f:if condition="{file.related} && {items.related -> f:count} > 0">
+							<f:variable name="poster" value="{f:uri.image(image: file.related.0, maxWidth: 1500m)}">
+							</f:variable>
+						</f:if>
+						<f:media file="{file}" additionalConfig="{controlsList: 'nodownload', autoplay: '0'}" additionalAttributes="{disablePictureInPicture: '', poster: poster}" />
+					</div>
+				</f:for>
+			</div>
+		</f:if>
+		<div class="section-link-con d-flex flex-column align-items-center">
+			<f:if condition="{items.tosectionimg}">
+				<div class="tosectionimg"><f:image image="{items.tosectionimg.0}" height="400c" /></div>
+			</f:if>
+			<f:if condition="{items.tosectiondesc}">
+				<div class="tosectiondesc"><f:format.html>{items.tosectiondesc}</f:format.html></div>
+			</f:if>
+			<f:link.action class="load_section" action="showsection" arguments="{pid:'{items.pid}', parent:'{items.uid}'}">
+				<f:if condition="{items.tosectionbtntext}">
+					<f:then>{items.tosectionbtntext}</f:then>
+					<f:else>Zu den Sektionen</f:else>
+				</f:if>
+			</f:link.action>
+		</div>
+		<f:if condition="{items.aboutproject}">
+			<f:alias map="{colors: '{items.aboutprojectcolor->jo:explode(delimiter:\'$\')}'}">
+				<f:variable name="thecolor"><f:if condition="{colors.0}">background-color: {colors.0};</f:if><f:if condition="{colors.1}"> color: {colors.1};</f:if></f:variable>
+				<div class="aboutproject" style="{thecolor}"><div class="container jocontainer jofade"><f:format.html>{items.aboutproject}</f:format.html></div></div>
+			</f:alias>
+		</f:if>
+		
+		<f:if condition="{items.zitiervorschlag}">
+			<f:alias map="{colors: '{items.zitiervorschlagcolor->jo:explode(delimiter:\'$\')}'}">
+				<f:variable name="thecolor"><f:if condition="{colors.0}">background-color: {colors.0};</f:if><f:if condition="{colors.1}"> color: {colors.1};</f:if></f:variable>
+				<f:if condition="{colors.1}"><style>body .exhibition .zitiervorschlag h2:before <f:format.raw>{</f:format.raw>background-color: {colors.1}<f:format.raw>}</f:format.raw>;</style></f:if>
+				<div class="zitiervorschlag" style="{thecolor}"><div class="container jocontainer jofade"><f:format.html>{items.zitiervorschlag}</f:format.html></div></div>
+			</f:alias>
+		</f:if>
+		<f:if condition="{items.infotexte}">
+			<f:alias map="{colors: '{items.infotextecolor->jo:explode(delimiter:\'$\')}'}">
+				<f:variable name="thecolor"><f:if condition="{colors.0}">background-color: {colors.0};</f:if><f:if condition="{colors.1}"> color: {colors.1};</f:if></f:variable>
+				<div id="joAccordion" style="{thecolor}">
+					<div class="jocontainer">
+						<f:if condition="{items.infotextetitle}">
+							<h2>{items.infotextetitle}</h2>
+						</f:if>
+						<f:for each="{items.infotexte}" as="text" iteration="it">
+							<div class="card">
+								<div id="heading{it.cycle}" class="card-header">
+									<button class="btn collapsed" data-toggle="collapse" data-target="#collapse{it.cycle}" aria-expanded="false" aria-controls="collapse{it.cycle}">{text.title}</button>
+								</div>
+								<div id="collapse{it.cycle}" class="collapse" aria-labelledby="heading{it.cycle}" data-parent="#joAccordion">
+									<div class="card-body">
+								    	<f:format.html>{text.description}</f:format.html>
+								    </div>
+								</div>
+							</div>
+						</f:for>
+					</div>
+				</div>
+			</f:alias>
+		</f:if>
+		<f:if condition="{items.place}">
+			<f:alias map="{colors: '{items.placecolor->jo:explode(delimiter:\'$\')}'}">
+				<f:variable name="thecolor"><f:if condition="{colors.0}">background-color: {colors.0};</f:if><f:if condition="{colors.1}"> color: {colors.1};</f:if></f:variable>
+				<div class="location" style="{thecolor}"><div class="container jocontainer jofade"><f:format.html>{items.place}</f:format.html></div></div>
+			</f:alias>
+		</f:if>
+		<f:if condition="{items.jsonfile}">
+			<div class="col-md-12 clearfix" id="map-container">
+			    <h3 id="map-jumper">{jsontitle}</h3>
+			    <div id="mapdiv" class="olMap col-12 map"></div>
+			    <div id="popup" class="ol-popup" style="background-color: white; display: block;">
+			      <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+			      <div id="popup-content"></div>
+			    </div>
+			</div>
+		</f:if>
+	</div>
+</f:if>
+</f:spaceless>

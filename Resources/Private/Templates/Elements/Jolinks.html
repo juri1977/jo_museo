@@ -1,0 +1,40 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<f:if condition="{settings.suche} || {settings.url}">
+	<div class="joLink-container">
+		<f:if condition="{settings.suche} && {settings.facettenvalue}">
+			<div class="control_button">
+				<f:link.action class="jo-search-btn" pageUid="{settings.suche}" noCache="1" pluginName="pi1009" controller="Museo" arguments="{jo:jomakearray(arraykey:'{settings.facettename}', arrayvalue:'{settings.facettenvalue}')}">
+					<span>Zu den Inhalten</span>
+					<div class="addGradient">
+						<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+							<f:then>
+								<div class="joSprite" title="Bestände anzeigen"></div>
+							</f:then>
+							<f:else>
+								<f:image src="{f:uri.resource(path:'Images/sprite.svg')}" alt="Bestände anzeigen" title="Bestände anzeigen" />
+							</f:else>
+						</f:if>
+					</div>
+				</f:link.action>
+			</div>
+		</f:if>
+
+		<f:if condition="{settings.url}">
+			<div class="control_button">
+				<f:link.external class="jo-link-extern" uri="{settings.url}" target="_blank">
+					<span>zur Webseite</span>
+					<div class="addGradient">
+						<f:if condition="{f:cObject(typoscriptObjectPath: 'lib.gpvar', data: 'test')} == 'test'">
+							<f:then>
+								<div class="joSprite" title="{settings.url}"></div>
+							</f:then>
+							<f:else>
+								<f:image src="{f:uri.resource(path:'Images/sprite.svg')}" alt="{settings.url}" title="{settings.url}" />
+							</f:else>
+						</f:if>
+					</div>
+				</f:link.external>
+			</div>
+		</f:if>
+	</div>
+</f:if>

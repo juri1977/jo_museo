@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="de" datatype="plaintext" original="messages" date="2017-11-04T10:48:54Z" product-name="jo_exhibition">
+		<header/>
+		<body>
+			<!-- Frontendfelder -->
+			<trans-unit id="tx_joexhibition">
+				<source>Jo Exhibition</source>
+				<target>Jo Exhibition</target>
+			</trans-unit>
+			<!-- Plugin Images CE -->
+			<trans-unit id="flexform.pi2010.main">
+				<source>Main</source>
+				<target state="translated">Einstellungen</target>
+			</trans-unit>
+			<trans-unit id="flexform.pi2010.main.slider">
+				<source>Slider settings</source>
+				<target state="translated">Slider Einstellungen</target>
+			</trans-unit>
+			<trans-unit id="flexform.pi2010.main.slider.slide">
+				<source>Slide</source>
+				<target state="translated">Slide</target>
+			</trans-unit>
+			<trans-unit id="flexform.pi2010.main.slider.image">
+				<source>Image</source>
+				<target state="translated">Bild</target>
+			</trans-unit>
+			<trans-unit id="flexform.pi2010.main.slider.active">
+				<source>Image activate at pageload</source>
+				<target state="translated">Bild beim Laden der Seite aktiv</target>
+			</trans-unit>
+			<trans-unit id="flexform.pi2010.main.slider.title">
+				<source>Title</source>
+				<target state="translated">Titel</target>
+			</trans-unit>
+			<trans-unit id="flexform.pi2010.main.slider.subtitle">
+				<source>Subtitle</source>
+				<target state="translated">Untertitel</target>
+			</trans-unit>
+			<trans-unit id="flexform.pi2010.main.slider.position">
+				<source>Position</source>
+				<target state="translated">Position</target>
+			</trans-unit>
+			<trans-unit id="flexform.pi2010.main.slider.link">
+				<source>Link</source>
+				<target state="translated">Link</target>
+			</trans-unit>
+			<trans-unit id="flexform.pi2010.main.slider.bodytext">
+				<source>Text</source>
+				<target state="translated">Text</target>
+			</trans-unit>
+			<!-- TCA Erweiterung sys_file_reference -->
+			<trans-unit id="inlinecss">
+				<source>CSS Eigenschaft für Imagetag</source>
+				<target state="translated">CSS Eigenschaft für Imagetag</target>
+			</trans-unit>
+			<trans-unit id="showdata.publikation">
+				<source>Art der Publikation [Druck; Handschrift; Sammlung; Landkarte o.ä.]:</source>
+				<target state="translated">Art der Publikation [Druck; Handschrift; Sammlung; Landkarte o.ä.]:</target>
+			</trans-unit>
+			<trans-unit id="showdata.signatur">
+				<source>Ehemals:</source>
+				<target state="translated">Ehemals:</target>
+			</trans-unit>
+			<trans-unit id="showdata.aufbewahrungsort">
+				<source>Heute:</source>
+				<target state="translated">Heute:</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

@@ -1,0 +1,123 @@
+{namespace jo=JO\JoMuseo\ViewHelpers}
+<div class="results map_view">
+	<f:if condition="{joSolrObjects.response.docs}">
+		<f:variable name="docsCount"><f:count subject='{joSolrObjects.response.docs}'/></f:variable>
+		<f:if condition="{docsCount} >= 2">
+			<div id="jo_popup_carousel" class="carousel slide" data-ride="carousel" data-interval="false">
+				<div class="carousel-inner">
+				<div class="carousel-item found-info">{docsCount} Objekte wurden gefunden</div>
+		</f:if>
+		<f:for each="{joSolrObjects.response.docs}" as="items" key="number" iteration="counter">
+			<f:if condition="{docsCount} >= 2">
+				<div class="carousel-item<f:if condition='{counter.isFirst}'> active</f:if>">
+			</f:if>
+			<div class="row<f:if condition='{jo:joinarray(arraycontains:\'{hidden_items}\', keytofind:\'{items.id}\')}'> inactive</f:if>">
+				<div class="col-12">
+					<div class="results map_view">	
+						<f:if condition="{config.fieldlist.mapview.headline.name} && {config.init.authdata.idfield}">
+							<div class="title_or_symbols">
+								<h2>
+									<f:link.action noCache="1" action="detailobject" title="Objektdetails öffnen" arguments="{joDetailView:'{items.{config.init.authdata.idfield}}',jopaginatepage:'{extbase_config.paginate}',h:'1'}">
+										<f:if condition="{docsCount} >= 2">
+											#{counter.cycle}.&nbsp;
+										</f:if>
+										<f:render partial="Sections" arguments="{fields:'{fields}', items:'{items}', config:'{config}',langPath:'{langPath}'}" section="headline"/>
+									</f:link.action>
+								</h2>
+							</div>
+						</f:if>
+						<div class="img">
+							<f:link.action class="row no-gutters h-100 list-view flex_link" noCache="1" action="detailobject" arguments="{joDetailView:'{items.id}',jopaginatepage:'{extbase_config.paginate}',h:'1'}">
+								<f:if condition="{items.images}">
+									<f:then>
+										<f:for each="{items.images}" as="item" key="subnumber" iteration="subcounter">
+											<f:alias map="{imagedata: '{item->jo:explode(delimiter:\'$\')}'}">
+						                      <f:if condition="{subcounter.cycle} <= {config.fieldlist.mapview.images.count}"> 
+					                      			<div class="grid-img col" <f:if condition='{imagedata.0}'>style="background-image:url('{imagedata.0}')"</f:if>></div>
+						                      </f:if>
+						                    </f:alias>
+					                    </f:for>
+			           				 </f:then>
+						            <f:else>  
+                    					<f:render partial="Sections" arguments="{_all}" section="placeholder-background"/>
+						        	</f:else>
+	                        	</f:if>
+							</f:link.action>
+						</div>
+						<f:if condition="{config.fieldlist.mapview.fields}">
+							<f:for each="{config.fieldlist.mapview.fields}" as="fields" key="fk" iteration="fi">
+								<f:render partial="Sections" arguments="{_all}" section="buildfieldsandsegments"/>
+							</f:for>
+						</f:if>
+					</div>
+					<div class="control_wrap">
+						<f:render partial="Sections" arguments="{_all}" section="controls"/>
+					</div>
+				</div>
+			</div>
+			<f:if condition="{docsCount} >= 2">
+				</div>
+			</f:if>
+		</f:for>
+		<f:if condition="{docsCount} >= 2">
+				</div>
+
+				<f:comment>
+				<!--
+				<div class="joIndicator">
+					<f:for each="{joSolrObjects.response.docs}" as="items" key="number" iteration="counter">
+						<div class="joIndicator-item<f:if condition='{counter.isFirst}'> active</f:if>" data-slide-to="{counter.index}">
+							<f:if condition="{items.images}">
+								<f:then>
+									<f:for each="{items.images}" as="subitems" key="subnumber" iteration="subcounter">
+										<f:if condition="{subcounter.isFirst}">
+											<f:alias map="{imagedata: '{subitems->jo:explode(delimiter:\'$\')}'}">
+												<f:if condition="{imagedata.0}">
+													<f:then>
+														<div class="joResponseImage" style="background-image: url({imagedata.0})"></div>
+													</f:then>
+													<f:else>
+														<f:if condition="{settings.imgplaceholder}">
+															<f:then>
+																<div class="joResponseImage" style="background-image: url(<f:uri.image src='{settings.imgplaceholder}' treatIdAsReference='1' width='550'/>)"></div>
+															</f:then>
+															<f:else>
+																<div class="joResponseImage" style="background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/platzhalter.jpg)"></div>
+															</f:else>
+														</f:if>
+													</f:else>
+												</f:if>
+											</f:alias>
+										</f:if>
+									</f:for>
+								</f:then>
+								<f:else>
+									<f:if condition="{settings.imgplaceholder}">
+										<f:then>
+											<div class="joResponseImage" style="background-image: url(<f:uri.image src='{settings.imgplaceholder}' treatIdAsReference='1' width='550'/>)"></div>
+										</f:then>
+										<f:else>
+											<div class="joResponseImage" style="background-image: url(/typo3conf/ext/jo_museo/Resources/Public/Images/platzhalter.jpg)"></div>
+										</f:else>
+									</f:if>
+								</f:else>
+							</f:if>
+						</div>
+					</f:for>
+				</div>
+				
+
+				<a class="carousel-control-prev" href="#jo_popup_carousel" role="button" data-slide="prev">
+				    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				    <span class="sr-only">Previous</span>
+			  	</a>
+			  	<a class="carousel-control-next" href="#jo_popup_carousel" role="button" data-slide="next">
+				    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+				    <span class="sr-only">Next</span>
+			  	</a>
+				-->
+			  	</f:comment>
+			</div>
+		</f:if>
+	</f:if>
+</div>

@@ -1,0 +1,122 @@
+.Tx-Formhandler input,
+.Tx-Formhandler textarea {
+	outline: none;
+    border: 1px solid #c2c4d8;
+}
+.Tx-Formhandler .jocontactwrap .fh-name{
+	width:150px;
+	float: left;
+}
+.jocontactwrap #fh-head h1{
+	padding: 0 0 10px 0;
+}
+.jocontactwrap #contact_subject_div{
+	margin: 20px 0;
+}
+.jocontactwrap #fh-textarea{
+
+}
+.jocontactwrap #fh-message{
+	margin:0 0 5px 0;
+}
+.jocontactwrap #fh-textarea textarea{
+	height:100px;
+	width:370px;
+}
+.jocontactwrap #formhandler-box-right{    
+	border-top: 1px solid #c2c4d8;
+    border-bottom: 1px solid #c2c4d8;
+    background-color: #ececec;
+}
+.jocontactwrap #fh-mandatory{
+	margin:0 25px 0 0;
+	text-align:right;
+	color:white;
+	font-size:12px;
+}
+.jocontactwrap #fh-submit input{
+	background-color:transparent;
+	border:none;
+	font-size:14px;
+	cursor:pointer;
+	height: 25px;
+}
+.jocontactwrap #fh-errors{
+	width:500px;
+	position: absolute;
+	top: -140px;
+	left: 585px;
+	color:red;
+	font-size:12px;
+}
+.jocontactwrap #error_wrap{
+	z-index:9999;
+	position:absolute;
+	width:100%;
+	height:100%;
+	top:0;
+	left:0;
+}
+.jocontactwrap .error-head{
+	position:absolute;
+	top:50%;
+	left:50%;
+	margin:-50px 0 0 -220px;
+	width:370px;
+	cursor:pointer;
+}
+.jocontactwrap .error-head h2{
+	color:red;
+	font-size:25px;
+	padding:20px 0 0 20px;
+}
+.jocontactwrap .error-head ul{
+	list-style-type:none;
+	padding:0 0 50px 20px;
+}
+.jocontactwrap .error-head ul li{
+	color:black;
+	padding:5px 0;
+}
+.jocontactwrap .Tx-Formhandler p{
+	color:white;
+	font-size:16px;
+}
+.jocontactwrap .abstandbutton2 span{
+	font-family:futura1;
+	display:block;
+	padding:1px 0 2px 0;
+	text-align:center;
+	background-repeat:repeat-x; 
+	background-position:0 0;
+	background-color:#A4333D;
+	overflow:auto;
+	text-decoration:none;
+}
+.jocontactwrap .abstandbutton2 span input{
+	text-decoration:none;
+	color:white;
+	text-shadow:none;
+	font-style: normal;
+}
+.jocontactwrap .roundedge{
+	-moz-border-radius:1px; /* Firefox */
+	-webkit-border-radius:1px; /* Safari, Chrome */
+	-html-border-radius:1px; /* Konqueror */
+	border-radius:1px; /* CSS3 */
+}
+.jocontactwrap .abstandshadow {
+  -moz-box-shadow:    2px 3px 7px 0px #990d17;
+  -webkit-box-shadow: 2px 3px 7px 0px #990d17;
+  box-shadow:         2px 3px 7px 0px #990d17;
+}
+.jocontactwrap .tx-srfreecap-pi2-cant-read,
+.jocontactwrap .tx-srfreecap-pi2-cant-read a{
+	color:white;
+}
+.joError input,
+.joError textarea,
+.joError select {
+	border:1px red solid;
+	background-color: #ffebe5;
+}
